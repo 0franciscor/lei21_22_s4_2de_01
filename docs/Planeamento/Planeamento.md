@@ -24,3 +24,5 @@ A distribuição de requisitos/funcionalidades ao longo do período de desenvolv
 |          	              	   |                       	 |                         |                  	      |
 |          	              	   |                       	 |                         |                  	      |
 |          	              	   |                       	 |                         |                  	      |
+
+**NOTA:** Ao clicar na **US** é reencaminhado para a **Documentação** da mesma.
