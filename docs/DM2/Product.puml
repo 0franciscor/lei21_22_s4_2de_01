@@ -1,0 +1,66 @@
+@startuml
+
+hide methods
+skinparam classAttributeIconSize 0
+skinparam classBackgroundColor beige
+skinparam ArrowColor #222222
+
+package "<<aggregate>> Product" {
+    entity Product
+    class Photos
+    class Category
+    class Brand
+    class Barcode
+    class Reference
+    class ProductionCode
+}
+
+entity Product <<entity>> <<root>> {
+    -<<VO>> ShortDescription
+    -<<VO>> ExtendedDescription
+    -<<VO>> TechnicalDescription
+    -<<VO>> Price w/out VAT
+    -<<VO>> Qt/unity
+}
+
+class Reference <<value object>>{}
+
+class Category <<value object>>{
+- AlphaNumeric Code
+- ExtendedDescription
+- SuperCategory
+}
+
+class ProductionCode <<value object>>{
+
+}
+
+class Photos <<value object>>{
+- PhotosList
+- Description
+}
+
+class Barcode <<value object>>{
+- Barcode
+- Code
+}
+
+
+class Brand <<value object>>{
+
+}
+
+class Catalog{
+- CategoryList
+}
+
+Category -- "1 " Catalog : listed on >
+
+Product --> "1"  Reference : identified by
+Product --> "1--*" Photos : described
+Product --> "1" Brand : designed
+Product --> "1" Category : organized by
+Product --> "1" Barcode : identified by
+Product --> "1" ProductionCode : identified by
+
+@enduml
