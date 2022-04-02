@@ -1,0 +1,93 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+skinparam classAttributeIconSize 0
+hide empty attributes
+skinparam classBackgroundColor beige
+skinparam ArrowColor #222222
+
+package "<<aggregate>> Order"{
+    entity Order
+    class TotalPrice
+    class Status
+
+}
+
+entity Order <<entity>> <<root>> {
+- numericIdentifier
+- dateOfOrder
+- shipmentMethod
+- paymentMethod
+
+}
+
+class TotalPrice <<(V,#FF8B40) value object>> {}
+class Status <<(V,#FF8B40) value object>> {}
+
+package "<<aggregate>> Client" {
+    entity Client
+    class PostalAddresses
+}
+
+entity Client <<entity>> <<root>> {
+
+}
+class PostalAddresses <<(V,#FF8B40) value object>> {}
+
+entity Client <<entity>> <<root>> {
+
+}
+package "<<aggregate>> ShopCar"{
+    entity ShopCar
+    entity Item
+}
+
+entity ShopCar <<entity>> <<root>>{
+
+}
+entity Item <<entity>> {
+    -productQuantity
+
+}
+package "<<aggregate>> Product"{
+     entity Product
+     class PriceWithVTA
+
+}
+
+entity Product <<entity>> <<root>> {
+
+}
+
+class PriceWithVTA <<(V,#FF8B40) value object>> {}
+
+package "<<aggregate>> Employee" {
+    entity Employee
+    class Identifier
+}
+
+entity Employee <<entity>> <<root>> {
+
+}
+
+class Identifier <<(V,#FF8B40) value object>> {}
+
+Order ---> "1" Client : associated
+Client -> "1..*" PostalAddresses: associated with an
+Order ---> "1" PostalAddresses : associated with an
+ShopCar ---> "1" Order : is transformed
+Product -> "1" PriceWithVTA : characterized by
+Item --> "1" Product : composed by
+Order -> "1" TotalPrice : is marked
+ShopCar -> "1..*" Item : composed by
+Employee -> "1" Identifier : characterized by
+Order ---> "0..1" Identifier : characterized by
+Order --> "1" Status : is in
+
+
+
+
+
+
+
+@enduml
