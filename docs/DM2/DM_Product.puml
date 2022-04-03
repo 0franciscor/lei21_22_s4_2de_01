@@ -1,0 +1,86 @@
+@startuml
+
+hide methods
+skinparam classAttributeIconSize 0
+skinparam classBackgroundColor beige
+skinparam ArrowColor #222222
+
+package "<<aggregate>> Product" {
+    entity Product
+    class Photos
+    class Category
+    class Brand
+    class Barcode
+    class Reference
+    class ProductionCode
+    class Catalog
+    class Description
+    class ShortDescription
+    class ExtendedDescription
+    class TechnicalDescription
+    class PriceWithoutVAT
+}
+
+package "<<aggregate>> Warehouse" {
+    entity Warehouse
+}
+
+entity Warehouse <<entity>> <<root>> {
+-Plant
+}
+
+entity Product <<entity>> <<root>> {
+-Qt/unity
+}
+
+class Reference <<(V,#FF8B40) value object>> {}
+
+class Category <<(V,#FF8B40) value object>>{
+- AlphaNumeric Code
+- SuperCategory
+}
+
+class ProductionCode <<(V,#FF8B40) value object>>{}
+
+class Photos <<(V,#FF8B40) value object>>{
+- PhotosList
+}
+
+class Barcode <<(V,#FF8B40) value object>>{}
+
+class PriceWithoutVAT <<(V,#FF8B40) value object>>{}
+
+class Brand <<(V,#FF8B40) value object>>{}
+
+class Description <<(V,#FF8B40) value object>>{}
+
+class ShortDescription <<(V,#FF8B40) value object>>{}
+
+class ExtendedDescription <<(V,#FF8B40) value object>>{}
+
+class TechnicalDescription <<(V,#FF8B40) value object>>{}
+
+class Description <<(V,#FF8B40) value object>>{}
+
+class Catalog <<(V,#FF8B40) value object>>{}
+
+
+Product --> "1..*" Warehouse : contained on
+
+Product --> "1" Reference : identified by
+Product --> "1..*" Photos : described
+Product --> "1" Brand : designed
+Product --> "1" Category : organized by
+Product --> "1" Barcode : identified by
+Product --> "1" ProductionCode : identified by
+Product --> "1" Description : identified by
+Product --> "1" PriceWithoutVAT : characterized by
+
+
+ShortDescription --> "1" Description : is a
+ExtendedDescription --> "1" Description : is a
+TechnicalDescription --> "1" Description : is a
+
+Category -- "1 " Catalog : listed on >
+
+@enduml

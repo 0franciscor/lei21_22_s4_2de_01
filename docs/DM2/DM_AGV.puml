@@ -17,6 +17,14 @@ package "<<aggregate>> AGV" {
     class MaxWeightCapacity
 }
 
+package "<<aggregate>> Warehouse" {
+    entity Warehouse
+}
+
+entity Warehouse <<entity>> <<root>> {
+-Plant
+}
+
 entity AGV <<entity>> <<root>> {}
 
 class Identifier <<(V,#FF8B40) value object>> {}
@@ -39,7 +47,8 @@ class MaxWeightCapacity <<(V,#FF8B40) value object>> {
 -unity
 }
 
-AGV --> "1--*" Task : collects
+AGV --> "1..*" Warehouse : manages
+AGV --> "1..*" Task : collects
 AGV --> "1" Route : follows
 AGV --> "1" BaseLocation : has
 AGV --> "1" Model : has

@@ -1,0 +1,47 @@
+@startuml
+
+hide methods
+left to right direction
+skinparam classAttributeIconSize 0
+skinparam classBackgroundColor beige
+skinparam ArrowColor #222222
+
+package "<<aggregate>> Warehouse" {
+    entity Warehouse
+    class StorageArea
+    class Aisle
+    class Row
+    class Shelf
+}
+
+package "<<aggregate>> AGV" {
+    entity AGV
+}
+
+entity AGV <<entity>> <<root>> {}
+
+entity Warehouse <<entity>> <<root>> {
+-Plant
+}
+
+class Shelf <<(V,#FF8B40) value object>>{
+-isEmpty
+}
+
+class StorageArea <<(V,#FF8B40) value object>>{}
+
+class Aisle <<(V,#FF8B40) value object>>{}
+
+class Row <<(V,#FF8B40) value object>>{}
+
+Warehouse --> "1..*" Aisle : contains
+
+Warehouse --> "1..*" AGV : managed by
+
+Aisle --> "1..*" Row : divided by
+
+Row --> "1..*" Shelf : divided by
+
+Shelf --> "1" StorageArea : comprehends
+
+@enduml
