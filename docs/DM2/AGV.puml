@@ -1,0 +1,52 @@
+@startuml
+
+hide methods
+skinparam classAttributeIconSize 0
+skinparam classBackgroundColor beige
+skinparam ArrowColor #222222
+
+package "<<aggregate>> AGV" {
+    entity AGV
+    class Identifier
+    class BriefDescription
+    class Model
+    class Range
+    class BaseLocation
+    class Task
+    class Route
+    class MaxWeightCapacity
+}
+
+entity AGV <<entity>> <<root>> {}
+
+class Identifier <<(V,#FF8B40) value object>> {}
+
+class BriefDescription <<(V,#FF8B40) value object>> {}
+
+class Model <<(V,#FF8B40) value object>> {}
+
+class Range <<(V,#FF8B40) value object>> {}
+
+class BaseLocation <<(V,#FF8B40) value object>> {}
+
+class Task<<(V,#FF8B40) value object>> {
+- taskState
+}
+
+class Route <<(V,#FF8B40) value object>> {}
+
+class MaxWeightCapacity <<(V,#FF8B40) value object>> {
+-unity
+}
+
+AGV --> "1--*" Task : collects
+AGV --> "1" Route : follows
+AGV --> "1" BaseLocation : has
+AGV --> "1" Model : has
+AGV --> "1" Identifier : identified by
+AGV --> "1" BriefDescription : characterized by
+AGV --> "1" Range : has
+AGV --> "1" MaxWeightCapacity : respects
+
+
+@enduml
