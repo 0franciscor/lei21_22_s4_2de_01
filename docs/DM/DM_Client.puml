@@ -31,7 +31,8 @@ package "<<aggregate>> Client" {
 }
 
 entity Client <<entity>> <<root>> {
-    - VAT
+    - id
+    - vat
 }
 
 class PhoneNumber <<(V,#FF8B40) value object>> {}

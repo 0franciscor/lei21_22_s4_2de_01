@@ -1,0 +1,166 @@
+@startuml
+
+hide methods
+left to right direction
+skinparam classAttributeIconSize 0
+skinparam classBackgroundColor beige
+skinparam ArrowColor #222222
+
+package "<<aggregate>> Warehouse" {
+    entity Warehouse
+    entity WarehousePlant
+    entity Aisle
+    entity Row
+    entity AGVDock
+    entity Shelf
+    class Dashboard
+    class StorageArea
+    class Bin
+    class Begin
+    class End
+    class Depth
+    class Acessibility
+}
+
+package "<<aggregate>> AGV" {
+    entity AGV
+    class BriefDescription
+    class Model
+    class Task
+    class Route
+    class MaxWeightCapacity
+    class Position
+}
+
+package "<<aggregate>> Product" {
+    entity Product
+}
+
+entity Product <<entity>> <<root>> {}
+
+entity WarehousePlant <<entity>> {
+    -description
+    -length
+    -width
+    -unit
+}
+
+entity AGV <<entity>> <<root>> {
+    -id
+    -state
+    -range
+}
+
+entity AGVDock <<entity>> {
+    -id
+}
+
+entity Warehouse <<entity>> <<root>> {
+}
+
+class Dashboard <<(V,#FF8B40) value object>>{}
+
+entity Shelf <<entity>>{
+    -id
+    -isEmpty
+}
+
+class StorageArea <<(V,#FF8B40) value object>>{}
+
+class Bin <<(V,#FF8B40) value object>>{
+    -size
+}
+
+entity Aisle <<entity>>{
+    -id
+}
+
+class Begin <<(V,#FF8B40) value object>>{
+    -lsquare
+    -wsquare
+}
+
+class End <<(V,#FF8B40) value object>>{
+    -lsquare
+    -wsquare
+}
+
+class Depth <<(V,#FF8B40) value object>>{
+    -lsquare
+    -wsquare
+}
+
+class Acessibility <<(V,#FF8B40) value object>>{}
+
+entity Row <<entity>>{
+    -id
+}
+
+Product--> "1" StorageArea : located in
+
+Warehouse --> "1..*" Aisle : contains
+
+Warehouse --> "1" Dashboard : monitored by
+
+Warehouse --> "1..*" AGV : operated by
+
+Warehouse --> "1..*" WarehousePlant : provides
+
+WarehousePlant --> "1..*" Aisle : provides information
+
+WarehousePlant --> "1..*" AGVDock : provides information
+
+StorageArea --> "1..*" Aisle : located in
+
+Aisle --> "1..*" Row : organized by
+
+Aisle --> "1" Begin : located in
+Aisle --> "1" End : located in
+Aisle ----> "1" Depth : located in
+Aisle --> "1" Acessibility : associated
+
+Row --> "1..*" Shelf : divided by
+
+Row --> "1..*" Begin : located in
+
+Row --> "1..*" End : located in
+
+StorageArea --> Row : identified by
+
+StorageArea --> "1" Shelf : identified by
+
+StorageArea --> "1..*" Bin : divided by
+
+AGVDock ---> "1" Begin : located in
+AGVDock ---> "1" End : located in
+AGVDock ---> "1" Depth : located in
+AGVDock ---> "1" Acessibility : associated
+
+
+entity AGV <<entity>> <<root>> {}
+
+class BriefDescription <<(V,#FF8B40) value object>> {}
+
+class Model <<(V,#FF8B40) value object>> {}
+
+class Position <<(V,#FF8B40) value object>> {}
+
+class Task<<(V,#FF8B40) value object>> {
+    -taskState
+}
+
+class Route <<(V,#FF8B40) value object>> {}
+
+class MaxWeightCapacity <<(V,#FF8B40) value object>> {
+-unity
+}
+
+AGV --> "1..*" Task : collects
+AGV --> "1" Route : follows
+AGV --> "1" AGVDock : docked in
+AGV --> "1" Model : has
+AGV --> "1" BriefDescription : characterized by
+AGV --> "1" MaxWeightCapacity : respects
+AGV --> "1" Position : located in
+
+@enduml

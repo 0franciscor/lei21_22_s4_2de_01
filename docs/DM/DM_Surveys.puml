@@ -1,5 +1,4 @@
 @startuml
-'https://plantuml.com/class-diagram
 
 skinparam classAttributeIconSize 0
 hide empty attributes
@@ -107,6 +106,7 @@ entity Client <<entity>> <<root>> {
 }
 
 Client --> "1..*" Notification : receive
+Client --> "1..*" Survey : answers
 
 
 @enduml

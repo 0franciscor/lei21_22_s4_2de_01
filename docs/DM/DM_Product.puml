@@ -19,11 +19,11 @@ package "<<aggregate>> Product" {
     class Weight
     class Volume
     class Photo
+    class BrandName
 }
 
 entity Product <<entity>> <<root>> {
     - uniqueInternalCode
-    - brandName
 }
 
 class ShortDescription <<(V,#FF8B40) value object>>
@@ -40,6 +40,7 @@ class Reference <<(V,#FF8B40) value object>> {}
 class Weight <<(V,#FF8B40) value object>> {}
 class Volume <<(V,#FF8B40) value object>> {}
 class Photo <<(V,#FF8B40) value object>>{}
+class BrandName <<(V,#FF8B40) value object>>{}
 
 package "<<aggregate>> Category" {
     entity Category
@@ -68,7 +69,8 @@ Product --> "1" Size: associated
 Product --> "1" Weight: characterized by
 Product --> "1" Volume: characterized by
 Product --> "1" Reference : identified by
-Product ---> "1" Photo : described
+Product --> "1..*" Photo : described
+Product ---> "1" BrandName : made by
 
 
 Category --> "1" AlphanumericCode : identified by

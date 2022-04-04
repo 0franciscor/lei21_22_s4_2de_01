@@ -39,7 +39,7 @@ package "<<aggregate>> Client" {
 }
 
 entity Client <<entity>> <<root>> {
-
+    -id
 }
 
 package "<<aggregate>> Employee" {
@@ -47,7 +47,7 @@ package "<<aggregate>> Employee" {
 }
 
 entity Employee <<entity>> <<root>> {
-
+    -identifier
 }
 
 Client --> "1" User : is a
