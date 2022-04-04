@@ -42,6 +42,15 @@ entity Client <<entity>> <<root>> {
 
 }
 
+package "<<aggregate>> Employee" {
+    entity Employee
+}
+
+entity Employee <<entity>> <<root>> {
+
+}
+
 Client --> "1" User : is a
+Employee --> "1" User : is a
 
 @enduml
