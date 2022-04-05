@@ -24,7 +24,7 @@ package "<<aggregate>> Warehouse" {
 
 package "<<aggregate>> AGV" {
     entity AGV
-    entity AGVDigitalTwin
+    entity AGVManager
     class BriefDescription
     class Model
     class Task
@@ -141,11 +141,11 @@ AGVDock ---> "1" End : located in
 AGVDock ---> "1" Depth : located in
 AGVDock ---> "1" Acessibility : associated
 
-AGVDigitalTwin --> "1" AGV : manages
+AGVManager --> "1" AGV : manages
 
 entity AGV <<entity>> <<root>> {}
 
-entity AGVDigitalTwin <<entity>>{}
+entity AGVManager <<entity>>{}
 
 class BriefDescription <<(V,#FF8B40) value object>> {}
 
@@ -181,9 +181,9 @@ class SimEngine <<(V,#FF8B40) value object>> {}
 class BatteryManagement <<(V,#FF8B40) value object>> {}
 
 
-AGVDigitalTwin --> "1..*" CommunicationModule : associated with
-AGVDigitalTwin --> "1..*" ControlUnit : associated with
-AGVDigitalTwin --> "1..*" SimEngine : associated with
-AGVDigitalTwin --> "1..*" BatteryManagement : associated with
+AGVManager --> "1..*" CommunicationModule : associated with
+AGVManager --> "1..*" ControlUnit : associated with
+AGVManager --> "1..*" SimEngine : associated with
+AGVManager --> "1..*" BatteryManagement : associated with
 
 @enduml
