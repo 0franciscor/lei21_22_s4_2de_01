@@ -19,7 +19,7 @@ package "<<aggregate>> Warehouse" {
     class Begin
     class End
     class Depth
-    class Acessibility
+    class Accessibility
 }
 
 package "<<aggregate>> AGV" {
@@ -95,7 +95,7 @@ class Depth <<(V,#FF8B40) value object>>{
     -wsquare
 }
 
-class Acessibility <<(V,#FF8B40) value object>>{}
+class Accessibility <<(V,#FF8B40) value object>>{}
 
 entity Row <<entity>>{
     -id
@@ -122,7 +122,7 @@ Aisle --> "1..*" Row : organized by
 Aisle --> "1" Begin : located in
 Aisle --> "1" End : located in
 Aisle ----> "1" Depth : located in
-Aisle --> "1" Acessibility : associated
+Aisle --> "1" Accessibility : associated
 
 Row --> "1..*" Shelf : divided by
 
@@ -139,7 +139,7 @@ StorageArea --> "1..*" Bin : divided by
 AGVDock ---> "1" Begin : located in
 AGVDock ---> "1" End : located in
 AGVDock ---> "1" Depth : located in
-AGVDock ---> "1" Acessibility : associated
+AGVDock ---> "1" Accessibility : associated
 
 AGVManager --> "1" AGV : manages
 
