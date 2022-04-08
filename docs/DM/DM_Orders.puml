@@ -78,8 +78,7 @@ entity Employee <<entity>> <<root>> {
 Client -----> "1" ShopCar : associated
 Order ----> "1" Client : associated
 Client -> "1..*" PostalAddresses: associated with an
-Order ---> "1" PostalAddresses : associated with an
-ShopCar ---> "1" Order : is transformed
+ShopCar ...> "1" Order : is transformed
 Product -> "1" Price : characterized by
 Item --> "1" Product : composed by
 Order -> "1" TotalPrice : is marked

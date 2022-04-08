@@ -101,7 +101,7 @@ entity Row <<entity>>{
     -id
 }
 
-Product--> "1" StorageArea : located in
+Product--> "1" Warehouse : located in
 
 Warehouse --> "1..*" Aisle : contains
 
@@ -165,7 +165,6 @@ class MaxWeightCapacity <<(V,#FF8B40) value object>> {
 
 AGV --> "1..*" Task : collects
 AGV --> "1" Route : follows
-AGV --> "1" AGVDock : docked in
 AGV --> "1" Model : has
 AGV --> "1" BriefDescription : characterized by
 AGV --> "1" MaxWeightCapacity : respects
