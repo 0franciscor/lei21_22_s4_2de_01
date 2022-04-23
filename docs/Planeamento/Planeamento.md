@@ -20,7 +20,7 @@ A distribuição de requisitos/funcionalidades ao longo do período de desenvolv
 | Aluno Nr.                	   | Sprint B                         | Sprint C                | Sprint D                 |
 |------------------------------|----------------------------------|-------------------------|--------------------------|
 | [**1201386**](/docs/1201386/)| [US1001](/docs/1201386/US1001.md)|                         |                          |
-| [**1200720**](/docs/1200720/)| [US1002](/docs/1200720/US1002.md)|                         |                          |
+| [**1200720**](/docs/1200720/)| [US1002](/docs/1200720/US1002/US1002.md)|                         |                          |
 | [**1201386**](/docs/1201386/)| [US1003](/docs/1201386/US1003.md)|                         |                          |
 | [**1200720**](/docs/1200720/)| [US1004](/docs/1200720/US1004.md)|                         |                          |
 | [**1201386**](/docs/1201386/)| [US1004](/docs/1200720/US1004.md)|                         |                          |
@@ -28,6 +28,6 @@ A distribuição de requisitos/funcionalidades ao longo do período de desenvolv
 | [**1201382**](/docs/1201382/)| [US9001](/docs/1201239/US9001.md)|                         |                          |
 | [**1201386**](/docs/1201386/)| [US1900](/docs/1201386/US1900.md)|                         |                          |
 | [**1201382**](/docs/1201382/)| [US2002](/docs/1201382/US2002.md)|                         |                          |
-| [**1200720**](/docs/1200720/)| [US1005](/docs/1200720/US1005.md)|                         |                          |
+| [**1200720**](/docs/1200720/)| [US1005](/docs/1200720/US1005/US1005.md)|                         |                          |
 
 **NOTA:** Ao clicar na **US** é reencaminhado para a **Documentação** da mesma.
