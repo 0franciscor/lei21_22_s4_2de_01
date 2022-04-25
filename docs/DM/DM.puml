@@ -99,8 +99,7 @@ package "<<aggregate>> Warehouse" {
     entity Row
     entity AGVDock
     entity Shelf
-    entity Bin
-
+    class Bin
 }
 
 
@@ -108,9 +107,7 @@ entity Row <<entity>>{
 
 }
 
-entity Bin <<entity>>{
-
-}
+class Bin <<(V,#FF8B40) value object>>{}
 
 entity AGVDock <<entity>> {
 }
@@ -170,7 +167,8 @@ Warehouse -> "1..*" WarehousePlant : provides
 Aisle --> "1..*" Row : organized by
 Row --> "1..*" Shelf : organized by
 
-Shelf --> "1..*" Bin : define
+Row --> "1" Bin : define
+Shelf --> "1" Bin : define
 
 WarehousePlant ---> "1..*" Aisle : provides information
 WarehousePlant -> "1..*" AGVDock : provides information

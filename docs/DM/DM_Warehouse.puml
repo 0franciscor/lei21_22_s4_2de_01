@@ -14,7 +14,6 @@ package "<<aggregate>> Warehouse" {
     entity AGVDock
     entity Shelf
     class Dashboard
-    class StorageArea
     class Bin
     class Begin
     class End
@@ -42,6 +41,7 @@ entity WarehousePlant <<entity>> {
     -description
     -length
     -width
+    -square
     -unit
 }
 
@@ -64,8 +64,6 @@ entity Shelf <<entity>>{
     -id
     -isEmpty
 }
-
-class StorageArea <<(V,#FF8B40) value object>>{}
 
 class Bin <<(V,#FF8B40) value object>>{
     -size
@@ -90,10 +88,13 @@ class Depth <<(V,#FF8B40) value object>>{
     -wsquare
 }
 
-class Accessibility <<(V,#FF8B40) value object>>{}
+class Accessibility <<(V,#FF8B40) value object>>{
+    -rating
+}
 
 entity Row <<entity>>{
     -id
+
 }
 
 Product--> "1" Warehouse : located in
@@ -110,7 +111,7 @@ WarehousePlant --> "1..*" Aisle : provides information
 
 WarehousePlant --> "1..*" AGVDock : provides information
 
-StorageArea --> "1..*" Aisle : located in
+
 
 Aisle --> "1..*" Row : organized by
 
@@ -125,11 +126,8 @@ Row --> "1..*" Begin : located in
 
 Row --> "1..*" End : located in
 
-StorageArea --> Row : identified by
-
-StorageArea --> "1" Shelf : identified by
-
-StorageArea --> "1..*" Bin : divided by
+Row --> "1" Bin : define
+Shelf --> "1" Bin : define
 
 AGVDock ---> "1" Begin : located in
 AGVDock ---> "1" End : located in
@@ -161,8 +159,5 @@ AGV --> "1" Model : has
 AGV --> "1" BriefDescription : characterized by
 AGV --> "1" MaxWeightCapacity : respects
 AGV --> "1" Position : located in
-
-
-
 
 @enduml
