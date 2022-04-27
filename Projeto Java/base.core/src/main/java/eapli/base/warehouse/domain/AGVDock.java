@@ -5,12 +5,9 @@ import eapli.framework.domain.model.AggregateRoot;
 import javax.persistence.*;
 
 @Entity
-@Embeddable
-public class AGVDock implements AggregateRoot<Long> {
-
+public class AGVDock implements AggregateRoot<String> {
 
     @Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private String Id;
     @Embedded
     private Depth depth;
@@ -45,9 +42,7 @@ public class AGVDock implements AggregateRoot<Long> {
     }
 
     @Override
-    public Long identity() {
-        long value = 0;
-        Long longReturn = value;
-        return longReturn;
+    public String identity() {
+        return Id;
     }
 }

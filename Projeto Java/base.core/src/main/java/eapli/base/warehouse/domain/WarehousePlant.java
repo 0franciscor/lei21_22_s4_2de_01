@@ -9,7 +9,6 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Embeddable
 public class WarehousePlant implements AggregateRoot<Long> {
 
     @Id

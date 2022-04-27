@@ -6,11 +6,9 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Embeddable
-public class Row implements AggregateRoot<Long> {
+public class Line implements AggregateRoot<Long> {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
     @ElementCollection
@@ -27,13 +25,13 @@ public class Row implements AggregateRoot<Long> {
     //@Embedded
     //private Bin bin;
 
-    public Row(){}
+    public Line(){}
 
-    public Row(final List<Shelf> shelfSet){
+    public Line(final List<Shelf> shelfSet){
         this.shelfSet = shelfSet;
     }
 
-    public Row(final Long Id, final Begin begin, final End end, final int numShelves){
+    public Line(final Long Id, final Begin begin, final End end, final int numShelves){
         this.Id = Id;
         this.begin = begin;
         this.end = end;
@@ -45,9 +43,9 @@ public class Row implements AggregateRoot<Long> {
         if(other == null) return false;
         if(this == other) return true;
 
-        Row newRow = ((Row) other);
+        Line newLine = ((Line) other);
 
-        return Id == newRow.Id && shelfSet == newRow.shelfSet && begin == newRow.begin && end == newRow.end && numShelves == newRow.numShelves;
+        return Id == newLine.Id && shelfSet == newLine.shelfSet && begin == newLine.begin && end == newLine.end && numShelves == newLine.numShelves;
     }
 
     @Override

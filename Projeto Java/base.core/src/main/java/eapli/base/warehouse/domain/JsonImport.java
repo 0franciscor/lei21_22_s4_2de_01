@@ -10,9 +10,8 @@ import java.util.List;
 
 public class JsonImport {
 
-    public static void main(String[] args) throws IOException {
-
-        Path filePath = Path.of("warehouse1.json");
+    public boolean importJson(final String fileName) throws IOException{
+        Path filePath = Path.of(fileName);
         String content = Files.readString(filePath);
         JSONObject jsonObject = new JSONObject(content);
 
@@ -22,13 +21,23 @@ public class JsonImport {
         int square = jsonObject.getInt("Square");
         String unit = jsonObject.getString("Unit");
 
-        JSONArray array = jsonObject.getJSONArray("Aisles");
+        List<Aisle> aisleList = importAisles(jsonObject.getJSONArray("Aisles"));
+        List<AGVDock> dockList = importDocks(jsonObject.getJSONArray("AGVDocks"));
 
+        WarehousePlant warehousePlant = new WarehousePlant(description, length, width, square, unit, dockList, aisleList);
+
+        Warehouse warehouse = new Warehouse(warehousePlant);
+
+        return true;
+    }
+
+
+    private List<Aisle> importAisles(JSONArray array){
         List<Aisle> aisleList = new ArrayList<>();
         for(Object object : array) {
             JSONObject arrayObject = (JSONObject) object;
 
-            Long id = arrayObject.getLong("Id");
+            long id = arrayObject.getLong("Id");
             Begin begin = new Begin(arrayObject.getJSONObject("begin").getInt("lsquare"), arrayObject.getJSONObject("begin").getInt("wsquare"));
             End end = new End(arrayObject.getJSONObject("end").getInt("lsquare"), arrayObject.getJSONObject("end").getInt("wsquare"));
             Depth depth = new Depth(arrayObject.getJSONObject("depth").getInt("lsquare"), arrayObject.getJSONObject("depth").getInt("wsquare"));
@@ -36,23 +45,24 @@ public class JsonImport {
 
             JSONArray jsonArray = arrayObject.getJSONArray("rows");
 
-            List<Row> rowList = new ArrayList<>();
+            List<Line> lineList = new ArrayList<>();
             for(int i = 0; i < jsonArray.length(); i++){
                 id = arrayObject.getLong("Id");
                 begin = new Begin(jsonArray.getJSONObject(i).getJSONObject("begin").getInt("lsquare"), jsonArray.getJSONObject(i).getJSONObject("begin").getInt("wsquare"));
                 end = new End(jsonArray.getJSONObject(i).getJSONObject("end").getInt("lsquare"), jsonArray.getJSONObject(i).getJSONObject("end").getInt("wsquare"));
                 int shelves = jsonArray.getJSONObject(i).getInt("shelves");
 
-                rowList.add(new Row(id, begin, end, shelves));
+                lineList.add(new Line(id, begin, end, shelves));
             }
-            aisleList.add(new Aisle(id, accessibility, depth, begin, end, rowList));
+            aisleList.add(new Aisle(id, accessibility, depth, begin, end, lineList));
         }
+        return aisleList;
+    }
 
-        JSONArray jsonArray = jsonObject.getJSONArray("AGVDocks");
-
+    private List<AGVDock> importDocks(JSONArray array){
         List<AGVDock> dockList = new ArrayList<>();
-        for(int i = 0; i < jsonArray.length(); i++) {
-            JSONObject object = jsonArray.getJSONObject(i);
+        for(int i = 0; i < array.length(); i++) {
+            JSONObject object = array.getJSONObject(i);
 
             String id = object.getString("Id");
             Begin begin = new Begin(object.getJSONObject("begin").getInt("lsquare"), object.getJSONObject("begin").getInt("wsquare"));
@@ -63,7 +73,6 @@ public class JsonImport {
             dockList.add(new AGVDock(id, depth, accessibility, begin, end));
 
         }
-
-        WarehousePlant warehousePlant = new WarehousePlant(description, length, width, square, unit, dockList, aisleList);
+        return dockList;
     }
 }
