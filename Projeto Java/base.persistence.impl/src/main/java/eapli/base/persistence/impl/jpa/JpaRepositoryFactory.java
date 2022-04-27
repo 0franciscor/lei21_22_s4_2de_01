@@ -58,7 +58,7 @@ public class JpaRepositoryFactory implements RepositoryFactory {
 
     @Override
     public ClientRepository client() {
-        return null;
+        return new JpaClientRepository();
     }
 
     @Override

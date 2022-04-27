@@ -3,6 +3,8 @@ package eapli.base.clientmanagement.domain;
 import eapli.framework.domain.model.DomainFactory;
 
 import java.util.Calendar;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class ClientBuilder implements DomainFactory<Client> {
@@ -17,7 +19,7 @@ public class ClientBuilder implements DomainFactory<Client> {
 
     private PhoneNumber phoneNumber;
 
-    private Set<PostalAddress> postalAddresses;
+    private Set<PostalAddress> postalAddresses = new HashSet<>();
 
     public ClientBuilder named(final Name name) {
         this.name = name;
@@ -47,7 +49,6 @@ public class ClientBuilder implements DomainFactory<Client> {
     }
 
     public ClientBuilder withAddress(final PostalAddress postalAddress) {
-        buildOrThrow();
         this.postalAddresses.add(postalAddress);
         return this;
     }
@@ -64,14 +65,18 @@ public class ClientBuilder implements DomainFactory<Client> {
     }
 
     public ClientBuilder withGender(final Client.Gender gender) {
-        buildOrThrow();
-        theClient.addGender(gender);
+        if (gender != null){
+            buildOrThrow();
+            theClient.addGender(gender);
+        }
         return this;
     }
 
     public ClientBuilder withBirthdate(final Calendar birthdate) {
-        buildOrThrow();
-        theClient.insertBirthDate(birthdate);
+        if (birthdate != null){
+            buildOrThrow();
+            theClient.insertBirthDate(birthdate);
+        }
         return this;
     }
 

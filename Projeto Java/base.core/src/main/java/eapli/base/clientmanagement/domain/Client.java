@@ -68,16 +68,10 @@ public class Client implements AggregateRoot<Long>, Serializable {
     }
 
     public void addGender(final Gender gender) {
-        if (gender == null) {
-            throw new IllegalArgumentException();
-        }
         this.gender = gender;
     }
 
     public void insertBirthDate(final Calendar birthdate) {
-        if (birthdate == null) {
-            throw new IllegalArgumentException();
-        }
         this.birthdate = birthdate;
     }
 
