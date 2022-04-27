@@ -7,6 +7,7 @@ import eapli.framework.validations.Preconditions;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
