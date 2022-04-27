@@ -13,7 +13,8 @@ package "<<aggregate>> Product" {
     class TechnicalDescription
     class Barcode
     class ProductionCode
-    class Price
+    class PriceWithoutVAT
+    class PriceWithVAT
     class Size
     class Reference
     class Weight
@@ -31,10 +32,8 @@ class LongDescription <<(V,#FF8B40) value object>>
 class TechnicalDescription <<(V,#FF8B40) value object>>
 class Barcode <<(V,#FF8B40) value object>>
 class ProductionCode <<(V,#FF8B40) value object>>
-class Price <<(V,#FF8B40) value object>> {
-    - withoutVAT
-    - withVAT
-}
+class PriceWithoutVAT <<(V,#FF8B40) value object>> {}
+class PriceWithVAT <<(V,#FF8B40) value object>> {}
 class Size <<(V,#FF8B40) value object>>
 class Reference <<(V,#FF8B40) value object>> {}
 class Weight <<(V,#FF8B40) value object>> {}
@@ -64,7 +63,8 @@ Product --> "1" LongDescription: characterized by
 Product --> "1" TechnicalDescription: characterized by
 Product --> "1" Barcode: identified by
 Product --> "0..1" ProductionCode: identified by
-Product --> "1" Price: associated
+Product --> "1" PriceWithoutVAT: associated
+Product --> "1" PriceWithVAT: associated
 Product --> "1" Size: associated
 Product --> "1" Weight: characterized by
 Product --> "1" Volume: characterized by
