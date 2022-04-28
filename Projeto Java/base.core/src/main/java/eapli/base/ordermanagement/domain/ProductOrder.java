@@ -5,6 +5,7 @@ import eapli.base.productmanagement.domain.UniqueInternalCode;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.general.domain.model.Money;
+import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.time.util.Calendars;
 
 import javax.persistence.*;
@@ -103,7 +104,10 @@ public class ProductOrder implements AggregateRoot<Long>, Serializable {
 
     private AdditionalComment additionalComment;
 
-    public ProductOrder(final Client client, final Address billingAddress, final Address shippingAddress, final Shipment shipment, final SourceChannel sourceChannel, final Calendar interactionDate, final AdditionalComment additionalComment) {
+    @ManyToOne
+    private SystemUser salesClerk;
+
+    public ProductOrder(final Client client, final Address billingAddress, final Address shippingAddress, final Shipment shipment, final SourceChannel sourceChannel, final Calendar interactionDate, final AdditionalComment additionalComment, final SystemUser salesClerk) {
         this.createdOn = Calendars.now();
         this.client = client;
         this.billingAddress = billingAddress;
@@ -114,9 +118,10 @@ public class ProductOrder implements AggregateRoot<Long>, Serializable {
         this.sourceChannel = sourceChannel;
         this.interactionDate = interactionDate;
         this.additionalComment = additionalComment;
+        this.salesClerk = salesClerk;
     }
 
-    public ProductOrder(final Client client, final Address billingAddress, final Address shippingAddress, final Shipment shipment, final SourceChannel sourceChannel, final Calendar interactionDate) {
+    public ProductOrder(final Client client, final Address billingAddress, final Address shippingAddress, final Shipment shipment, final SourceChannel sourceChannel, final Calendar interactionDate, final SystemUser salesClerk) {
         this.createdOn = Calendars.now();
         this.client = client;
         this.billingAddress = billingAddress;
@@ -126,6 +131,7 @@ public class ProductOrder implements AggregateRoot<Long>, Serializable {
         //this.payment = payment;
         this.sourceChannel = sourceChannel;
         this.interactionDate = interactionDate;
+        this.salesClerk = salesClerk;
     }
 
     protected ProductOrder() {
