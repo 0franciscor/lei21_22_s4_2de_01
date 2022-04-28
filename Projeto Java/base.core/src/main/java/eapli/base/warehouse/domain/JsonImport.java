@@ -12,7 +12,7 @@ public class JsonImport {
 
     public JsonImport(){}
 
-    public boolean importJson(final String fileName){
+    public Warehouse importJson(final String fileName){
 
         Warehouse warehouse;
 
@@ -20,7 +20,7 @@ public class JsonImport {
             File file = new File(fileName);
             if(!file.exists()){
                 System.out.println("The pointed file does not exist.");
-                return false;
+                return null;
             }
 
             Path filePath = Path.of(fileName);
@@ -39,12 +39,13 @@ public class JsonImport {
             WarehousePlant warehousePlant = new WarehousePlant(description, length, width, square, unit, dockList, aisleList);
 
             warehouse = new Warehouse(warehousePlant);
+
         } catch (Exception e){
             System.out.println("There was an error when Importing a .json file data.");
-            return false;
+            return null;
         }
 
-        return true;
+        return warehouse;
     }
 
 

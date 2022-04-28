@@ -26,6 +26,7 @@ import eapli.base.clientmanagement.repositories.ClientRepository;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
 import eapli.base.infrastructure.persistence.RepositoryFactory;
 import eapli.base.ordermanagement.repository.OrderRepository;
+import eapli.base.warehouse.repositories.*;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 import eapli.framework.infrastructure.authz.repositories.impl.JpaAutoTxUserRepository;
@@ -71,6 +72,24 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     public CategoryRepository category() {
         return new JpaCategoryRepository();
     }
+
+    @Override
+    public AGVDockRepository dock(){return new JpaAGVDockRepository();}
+
+    @Override
+    public AisleRepository aisle(){return new JpaAisleRepository();}
+
+    @Override
+    public LineRepository line(){return new JpaLineRepository();}
+
+    @Override
+    public ShelfRepository shelf(){return new JpaShelfRepository();}
+
+    @Override
+    public WarehousePlantRepository plant(){return new JpaWarehousePlantRepository();}
+
+    @Override
+    public WarehouseRepository warehouse(){return new JpaWarehouseRepository();}
 
     @Override
     public SignupRequestRepository signupRequests(final TransactionalContext autoTx) {
