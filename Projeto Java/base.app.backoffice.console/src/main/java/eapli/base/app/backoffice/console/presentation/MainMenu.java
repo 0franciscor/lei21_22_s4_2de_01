@@ -23,6 +23,7 @@
  */
 package eapli.base.app.backoffice.console.presentation;
 
+import eapli.base.app.backoffice.console.categoriamanagement.CreateCategoriaUI;
 import eapli.base.app.backoffice.console.clientmanagement.RegisterClientUI;
 import eapli.base.app.common.console.presentation.authz.MyUserMenu;
 import eapli.base.Application;
@@ -67,6 +68,7 @@ public class MainMenu extends AbstractUI {
 
     // SALES CLERK
     private static final int REGISTER_CLIENT = 1;
+    private static final int CREATE_CATEGORY = 2;
 
     // MAIN MENU
     private static final int MY_USER_OPTION = 1;
@@ -171,6 +173,7 @@ public class MainMenu extends AbstractUI {
         final Menu menu = new Menu("Sales Clerk >");
 
         menu.addItem(REGISTER_CLIENT, "Register a Client", new RegisterClientUI()::show);
+        menu.addItem(CREATE_CATEGORY, "Create a Category", new CreateCategoriaUI()::show);
 
         return menu;
     }

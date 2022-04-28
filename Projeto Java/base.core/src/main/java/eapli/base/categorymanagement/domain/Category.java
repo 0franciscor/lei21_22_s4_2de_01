@@ -28,8 +28,7 @@ public class Category implements AggregateRoot<Long>, Serializable {
     private SuperCategory superCategory;
 
 
-    public Category(Long categoryId, AlphanumericCode alphanumericCode, Description description, SuperCategory superCategory) {
-        this.categoryId = categoryId;
+    public Category(AlphanumericCode alphanumericCode, Description description, SuperCategory superCategory) {
         this.alphanumericCode = alphanumericCode;
         this.description = description;
         this.superCategory = superCategory;

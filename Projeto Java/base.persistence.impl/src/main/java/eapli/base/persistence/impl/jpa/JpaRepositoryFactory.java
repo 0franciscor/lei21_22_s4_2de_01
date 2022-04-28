@@ -21,6 +21,7 @@
 package eapli.base.persistence.impl.jpa;
 
 import eapli.base.Application;
+import eapli.base.categorymanagement.repositories.CategoryRepository;
 import eapli.base.clientmanagement.repositories.ClientRepository;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
 import eapli.base.infrastructure.persistence.RepositoryFactory;
@@ -59,6 +60,11 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     @Override
     public ClientRepository client() {
         return new JpaClientRepository();
+    }
+
+    @Override
+    public CategoryRepository category() {
+        return new JpaCategoryRepository();
     }
 
     @Override
