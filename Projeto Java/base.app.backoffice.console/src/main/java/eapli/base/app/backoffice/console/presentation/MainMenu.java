@@ -25,6 +25,7 @@ package eapli.base.app.backoffice.console.presentation;
 
 import eapli.base.app.backoffice.console.categoriamanagement.CreateCategoriaUI;
 import eapli.base.app.backoffice.console.clientmanagement.RegisterClientUI;
+import eapli.base.app.backoffice.console.presentation.authz.ImportJsonUI;
 import eapli.base.app.common.console.presentation.authz.MyUserMenu;
 import eapli.base.Application;
 import eapli.base.app.backoffice.console.presentation.authz.AddUserUI;
@@ -135,7 +136,12 @@ public class MainMenu extends AbstractUI {
             mainMenu.addSubMenu(SETTINGS_OPTION, settingsMenu);
         }
 
-
+        if (authz.isAuthenticatedUserAuthorizedTo(BaseRoles.POWER_USER, BaseRoles.WAREHOUSE_EMPLOYEE)) {
+            final Menu usersMenu = buildWarehouseEmployeeMenu();
+            mainMenu.addSubMenu(USERS_OPTION, usersMenu);
+            final Menu settingsMenu = buildAdminSettingsMenu();
+            mainMenu.addSubMenu(SETTINGS_OPTION, settingsMenu);
+        }
 
         if (!Application.settings().isMenuLayoutHorizontal()) {
             mainMenu.addItem(MenuItem.separator(SEPARATOR_LABEL));
@@ -178,8 +184,12 @@ public class MainMenu extends AbstractUI {
         return menu;
     }
 
+    private Menu buildWarehouseEmployeeMenu() {
+        final Menu menu = new Menu(".json Functionality");
 
+        menu.addItem(REGISTER_CLIENT, "Import a Warehouse's Info", new ImportJsonUI()::show);
 
-
+        return menu;
+    }
 
 }

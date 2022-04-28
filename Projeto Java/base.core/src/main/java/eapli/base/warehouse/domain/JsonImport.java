@@ -2,7 +2,7 @@ package eapli.base.warehouse.domain;
 
 import org.json.*;
 
-import java.io.IOException;
+import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -10,23 +10,39 @@ import java.util.List;
 
 public class JsonImport {
 
-    public boolean importJson(final String fileName) throws IOException{
-        Path filePath = Path.of(fileName);
-        String content = Files.readString(filePath);
-        JSONObject jsonObject = new JSONObject(content);
+    public JsonImport(){}
 
-        String description = jsonObject.getString("Warehouse");
-        int length = jsonObject.getInt("Length");
-        int width = jsonObject.getInt("Width");
-        int square = jsonObject.getInt("Square");
-        String unit = jsonObject.getString("Unit");
+    public boolean importJson(final String fileName){
 
-        List<Aisle> aisleList = importAisles(jsonObject.getJSONArray("Aisles"));
-        List<AGVDock> dockList = importDocks(jsonObject.getJSONArray("AGVDocks"));
+        Warehouse warehouse;
 
-        WarehousePlant warehousePlant = new WarehousePlant(description, length, width, square, unit, dockList, aisleList);
+        try {
+            File file = new File(fileName);
+            if(!file.exists()){
+                System.out.println("The pointed file does not exist.");
+                return false;
+            }
 
-        Warehouse warehouse = new Warehouse(warehousePlant);
+            Path filePath = Path.of(fileName);
+            String content = Files.readString(filePath);
+            JSONObject jsonObject = new JSONObject(content);
+
+            String description = jsonObject.getString("Warehouse");
+            int length = jsonObject.getInt("Length");
+            int width = jsonObject.getInt("Width");
+            int square = jsonObject.getInt("Square");
+            String unit = jsonObject.getString("Unit");
+
+            List<Aisle> aisleList = importAisles(jsonObject.getJSONArray("Aisles"));
+            List<AGVDock> dockList = importDocks(jsonObject.getJSONArray("AGVDocks"));
+
+            WarehousePlant warehousePlant = new WarehousePlant(description, length, width, square, unit, dockList, aisleList);
+
+            warehouse = new Warehouse(warehousePlant);
+        } catch (Exception e){
+            System.out.println("There was an error when Importing a .json file data.");
+            return false;
+        }
 
         return true;
     }

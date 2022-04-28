@@ -11,10 +11,10 @@ public class ImportJsonController {
 
     private final JsonImport jsonImport = new JsonImport();
 
-    public Warehouse importWarehouse(final String jsonName){
-        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.WAREHOUSE_EMPLOYEE);
+    public ImportJsonController(){}
 
-        //return jsonImport.importWarehouse(jsonName);
-        return new Warehouse();
+    public boolean importWarehouse(final String jsonName){
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.WAREHOUSE_EMPLOYEE);
+        return jsonImport.importJson(jsonName);
     }
 }
