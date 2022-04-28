@@ -5,7 +5,6 @@ import eapli.framework.domain.model.AggregateRoot;
 import javax.persistence.*;
 
 @Entity
-@Embeddable
 public class Shelf implements AggregateRoot<Long> {
 
     @Id

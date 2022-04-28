@@ -8,10 +8,9 @@ import javax.persistence.*;
 public class Warehouse implements AggregateRoot<Long> {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
-    @Embedded
+    @OneToOne
     private WarehousePlant warehousePlant;
 
     @Embedded
@@ -19,7 +18,12 @@ public class Warehouse implements AggregateRoot<Long> {
 
     public Warehouse(){}
 
-    public Warehouse(final WarehousePlant warehousePlant, final Dashboard dashboard){
+    public Warehouse(final WarehousePlant warehousePlant){
+        this.warehousePlant = warehousePlant;
+    }
+
+    public Warehouse(final Long Id, final WarehousePlant warehousePlant, final Dashboard dashboard){
+        this.Id = Id;
         this.warehousePlant = warehousePlant;
         this.dashboard = dashboard;
     }

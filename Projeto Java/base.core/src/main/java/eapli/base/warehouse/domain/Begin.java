@@ -6,24 +6,24 @@ import javax.persistence.Embeddable;
 
 @Embeddable
 public class Begin implements ValueObject {
-    private int lSquare;
-    private int wSquare;
+    private int beginLSquare;
+    private int beginWSquare;
 
     public Begin(){}
 
-    public Begin(final int lSquare, final int wSquare){
-        setLsquare(lSquare);
-        setWsquare(wSquare);
+    public Begin(final int beginLSquare, final int beginWSquare){
+        setLsquare(beginLSquare);
+        setWsquare(beginWSquare);
     }
 
     private void setLsquare(final int lSquare){
         if(lSquare <= 0) throw new IllegalArgumentException("lSquare must be bigger than 0.");
-        this.lSquare = lSquare;
+        this.beginLSquare = lSquare;
     }
 
     private void setWsquare(final int wSquare){
         if(wSquare <= 0) throw new IllegalArgumentException("wSquare must be bigger than 0.");
-        this.wSquare = wSquare;
+        this.beginWSquare = wSquare;
     }
 
     public boolean equals(Object obj){
@@ -33,10 +33,10 @@ public class Begin implements ValueObject {
 
         Begin newObj = (Begin) obj;
 
-        return lSquare == newObj.lSquare && wSquare == newObj.wSquare;
+        return beginLSquare == newObj.beginLSquare && beginWSquare == newObj.beginWSquare;
     }
 
     public String toString(){
-        return String.format("Starts at Length: %d and Width: %d", lSquare, wSquare);
+        return String.format("Starts at Length: %d and Width: %d", beginLSquare, beginWSquare);
     }
 }

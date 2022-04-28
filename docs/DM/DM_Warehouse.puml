@@ -10,7 +10,7 @@ package "<<aggregate>> Warehouse" {
     entity Warehouse
     entity WarehousePlant
     entity Aisle
-    entity Row
+    entity Line
     entity AGVDock
     entity Shelf
     class Dashboard
@@ -92,7 +92,7 @@ class Accessibility <<(V,#FF8B40) value object>>{
     -rating
 }
 
-entity Row <<entity>>{
+entity Line <<entity>>{
     -id
 
 }
@@ -113,20 +113,20 @@ WarehousePlant --> "1..*" AGVDock : provides information
 
 
 
-Aisle --> "1..*" Row : organized by
+Aisle --> "1..*" Line : organized by
 
 Aisle --> "1" Begin : located in
 Aisle --> "1" End : located in
 Aisle ----> "1" Depth : located in
 Aisle --> "1" Accessibility : associated
 
-Row --> "1..*" Shelf : divided by
+Line --> "1..*" Shelf : divided by
 
-Row --> "1..*" Begin : located in
+Line --> "1..*" Begin : located in
 
-Row --> "1..*" End : located in
+Line --> "1..*" End : located in
 
-Row --> "1" Bin : define
+Line --> "1" Bin : define
 Shelf --> "1" Bin : define
 
 AGVDock ---> "1" Begin : located in

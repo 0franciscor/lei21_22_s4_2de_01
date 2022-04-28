@@ -7,23 +7,23 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class End implements ValueObject {
 
-    private int lSquare;
-    private int wSquare;
+    private int endLSquare;
+    private int endWSquare;
 
     public End(){}
 
-    public End(final int lSquare, final int wSquare){
-        setLsquare(lSquare);
-        setWsquare(wSquare);
+    public End(final int endLSquare, final int endWSquare){
+        setLsquare(endLSquare);
+        setWsquare(endWSquare);
     }
     private void setLsquare(final int lSquare){
         if(lSquare <= 0) throw new IllegalArgumentException("lSquare must be bigger than 0.");
-        this.lSquare = lSquare;
+        this.endLSquare = lSquare;
     }
 
     private void setWsquare(final int wSquare){
         if(wSquare <= 0) throw new IllegalArgumentException("wSquare must be bigger than 0.");
-        this.wSquare = wSquare;
+        this.endWSquare = wSquare;
     }
 
     public boolean equals(Object obj){
@@ -33,10 +33,10 @@ public class End implements ValueObject {
 
         End newObj = (End) obj;
 
-        return lSquare == newObj.lSquare && wSquare == newObj.wSquare;
+        return endLSquare == newObj.endLSquare && endWSquare == newObj.endWSquare;
     }
 
     public String toString(){
-        return String.format("Ends at Length: %d and Width: %d", lSquare, wSquare);
+        return String.format("Ends at Length: %d and Width: %d", endLSquare, endWSquare);
     }
 }

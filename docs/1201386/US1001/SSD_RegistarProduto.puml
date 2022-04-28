@@ -1,0 +1,23 @@
+@startuml
+
+autonumber
+actor "Sales Clerk" as SC
+
+activate SC
+SC -> ":System" : Inicia o processo de registo de um produto
+activate ":System"
+":System" --> SC : Informa as categorias existentes no sistema e \n pede para que escolha a associada ao produto
+deactivate ":System"
+SC -> ":System" : Seleciona a Categoria desejada
+activate ":System"
+
+
+
+
+":System" --> SC : Informa o sucesso da operação
+deactivate ":System"
+deactivate SC
+
+
+
+@enduml

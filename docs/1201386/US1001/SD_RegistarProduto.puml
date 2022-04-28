@@ -1,0 +1,43 @@
+@startuml
+
+autonumber
+actor "Sales Clerk" as SC
+participant RegisterProductUI as UI <<presentation>>
+participant RegisterProductController as Controller <<application>>
+participant PersistenceContext as Persistence <<persistence>>
+participant RepositoryFactory as Factory <<factory>>
+database  CategoryRepository as CategoryRepository <<repository>>
+
+activate SC
+SC -> UI : Inicia o processo de registo de um produto
+activate UI
+UI -> Controller: create
+UI -> Controller: getCategories()
+activate Controller
+Controller -> Persistence: repositories()
+activate Persistence
+Persistence -> Factory:create
+activate Factory
+Factory -> CategoryRepository: create
+activate CategoryRepository
+deactivate CategoryRepository
+deactivate Factory
+deactivate Persistence
+Controller -> CategoryRepository: findAll
+activate CategoryRepository
+deactivate CategoryRepository
+Controller --> UI:categories
+deactivate Controller
+UI --> SC : Informa as categorias existentes no sistema e \n pede para que escolha a associada ao produto
+deactivate UI
+SC -> UI : Seleciona a Categoria desejada
+activate UI
+
+
+
+
+UI --> SC : Informa o sucesso da operação
+deactivate UI
+deactivate SC
+
+@enduml
