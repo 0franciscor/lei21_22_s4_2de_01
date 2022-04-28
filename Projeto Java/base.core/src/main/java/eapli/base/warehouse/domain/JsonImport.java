@@ -52,9 +52,9 @@ public class JsonImport {
                 end = new End(jsonArray.getJSONObject(i).getJSONObject("end").getInt("lsquare"), jsonArray.getJSONObject(i).getJSONObject("end").getInt("wsquare"));
                 int shelves = jsonArray.getJSONObject(i).getInt("shelves");
 
-                lineList.add(new Line(id, begin, end, shelves));
+                lineList.add(new LineBuilder(id, begin, end, shelves).build());
             }
-            aisleList.add(new Aisle(id, accessibility, depth, begin, end, lineList));
+            aisleList.add(new AisleBuilder(id, accessibility, depth, begin, end, lineList).build());
         }
         return aisleList;
     }
@@ -70,7 +70,7 @@ public class JsonImport {
             Depth depth = new Depth(object.getJSONObject("depth").getInt("lsquare"), object.getJSONObject("depth").getInt("wsquare"));
             Accessibility accessibility = new Accessibility(object.getString("Id"));
 
-            dockList.add(new AGVDock(id, depth, accessibility, begin, end));
+            dockList.add(new AGVDockBuilder(id, depth, accessibility, begin, end).build());
 
         }
         return dockList;

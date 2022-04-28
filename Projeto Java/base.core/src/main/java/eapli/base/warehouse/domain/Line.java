@@ -12,7 +12,7 @@ public class Line implements AggregateRoot<Long> {
     private Long Id;
 
     @ElementCollection
-    private List<Shelf> shelfSet;
+    private List<Shelf> shelfList;
 
     @Embedded
     private Begin begin;
@@ -27,8 +27,8 @@ public class Line implements AggregateRoot<Long> {
 
     public Line(){}
 
-    public Line(final List<Shelf> shelfSet){
-        this.shelfSet = shelfSet;
+    public Line(final List<Shelf> shelfList){
+        this.shelfList = shelfList;
     }
 
     public Line(final Long Id, final Begin begin, final End end, final int numShelves){
@@ -45,7 +45,7 @@ public class Line implements AggregateRoot<Long> {
 
         Line newLine = ((Line) other);
 
-        return Id == newLine.Id && shelfSet == newLine.shelfSet && begin == newLine.begin && end == newLine.end && numShelves == newLine.numShelves;
+        return Id == newLine.Id && shelfList == newLine.shelfList && begin == newLine.begin && end == newLine.end && numShelves == newLine.numShelves;
     }
 
     @Override
