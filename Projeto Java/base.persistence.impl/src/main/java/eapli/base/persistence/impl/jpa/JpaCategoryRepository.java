@@ -6,7 +6,6 @@ import eapli.base.categorymanagement.domain.Description;
 import eapli.base.categorymanagement.domain.SuperCategory;
 import eapli.base.categorymanagement.repositories.CategoryRepository;
 
-import java.util.Optional;
 
 public class JpaCategoryRepository extends BasepaRepositoryBase<Category, Long, Long> implements CategoryRepository {
 
@@ -27,25 +26,5 @@ public class JpaCategoryRepository extends BasepaRepositoryBase<Category, Long, 
     @Override
     public Iterable<Category> findBySuperCategory(SuperCategory superCategory) {
         return null;
-    }
-
-    @Override
-    public <S extends Category> S save(S entity) {
-        return null;
-    }
-
-    @Override
-    public Optional<Category> ofIdentity(Long id) {
-        return Optional.empty();
-    }
-
-    @Override
-    public void delete(Category entity) {
-
-    }
-
-    @Override
-    public void deleteOfIdentity(Long entityId) {
-
     }
 }

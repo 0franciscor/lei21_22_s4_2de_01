@@ -1,6 +1,5 @@
 package eapli.base.categorymanagement.domain;
 
-import eapli.base.clientmanagement.domain.Email;
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.util.HashCoder;
 import eapli.framework.validations.Preconditions;
@@ -9,6 +8,11 @@ import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * Value Object that will represent the super category of a category.
+ *
+ * Created by Manuela Leite on 27/04/2022.
+ */
 @Embeddable
 public class SuperCategory implements ValueObject, Serializable, Comparable<SuperCategory> {
     private static final long serialVersionUID = 1L;
