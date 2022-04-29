@@ -20,6 +20,7 @@
  */
 package eapli.base.infrastructure.persistence;
 
+import eapli.base.AGVManagement.Repositories.AGVRepository;
 import eapli.base.categorymanagement.repositories.CategoryRepository;
 import eapli.base.clientmanagement.repositories.ClientRepository;
 import eapli.base.clientusermanagement.repositories.ClientUserRepository;
@@ -95,4 +96,10 @@ public interface RepositoryFactory {
      */
     SignupRequestRepository signupRequests();
 
+    /**
+     * repository will be created in auto transaction mode
+     *
+     * @return
+     */
+    AGVRepository agv();
 }
