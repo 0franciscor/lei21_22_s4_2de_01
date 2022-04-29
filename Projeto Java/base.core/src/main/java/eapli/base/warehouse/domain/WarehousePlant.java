@@ -12,8 +12,7 @@ import java.util.List;
 public class WarehousePlant implements AggregateRoot<Long> {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long Id = 1L; // Required to Avoid Code Bursting Errors
 
     private String description;
 

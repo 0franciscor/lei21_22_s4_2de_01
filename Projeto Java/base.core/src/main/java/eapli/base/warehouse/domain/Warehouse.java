@@ -8,10 +8,9 @@ import javax.persistence.*;
 public class Warehouse implements AggregateRoot<Long> {
 
     @Id
-    //@GeneratedValue(strategy = GenerationType.AUTO)
     private Long Id;
 
-    @OneToOne
+    @OneToOne(cascade=CascadeType.PERSIST)
     private WarehousePlant warehousePlant;
 
     @Embedded

@@ -13,8 +13,7 @@ public class JsonImport {
 
     public boolean importJson(final String fileName){
 
-        Warehouse warehouse = new Warehouse();
-        warehouse.setId((long) 1);
+        Warehouse warehouse;
 
         try {
             File file = new File(fileName);
@@ -27,28 +26,32 @@ public class JsonImport {
             String content = Files.readString(filePath);
             JSONObject jsonObject = new JSONObject(content);
 
+            warehouse = new Warehouse();
+            warehouse.setId((long) 1);
+
             String description = jsonObject.getString("Warehouse");
             int length = jsonObject.getInt("Length");
             int width = jsonObject.getInt("Width");
             int square = jsonObject.getInt("Square");
             String unit = jsonObject.getString("Unit");
 
+            WarehousePlant warehousePlant = new WarehousePlantBuilder(description, length, width, square, unit).buildWarehouse();
+            dataBaseImport(warehousePlant);
+
+            warehouse.setWarehousePlant(warehousePlant); warehouse.setDashboard(new Dashboard());
+            dataBaseImport(warehouse);
+
             importAisles(jsonObject.getJSONArray("Aisles"), warehouse);
             importDocks(jsonObject.getJSONArray("AGVDocks"), warehouse);
 
-            WarehousePlant warehousePlant = new WarehousePlantBuilder(description, length, width, square, unit).buildWarehouse();
-
-            warehouse.setWarehousePlant(warehousePlant); warehouse.setDashboard(new Dashboard());
-
-
         } catch (Exception e){
+            //e.printStackTrace();
             System.out.println("There was an error when Importing a .json file data.");
             return false;
         }
 
         return true;
     }
-
 
     private void importAisles(JSONArray array, Warehouse warehouse){
 
@@ -93,11 +96,15 @@ public class JsonImport {
     }
 
     private void dataBaseImport(Object object){
-        if(object.getClass().equals(Aisle.class)){
+        if(object.getClass().equals(Aisle.class)) {
             PersistenceContext.repositories().aisle().save((Aisle) object);
-        } else if(object.getClass().equals(Line.class)){
+        } else if(object.getClass().equals(Line.class)) {
             PersistenceContext.repositories().line().save((Line) object);
-        } else{
+        } else if(object.getClass().equals(WarehousePlant.class)) {
+            PersistenceContext.repositories().plant().save((WarehousePlant) object);
+        } else if(object.getClass().equals(Warehouse.class)) {
+            PersistenceContext.repositories().warehouse().save((Warehouse) object);
+        } else if(object.getClass().equals(AGVDock.class)){
             PersistenceContext.repositories().dock().save((AGVDock) object);
         }
     }
