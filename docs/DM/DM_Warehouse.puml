@@ -14,7 +14,7 @@ package "<<aggregate>> Warehouse" {
     entity AGVDock
     entity Shelf
     class Dashboard
-    class Bin
+    entity Bin
     class Begin
     class End
     class Depth
@@ -65,8 +65,8 @@ entity Shelf <<entity>>{
     -isEmpty
 }
 
-class Bin <<(V,#FF8B40) value object>>{
-    -size
+entity Bin <<entity>>{
+    -id
 }
 
 entity Aisle <<entity>>{
@@ -130,8 +130,7 @@ Line --> "1..*" Begin : located in
 
 Line --> "1..*" End : located in
 
-Line --> "1" Bin : define
-Shelf --> "1" Bin : define
+Shelf --> "1..*" Bin : define
 
 AGVDock ---> "1" Begin : located in
 AGVDock ---> "1" End : located in
