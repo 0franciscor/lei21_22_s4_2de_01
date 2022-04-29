@@ -10,17 +10,17 @@ import java.io.Serializable;
 @Embeddable
 public class TechnicalDescription implements ValueObject, Serializable {
 
-    private final String description;
+    private final String technicalDescription;
 
 
     public TechnicalDescription(final String description) {
         Preconditions.nonEmpty(description);
-        this.description = description;
+        this.technicalDescription = description;
 
     }
 
     protected TechnicalDescription() {
-        this.description = "";
+        this.technicalDescription = "";
     }
 
     public static TechnicalDescription valueOf(final String description) {
@@ -35,16 +35,16 @@ public class TechnicalDescription implements ValueObject, Serializable {
             return false;
         } else {
             TechnicalDescription shortDescription = (TechnicalDescription)o;
-            return this.description.equals(shortDescription.description);
+            return this.technicalDescription.equals(shortDescription.technicalDescription);
         }
     }
 
     public int hashCode() {
-        HashCoder coder = (new HashCoder()).with(this.description);
+        HashCoder coder = (new HashCoder()).with(this.technicalDescription);
         return coder.code();
     }
 
     public String toString() {
-        return this.description;
+        return this.technicalDescription;
     }
 }

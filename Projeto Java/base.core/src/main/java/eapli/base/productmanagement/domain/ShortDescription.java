@@ -10,17 +10,17 @@ import java.io.Serializable;
 @Embeddable
 public class ShortDescription implements ValueObject, Serializable {
 
-    private final String description;
+    private final String shortDescription;
 
 
     public ShortDescription(final String description) {
         Preconditions.nonEmpty(description);
-        this.description = description;
+        this.shortDescription = description;
 
     }
 
     protected ShortDescription() {
-        this.description = "";
+        this.shortDescription = "";
     }
 
     public static ShortDescription valueOf(final String description) {
@@ -35,16 +35,16 @@ public class ShortDescription implements ValueObject, Serializable {
             return false;
         } else {
             ShortDescription shortDescription = (ShortDescription)o;
-            return this.description.equals(shortDescription.description);
+            return this.shortDescription.equals(shortDescription.shortDescription);
         }
     }
 
     public int hashCode() {
-        HashCoder coder = (new HashCoder()).with(this.description);
+        HashCoder coder = (new HashCoder()).with(this.shortDescription);
         return coder.code();
     }
 
     public String toString() {
-        return this.description;
+        return this.shortDescription;
     }
 }

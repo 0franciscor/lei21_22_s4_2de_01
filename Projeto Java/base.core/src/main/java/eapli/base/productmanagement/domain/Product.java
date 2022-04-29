@@ -1,5 +1,7 @@
 package eapli.base.productmanagement.domain;
 
+import eapli.base.categorymanagement.domain.Category;
+import eapli.base.clientmanagement.domain.Client;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.general.domain.model.Money;
@@ -8,6 +10,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
 
+@Entity
 public class Product implements AggregateRoot<Long>, Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -22,25 +25,31 @@ public class Product implements AggregateRoot<Long>, Serializable {
     @Column(unique = true,nullable = false)
     private UniqueInternalCode uniqueInternalCode;
 
-    private ShortDescription shortDescription;
+    @ManyToOne
+    private Category category;
 
-    private TechnicalDescription technicalDescription;
+    //private ShortDescription shortDescription;
 
-    private ExtendedDescription extendedDescription;
+    //private TechnicalDescription technicalDescription;
 
-    private Weight weight;
+    //private ExtendedDescription extendedDescription;
 
-    private Reference reference;
+    private Double weight;
 
-    @Column(unique = true,nullable = false)
-    private Barcode barcode;
+    private Double volume;
 
-    private BrandName brandName;
+    //private Reference reference;
 
-    @ElementCollection
-    private Set<Photo> photos;
+    //@Column(unique = true,nullable = false)
+    //private Barcode barcode;
 
-    private ProductionCode productionCode;
+    //private BrandName brandName;
+
+    //@ElementCollection
+    //private Set<Photo> photos;
+
+    //private ProductionCode productionCode;
+
 
     @Embedded
     @AttributeOverrides({
@@ -56,24 +65,27 @@ public class Product implements AggregateRoot<Long>, Serializable {
     })
     private Money priceWithTaxes;
 
-    public Product(final UniqueInternalCode uniqueInternalCode, final Barcode barcode,final BrandName brandName, final ExtendedDescription extendedDescription, final Reference reference, final ShortDescription shortDescription, final TechnicalDescription technicalDescription,final Weight weight){
+
+
+    public Product(final Category category,final UniqueInternalCode uniqueInternalCode, final Money priceWithoutTaxes, final Money priceWithTaxes, final Double weight, final  Double volume){
+        this.category=category;
         this.uniqueInternalCode=uniqueInternalCode;
-        this.barcode = barcode;
-        this.brandName = brandName;
-        this.extendedDescription = extendedDescription;
-        this.reference=reference;
-        this.shortDescription=shortDescription;
-        this.technicalDescription=technicalDescription;
+        this.priceWithoutTaxes=priceWithoutTaxes;
+        this.priceWithTaxes=priceWithTaxes;
         this.weight=weight;
+        this.volume=volume;
     }
 
     protected Product() {
         //for ORM only
     }
 
+    /*
     public void addProductionCode(final ProductionCode productionCode) {
         this.productionCode = productionCode;
     }
+
+     */
 
     @Override
     public boolean sameAs(Object other) {
