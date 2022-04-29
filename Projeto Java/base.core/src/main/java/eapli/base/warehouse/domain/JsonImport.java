@@ -27,7 +27,6 @@ public class JsonImport {
             JSONObject jsonObject = new JSONObject(content);
 
             warehouse = new Warehouse();
-            warehouse.setId((long) 1);
 
             String description = jsonObject.getString("Warehouse");
             int length = jsonObject.getInt("Length");
@@ -38,7 +37,7 @@ public class JsonImport {
             WarehousePlant warehousePlant = new WarehousePlantBuilder(description, length, width, square, unit).buildWarehouse();
             dataBaseImport(warehousePlant);
 
-            warehouse.setWarehousePlant(warehousePlant); warehouse.setDashboard(new Dashboard());
+            warehouse = new WarehouseBuilder(1L, warehousePlant, new Dashboard()).build();
             dataBaseImport(warehouse);
 
             importAisles(jsonObject.getJSONArray("Aisles"), warehouse);

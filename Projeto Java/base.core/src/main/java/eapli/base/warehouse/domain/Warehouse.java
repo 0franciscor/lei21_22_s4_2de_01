@@ -28,18 +28,6 @@ public class Warehouse implements AggregateRoot<Long> {
         this.dashboard = dashboard;
     }
 
-    public void setId(Long Id){
-        this.Id = Id;
-    }
-
-    public void setWarehousePlant(WarehousePlant warehousePlant){
-        this.warehousePlant = warehousePlant;
-    }
-
-    public void setDashboard(Dashboard dashboard){
-        this.dashboard = dashboard;
-    }
-
     @Override
     public boolean sameAs(Object other) {
         if(other == null) return false;
