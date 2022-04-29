@@ -25,7 +25,9 @@ package eapli.base.app.backoffice.console.presentation;
 
 import eapli.base.app.backoffice.console.categoriamanagement.CreateCategoriaUI;
 import eapli.base.app.backoffice.console.clientmanagement.RegisterClientUI;
+import eapli.base.app.backoffice.console.ordermanagement.RegisterClientOrderUI;
 import eapli.base.app.backoffice.console.presentation.authz.ImportJsonUI;
+import eapli.base.app.backoffice.console.productmanagement.RegisterProductUI;
 import eapli.base.app.common.console.presentation.authz.MyUserMenu;
 import eapli.base.Application;
 import eapli.base.app.backoffice.console.presentation.authz.AddUserUI;
@@ -45,6 +47,7 @@ import eapli.framework.presentation.console.menu.HorizontalMenuRenderer;
 import eapli.framework.presentation.console.menu.MenuItemRenderer;
 import eapli.framework.presentation.console.menu.MenuRenderer;
 import eapli.framework.presentation.console.menu.VerticalMenuRenderer;
+import eapli.base.app.backoffice.console.warehouseEmployeeManagement.ConfigureAGVUI;
 
 /**
  * TODO split this class in more specialized classes for each menu
@@ -70,15 +73,15 @@ public class MainMenu extends AbstractUI {
     // SALES CLERK
     private static final int REGISTER_CLIENT = 1;
     private static final int CREATE_CATEGORY = 2;
+    private static final int REGISTER_CLIENT_ORDER = 3;
+    private static final int REGISTER_PRODUCT = 4;
 
     // MAIN MENU
     private static final int MY_USER_OPTION = 1;
     private static final int USERS_OPTION = 2;
+    private static final int CONFIGURE_OPTION = 3;
     private static final int SETTINGS_OPTION = 4;
-    private static final int DISH_OPTION = 5;
-    private static final int TRACEABILITY_OPTION = 6;
-    private static final int MEALS_OPTION = 7;
-    private static final int REPORTING_DISHES_OPTION = 8;
+
 
     private static final String SEPARATOR_LABEL = "--------------";
 
@@ -139,6 +142,10 @@ public class MainMenu extends AbstractUI {
         if (authz.isAuthenticatedUserAuthorizedTo(BaseRoles.POWER_USER, BaseRoles.WAREHOUSE_EMPLOYEE)) {
             final Menu usersMenu = buildWarehouseEmployeeMenu();
             mainMenu.addSubMenu(USERS_OPTION, usersMenu);
+
+            final Menu configMenu = configAGVAdminSettingsMenu();
+            mainMenu.addSubMenu(CONFIGURE_OPTION, configMenu);
+
             final Menu settingsMenu = buildAdminSettingsMenu();
             mainMenu.addSubMenu(SETTINGS_OPTION, settingsMenu);
         }
@@ -162,6 +169,15 @@ public class MainMenu extends AbstractUI {
         return menu;
     }
 
+    private Menu configAGVAdminSettingsMenu() {
+        final Menu menu = new Menu("AGV Configuration >");
+
+        menu.addItem(SET_KITCHEN_ALERT_LIMIT_OPTION, "Configure AGV", new ConfigureAGVUI()::show);
+        menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
+
+        return menu;
+    }
+
     private Menu buildUsersMenu() {
         final Menu menu = new Menu("Users >");
 
@@ -180,6 +196,8 @@ public class MainMenu extends AbstractUI {
 
         menu.addItem(REGISTER_CLIENT, "Register a Client", new RegisterClientUI()::show);
         menu.addItem(CREATE_CATEGORY, "Create a Category", new CreateCategoriaUI()::show);
+        menu.addItem(REGISTER_CLIENT_ORDER, "Register a Client Order", new RegisterClientOrderUI()::show);
+        menu.addItem(REGISTER_PRODUCT, "Register a Product", new RegisterProductUI()::show);
 
         return menu;
     }

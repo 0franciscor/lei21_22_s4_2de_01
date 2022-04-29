@@ -9,6 +9,13 @@ import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
+
+/**
+ * Value Object that will represent the description of a category.
+ *
+ * Created by Manuela Leite on 27/04/2022.
+ */
+
 @Embeddable
 public class Description implements ValueObject, Serializable, Comparable<Description> {
 

@@ -4,22 +4,18 @@ public class ShelfBuilder {
 
     private Shelf shelf;
 
+    private Aisle aisle;
     private boolean isEmpty;
 
-    public ShelfBuilder(final boolean isEmpty){
-        this.shelf = new Shelf();
-        withEmpty(isEmpty);
-    }
-
-    private ShelfBuilder withEmpty(boolean isEmpty){
+    public ShelfBuilder(final Aisle aisle, final boolean isEmpty) {
+        this.aisle = aisle;
         this.isEmpty = isEmpty;
-        return this;
     }
 
     private Shelf buildShelf(){
         if(shelf != null)
             return shelf;
-        this.shelf = new Shelf(isEmpty);
+        this.shelf = new Shelf(aisle, isEmpty);
 
         return shelf;
     }

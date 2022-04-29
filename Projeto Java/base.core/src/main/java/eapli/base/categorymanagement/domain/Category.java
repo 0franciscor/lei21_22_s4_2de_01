@@ -6,6 +6,12 @@ import eapli.framework.domain.model.DomainEntities;
 import javax.persistence.*;
 import java.io.Serializable;
 
+/**
+ * Entity Root that will represent a Category.
+ *
+ * Created by Manuela Leite on 27/04/2022.
+ */
+
 @Entity
 public class Category implements AggregateRoot<Long>, Serializable {
 

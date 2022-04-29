@@ -5,6 +5,8 @@ public class AGVDockBuilder {
     private AGVDock agvDock;
     private String Id;
 
+    private Warehouse warehouse;
+
     private Depth depth;
 
     private Accessibility accessibility;
@@ -13,8 +15,9 @@ public class AGVDockBuilder {
 
     private End end;
 
-    public AGVDockBuilder(String Id, Depth depth, Accessibility accessibility, Begin begin, End end){
+    public AGVDockBuilder(String Id, Warehouse warehouse, Depth depth, Accessibility accessibility, Begin begin, End end){
         this.Id = Id;
+        this.warehouse = warehouse;
         this.depth = depth;
         this.accessibility = accessibility;
         this.begin = begin;
@@ -25,7 +28,7 @@ public class AGVDockBuilder {
         if(agvDock != null)
             return agvDock;
         else if(depth != null && accessibility != null && begin != null && end != null) {
-            this.agvDock = new AGVDock(Id, depth, accessibility, begin, end);
+            this.agvDock = new AGVDock(Id, warehouse, depth, accessibility, begin, end);
             return agvDock;
         }
         return null;

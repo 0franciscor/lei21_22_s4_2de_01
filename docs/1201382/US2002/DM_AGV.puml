@@ -1,0 +1,90 @@
+@startuml
+
+hide methods
+left to right direction
+skinparam classAttributeIconSize 0
+skinparam classBackgroundColor beige
+skinparam ArrowColor #222222
+
+package "<<aggregate>> Warehouse" {
+    entity Warehouse
+    entity WarehousePlant
+    entity AGVDock
+}
+
+package "<<aggregate>> AGV" {
+    entity AGV
+    class BriefDescription
+    class Model
+    class Task
+    class Route
+    class MaxWeightCapacity
+    class AGVPosition
+    class AGVId
+    class Range
+}
+
+package "<<aggregate>> Product" {
+    entity Product
+}
+
+entity Product <<entity>> <<root>> {}
+
+entity WarehousePlant <<entity>> {
+    -description
+    -length
+    -width
+    -square
+    -unit
+}
+
+entity AGV <<entity>> <<root>> {
+    -state
+}
+
+entity AGVDock <<entity>> {
+    -id
+}
+
+entity Warehouse <<entity>> <<root>> {
+}
+
+
+entity AGV <<entity>> <<root>> {}
+
+class BriefDescription <<(V,#FF8B40) value object>> {}
+
+class Model <<(V,#FF8B40) value object>> {}
+
+class AGVPosition <<(V,#FF8B40) value object>> {}
+
+class Task<<(V,#FF8B40) value object>> {
+    -taskState
+}
+
+class Route <<(V,#FF8B40) value object>> {}
+
+class AGVId <<(V,#FF8B40) value object>> {}
+
+class Range <<(V,#FF8B40) value object>> {}
+
+class MaxWeightCapacity <<(V,#FF8B40) value object>> {
+-unity
+}
+
+AGV --> "1" AGVId : has
+AGV --> "1" Range : respects
+AGV --> "1..*" Task : collects
+AGV --> "1" Route : follows
+AGV --> "1" Model : has
+AGV --> "1" BriefDescription : characterized by
+AGV --> "1" MaxWeightCapacity : respects
+AGV --> "1" AGVPosition : located in
+
+Product--> "1" Warehouse : located in
+
+Warehouse --> "1..*" AGV : operated by
+Warehouse --> "1..*" WarehousePlant : provides
+WarehousePlant --> "1..*" AGVDock : provides information
+
+@enduml

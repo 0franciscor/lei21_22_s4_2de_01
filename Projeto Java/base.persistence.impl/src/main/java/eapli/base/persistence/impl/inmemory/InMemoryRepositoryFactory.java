@@ -20,12 +20,15 @@
  */
 package eapli.base.persistence.impl.inmemory;
 
+import eapli.base.AGVManagement.Repositories.AGVRepository;
 import eapli.base.categorymanagement.repositories.CategoryRepository;
 import eapli.base.clientmanagement.repositories.ClientRepository;
 import eapli.base.clientusermanagement.repositories.ClientUserRepository;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
 import eapli.base.infrastructure.bootstrapers.BaseBootstrapper;
 import eapli.base.infrastructure.persistence.RepositoryFactory;
+import eapli.base.ordermanagement.repository.OrderRepository;
+import eapli.base.warehouse.repositories.*;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 import eapli.framework.infrastructure.authz.repositories.impl.InMemoryUserRepository;
@@ -68,13 +71,44 @@ public class InMemoryRepositoryFactory implements RepositoryFactory{
     }
 
     @Override
+    public OrderRepository orders() {
+        return new InMemoryOrderRepository();
+    }
+
+    @Override
     public CategoryRepository category() {
         return new InMemoryCategoryRepository();
     }
 
     @Override
+    public AGVDockRepository dock(){return new InMemoryAGVDockRepository();}
+
+    @Override
+    public AisleRepository aisle(){return new InMemoryAisleRepository();}
+
+    @Override
+    public LineRepository line(){return new InMemoryLineRepository();}
+
+    @Override
+    public ShelfRepository shelf(){return new InMemoryShelfRepository();}
+
+    @Override
+    public BinRepository bin(){return new InMemoryBinRepository();}
+
+    @Override
+    public WarehousePlantRepository plant(){return new InMemoryPlantRepository();}
+
+    @Override
+    public WarehouseRepository warehouse(){return new InMemoryWarehouseRepository();}
+
+    @Override
     public SignupRequestRepository signupRequests() {
         return signupRequests(null);
+    }
+
+    @Override
+    public AGVRepository agv() {
+        return new InMemoryAGVRepository();
     }
 
     @Override

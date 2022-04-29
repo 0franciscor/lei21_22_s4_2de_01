@@ -19,7 +19,7 @@ activate UI
 
     UI -> Controller: addCategoria(CódigoAlfanumérico, Descrição, SuperCategoria)
     activate Controller
-        note right of FactoryCategoria:CategoriaFactory é usado para criar uma entidade do tipo User num estado válido
+        note right of FactoryCategoria:CategoriaFactory é usado para criar uma entidade do tipo Category num estado válido
         Controller -> FactoryCategoria: create
         activate FactoryCategoria
             Controller -> FactoryCategoria:setCodigoAlfanumerico(codigoAlfanumerico)

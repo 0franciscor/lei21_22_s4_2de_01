@@ -14,7 +14,7 @@ package "<<aggregate>> Warehouse" {
     entity AGVDock
     entity Shelf
     class Dashboard
-    class Bin
+    entity Bin
     class Begin
     class End
     class Depth
@@ -28,7 +28,9 @@ package "<<aggregate>> AGV" {
     class Task
     class Route
     class MaxWeightCapacity
-    class Position
+    class AGVPosition
+    class AGVId
+    class Range
 }
 
 package "<<aggregate>> Product" {
@@ -46,9 +48,7 @@ entity WarehousePlant <<entity>> {
 }
 
 entity AGV <<entity>> <<root>> {
-    -id
     -state
-    -range
 }
 
 entity AGVDock <<entity>> {
@@ -65,13 +65,17 @@ entity Shelf <<entity>>{
     -isEmpty
 }
 
-class Bin <<(V,#FF8B40) value object>>{
-    -size
+entity Bin <<entity>>{
+    -id
 }
 
 entity Aisle <<entity>>{
     -id
 }
+
+class AGVId <<(V,#FF8B40) value object>> {}
+
+class Range <<(V,#FF8B40) value object>> {}
 
 class Begin <<(V,#FF8B40) value object>>{
     -lsquare
@@ -126,8 +130,7 @@ Line --> "1..*" Begin : located in
 
 Line --> "1..*" End : located in
 
-Line --> "1" Bin : define
-Shelf --> "1" Bin : define
+Shelf --> "1..*" Bin : define
 
 AGVDock ---> "1" Begin : located in
 AGVDock ---> "1" End : located in
@@ -141,7 +144,7 @@ class BriefDescription <<(V,#FF8B40) value object>> {}
 
 class Model <<(V,#FF8B40) value object>> {}
 
-class Position <<(V,#FF8B40) value object>> {}
+class AGVPosition <<(V,#FF8B40) value object>> {}
 
 class Task<<(V,#FF8B40) value object>> {
     -taskState
@@ -153,11 +156,13 @@ class MaxWeightCapacity <<(V,#FF8B40) value object>> {
 -unity
 }
 
+AGV --> "1" AGVId : has
 AGV --> "1..*" Task : collects
+AGV --> "1" Range : respects
 AGV --> "1" Route : follows
 AGV --> "1" Model : has
 AGV --> "1" BriefDescription : characterized by
 AGV --> "1" MaxWeightCapacity : respects
-AGV --> "1" Position : located in
+AGV --> "1" AGVPosition : located in
 
 @enduml

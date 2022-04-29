@@ -9,6 +9,8 @@ public class AGVDock implements AggregateRoot<String> {
 
     @Id
     private String Id;
+    @ManyToOne(optional = false, cascade = CascadeType.MERGE)
+    private Warehouse warehouse;
     @Embedded
     private Depth depth;
 
@@ -23,8 +25,9 @@ public class AGVDock implements AggregateRoot<String> {
 
     public AGVDock(){}
 
-    public AGVDock(final String Id, final Depth depth, final Accessibility accessibility, final Begin begin, final End end){
+    public AGVDock(final String Id, final Warehouse warehouse, final Depth depth, final Accessibility accessibility, final Begin begin, final End end){
         this.Id = Id;
+        this.warehouse = warehouse;
         this.depth = depth;
         this.accessibility = accessibility;
         this.begin = begin;
@@ -38,7 +41,7 @@ public class AGVDock implements AggregateRoot<String> {
 
         AGVDock newObj = ((AGVDock) other);
 
-        return depth == newObj.depth && accessibility == newObj.accessibility && begin == newObj.begin && end == newObj.end;
+        return warehouse == newObj.warehouse && depth == newObj.depth && accessibility == newObj.accessibility && begin == newObj.begin && end == newObj.end;
     }
 
     @Override

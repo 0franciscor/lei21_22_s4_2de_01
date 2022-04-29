@@ -10,7 +10,7 @@ public class Warehouse implements AggregateRoot<Long> {
     @Id
     private Long Id;
 
-    @OneToOne
+    @OneToOne(cascade=CascadeType.PERSIST)
     private WarehousePlant warehousePlant;
 
     @Embedded

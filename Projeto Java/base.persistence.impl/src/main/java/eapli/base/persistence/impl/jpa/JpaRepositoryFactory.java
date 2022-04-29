@@ -20,11 +20,14 @@
  */
 package eapli.base.persistence.impl.jpa;
 
+import eapli.base.AGVManagement.Repositories.AGVRepository;
 import eapli.base.Application;
 import eapli.base.categorymanagement.repositories.CategoryRepository;
 import eapli.base.clientmanagement.repositories.ClientRepository;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
 import eapli.base.infrastructure.persistence.RepositoryFactory;
+import eapli.base.ordermanagement.repository.OrderRepository;
+import eapli.base.warehouse.repositories.*;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 import eapli.framework.infrastructure.authz.repositories.impl.JpaAutoTxUserRepository;
@@ -61,11 +64,36 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     public ClientRepository client() {
         return new JpaClientRepository();
     }
+    @Override
+    public OrderRepository orders() {
+        return new JpaOrderRepository();
+    }
 
     @Override
     public CategoryRepository category() {
         return new JpaCategoryRepository();
     }
+
+    @Override
+    public AGVDockRepository dock(){return new JpaAGVDockRepository();}
+
+    @Override
+    public AisleRepository aisle(){return new JpaAisleRepository();}
+
+    @Override
+    public LineRepository line(){return new JpaLineRepository();}
+
+    @Override
+    public ShelfRepository shelf(){return new JpaShelfRepository();}
+
+    @Override
+    public BinRepository bin(){return new JpaBinRepository();}
+
+    @Override
+    public WarehousePlantRepository plant(){return new JpaWarehousePlantRepository();}
+
+    @Override
+    public WarehouseRepository warehouse(){return new JpaWarehouseRepository();}
 
     @Override
     public SignupRequestRepository signupRequests(final TransactionalContext autoTx) {
@@ -75,6 +103,11 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     @Override
     public SignupRequestRepository signupRequests() {
         return new JpaSignupRequestRepository(Application.settings().getPersistenceUnitName());
+    }
+
+    @Override
+    public AGVRepository agv() {
+        return new JpaAGVRepository();
     }
 
     @Override
