@@ -93,6 +93,9 @@ public class InMemoryRepositoryFactory implements RepositoryFactory{
     public ShelfRepository shelf(){return new InMemoryShelfRepository();}
 
     @Override
+    public BinRepository bin(){return new InMemoryBinRepository();}
+
+    @Override
     public WarehousePlantRepository plant(){return new InMemoryPlantRepository();}
 
     @Override

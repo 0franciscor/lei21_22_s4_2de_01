@@ -17,6 +17,7 @@
     <class>eapli.base.clientmanagement.domain.Client</class>
     <class>eapli.base.ordermanagement.domain.OrderItem</class>
     <class>eapli.base.ordermanagement.domain.ProductOrder</class>
+    <class>eapli.base.warehouse.domain.Bin</class>
     <class>eapli.base.warehouse.domain.Shelf</class>
     <class>eapli.base.warehouse.domain.Line</class>
     <class>eapli.base.warehouse.domain.Aisle</class>

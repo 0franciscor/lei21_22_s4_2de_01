@@ -22,9 +22,6 @@ public class Line implements AggregateRoot<Long> {
 
     private int numShelves;
 
-    //@Embedded
-    //private Bin bin;
-
     public Line(){}
     public Line(final Long Id, final Aisle aisle, final Begin begin, final End end, final int numShelves){
         this.Id = Id;

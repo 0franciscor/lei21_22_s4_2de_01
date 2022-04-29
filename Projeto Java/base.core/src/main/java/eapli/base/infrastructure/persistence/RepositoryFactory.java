@@ -89,16 +89,53 @@ public interface RepositoryFactory {
 
     CategoryRepository category();
 
+    /**
+     * repository will be created in auto transaction mode
+     *
+     * @return
+     */
     AGVDockRepository dock();
 
+    /**
+     * repository will be created in auto transaction mode
+     *
+     * @return
+     */
     AisleRepository aisle();
 
+    /**
+     * repository will be created in auto transaction mode
+     *
+     * @return
+     */
     LineRepository line();
 
+    /**
+     * repository will be created in auto transaction mode
+     *
+     * @return
+     */
     ShelfRepository shelf();
 
+    /**
+     * repository will be created in auto transaction mode
+     *
+     * @return
+     */
+    BinRepository bin();
+
+    /**
+     * repository will be created in auto transaction mode
+     *
+     * @return
+     */
     WarehousePlantRepository plant();
 
+    /**
+     * repository will be created in auto transaction mode
+     *
+     * @return
+     */
     WarehouseRepository warehouse();
 
     /**

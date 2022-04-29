@@ -16,9 +16,6 @@ public class Shelf implements AggregateRoot<Long> {
 
     private boolean isEmpty;
 
-    //@Embedded
-    //private Bin bin;
-
     public Shelf(){}
 
     public Shelf(final Aisle aisle, final boolean isEmpty){

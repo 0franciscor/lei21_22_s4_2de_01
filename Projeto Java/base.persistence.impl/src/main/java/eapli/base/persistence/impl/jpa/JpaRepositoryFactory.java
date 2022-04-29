@@ -87,6 +87,9 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     public ShelfRepository shelf(){return new JpaShelfRepository();}
 
     @Override
+    public BinRepository bin(){return new JpaBinRepository();}
+
+    @Override
     public WarehousePlantRepository plant(){return new JpaWarehousePlantRepository();}
 
     @Override
