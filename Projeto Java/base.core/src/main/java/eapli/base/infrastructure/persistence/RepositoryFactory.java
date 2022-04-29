@@ -20,12 +20,13 @@
  */
 package eapli.base.infrastructure.persistence;
 
+import eapli.base.AGVManagement.Repositories.AGVRepository;
 import eapli.base.categorymanagement.repositories.CategoryRepository;
 import eapli.base.clientmanagement.repositories.ClientRepository;
 import eapli.base.clientusermanagement.repositories.ClientUserRepository;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
 import eapli.base.ordermanagement.repository.OrderRepository;
-import eapli.base.warehouse.repositories.WarehouseRepository;
+import eapli.base.warehouse.repositories.*;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 
@@ -89,6 +90,55 @@ public interface RepositoryFactory {
     CategoryRepository category();
 
     /**
+     * repository will be created in auto transaction mode
+     *
+     * @return
+     */
+    AGVDockRepository dock();
+
+    /**
+     * repository will be created in auto transaction mode
+     *
+     * @return
+     */
+    AisleRepository aisle();
+
+    /**
+     * repository will be created in auto transaction mode
+     *
+     * @return
+     */
+    LineRepository line();
+
+    /**
+     * repository will be created in auto transaction mode
+     *
+     * @return
+     */
+    ShelfRepository shelf();
+
+    /**
+     * repository will be created in auto transaction mode
+     *
+     * @return
+     */
+    BinRepository bin();
+
+    /**
+     * repository will be created in auto transaction mode
+     *
+     * @return
+     */
+    WarehousePlantRepository plant();
+
+    /**
+     * repository will be created in auto transaction mode
+     *
+     * @return
+     */
+    WarehouseRepository warehouse();
+
+    /**
      *
      * @param autoTx
      *            the transactional context to enroll
@@ -103,4 +153,10 @@ public interface RepositoryFactory {
      */
     SignupRequestRepository signupRequests();
 
+    /**
+     * repository will be created in auto transaction mode
+     *
+     * @return
+     */
+    AGVRepository agv();
 }

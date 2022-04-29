@@ -11,14 +11,15 @@ public class Shelf implements AggregateRoot<Long> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
-    private boolean isEmpty;
+    @ManyToOne(optional = false, cascade = CascadeType.MERGE)
+    private Aisle aisle;
 
-    //@Embedded
-    //private Bin bin;
+    private boolean isEmpty;
 
     public Shelf(){}
 
-    public Shelf(final boolean isEmpty){
+    public Shelf(final Aisle aisle, final boolean isEmpty){
+        this.aisle = aisle;
         this.isEmpty = isEmpty;
     }
 
@@ -29,7 +30,7 @@ public class Shelf implements AggregateRoot<Long> {
 
         Shelf otherShelf = ((Shelf) other);
 
-        return Id == otherShelf.Id && isEmpty == isEmpty;
+        return Id == otherShelf.Id && aisle == otherShelf.aisle && isEmpty == isEmpty;
     }
 
     @Override

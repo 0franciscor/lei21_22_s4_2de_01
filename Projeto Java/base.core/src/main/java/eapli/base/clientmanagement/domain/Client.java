@@ -7,7 +7,6 @@ import eapli.framework.validations.Preconditions;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Calendar;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -56,7 +55,7 @@ public class Client implements AggregateRoot<Long>, Serializable {
         Preconditions.noneNull(name, vat, email, phoneNumber);
         Preconditions.noneNull(postalAddresses, "The Client must have at least one address.");
 
-        this.name = name;
+        this.name= name;
         this.vat = vat;
         this.email = email;
         this.phoneNumber = phoneNumber;

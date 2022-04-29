@@ -47,6 +47,7 @@ import eapli.framework.presentation.console.menu.HorizontalMenuRenderer;
 import eapli.framework.presentation.console.menu.MenuItemRenderer;
 import eapli.framework.presentation.console.menu.MenuRenderer;
 import eapli.framework.presentation.console.menu.VerticalMenuRenderer;
+import eapli.base.app.backoffice.console.warehouseEmployeeManagement.ConfigureAGVUI;
 
 /**
  * TODO split this class in more specialized classes for each menu
@@ -78,6 +79,7 @@ public class MainMenu extends AbstractUI {
     // MAIN MENU
     private static final int MY_USER_OPTION = 1;
     private static final int USERS_OPTION = 2;
+    private static final int CONFIGURE_OPTION = 3;
     private static final int SETTINGS_OPTION = 4;
 
 
@@ -140,6 +142,10 @@ public class MainMenu extends AbstractUI {
         if (authz.isAuthenticatedUserAuthorizedTo(BaseRoles.POWER_USER, BaseRoles.WAREHOUSE_EMPLOYEE)) {
             final Menu usersMenu = buildWarehouseEmployeeMenu();
             mainMenu.addSubMenu(USERS_OPTION, usersMenu);
+
+            final Menu configMenu = configAGVAdminSettingsMenu();
+            mainMenu.addSubMenu(CONFIGURE_OPTION, configMenu);
+
             final Menu settingsMenu = buildAdminSettingsMenu();
             mainMenu.addSubMenu(SETTINGS_OPTION, settingsMenu);
         }
@@ -158,6 +164,15 @@ public class MainMenu extends AbstractUI {
 
         menu.addItem(SET_KITCHEN_ALERT_LIMIT_OPTION, "Set kitchen alert limit",
                 new ShowMessageAction("Not implemented yet"));
+        menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
+
+        return menu;
+    }
+
+    private Menu configAGVAdminSettingsMenu() {
+        final Menu menu = new Menu("AGV Configuration >");
+
+        menu.addItem(SET_KITCHEN_ALERT_LIMIT_OPTION, "Configure AGV", new ConfigureAGVUI()::show);
         menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
 
         return menu;

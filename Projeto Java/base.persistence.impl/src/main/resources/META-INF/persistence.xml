@@ -17,12 +17,14 @@
     <class>eapli.base.clientmanagement.domain.Client</class>
     <class>eapli.base.ordermanagement.domain.OrderItem</class>
     <class>eapli.base.ordermanagement.domain.ProductOrder</class>
+    <class>eapli.base.warehouse.domain.Bin</class>
     <class>eapli.base.warehouse.domain.Shelf</class>
     <class>eapli.base.warehouse.domain.Line</class>
     <class>eapli.base.warehouse.domain.Aisle</class>
     <class>eapli.base.warehouse.domain.AGVDock</class>
     <class>eapli.base.warehouse.domain.WarehousePlant</class>
     <class>eapli.base.warehouse.domain.Warehouse</class>
+    <class>eapli.base.AGVManagement.Domain.AGV</class>
 
 
     <properties>

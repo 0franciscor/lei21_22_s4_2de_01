@@ -12,8 +12,7 @@ import java.util.List;
 public class WarehousePlant implements AggregateRoot<Long> {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long Id = 1L; // Required to Avoid Code Bursting Errors
 
     private String description;
 
@@ -25,23 +24,14 @@ public class WarehousePlant implements AggregateRoot<Long> {
 
     private String unit;
 
-    @ElementCollection
-    private List<AGVDock> dockList;
-
-    @ElementCollection
-    private List<Aisle> aisleList;
-
     public WarehousePlant(){}
 
-    public WarehousePlant(final String description, final int length, final int width, final int square, final String unit,
-                   final List<AGVDock> dockList, final List<Aisle> aisleList){
+    public WarehousePlant(final String description, final int length, final int width, final int square, final String unit) {
         this.description = description;
         this.length = length;
         this.width = width;
         this.square = square;
         this.unit = unit;
-        this.dockList = dockList;
-        this.aisleList = aisleList;
     }
 
     @Override
@@ -52,7 +42,7 @@ public class WarehousePlant implements AggregateRoot<Long> {
         WarehousePlant newObj = ((WarehousePlant) other);
 
         return description == newObj.description && length == newObj.length && width == newObj.width && square == newObj.square
-                && unit == newObj.unit && dockList == newObj.dockList && aisleList == newObj.aisleList;
+                && unit == newObj.unit;
     }
 
     @Override

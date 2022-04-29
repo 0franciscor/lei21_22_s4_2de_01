@@ -10,6 +10,7 @@ public class WarehouseBuilder {
 
     private Dashboard dashboard;
 
+    public WarehouseBuilder(){}
     public WarehouseBuilder(final Long Id, final WarehousePlant warehousePlant, final Dashboard dashboard){
         this.Id = Id;
         this.warehousePlant = warehousePlant;

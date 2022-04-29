@@ -82,6 +82,10 @@ public class Product implements AggregateRoot<Long>, Serializable {
 
     @Override
     public Long identity() {
+<<<<<<< HEAD
         return this.productId;
+=======
+        return null;
+>>>>>>> 934bf8ce4be801cd51cff203e5e08d85288bbd0e
     }
 }

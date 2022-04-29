@@ -1,5 +1,11 @@
 package eapli.base.ordermanagement.application;
 
+<<<<<<< HEAD
+import eapli.framework.infrastructure.authz.application.AuthorizationService;
+import eapli.framework.infrastructure.authz.application.AuthzRegistry;
+
+import javax.persistence.PersistenceContext;
+=======
 import eapli.base.clientmanagement.domain.Client;
 import eapli.base.clientmanagement.repositories.ClientRepository;
 import eapli.base.infrastructure.persistence.PersistenceContext;
@@ -14,11 +20,14 @@ import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 
 import java.util.*;
+>>>>>>> 35e3cbd956197eaf592d1138f4305fb3bae8f549
 
 public class RegisterClientOrderController {
 
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
     private final ClientRepository clientRepository = PersistenceContext.repositories().client();
+<<<<<<< HEAD
+=======
     private final OrderRepository orderRepository = PersistenceContext.repositories().orders();
 
     private Client client;
@@ -45,4 +54,5 @@ public class RegisterClientOrderController {
         }
         return chosenClient.isPresent();
     }
+>>>>>>> 35e3cbd956197eaf592d1138f4305fb3bae8f549
 }
