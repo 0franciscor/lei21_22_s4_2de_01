@@ -28,7 +28,7 @@ public class ConfigureAGVUI extends AbstractUI {
         if(flag==false){
             throw new IllegalArgumentException();
         }
-        configureAGVController.configureAGV(agvId,briefDescription,model,Double.parseDouble(maxWeightCapacity),Double.parseDouble(range));
+        //configureAGVController.configureAGV(agvId,briefDescription,model,Double.parseDouble(maxWeightCapacity),Double.parseDouble(range));
         return true;
     }
 
