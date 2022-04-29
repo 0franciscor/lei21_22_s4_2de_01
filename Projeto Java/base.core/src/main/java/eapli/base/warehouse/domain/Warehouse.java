@@ -8,6 +8,7 @@ import javax.persistence.*;
 public class Warehouse implements AggregateRoot<Long> {
 
     @Id
+    //@GeneratedValue(strategy = GenerationType.AUTO)
     private Long Id;
 
     @OneToOne
@@ -25,6 +26,18 @@ public class Warehouse implements AggregateRoot<Long> {
     public Warehouse(final Long Id, final WarehousePlant warehousePlant, final Dashboard dashboard){
         this.Id = Id;
         this.warehousePlant = warehousePlant;
+        this.dashboard = dashboard;
+    }
+
+    public void setId(Long Id){
+        this.Id = Id;
+    }
+
+    public void setWarehousePlant(WarehousePlant warehousePlant){
+        this.warehousePlant = warehousePlant;
+    }
+
+    public void setDashboard(Dashboard dashboard){
         this.dashboard = dashboard;
     }
 

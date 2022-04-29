@@ -11,6 +11,9 @@ public class Aisle implements AggregateRoot<Long> {
     @Id
     private Long Id;
 
+    @ManyToOne(optional = false, cascade = CascadeType.MERGE)
+    private Warehouse warehouse;
+
     @Embedded
     private Accessibility accessibility;
 
@@ -23,19 +26,16 @@ public class Aisle implements AggregateRoot<Long> {
     @Embedded
     private End end;
 
-    @ElementCollection
-    private List<Line> lineList;
-
     public Aisle(){}
 
-    public Aisle(final Long Id, final Accessibility accessibility, final Depth depth, final Begin begin,
-                 final End end, final List<Line> lineList){
+    public Aisle(final Long Id, final Warehouse warehouse, final Accessibility accessibility, final Depth depth, final Begin begin,
+                 final End end){
         this.Id = Id;
+        this.warehouse = warehouse;
         this.accessibility = accessibility;
         this.depth = depth;
         this.begin = begin;
         this.end = end;
-        this.lineList = lineList;
     }
 
     @Override
@@ -45,8 +45,8 @@ public class Aisle implements AggregateRoot<Long> {
 
         Aisle newObj = ((Aisle) other);
 
-        return accessibility == newObj.accessibility && depth == newObj.depth && begin == newObj.begin
-                && end == newObj.end && lineList == newObj.lineList;
+        return warehouse == newObj.warehouse && accessibility == newObj.accessibility && depth == newObj.depth && begin == newObj.begin
+                && end == newObj.end;
     }
 
     @Override

@@ -1,26 +1,26 @@
 package eapli.base.warehouse.domain;
 
+import eapli.base.infrastructure.persistence.PersistenceContext;
 import org.json.*;
 
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
 
 public class JsonImport {
 
     public JsonImport(){}
 
-    public Warehouse importJson(final String fileName){
+    public boolean importJson(final String fileName){
 
-        Warehouse warehouse;
+        Warehouse warehouse = new Warehouse();
+        warehouse.setId((long) 1);
 
         try {
             File file = new File(fileName);
             if(!file.exists()){
                 System.out.println("The pointed file does not exist.");
-                return null;
+                return false;
             }
 
             Path filePath = Path.of(fileName);
@@ -33,24 +33,25 @@ public class JsonImport {
             int square = jsonObject.getInt("Square");
             String unit = jsonObject.getString("Unit");
 
-            List<Aisle> aisleList = importAisles(jsonObject.getJSONArray("Aisles"));
-            List<AGVDock> dockList = importDocks(jsonObject.getJSONArray("AGVDocks"));
+            importAisles(jsonObject.getJSONArray("Aisles"), warehouse);
+            importDocks(jsonObject.getJSONArray("AGVDocks"), warehouse);
 
-            WarehousePlant warehousePlant = new WarehousePlant(description, length, width, square, unit, dockList, aisleList);
+            WarehousePlant warehousePlant = new WarehousePlantBuilder(description, length, width, square, unit).buildWarehouse();
 
-            warehouse = new Warehouse(warehousePlant);
+            warehouse.setWarehousePlant(warehousePlant); warehouse.setDashboard(new Dashboard());
+
 
         } catch (Exception e){
             System.out.println("There was an error when Importing a .json file data.");
-            return null;
+            return false;
         }
 
-        return warehouse;
+        return true;
     }
 
 
-    private List<Aisle> importAisles(JSONArray array){
-        List<Aisle> aisleList = new ArrayList<>();
+    private void importAisles(JSONArray array, Warehouse warehouse){
+
         for(Object object : array) {
             JSONObject arrayObject = (JSONObject) object;
 
@@ -60,24 +61,24 @@ public class JsonImport {
             Depth depth = new Depth(arrayObject.getJSONObject("depth").getInt("lsquare"), arrayObject.getJSONObject("depth").getInt("wsquare"));
             Accessibility accessibility = new Accessibility(arrayObject.getString("accessibility"));
 
+            Aisle aisle = new AisleBuilder(id, warehouse, accessibility, depth, begin, end).build();
+
+            dataBaseImport(aisle);
+
             JSONArray jsonArray = arrayObject.getJSONArray("rows");
 
-            List<Line> lineList = new ArrayList<>();
             for(int i = 0; i < jsonArray.length(); i++){
                 id = arrayObject.getLong("Id");
                 begin = new Begin(jsonArray.getJSONObject(i).getJSONObject("begin").getInt("lsquare"), jsonArray.getJSONObject(i).getJSONObject("begin").getInt("wsquare"));
                 end = new End(jsonArray.getJSONObject(i).getJSONObject("end").getInt("lsquare"), jsonArray.getJSONObject(i).getJSONObject("end").getInt("wsquare"));
                 int shelves = jsonArray.getJSONObject(i).getInt("shelves");
 
-                lineList.add(new LineBuilder(id, begin, end, shelves).build());
+                dataBaseImport(new LineBuilder(id, aisle, begin, end, shelves).build());
             }
-            aisleList.add(new AisleBuilder(id, accessibility, depth, begin, end, lineList).build());
         }
-        return aisleList;
     }
 
-    private List<AGVDock> importDocks(JSONArray array){
-        List<AGVDock> dockList = new ArrayList<>();
+    private void importDocks(JSONArray array, Warehouse warehouse){
         for(int i = 0; i < array.length(); i++) {
             JSONObject object = array.getJSONObject(i);
 
@@ -87,9 +88,17 @@ public class JsonImport {
             Depth depth = new Depth(object.getJSONObject("depth").getInt("lsquare"), object.getJSONObject("depth").getInt("wsquare"));
             Accessibility accessibility = new Accessibility(object.getString("Id"));
 
-            dockList.add(new AGVDockBuilder(id, depth, accessibility, begin, end).build());
-
+            dataBaseImport(new AGVDockBuilder(id, warehouse, depth, accessibility, begin, end).build());
         }
-        return dockList;
+    }
+
+    private void dataBaseImport(Object object){
+        if(object.getClass().equals(Aisle.class)){
+            PersistenceContext.repositories().aisle().save((Aisle) object);
+        } else if(object.getClass().equals(Line.class)){
+            PersistenceContext.repositories().line().save((Line) object);
+        } else{
+            PersistenceContext.repositories().dock().save((AGVDock) object);
+        }
     }
 }
