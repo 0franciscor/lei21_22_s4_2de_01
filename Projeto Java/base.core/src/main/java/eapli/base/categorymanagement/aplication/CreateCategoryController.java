@@ -9,6 +9,13 @@ import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import org.springframework.stereotype.Component;
 
+
+/**
+ * Controller responsible for creating a new category in the application.
+ *
+ * Created by Manuela Leite on 27/04/20022
+ */
+
 @Component
 @UseCaseController
 public class CreateCategoryController {

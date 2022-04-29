@@ -15,26 +15,19 @@ public class WarehousePlantBuilder {
 
     private String unit;
 
-    private List<AGVDock> dockList;
-
-    private List<Aisle> aisleList;
-
-    public WarehousePlantBuilder(final String description, final int length, final int width, final int square, final String unit,
-                                 final List<AGVDock> dockList, final List<Aisle> aisleList){
+    public WarehousePlantBuilder(final String description, final int length, final int width, final int square, final String unit){
         this.description = description;
         this.length = length;
         this.width = width;
         this.square = square;
         this.unit = unit;
-        this.dockList = dockList;
-        this.aisleList = aisleList;
     }
 
     private WarehousePlant buildWarehousePlant(){
         if(warehousePlant != null)
             return warehousePlant;
-        if(description != null && unit != null && dockList != null && aisleList != null)
-            this.warehousePlant = new WarehousePlant(description, length, width, square, unit, dockList, aisleList);
+        if(description != null && unit != null)
+            this.warehousePlant = new WarehousePlant(description, length, width, square, unit);
 
         return warehousePlant;
     }

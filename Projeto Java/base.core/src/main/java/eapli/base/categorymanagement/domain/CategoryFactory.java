@@ -2,6 +2,14 @@ package eapli.base.categorymanagement.domain;
 
 import eapli.framework.domain.model.DomainFactory;
 
+
+/**
+ * Factory responsible for creating new categories.
+ *
+ * Created by Manuela Leite on 27/04/2022.
+ */
+
+
 public class CategoryFactory implements DomainFactory<Category> {
 
     private Category category;

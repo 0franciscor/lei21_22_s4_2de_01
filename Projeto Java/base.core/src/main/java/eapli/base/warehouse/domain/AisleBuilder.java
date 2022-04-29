@@ -1,12 +1,12 @@
 package eapli.base.warehouse.domain;
 
-import java.util.List;
-
 public class AisleBuilder {
 
     private Aisle aisle;
 
     private Long Id;
+
+    private Warehouse warehouse;
 
     private Accessibility accessibility;
 
@@ -16,23 +16,21 @@ public class AisleBuilder {
 
     private End end;
 
-    private List<Line> lineList;
-
-    public AisleBuilder(final Long Id, final Accessibility accessibility, final Depth depth, final Begin begin,
-                        final End end, final List<Line> lineList){
+    public AisleBuilder(final Long Id, final Warehouse warehouse, final Accessibility accessibility, final Depth depth, final Begin begin,
+                        final End end){
         this.Id = Id;
+        this.warehouse = warehouse;
         this.accessibility = accessibility;
         this.depth = depth;
         this.begin = begin;
         this.end = end;
-        this.lineList = lineList;
     }
 
     private Aisle buildAisle(){
         if(aisle != null)
             return aisle;
-        if(accessibility != null && depth != null && begin != null && end != null && lineList != null)
-            this.aisle = new Aisle(Id, accessibility, depth, begin, end, lineList);
+        if(accessibility != null && depth != null && begin != null && end != null)
+            this.aisle = new Aisle(Id, warehouse, accessibility, depth, begin, end);
 
         return aisle;
     }

@@ -11,8 +11,8 @@ public class Line implements AggregateRoot<Long> {
     @Id
     private Long Id;
 
-    @ElementCollection
-    private List<Shelf> shelfList;
+    @ManyToOne(optional = false, cascade = CascadeType.MERGE)
+    private Aisle aisle;
 
     @Embedded
     private Begin begin;
@@ -26,13 +26,9 @@ public class Line implements AggregateRoot<Long> {
     //private Bin bin;
 
     public Line(){}
-
-    public Line(final List<Shelf> shelfList){
-        this.shelfList = shelfList;
-    }
-
-    public Line(final Long Id, final Begin begin, final End end, final int numShelves){
+    public Line(final Long Id, final Aisle aisle, final Begin begin, final End end, final int numShelves){
         this.Id = Id;
+        this.aisle = aisle;
         this.begin = begin;
         this.end = end;
         this.numShelves = numShelves;
@@ -45,7 +41,7 @@ public class Line implements AggregateRoot<Long> {
 
         Line newLine = ((Line) other);
 
-        return Id == newLine.Id && shelfList == newLine.shelfList && begin == newLine.begin && end == newLine.end && numShelves == newLine.numShelves;
+        return Id == newLine.Id && aisle == newLine.aisle && begin == newLine.begin && end == newLine.end && numShelves == newLine.numShelves;
     }
 
     @Override

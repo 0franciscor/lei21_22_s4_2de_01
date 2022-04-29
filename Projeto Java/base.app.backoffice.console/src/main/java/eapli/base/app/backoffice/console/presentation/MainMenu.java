@@ -25,7 +25,9 @@ package eapli.base.app.backoffice.console.presentation;
 
 import eapli.base.app.backoffice.console.categoriamanagement.CreateCategoriaUI;
 import eapli.base.app.backoffice.console.clientmanagement.RegisterClientUI;
+import eapli.base.app.backoffice.console.ordermanagement.RegisterClientOrderUI;
 import eapli.base.app.backoffice.console.presentation.authz.ImportJsonUI;
+import eapli.base.app.backoffice.console.productmanagement.RegisterProductUI;
 import eapli.base.app.common.console.presentation.authz.MyUserMenu;
 import eapli.base.Application;
 import eapli.base.app.backoffice.console.presentation.authz.AddUserUI;
@@ -71,16 +73,15 @@ public class MainMenu extends AbstractUI {
     // SALES CLERK
     private static final int REGISTER_CLIENT = 1;
     private static final int CREATE_CATEGORY = 2;
+    private static final int REGISTER_CLIENT_ORDER = 3;
+    private static final int REGISTER_PRODUCT = 4;
 
     // MAIN MENU
     private static final int MY_USER_OPTION = 1;
     private static final int USERS_OPTION = 2;
     private static final int CONFIGURE_OPTION = 3;
     private static final int SETTINGS_OPTION = 4;
-    private static final int DISH_OPTION = 5;
-    private static final int TRACEABILITY_OPTION = 6;
-    private static final int MEALS_OPTION = 7;
-    private static final int REPORTING_DISHES_OPTION = 8;
+
 
     private static final String SEPARATOR_LABEL = "--------------";
 
@@ -195,6 +196,8 @@ public class MainMenu extends AbstractUI {
 
         menu.addItem(REGISTER_CLIENT, "Register a Client", new RegisterClientUI()::show);
         menu.addItem(CREATE_CATEGORY, "Create a Category", new CreateCategoriaUI()::show);
+        menu.addItem(REGISTER_CLIENT_ORDER, "Register a Client Order", new RegisterClientOrderUI()::show);
+        menu.addItem(REGISTER_PRODUCT, "Register a Product", new RegisterProductUI()::show);
 
         return menu;
     }
