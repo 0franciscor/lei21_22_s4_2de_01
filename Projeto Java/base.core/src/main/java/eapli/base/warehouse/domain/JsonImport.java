@@ -89,7 +89,7 @@ public class JsonImport {
             Begin begin = new Begin(object.getJSONObject("begin").getInt("lsquare"), object.getJSONObject("begin").getInt("wsquare"));
             End end = new End(object.getJSONObject("end").getInt("lsquare"), object.getJSONObject("end").getInt("wsquare"));
             Depth depth = new Depth(object.getJSONObject("depth").getInt("lsquare"), object.getJSONObject("depth").getInt("wsquare"));
-            Accessibility accessibility = new Accessibility(object.getString("Id"));
+            Accessibility accessibility = new Accessibility(object.getString("accessibility"));
 
             dataBaseImport(new AGVDockBuilder(id, warehouse, depth, accessibility, begin, end).build());
         }
