@@ -26,8 +26,6 @@ public class JsonImport {
             String content = Files.readString(filePath);
             JSONObject jsonObject = new JSONObject(content);
 
-            warehouse = new Warehouse();
-
             String description = jsonObject.getString("Warehouse");
             int length = jsonObject.getInt("Length");
             int width = jsonObject.getInt("Width");
@@ -44,7 +42,6 @@ public class JsonImport {
             importDocks(jsonObject.getJSONArray("AGVDocks"), warehouse);
 
         } catch (Exception e){
-            //e.printStackTrace();
             System.out.println("There was an error when Importing a .json file data.");
             return false;
         }

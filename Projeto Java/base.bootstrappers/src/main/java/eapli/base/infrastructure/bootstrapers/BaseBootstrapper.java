@@ -23,6 +23,7 @@
  */
 package eapli.base.infrastructure.bootstrapers;
 
+import eapli.base.warehouse.application.ImportJsonController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -65,6 +66,7 @@ public class BaseBootstrapper implements Action {
 
         registerPowerUser();
         authenticateForBootstrapping();
+        //importFileBootStrap();
 
         // execute all bootstrapping
         boolean ret = true;
@@ -97,6 +99,12 @@ public class BaseBootstrapper implements Action {
             LOGGER.trace("Assuming existing record", e);
             return false;
         }
+    }
+
+    private boolean importFileBootStrap(){
+        ImportJsonController importJsonController = new ImportJsonController();
+
+        return importJsonController.importWarehouse("warehouse1.json");
     }
 
     /**
