@@ -131,7 +131,7 @@ package "<<aggregate>> AGV" {
 }
 
 entity AGV <<entity>> <<root>> {
-
+-state
 }
 
 entity Warehouse <<entity>> <<root>> {
