@@ -84,7 +84,7 @@ public class BaseBootstrapper implements Action {
 
         registerPowerUser();
         authenticateForBootstrapping();
-        //importFileBootStrap();
+        importFileBootStrap();
         try {
             registerClient();
         } catch (ParseException e) {
