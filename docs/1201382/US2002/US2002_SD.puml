@@ -18,23 +18,25 @@ UI -> CTR : create
 UI -> CTR : validateData()
 activate CTR
 deactivate CTR
-UI --> WE : requests data (id, briefDescription, \nmodel, maxWeightCapacity, range)
+UI --> WE : requests data (id, briefDescription, model, maxWeightCapacity, \nmaxVolumeCapacity, range, position, agvDock)
 deactivate UI
-WE -> UI : type the requested data
+WE -> UI : type and select the requested data
 activate UI
 UI -> CTR : configureAGV(id, briefDescription, model,\n maxWeightCapacity, range)
 activate CTR
 CTR -> BUILDER : create
 CTR -> BUILDER : withId(id)
-CTR -> BUILDER : associateWithAGVDock()
-CTR -> BUILDER : withBriefDescription(briefDescription)
-CTR -> BUILDER : withModel(model)
-CTR -> BUILDER : withWeight(weight)
-CTR -> BUILDER : withMaxWeightCapacity(maxWeightCapacity)
+CTR -> BUILDER : withAGVDock(agvDock)
 CTR -> BUILDER : withRange(range)
+CTR -> BUILDER : withMaxWeightCapacity(maxWeightCapacity)
+CTR -> BUILDER : withMaxVolumeCapacity(maxVolumeCapacity)
+CTR -> BUILDER : withModel(model)
+CTR -> BUILDER : withBriefDescription(briefDescription)
+CTR -> BUILDER : withPosition(position)
+CTR -> BUILDER : withAGVStatus(status)
 CTR -> BUILDER : createAGV()
 activate BUILDER
-BUILDER -> AGV : createAGV(id, briefDescription, model,\n maxWeightCapacity, range)
+BUILDER -> AGV : createAGV(id, briefDescription, model,maxWeightCapacity, \n maxVolumeCapacity, range, position, agvDock)
 AGV --> BUILDER : agv
 BUILDER --> CTR : agv
 deactivate BUILDER
@@ -54,7 +56,7 @@ CTR -> REP : save(AGV)
 CTR -> UI : agv
 deactivate CTR
 
-UI --> WE : informs operation sucess
+UI --> WE : shows information and informs operation sucess
 deactivate UI
 
 deactivate WE

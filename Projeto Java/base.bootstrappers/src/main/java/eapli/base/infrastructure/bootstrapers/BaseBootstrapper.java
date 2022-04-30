@@ -53,10 +53,14 @@ import eapli.framework.validations.Invariants;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+<<<<<<< HEAD
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
+=======
+import java.util.*;
+>>>>>>> ea59ceddef2a989944161eb7a37009cbd7359c2f
 
 /**
  * Base Bootstrapping data app
@@ -89,6 +93,7 @@ public class BaseBootstrapper implements Action {
             e.printStackTrace();
         }
         registerCategories();
+        registerProduct();
 
         // execute all bootstrapping
         boolean ret = true;
@@ -129,6 +134,16 @@ public class BaseBootstrapper implements Action {
         return importJsonController.importWarehouse("warehouse1.json");
     }
 
+    private void registerProduct(){
+        RegisterProductController registerProductController = new RegisterProductController();
+        Set<String> photos = new HashSet<>();
+        photos.add("frigorífico.jpg");
+
+        CreateCategoryController createCategoryController = new CreateCategoryController();
+        Category category = createCategoryController.createCategory(new AlphanumericCode("123dc"),new Description("Eletrodomésticos Eficientes"),new SuperCategory("Eletrodomésticos Modernos e Eficientes"));
+        registerProductController.registerProduct(category,"FRIG123","Frigorífico Eficiente","Frigorífico Moderno e Eficiente","Frigorífico Moderno","123456789123","Samsung","frig937",null,150.0,160.0,20.0,30.0,photos);
+    }
+
     private void registerClient() throws ParseException {
         RegisterClientController registerClientController = new RegisterClientController();
         List<List<String>> addresses = new ArrayList<>();
@@ -148,8 +163,12 @@ public class BaseBootstrapper implements Action {
 
     private void registerCategories(){
         CreateCategoryController createCategoryController = new CreateCategoryController();
+<<<<<<< HEAD
         createCategoryController.createCategory(new AlphanumericCode("123dc"),new Description("Eletrodomésticos Eficientes"),new SuperCategory("Eletrodomésticos Modernos e Eficientes"));
         createCategoryController.createCategory(new AlphanumericCode("11hagsb"),new Description("This medicine is for the eyes"),new SuperCategory("Eye Category"));
+=======
+        createCategoryController.createCategory(new AlphanumericCode("1253dc"),new Description("Televisões Eficientes"),new SuperCategory("Televisões Modernas e Eficientes"));
+>>>>>>> ea59ceddef2a989944161eb7a37009cbd7359c2f
     }
 
 
