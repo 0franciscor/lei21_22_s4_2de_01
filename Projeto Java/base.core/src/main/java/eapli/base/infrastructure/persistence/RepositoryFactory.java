@@ -25,6 +25,8 @@ import eapli.base.categorymanagement.repositories.CategoryRepository;
 import eapli.base.clientmanagement.repositories.ClientRepository;
 import eapli.base.clientusermanagement.repositories.ClientUserRepository;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
+import eapli.base.ordermanagement.domain.OrderItem;
+import eapli.base.ordermanagement.repository.OrderItemRepository;
 import eapli.base.ordermanagement.repository.OrderRepository;
 import eapli.base.productmanagement.repository.ProductRepository;
 import eapli.base.warehouse.repositories.*;
@@ -94,6 +96,13 @@ public interface RepositoryFactory {
      * @return
      */
     OrderRepository orders();
+
+    /**
+     * repository will be created in auto transaction mode
+     *
+     * @return
+     */
+    OrderItemRepository orderItems();
 
     CategoryRepository category();
 

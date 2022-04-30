@@ -2,16 +2,17 @@ package eapli.base.ordermanagement.application;
 
 
 import eapli.base.infrastructure.persistence.PersistenceContext;
+import eapli.base.ordermanagement.domain.*;
+import eapli.base.ordermanagement.repository.OrderItemRepository;
+import eapli.base.productmanagement.application.ListProductService;
+import eapli.base.productmanagement.domain.Product;
+import eapli.base.productmanagement.domain.UniqueInternalCode;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 
 import eapli.base.clientmanagement.domain.Client;
 import eapli.base.clientmanagement.repositories.ClientRepository;
 
-import eapli.base.ordermanagement.domain.AdditionalComment;
-import eapli.base.ordermanagement.domain.Address;
-import eapli.base.ordermanagement.domain.ProductOrder;
-import eapli.base.ordermanagement.domain.Shipment;
 import eapli.base.ordermanagement.repository.OrderRepository;
 import eapli.base.usermanagement.domain.BaseRoles;
 
@@ -24,21 +25,26 @@ public class RegisterClientOrderController {
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
     private final ClientRepository clientRepository = PersistenceContext.repositories().client();
     private final OrderRepository orderRepository = PersistenceContext.repositories().orders();
+    private ListProductService listProductService = new ListProductService();
+    private final OrderItemRepository orderItemRepository = PersistenceContext.repositories().orderItems();
 
     private Client client;
+    private Set<OrderItem> orderItems = new HashSet<>();
 
 
 
-    public ProductOrder registerOrder(List<List<String>> addresses, Shipment shipment, ProductOrder.SourceChannel sourceChannel, Calendar interactionDate, String additionalComment){
+    public ProductOrder registerOrder(Map<String,Integer> items, List<List<String>> addresses, Shipment shipment, ProductOrder.SourceChannel sourceChannel, Calendar interactionDate, String additionalComment, ProductOrder.Payment payment){
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER, BaseRoles.SALES_CLERK);
-        ProductOrder order = new ProductOrder(client, new Address(addresses.get(0).get(0), addresses.get(0).get(1),addresses.get(0).get(2), addresses.get(0).get(3), addresses.get(0).get(4)), new Address(addresses.get(1).get(0), addresses.get(1).get(1),addresses.get(1).get(2), addresses.get(1).get(3), addresses.get(1).get(4)),shipment,sourceChannel,interactionDate,new AdditionalComment(additionalComment), authz.session().get().authenticatedUser());
+        fillOrderItems(items,orderItems);
+        ProductOrder order = new ProductOrder(client, new Address(addresses.get(0).get(0), addresses.get(0).get(1),addresses.get(0).get(2), addresses.get(0).get(3), addresses.get(0).get(4)), new Address(addresses.get(1).get(0), addresses.get(1).get(1),addresses.get(1).get(2), addresses.get(1).get(3), addresses.get(1).get(4)),shipment,sourceChannel,interactionDate,new AdditionalComment(additionalComment), authz.session().get().authenticatedUser(),orderItems,payment);
         return orderRepository.save(order);
 
     }
 
-    public ProductOrder registerOrder(List<List<String>> addresses, Shipment shipment, ProductOrder.SourceChannel sourceChannel, Calendar interactionDate){
+    public ProductOrder registerOrder(Map<String,Integer> items,List<List<String>> addresses, Shipment shipment, ProductOrder.SourceChannel sourceChannel, Calendar interactionDate, ProductOrder.Payment payment){
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER, BaseRoles.SALES_CLERK);
-        ProductOrder order = new ProductOrder(client, new Address(addresses.get(0).get(0), addresses.get(0).get(1),addresses.get(0).get(2), addresses.get(0).get(3), addresses.get(0).get(4)), new Address(addresses.get(1).get(0), addresses.get(1).get(1),addresses.get(1).get(2), addresses.get(1).get(3), addresses.get(1).get(4)),shipment,sourceChannel,interactionDate, authz.session().get().authenticatedUser());
+        fillOrderItems(items,orderItems);
+        ProductOrder order = new ProductOrder(client, new Address(addresses.get(0).get(0), addresses.get(0).get(1),addresses.get(0).get(2), addresses.get(0).get(3), addresses.get(0).get(4)), new Address(addresses.get(1).get(0), addresses.get(1).get(1),addresses.get(1).get(2), addresses.get(1).get(3), addresses.get(1).get(4)),shipment,sourceChannel,interactionDate, authz.session().get().authenticatedUser(),orderItems,payment);
         return orderRepository.save(order);
 
     }
@@ -51,5 +57,24 @@ public class RegisterClientOrderController {
         }
         return chosenClient.isPresent();
     }
+
+    public boolean verifyProductById(UniqueInternalCode code) {
+        Product chosenProduct = listProductService.findProductByUniqueInternalCode(code);
+
+        return chosenProduct != null;
+    }
+
+    private void fillOrderItems(Map<String, Integer> items, Set<OrderItem> setItems) {
+
+        for (Map.Entry<String, Integer> entry : items.entrySet()) {
+            String code = entry.getKey();
+            Integer quantity = entry.getValue();
+            Product product = listProductService.findProductByUniqueInternalCode(UniqueInternalCode.valueOf(code));
+            OrderItem orderItem = new OrderItem(quantity, product);
+            orderItemRepository.save(orderItem);
+            setItems.add(orderItem);
+        }
+    }
+
 
 }

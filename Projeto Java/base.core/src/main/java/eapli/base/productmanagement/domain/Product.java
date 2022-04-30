@@ -96,4 +96,8 @@ public class Product implements AggregateRoot<Long>, Serializable {
     public Long identity() {
         return this.productId;
     }
+
+    public UniqueInternalCode uniqueInternalCode() {
+        return this.uniqueInternalCode;
+    }
 }

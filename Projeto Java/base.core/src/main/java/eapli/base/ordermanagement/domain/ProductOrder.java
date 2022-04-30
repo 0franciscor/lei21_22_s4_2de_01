@@ -20,6 +20,10 @@ public class ProductOrder implements AggregateRoot<Long>, Serializable {
         CALL, EMAIL, MEETING;
     }
 
+    public enum Payment {
+        PAYPAL, APPLE_PAY;
+    }
+
     @Version
     private Long version;
 
@@ -90,6 +94,7 @@ public class ProductOrder implements AggregateRoot<Long>, Serializable {
     @Enumerated(EnumType.STRING)
     private Shipment shipment;
 
+    @Enumerated(EnumType.STRING)
     private Payment payment;
 
     private OrderVolume orderVolume;
@@ -107,28 +112,28 @@ public class ProductOrder implements AggregateRoot<Long>, Serializable {
     @ManyToOne
     private SystemUser salesClerk;
 
-    public ProductOrder(final Client client, final Address billingAddress, final Address shippingAddress, final Shipment shipment, final SourceChannel sourceChannel, final Calendar interactionDate, final AdditionalComment additionalComment, final SystemUser salesClerk) {
+    public ProductOrder(final Client client, final Address billingAddress, final Address shippingAddress, final Shipment shipment, final SourceChannel sourceChannel, final Calendar interactionDate, final AdditionalComment additionalComment, final SystemUser salesClerk, final Set<OrderItem> orderItems, final Payment payment) {
         this.createdOn = Calendars.now();
         this.client = client;
         this.billingAddress = billingAddress;
         this.shippingAddress = shippingAddress;
-        //this.items = items;
+        this.items = orderItems;
         this.shipment = shipment;
-        //this.payment = payment;
+        this.payment = payment;
         this.sourceChannel = sourceChannel;
         this.interactionDate = interactionDate;
         this.additionalComment = additionalComment;
         this.salesClerk = salesClerk;
     }
 
-    public ProductOrder(final Client client, final Address billingAddress, final Address shippingAddress, final Shipment shipment, final SourceChannel sourceChannel, final Calendar interactionDate, final SystemUser salesClerk) {
+    public ProductOrder(final Client client, final Address billingAddress, final Address shippingAddress, final Shipment shipment, final SourceChannel sourceChannel, final Calendar interactionDate, final SystemUser salesClerk, final Set<OrderItem> orderItems, final Payment payment) {
         this.createdOn = Calendars.now();
         this.client = client;
         this.billingAddress = billingAddress;
         this.shippingAddress = shippingAddress;
-        //this.items = items;
+        this.items = orderItems;
         this.shipment = shipment;
-        //this.payment = payment;
+        this.payment = payment;
         this.sourceChannel = sourceChannel;
         this.interactionDate = interactionDate;
         this.salesClerk = salesClerk;
