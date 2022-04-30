@@ -30,7 +30,20 @@ public class AGVId implements ValueObject, Comparable<AGVId> {
     }
 
     @Override
-    public int compareTo(AGVId o) {
-        return 0;
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof AGVId)) {
+            return false;
+        }
+
+        final AGVId that = (AGVId) o;
+        return this.id.equals(that.id);
+    }
+
+    @Override
+    public int compareTo(final AGVId arg) {
+        return id.compareTo(arg.id);
     }
 }

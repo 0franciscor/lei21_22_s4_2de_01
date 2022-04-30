@@ -11,6 +11,10 @@ import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 import eapli.framework.presentation.console.SelectWidget;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -51,7 +55,42 @@ public class RegisterProductUI extends AbstractUI {
         final Double volume = Console.readDouble("Volume:");
 
         final Set<String> photoPaths = new HashSet<>();
-        String option = "yes";
+        String option;
+
+        do {
+            String photoPath = Console.readLine("Photo Path:");
+            File file = new File(photoPath);
+            while (!file.exists()){
+                photoPath = Console.readLine("Invalid Photo Path! Insert a new one:");
+                file = new File(photoPath);
+            }
+            if (Files.exists(Paths.get(photoPath)) && !photoPaths.contains(photoPath)){
+                photoPaths.add(photoPath);
+
+/*
+                try {
+                    Runtime rt = Runtime.getRuntime();
+                    rt.exec(String.format("open %s",photoPath));
+                } catch (IOException e) {
+                    Runtime runtime = Runtime.getRuntime();
+                    try {
+                        runtime.exec(String.format("open %s",photoPath));
+                    } catch (IOException ioException) {
+                        ioException.printStackTrace();
+                    }
+                }
+
+ */
+
+
+            } else if (!Files.exists(Paths.get(photoPath))){
+                System.out.println("Wrong Path Inserted");
+            } else {
+                System.out.println("This photo was already added");
+            }
+            option = Console.readLine("Do you want to add another phot? (yes|no)");
+
+        }while (option.equalsIgnoreCase("yes"));
 
 
         option = Console.readLine("Do you want to insert the production Code?\n (yes|no)\n");
@@ -61,7 +100,7 @@ public class RegisterProductUI extends AbstractUI {
         }
 
         try {
-            this.registerProductController.registerProduct(theCategory,uniqueInternalCode,shortDescription,extendedDescription,technicalDescription,barcode,brandName,reference,productionCode,priceWithoutTaxes,priceWithTaxes,weight,volume);
+            this.registerProductController.registerProduct(theCategory,uniqueInternalCode,shortDescription,extendedDescription,technicalDescription,barcode,brandName,reference,productionCode,priceWithoutTaxes,priceWithTaxes,weight,volume,photoPaths);
         } catch (@SuppressWarnings("unused") final IntegrityViolationException e) {
             System.out.println("You tried to enter a product which already exists in the database..");
         }
