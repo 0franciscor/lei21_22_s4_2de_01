@@ -25,10 +25,12 @@ package eapli.base.infrastructure.bootstrapers;
 
 import eapli.base.categorymanagement.aplication.CreateCategoryController;
 import eapli.base.categorymanagement.domain.AlphanumericCode;
+import eapli.base.categorymanagement.domain.Category;
 import eapli.base.categorymanagement.domain.Description;
 import eapli.base.categorymanagement.domain.SuperCategory;
 import eapli.base.clientmanagement.application.RegisterClientController;
 import eapli.base.clientmanagement.domain.Client;
+import eapli.base.productmanagement.application.RegisterProductController;
 import eapli.base.warehouse.application.ImportJsonController;
 import eapli.framework.time.util.Calendars;
 import org.slf4j.Logger;
@@ -51,9 +53,7 @@ import eapli.framework.validations.Invariants;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
+import java.util.*;
 
 /**
  * Base Bootstrapping data app
@@ -86,6 +86,7 @@ public class BaseBootstrapper implements Action {
             e.printStackTrace();
         }
         registerCategories();
+        registerProduct();
 
         // execute all bootstrapping
         boolean ret = true;
@@ -126,6 +127,16 @@ public class BaseBootstrapper implements Action {
         return importJsonController.importWarehouse("warehouse1.json");
     }
 
+    private void registerProduct(){
+        RegisterProductController registerProductController = new RegisterProductController();
+        Set<String> photos = new HashSet<>();
+        photos.add("frigorífico.jpg");
+
+        CreateCategoryController createCategoryController = new CreateCategoryController();
+        Category category = createCategoryController.createCategory(new AlphanumericCode("123dc"),new Description("Eletrodomésticos Eficientes"),new SuperCategory("Eletrodomésticos Modernos e Eficientes"));
+        registerProductController.registerProduct(category,"FRIG123","Frigorífico Eficiente","Frigorífico Moderno e Eficiente","Frigorífico Moderno","123456789123","Samsung","frig937",null,150.0,160.0,20.0,30.0,photos);
+    }
+
     private void registerClient() throws ParseException {
         RegisterClientController registerClientController = new RegisterClientController();
         List<List<String>> addresses = new ArrayList<>();
@@ -145,7 +156,7 @@ public class BaseBootstrapper implements Action {
 
     private void registerCategories(){
         CreateCategoryController createCategoryController = new CreateCategoryController();
-        createCategoryController.createCategory(new AlphanumericCode("123dc"),new Description("Eletrodomésticos Eficientes"),new SuperCategory("Eletrodomésticos Modernos e Eficientes"));
+        createCategoryController.createCategory(new AlphanumericCode("1253dc"),new Description("Televisões Eficientes"),new SuperCategory("Televisões Modernas e Eficientes"));
     }
 
     /**

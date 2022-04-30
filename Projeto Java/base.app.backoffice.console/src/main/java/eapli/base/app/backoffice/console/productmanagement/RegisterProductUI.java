@@ -83,6 +83,8 @@ public class RegisterProductUI extends AbstractUI {
  */
 
 
+
+
             } else if (!Files.exists(Paths.get(photoPath))){
                 System.out.println("Wrong Path Inserted");
             } else {
