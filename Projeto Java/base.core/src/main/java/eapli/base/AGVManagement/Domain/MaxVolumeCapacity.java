@@ -6,27 +6,27 @@ import javax.persistence.Embeddable;
 
 @Embeddable
 public class MaxVolumeCapacity implements ValueObject {
-    private Double volume;
+    private Double maxVolumeCapacity;
 
-    public MaxVolumeCapacity(final double volume)    {
-        this.volume = volume;
+    public MaxVolumeCapacity(final double maxVolumeCapacity)    {
+        this.maxVolumeCapacity = maxVolumeCapacity;
     }
 
     public MaxVolumeCapacity() {}
 
 
     public Double getMaxVolumeCapacity() {
-        return volume;
+        return maxVolumeCapacity;
     }
 
     public void setMaxVolumeCapacity(Double maxVolumeCapacity) {
-        this.volume = maxVolumeCapacity;
+        this.maxVolumeCapacity = maxVolumeCapacity;
     }
 
     @Override
     public String toString() {
         return "MaxVolumeCapacity{" +
-                "volume=" + volume +
+                "volume=" + maxVolumeCapacity +
                 '}';
     }
 }

@@ -9,6 +9,8 @@ import eapli.base.warehouse.repositories.AGVDockRepository;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 
+import java.util.List;
+
 /**
  * Created by Pedro Rocha
  */
@@ -32,9 +34,21 @@ public class ConfigureAGVController {
     }
 
     public AGV configureAGV(final String agvId, final String briefDescription, final String model, final Double maxWeightCapacity, final Double maxVolumeCapacity,
-                            final Double range, final String position , final AGVDock agvDock, final String status) {
+                            final Double range, final String position , final AGVDock agvDock, final String status, final String task) {
 
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER, BaseRoles.ADMIN, BaseRoles.WAREHOUSE_EMPLOYEE);
+
+        List<AGV> listAGV = (List) agvRepository.findAll();
+        Boolean occupied = false;
+        for (AGV agv: listAGV) {
+            if(agv.agvDock().getId().equals(agvDock.getId())){
+                occupied=true;
+            }
+        }
+        if (occupied==true){
+           return null;
+        }
+
 
         final AGVBuilder newAGV = new AGVBuilder()
                 .withId(new AGVId(agvId))
@@ -44,7 +58,9 @@ public class ConfigureAGVController {
                 .withMaxVolumeCapacity(new MaxVolumeCapacity(maxVolumeCapacity))
                 .withRange(new Range(range))
                 .withPosition(new AGVPosition(position))
-                .withAGVDock(agvDock).withAGVStatus(status);
+                .withAGVDock(agvDock)
+                .withAGVStatus(status)
+                .withAGVTask(task);
 
 
         AGV agv = newAGV.build();

@@ -30,6 +30,7 @@ public class ConfigureAGVUI extends AbstractUI {
         final String range = Console.readLine("Range: (hours)");
         final String position = Console.readLine("Position:");
         final String status = "FREE";
+        final String task = "123";
 
 
 
@@ -47,11 +48,17 @@ public class ConfigureAGVUI extends AbstractUI {
         int a = Integer.parseInt(Console.readLine("Choose an agvdock"));
         AGVDock dock = list.get(a-1);
 
+        Boolean flag1 = false;
+        if(configureAGVController.configureAGV(agvId,briefDescription,model,Double.parseDouble(maxWeightCapacity), Double.parseDouble(maxVolumeCapacity), Double.parseDouble(range), position, dock, status, task)==null){
+            System.out.println("AGV Dock occupied");
+            flag1 = true;
 
-        configureAGVController.configureAGV(agvId,briefDescription,model,Double.parseDouble(maxWeightCapacity), Double.parseDouble(maxVolumeCapacity), Double.parseDouble(range), position, dock, status);
-        System.out.println("*================== AGV Created ================*");
-        System.out.printf("AGVId: %s; \nBrief Description: %s; \nModel: %s \nMax Weight Capacity: %s \nMax Volume Capacity: %s \nRange: %s \nPosition: %s \nDock ID: %s\nStatus: %s\n",
-                agvId,briefDescription,model,maxWeightCapacity,maxVolumeCapacity,range,position,dock.getId(),status);
+        }
+        if(!flag1){
+            System.out.println("*================== AGV Created ================*");
+            System.out.printf("AGVId: %s; \nBrief Description: %s; \nModel: %s \nMax Weight Capacity: %s \nMax Volume Capacity: %s \nRange: %s \nPosition: %s \nDock ID: %s\nStatus: %s\nTask: %s\n",
+                    agvId,briefDescription,model,maxWeightCapacity,maxVolumeCapacity,range,position,dock.getId(),status,task);
+        }
 
         return true;
     }

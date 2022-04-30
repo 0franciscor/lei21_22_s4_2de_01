@@ -6,26 +6,26 @@ import javax.persistence.Embeddable;
 
 @Embeddable
 public class AGVId implements ValueObject, Comparable<AGVId> {
-    private String id;
+    private String agvId;
 
-    public AGVId(String id) {
-        this.id = id;
+    public AGVId(String agvId) {
+        this.agvId = agvId;
     }
 
     public AGVId() {}
 
     public String getAGVId() {
-        return id;
+        return agvId;
     }
 
     public void setAGVId(String agvId) {
-        this.id = agvId;
+        this.agvId = agvId;
     }
 
     @Override
     public String toString() {
         return "AGVId{" +
-                "id=" + id +
+                "id=" + agvId +
                 '}';
     }
 
@@ -39,11 +39,11 @@ public class AGVId implements ValueObject, Comparable<AGVId> {
         }
 
         final AGVId that = (AGVId) o;
-        return this.id.equals(that.id);
+        return this.agvId.equals(that.agvId);
     }
 
     @Override
     public int compareTo(final AGVId arg) {
-        return id.compareTo(arg.id);
+        return agvId.compareTo(arg.agvId);
     }
 }

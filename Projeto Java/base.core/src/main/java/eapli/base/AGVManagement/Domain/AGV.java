@@ -9,7 +9,7 @@ import javax.persistence.*;
 public class AGV implements AggregateRoot<AGVId> {
 
     @EmbeddedId
-    private AGVId id;
+    private AGVId agvId;
 
     @OneToOne
     private AGVDock agvDock;
@@ -34,11 +34,14 @@ public class AGV implements AggregateRoot<AGVId> {
 
     private ChangeAGVStatus status;
 
+    @Embedded
+    private AGVTask agvTask;
+
 
     public AGV(){}
 
-    public AGV(final AGVId id, final BriefDescription briefDescription, final Model model, final MaxWeightCapacity maxWeightCapacity, final MaxVolumeCapacity maxVolumeCapacity, final Range range, final AGVPosition position, final AGVDock agvDock, final ChangeAGVStatus status){
-        this.id = id;
+    public AGV(final AGVId agvId, final BriefDescription briefDescription, final Model model, final MaxWeightCapacity maxWeightCapacity, final MaxVolumeCapacity maxVolumeCapacity, final Range range, final AGVPosition position, final AGVDock agvDock, final ChangeAGVStatus status, final AGVTask agvTask){
+        this.agvId = agvId;
         this.range = range;
         this.maxWeightCapacity = maxWeightCapacity;
         this.maxVolumeCapacity = maxVolumeCapacity;
@@ -47,6 +50,7 @@ public class AGV implements AggregateRoot<AGVId> {
         this.position = position;
         this.agvDock = agvDock;
         this.status = status;
+        this.agvTask = agvTask;
     }
 
 
@@ -58,12 +62,16 @@ public class AGV implements AggregateRoot<AGVId> {
 
         eapli.base.AGVManagement.Domain.AGV newObj = ((eapli.base.AGVManagement.Domain.AGV) other);
 
-        return id == newObj.id && range == newObj.range && maxWeightCapacity == newObj.maxWeightCapacity && maxVolumeCapacity == newObj.maxVolumeCapacity
-                && model == newObj.model && briefDescription == newObj.briefDescription && position == newObj.position && agvDock == newObj.agvDock ;
+        return agvId == newObj.agvId && range == newObj.range && maxWeightCapacity == newObj.maxWeightCapacity && maxVolumeCapacity == newObj.maxVolumeCapacity
+                && model == newObj.model && briefDescription == newObj.briefDescription && position == newObj.position && agvDock == newObj.agvDock && agvTask == newObj.agvTask;
+    }
+
+    public AGVDock agvDock() {
+        return agvDock;
     }
 
     @Override
     public AGVId identity() {
-        return id;
+        return agvId;
     }
 }
