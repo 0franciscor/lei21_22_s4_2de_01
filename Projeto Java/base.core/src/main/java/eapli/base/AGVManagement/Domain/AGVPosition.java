@@ -3,10 +3,11 @@ package eapli.base.AGVManagement.Domain;
 import eapli.framework.domain.model.ValueObject;
 
 import javax.persistence.Embeddable;
+import javax.swing.text.Position;
 import java.util.Objects;
 
 @Embeddable
-public class AGVPosition implements ValueObject, Comparable<AGVId> {
+public class AGVPosition implements ValueObject{
     private String agvPosition;
 
     public AGVPosition(String position) {
@@ -36,10 +37,5 @@ public class AGVPosition implements ValueObject, Comparable<AGVId> {
         return "AGVPosition{" +
                 "agvPosition='" + agvPosition + '\'' +
                 '}';
-    }
-
-    @Override
-    public int compareTo(AGVId o) {
-        return 0;
     }
 }

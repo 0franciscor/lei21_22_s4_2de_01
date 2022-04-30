@@ -43,6 +43,11 @@ public class AGVId implements ValueObject, Comparable<AGVId> {
     }
 
     @Override
+    public int hashCode() {
+        return this.agvId.hashCode();
+    }
+
+    @Override
     public int compareTo(final AGVId arg) {
         return agvId.compareTo(arg.agvId);
     }
