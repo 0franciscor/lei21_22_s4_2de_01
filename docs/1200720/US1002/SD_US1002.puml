@@ -4,7 +4,7 @@
 
 actor Balconista as B
 participant ListProductsUi as Ui <<presentation>>
-participant ListProducatsController as CT <<application>>
+participant ListProductsController as CT <<application>>
 participant ListProductsService as SR <<service>>
 participant PersistenceContext as CTX <<persistence>>
 participant RepositoryFactory as FT <<factory>>
@@ -47,9 +47,8 @@ SR -> REPO : findProductsByCategory()
 activate REPO
 REPO --> SR : productsByCategory()
 
-
 deactivate REPO
-deactivate SR
+
 else [information = marca]
 SR -> REPO : findProductsByBrand()
 activate REPO
