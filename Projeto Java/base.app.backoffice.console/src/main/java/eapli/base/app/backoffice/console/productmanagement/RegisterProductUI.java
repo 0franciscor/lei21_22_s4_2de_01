@@ -5,10 +5,14 @@ import eapli.base.categorymanagement.domain.Category;
 
 import eapli.base.productmanagement.application.RegisterProductController;
 
+import eapli.base.productmanagement.domain.Photo;
 import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 import eapli.framework.presentation.console.SelectWidget;
+
+import java.util.HashSet;
+import java.util.Set;
 
 
 /**
@@ -46,7 +50,11 @@ public class RegisterProductUI extends AbstractUI {
         final Double weight = Console.readDouble("Weight:");
         final Double volume = Console.readDouble("Volume:");
 
-        String option = Console.readLine("Do you want to insert the production Code?\n (yes|no)\n");
+        final Set<String> photoPaths = new HashSet<>();
+        String option = "yes";
+
+
+        option = Console.readLine("Do you want to insert the production Code?\n (yes|no)\n");
 
         if(option.equalsIgnoreCase("yes")){
             productionCode = Console.readLine("Production Code:");

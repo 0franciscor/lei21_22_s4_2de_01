@@ -8,6 +8,7 @@ import eapli.framework.general.domain.model.Money;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -45,8 +46,8 @@ public class Product implements AggregateRoot<Long>, Serializable {
 
     private BrandName brandName;
 
-    //@ElementCollection
-    //private Set<Photo> photos;
+    @ElementCollection
+    private Set<Photo> photos = new HashSet<>();
 
     private ProductionCode productionCode;
 
