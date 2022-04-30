@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
 public class Photo implements ValueObject, Serializable {
     private static final long serialVersionUID = 1L;
 
-    private static final Pattern VALID_PHOTO_PATH =Pattern.compile("^([a-zA-Z]+/)*[a-zA-Z0-9_-]+.(png|jpg|svg|jped|PNG|JPG|SVG|JPEG)$");
+    private static final Pattern VALID_PHOTO_PATH =Pattern.compile("^*.(png|jpg|svg|jped|PNG|JPG|SVG|JPEG)$");
 
     private final String photoPath;
 

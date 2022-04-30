@@ -68,7 +68,7 @@ public class Product implements AggregateRoot<Long>, Serializable {
 
 
 
-    public Product(final Category category,final UniqueInternalCode uniqueInternalCode, final ShortDescription shortDescription,final ExtendedDescription extendedDescription,final TechnicalDescription technicalDescription,final Barcode barcode,final BrandName brandName, final Reference reference,final Money priceWithoutTaxes, final Money priceWithTaxes, final Double weight, final  Double volume){
+    public Product(final Category category,final UniqueInternalCode uniqueInternalCode, final ShortDescription shortDescription,final ExtendedDescription extendedDescription,final TechnicalDescription technicalDescription,final Barcode barcode,final BrandName brandName, final Reference reference,final Money priceWithoutTaxes, final Money priceWithTaxes, final Double weight, final  Double volume, final Set<Photo> photos){
         this.category=category;
         this.uniqueInternalCode=uniqueInternalCode;
         this.shortDescription=shortDescription;
@@ -81,6 +81,7 @@ public class Product implements AggregateRoot<Long>, Serializable {
         this.barcode=barcode;
         this.brandName=brandName;
         this.reference=reference;
+        this.photos = photos;
     }
 
     protected Product() {
