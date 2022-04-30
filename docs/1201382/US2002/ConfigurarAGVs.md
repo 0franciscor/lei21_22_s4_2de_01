@@ -2,11 +2,11 @@ US2002
 =======================================
 
 
-# 1. Requisitos
+# 1. Requirements
 
-### Como Warehouse Employee, quero configurar os AGV's disponíveis na Warehouse.
+### As a Warehouse Employee, I want to configure the AGV's available in the Warehouse.
 
-## Especificações do Cliente
+## Customer Specifications
 >Question: There is a need to each AVG has its own avg dock? If it does makes sence to give him a responsible avg?
 > 
 >[Awnser:](https://moodle.isep.ipp.pt/mod/forum/discuss.php?d=15824#p20334) Every AGV has a base location, i.e.  an AGV dock. The same AGV dock can not be used by two (or more) distinct AGVs.
@@ -73,29 +73,31 @@ US2002
 >[Awnser:](https://moodle.isep.ipp.pt/mod/forum/discuss.php?d=15961#p20491) I would not called it task but, instead, AGV status.
 > Besides those status I can foresee another status: in maintenance. If you find out more AGV status useful, you might adopt them and further explain/argue about their pertinence.
 
->Question:
+>Question: Should it be possible to still create an AGV without assigning it to an AGV Dock (in case of none being available)?
 >
->[Awnser:](https://moodle.isep.ipp.pt/mod/forum/discuss.php?d=15961#p20491)
+>[Awnser:](https://moodle.isep.ipp.pt/mod/forum/discuss.php?d=15961#p20491) No! The AGV Dock is mandatory.
+
+>Question: Should it be possible to edit an AGV configuration, or is that outside the scope of US2002?
+>
+>[Awnser:](https://moodle.isep.ipp.pt/mod/forum/discuss.php?d=15961#p20491)  It outside of scope. But, if you want, you can do it.
+
+## Teacher Clarification
+>Clarification: Esclarecimentos adicionais sobre alguns casos de uso
+>
+>[Awnser:](https://moodle.isep.ipp.pt/mod/forum/discuss.php?d=16072#p20647) A informação contida no ficheiro JSON deve ser utilizada para validar se a docking do AGV existe no caso de uso 2002
 
 
-# 2. Análise
 
-### Interpretação da US
-Com configurar um AGV disponível na Warehouse, interpretei que a Warehouse possuí AGVs para configurar. 
-Desta forma, para existirem AGVs a configurar, num primeiro momento esses AGVs têm de ser criados, com isto, o utilizador tem essa possibilidade.
+# 2. Analysis
 
-### Cenário de sucesso principal
-1. O Warehouse Employee requer a configuração de um AGV disponível na Warehouse.
-2. O Sistema demonstra os AGVs disponíveis, e pede ao Warehouse Employee para selecionar um ou para criar um.
-3. O Warehouse Employee seleciona o AGV desejado ou cria um.
-4. O Sistema gera um id e solicita os dados necessários (range, maxWeightCapacity, model, briefDescription).
-5. O Warehouse Employee introduz os dados solicitados.
-6. O Sistema valida os dados e demonstra ao Warehouse Employee.
-7. O Warehouse Employee confirma os dados.
-8. O Sistema informa o sucesso da operação.
+### Main success scenario
+1. Warehouse Employee requires the configuration of an AGV available in the Warehouse.
+2. The System asks for information related to the AGV
+3. Warehouse Employee enters the information.
+8. The System reports the success of the operation.
 
-### Condições
-A informação do registo da nova categoria é persistida/guardada no sistema.
+### Conditions
+The registration information of the new category is persisted/saved in the system.
 
 ## 2.1. System Sequence Diagram
 ![US2002_SSD](US2002_SSD.svg)
