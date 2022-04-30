@@ -36,7 +36,7 @@ public class JsonImport {
 
             dataBaseImport(warehousePlant);
 
-            warehouse = new WarehouseBuilder(1L, warehousePlant, new Dashboard()).build();
+            warehouse = new WarehouseBuilder().withId(1L).withPlant(warehousePlant).withDashboard(new Dashboard()).build();
             dataBaseImport(warehouse);
 
             importAisles(jsonObject.getJSONArray("Aisles"), warehouse);

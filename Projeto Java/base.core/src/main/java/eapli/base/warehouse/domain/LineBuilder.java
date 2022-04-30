@@ -1,8 +1,6 @@
 package eapli.base.warehouse.domain;
 public class LineBuilder {
 
-    private Line line;
-
     private LineId Id;
 
     private Begin begin;
@@ -13,7 +11,7 @@ public class LineBuilder {
 
     public LineBuilder(){}
 
-    public LineBuilder withId(final LineId lineId){
+    public LineBuilder withId(final LineId Id){
         this.Id = Id;
         return this;
     }
@@ -33,17 +31,10 @@ public class LineBuilder {
         return this;
     }
     private Line buildLine(){
-        if(line != null)
-            return line;
-        else if(Id != null && begin != null && end != null) {
-            this.line = new Line(Id, begin, end, numShelves);
-            return line;
-        }
-        return null;
+        return new Line(Id, begin, end, numShelves);
     }
 
     public Line build(){
-        final Line returnLine = buildLine();
-        return returnLine;
+        return buildLine();
     }
 }

@@ -1,8 +1,6 @@
 package eapli.base.warehouse.domain;
 
 public class AGVDockBuilder {
-
-    private AGVDock agvDock;
     private String Id;
 
     private Warehouse warehouse;
@@ -48,17 +46,10 @@ public class AGVDockBuilder {
     }
 
     private AGVDock buildDock(){
-        if(agvDock != null)
-            return agvDock;
-        else if(depth != null && accessibility != null && begin != null && end != null) {
-            this.agvDock = new AGVDock(Id, warehouse, depth, accessibility, begin, end);
-            return agvDock;
-        }
-        return null;
+        return new AGVDock(Id, warehouse, depth, accessibility, begin, end);
     }
 
     public AGVDock build(){
-        final AGVDock returnDock = buildDock();
-        return returnDock;
+        return buildDock();
     }
 }

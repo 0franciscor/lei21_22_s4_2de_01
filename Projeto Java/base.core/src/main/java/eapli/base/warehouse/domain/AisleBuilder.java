@@ -2,8 +2,6 @@ package eapli.base.warehouse.domain;
 
 public class AisleBuilder {
 
-    private Aisle aisle;
-
     private Long Id;
 
     private Warehouse warehouse;
@@ -49,16 +47,10 @@ public class AisleBuilder {
     }
 
     private Aisle buildAisle(){
-        if(aisle != null)
-            return aisle;
-        if(accessibility != null && depth != null && begin != null && end != null)
-            this.aisle = new Aisle(Id, warehouse, accessibility, depth, begin, end);
-
-        return aisle;
+        return new Aisle(Id, warehouse, accessibility, depth, begin, end);
     }
 
     public Aisle build() {
-        final Aisle returnAisle = buildAisle();
-        return returnAisle;
+        return buildAisle();
     }
 }

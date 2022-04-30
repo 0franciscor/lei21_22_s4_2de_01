@@ -2,8 +2,6 @@ package eapli.base.warehouse.domain;
 
 public class ShelfBuilder {
 
-    private Shelf shelf;
-
     private ShelfId Id;
     private boolean isEmpty;
 
@@ -20,15 +18,10 @@ public class ShelfBuilder {
     }
 
     private Shelf buildShelf(){
-        if(shelf != null)
-            return shelf;
-        this.shelf = new Shelf(Id, isEmpty);
-
-        return shelf;
+        return new Shelf(Id, isEmpty);
     }
 
     public Shelf build(){
-        final Shelf returnShelf = buildShelf();
-        return returnShelf;
+        return buildShelf();
     }
 }
