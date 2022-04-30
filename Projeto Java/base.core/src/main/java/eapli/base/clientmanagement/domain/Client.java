@@ -9,6 +9,11 @@ import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Set;
 
+/**
+ * Entity Root that will represent a Client.
+ *
+ * Created by Rita Ariana Sobral on 23/04/2022.
+ */
 @Entity
 public class Client implements AggregateRoot<Long>, Serializable {
 

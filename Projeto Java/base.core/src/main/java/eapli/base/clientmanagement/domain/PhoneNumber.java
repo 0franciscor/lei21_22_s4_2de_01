@@ -8,8 +8,14 @@ import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.regex.Pattern;
 
+/**
+ * Value Object that will represent the phone number of a client.
+ *
+ * Created by Rita Ariana Sobral on 29/04/2022.
+ */
 @Embeddable
 public class PhoneNumber implements ValueObject, Serializable {
+
     private static final long serialVersionUID = 1L;
 
     private static final Pattern VALID_PHONE_NUMBER_REGEX = Pattern.compile("^(\\+|00)[1-9][0-9 -().]{7,32}$");

@@ -25,11 +25,23 @@ database ClientRepository{
 
 class Client{
 +create()
++addGender()
++insertBirthDate()
 }
 
 class ClientBuilder{
 +create()
 +createClient()
++withVAT()
++withEmail()
++withPhoneNumber()
++named()
++withAddresses()
++withAddress()
++buildOrThrow()
++withBirthDate()
++withGender()
++build()
 }
 
 class TransactionalContext{
@@ -38,18 +50,18 @@ class TransactionalContext{
 }
 
 
-RegisterClientUI ..> RegisterClientController
+RegisterClientUI --> RegisterClientController
 
-RegisterClientController..>ClientBuilder
-RegisterClientController..>PersistenceContext
-RegisterClientController..>TransactionalContext
-RegisterClientController..>ClientRepository
+RegisterClientController-->ClientBuilder
+RegisterClientController-->PersistenceContext
+RegisterClientController-->TransactionalContext
+RegisterClientController-->ClientRepository
 
 ClientBuilder --> Client
 
-PersistenceContext..>RepositoryFactory
+PersistenceContext-->RepositoryFactory
 
-RepositoryFactory..>ClientRepository
+RepositoryFactory-->ClientRepository
 
 
 @enduml

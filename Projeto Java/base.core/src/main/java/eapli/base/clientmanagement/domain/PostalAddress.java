@@ -8,8 +8,14 @@ import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.regex.Pattern;
 
+/**
+ * Value Object that will represent the postal address of a client.
+ *
+ * Created by Rita Ariana Sobral on 29/04/2022.
+ */
 @Embeddable
 public class PostalAddress implements ValueObject, Serializable {
+
     private static final long serialVersionUID = 1L;
 
     private static final Pattern VALID_POSTAL_CODE_REGEX = Pattern.compile("[0-9]{4}-[0-9]{3}");

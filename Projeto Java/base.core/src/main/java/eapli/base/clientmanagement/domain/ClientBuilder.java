@@ -7,6 +7,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Builder responsible for registering a client in the application.
+ *
+ * Created by Rita Ariana Sobral on 23/04/2022.
+ */
 public class ClientBuilder implements DomainFactory<Client> {
 
     private Client theClient;

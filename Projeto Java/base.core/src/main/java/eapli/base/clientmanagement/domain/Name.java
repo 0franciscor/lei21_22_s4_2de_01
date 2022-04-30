@@ -8,8 +8,14 @@ import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.regex.Pattern;
 
+/**
+ * Value Object that will represent the name of a client.
+ *
+ * Created by Rita Ariana Sobral on 29/04/2022.
+ */
 @Embeddable
 public class Name implements ValueObject, Serializable {
+
     private static final long serialVersionUID = 1L;
     private static final Pattern VALID_NAME_REGEX = Pattern.compile("^[A-Z][a-zA-Z ',.\\-]*$", 2);
     private static final Integer MIN_LENGTH = 3;

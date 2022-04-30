@@ -1,8 +1,6 @@
 package eapli.base.clientmanagement.domain;
 
 import org.junit.Test;
-
-import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
 
