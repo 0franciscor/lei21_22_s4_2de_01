@@ -7,6 +7,11 @@ import eapli.framework.validations.Preconditions;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 
+/**
+ * Value Object that will represent the technical description of a product.
+ *
+ * Created by Rita Ariana Sobral on 29/04/2022.
+ */
 @Embeddable
 public class TechnicalDescription implements ValueObject, Serializable {
 
@@ -14,7 +19,8 @@ public class TechnicalDescription implements ValueObject, Serializable {
 
 
     public TechnicalDescription(final String description) {
-        Preconditions.nonEmpty(description);
+        Preconditions.nonEmpty(description, "Technical Description should neither be null nor empty");
+        Preconditions.noneNull(description,"Technical Description should neither be null nor empty");
         this.technicalDescription = description;
 
     }

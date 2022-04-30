@@ -6,8 +6,7 @@ import eapli.base.categorymanagement.repositories.CategoryRepository;
 import eapli.base.clientmanagement.domain.*;
 import eapli.base.clientmanagement.repositories.ClientRepository;
 import eapli.base.infrastructure.persistence.PersistenceContext;
-import eapli.base.productmanagement.domain.Product;
-import eapli.base.productmanagement.domain.UniqueInternalCode;
+import eapli.base.productmanagement.domain.*;
 import eapli.base.productmanagement.repository.ProductRepository;
 import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.framework.general.domain.model.Money;
@@ -34,12 +33,14 @@ public class RegisterProductController {
         return categoryRepository.findAll();
     }
 
-    public Product registerProduct(final Category category,final String uniqueInternalCode, final double priceWithoutTaxes, final double priceWithTaxes, final Double weight, final Double volume) {
+    public Product registerProduct(final Category category,final String uniqueInternalCode, final String shortDescription, final String extendedDescription, final String technicalDescription,final String barcode,final String brandName,final String reference, final String productionCode,final double priceWithoutTaxes, final double priceWithTaxes, final Double weight, final Double volume) {
 
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER, BaseRoles.SALES_CLERK);
 
-        Product newProduct = new Product(category,new UniqueInternalCode(uniqueInternalCode), Money.euros(priceWithoutTaxes), Money.euros(priceWithTaxes), weight, volume);
-
+        Product newProduct = new Product(category,new UniqueInternalCode(uniqueInternalCode), new ShortDescription(shortDescription),new ExtendedDescription(extendedDescription),new TechnicalDescription(technicalDescription),new Barcode(barcode), new BrandName(brandName),new Reference(reference),Money.euros(priceWithoutTaxes), Money.euros(priceWithTaxes), weight, volume);
+        if(productionCode != null){
+            newProduct.addProductionCode(new ProductionCode(productionCode));
+        }
         return productRepository.save(newProduct);
     }
 
