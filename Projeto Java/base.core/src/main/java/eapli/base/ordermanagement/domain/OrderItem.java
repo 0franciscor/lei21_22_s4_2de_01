@@ -16,7 +16,7 @@ public class OrderItem implements AggregateRoot<Long>, Serializable {
     private Long version;
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy= GenerationType.AUTO)
     private Long orderItemId;
 
     private int quantity;

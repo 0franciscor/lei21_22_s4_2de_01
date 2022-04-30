@@ -74,12 +74,12 @@ public class JpaRepositoryFactory implements RepositoryFactory {
 
     @Override
     public OrderRepository orders() {
-        return new JpaOrderRepository();
+        return new JpaOrderRepository(Application.settings().getPersistenceUnitName());
     }
 
     @Override
     public OrderItemRepository orderItems() {
-        return new JpaOrderItemRepository();
+        return new JpaOrderItemRepository(Application.settings().getPersistenceUnitName());
     }
 
     @Override
