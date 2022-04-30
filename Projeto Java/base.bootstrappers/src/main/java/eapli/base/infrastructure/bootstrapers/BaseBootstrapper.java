@@ -23,7 +23,14 @@
  */
 package eapli.base.infrastructure.bootstrapers;
 
+import eapli.base.categorymanagement.aplication.CreateCategoryController;
+import eapli.base.categorymanagement.domain.AlphanumericCode;
+import eapli.base.categorymanagement.domain.Description;
+import eapli.base.categorymanagement.domain.SuperCategory;
+import eapli.base.clientmanagement.application.RegisterClientController;
+import eapli.base.clientmanagement.domain.Client;
 import eapli.base.warehouse.application.ImportJsonController;
+import eapli.framework.time.util.Calendars;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,6 +48,12 @@ import eapli.framework.infrastructure.authz.domain.model.SystemUserBuilder;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 import eapli.framework.strings.util.Strings;
 import eapli.framework.validations.Invariants;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 /**
  * Base Bootstrapping data app
@@ -67,6 +80,12 @@ public class BaseBootstrapper implements Action {
         registerPowerUser();
         authenticateForBootstrapping();
         //importFileBootStrap();
+        try {
+            registerClient();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        registerCategories();
 
         // execute all bootstrapping
         boolean ret = true;
@@ -105,6 +124,28 @@ public class BaseBootstrapper implements Action {
         ImportJsonController importJsonController = new ImportJsonController();
 
         return importJsonController.importWarehouse("warehouse1.json");
+    }
+
+    private void registerClient() throws ParseException {
+        RegisterClientController registerClientController = new RegisterClientController();
+        List<List<String>> addresses = new ArrayList<>();
+        List<String> address = new ArrayList<>();
+        address.add("Rua do Ouro");
+        address.add("353");
+        address.add("4505-102");
+        address.add("Aveiro");
+        address.add("Portugal");
+        addresses.add(address);
+        String strDate = "2006/09/15";
+        SimpleDateFormat df = new SimpleDateFormat("yyyy/mm/dd");
+        Calendar birthDate = Calendars.fromDate(df.parse(strDate));
+
+        registerClientController.registerClient("Carlota","de Castro Ribeiro e Pereira Sobral","carlotasobral15@gmail.com","+351939214644","PT999999999",addresses,birthDate, Client.Gender.FEMININE);
+    }
+
+    private void registerCategories(){
+        CreateCategoryController createCategoryController = new CreateCategoryController();
+        createCategoryController.createCategory(new AlphanumericCode("123dc"),new Description("Eletrodomésticos Eficientes"),new SuperCategory("Eletrodomésticos Modernos e Eficientes"));
     }
 
     /**

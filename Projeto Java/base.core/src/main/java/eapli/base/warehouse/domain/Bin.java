@@ -1,33 +1,41 @@
 package eapli.base.warehouse.domain;
 
-import eapli.framework.domain.model.ValueObject;
+import eapli.framework.domain.model.AggregateRoot;
 
-import javax.persistence.Embeddable;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
-@Embeddable
-public class Bin implements ValueObject {
-    private int size;
+@Entity
+public class Bin implements AggregateRoot<Long> {
+
+    @Id
+    private Long Id;
+
+    @ManyToOne(optional = false, cascade = CascadeType.MERGE)
+    private Shelf shelf;
 
     public Bin(){}
 
-    public Bin(final int size){
-        setSize(size);
+    public Bin(final Long Id, final Shelf shelf) {
+        this.Id = Id;
+        this.shelf = shelf;
     }
 
-    private void setSize(final int size){
-        if(size <= 0) throw new IllegalArgumentException("A bin's size must be bigger than 0.");
-        this.size = size;
+    @Override
+    public boolean sameAs(Object other) {
+        if(other == null) return false;
+
+        if(this == other) return true;
+
+        Bin newObj = ((Bin) other);
+
+        return Id == Id && shelf == newObj.shelf;
     }
 
-    public boolean equals(Object obj){
-        if(obj == null) return false;
-
-        if(this == obj) return true;
-
-        return size == ((Bin) obj).size;
-    }
-
-    public String toString(){
-        return "Bin sized at " + size;
+    @Override
+    public Long identity() {
+        return Id;
     }
 }

@@ -1,5 +1,6 @@
 package eapli.base.categorymanagement.domain;
 
+import antlr.StringUtils;
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.util.StringPredicates;
 import eapli.framework.util.HashCoder;
@@ -8,6 +9,7 @@ import eapli.framework.validations.Preconditions;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 
 /**
@@ -21,10 +23,15 @@ public class AlphanumericCode implements ValueObject, Serializable, Comparable<A
 
     private final String alphanumericCode;
 
+
+
     public AlphanumericCode(String alphanumericCode) {
+        final Pattern p = Pattern.compile("[0-9]+[a-zA-Z]+[a-zA-Z0-9]*$");
+
         Preconditions.nonEmpty(alphanumericCode, "The alphanumeric code cannot be empty!");
         Preconditions.noneNull(alphanumericCode, "The alphanumeric code cannot be null!");
-        Preconditions.ensure(StringPredicates.containsAlpha(alphanumericCode), "The code entered is not alphanumeric.");
+
+        if (!p.matcher(alphanumericCode).find()) throw new IllegalArgumentException("The code entered is not alphanumeric.");
 
         if (alphanumericCode.length() > 10 || alphanumericCode.length() <= 0) throw new IllegalArgumentException("The alphanumeric code is not in the allowed size!");
         this.alphanumericCode = alphanumericCode;
@@ -33,6 +40,7 @@ public class AlphanumericCode implements ValueObject, Serializable, Comparable<A
     protected AlphanumericCode(){
         this.alphanumericCode = "";
     }
+
 
     public static AlphanumericCode valueOf(final String alphanumericCode) {
         return new AlphanumericCode(alphanumericCode);

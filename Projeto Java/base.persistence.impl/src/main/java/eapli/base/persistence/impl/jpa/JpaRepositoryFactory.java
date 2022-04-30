@@ -26,7 +26,9 @@ import eapli.base.categorymanagement.repositories.CategoryRepository;
 import eapli.base.clientmanagement.repositories.ClientRepository;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
 import eapli.base.infrastructure.persistence.RepositoryFactory;
+import eapli.base.ordermanagement.repository.OrderItemRepository;
 import eapli.base.ordermanagement.repository.OrderRepository;
+import eapli.base.productmanagement.repository.ProductRepository;
 import eapli.base.warehouse.repositories.*;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
@@ -64,9 +66,20 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     public ClientRepository client() {
         return new JpaClientRepository();
     }
+
+    @Override
+    public ProductRepository products() {
+        return new JpaProductRepository();
+    }
+
     @Override
     public OrderRepository orders() {
-        return new JpaOrderRepository();
+        return new JpaOrderRepository(Application.settings().getPersistenceUnitName());
+    }
+
+    @Override
+    public OrderItemRepository orderItems() {
+        return new JpaOrderItemRepository(Application.settings().getPersistenceUnitName());
     }
 
     @Override
@@ -85,6 +98,9 @@ public class JpaRepositoryFactory implements RepositoryFactory {
 
     @Override
     public ShelfRepository shelf(){return new JpaShelfRepository();}
+
+    @Override
+    public BinRepository bin(){return new JpaBinRepository();}
 
     @Override
     public WarehousePlantRepository plant(){return new JpaWarehousePlantRepository();}

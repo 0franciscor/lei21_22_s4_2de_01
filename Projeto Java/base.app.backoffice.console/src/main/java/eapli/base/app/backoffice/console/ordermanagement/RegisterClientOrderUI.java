@@ -4,12 +4,11 @@ import eapli.base.app.backoffice.console.clientmanagement.RegisterClientUI;
 import eapli.base.ordermanagement.application.RegisterClientOrderController;
 import eapli.base.ordermanagement.domain.ProductOrder;
 import eapli.base.ordermanagement.domain.Shipment;
+import eapli.base.productmanagement.domain.UniqueInternalCode;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
+import java.util.*;
 
 /**
  * UI for register a client order to the application.
@@ -22,6 +21,35 @@ public class RegisterClientOrderUI extends AbstractUI {
 
     @Override
     protected boolean doShow() {
+
+        Map<String, Integer> items = new HashMap<>();
+
+        System.out.println(">> PRODUCTS OF THE ORDER");
+
+        String moreProducts = "yes";
+
+        while(moreProducts.equalsIgnoreCase("yes")) {
+            String answer = Console.readLine("Do you want to view the Products Catalog?\n (yes|no)\n");
+
+            if (answer.equalsIgnoreCase("yes")) {
+                //colocar UI do US1002
+            }
+            final String productCode = Console.readLine("Product Unique Internal Code: ");
+
+            boolean productExist = this.theController.verifyProductById(UniqueInternalCode.valueOf(productCode));
+            if (!productExist) {
+                System.out.println("There has not been matches in our Catalog for that Product Code.");
+            } else {
+                Integer quantity = Console.readInteger("How many units of this product do you want?");
+
+                if(items.get(productCode) != null) {
+                    System.out.println("You have already chosen that Product.");
+                } else {
+                    items.put(productCode, quantity);
+                }
+                moreProducts = Console.readLine("Product added successfully. Do you want to add more Products?");
+            }
+        }
 
         final Long clientId = Console.readLong("Client ID: ");
 
@@ -75,6 +103,24 @@ public class RegisterClientOrderUI extends AbstractUI {
 
         i = 1;
 
+        System.out.println("- Payment -");
+        for (ProductOrder.Payment options : ProductOrder.Payment.values()) {
+            System.out.printf("%d. %s%n", i , options.name());
+            i++;
+        }
+
+        int optionPayment = Console.readInteger("Select the option:") - 1;
+
+        if (optionPayment >= i || optionPayment < 0) {
+            throw new UnsupportedOperationException("Invalid Option");
+        }
+
+        ProductOrder.Payment payment = ProductOrder.Payment.values()[optionPayment];
+
+
+
+        i = 1;
+
         System.out.println("- Source Channel -");
         for (ProductOrder.SourceChannel options : ProductOrder.SourceChannel.values()) {
             System.out.printf("%d. %s%n", i , options.name());
@@ -95,9 +141,9 @@ public class RegisterClientOrderUI extends AbstractUI {
 
         if(option.equalsIgnoreCase("yes")){
             String additionalComment = Console.readLine("Additional Comments:");
-            theController.registerOrder(addresses,shipment,sourceChannel,interactionDate,additionalComment);
+            theController.registerOrder(items,addresses,shipment,sourceChannel,interactionDate,additionalComment,payment);
         } else {
-            theController.registerOrder(addresses,shipment,sourceChannel,interactionDate);
+            theController.registerOrder(items,addresses,shipment,sourceChannel,interactionDate,payment);
         }
 
         return false;

@@ -25,7 +25,10 @@ import eapli.base.categorymanagement.repositories.CategoryRepository;
 import eapli.base.clientmanagement.repositories.ClientRepository;
 import eapli.base.clientusermanagement.repositories.ClientUserRepository;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
+import eapli.base.ordermanagement.domain.OrderItem;
+import eapli.base.ordermanagement.repository.OrderItemRepository;
 import eapli.base.ordermanagement.repository.OrderRepository;
+import eapli.base.productmanagement.repository.ProductRepository;
 import eapli.base.warehouse.repositories.*;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
@@ -85,20 +88,71 @@ public interface RepositoryFactory {
      *
      * @return
      */
+    ProductRepository products();
+
+    /**
+     * repository will be created in auto transaction mode
+     *
+     * @return
+     */
     OrderRepository orders();
+
+    /**
+     * repository will be created in auto transaction mode
+     *
+     * @return
+     */
+    OrderItemRepository orderItems();
 
     CategoryRepository category();
 
+    /**
+     * repository will be created in auto transaction mode
+     *
+     * @return
+     */
     AGVDockRepository dock();
 
+    /**
+     * repository will be created in auto transaction mode
+     *
+     * @return
+     */
     AisleRepository aisle();
 
+    /**
+     * repository will be created in auto transaction mode
+     *
+     * @return
+     */
     LineRepository line();
 
+    /**
+     * repository will be created in auto transaction mode
+     *
+     * @return
+     */
     ShelfRepository shelf();
 
+    /**
+     * repository will be created in auto transaction mode
+     *
+     * @return
+     */
+    BinRepository bin();
+
+    /**
+     * repository will be created in auto transaction mode
+     *
+     * @return
+     */
     WarehousePlantRepository plant();
 
+    /**
+     * repository will be created in auto transaction mode
+     *
+     * @return
+     */
     WarehouseRepository warehouse();
 
     /**

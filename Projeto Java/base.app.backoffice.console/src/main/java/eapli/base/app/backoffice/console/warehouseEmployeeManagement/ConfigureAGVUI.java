@@ -1,9 +1,6 @@
 package eapli.base.app.backoffice.console.warehouseEmployeeManagement;
 
 import eapli.base.AGVManagement.Application.ConfigureAGVController;
-import eapli.base.AGVManagement.Domain.AGVId;
-import eapli.base.AGVManagement.Domain.AGVStatus;
-import eapli.base.AGVManagement.Domain.ChangeAGVStatus;
 import eapli.base.warehouse.domain.AGVDock;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;

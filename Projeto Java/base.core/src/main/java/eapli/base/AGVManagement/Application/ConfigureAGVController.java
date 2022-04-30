@@ -17,6 +17,7 @@ public class ConfigureAGVController {
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
     private final AGVRepository agvRepository = PersistenceContext.repositories().agv();
     private final AGVDockRepository agvDockRepository = PersistenceContext.repositories().dock();
+    //private final AGVDockRepository agvDockRepository = PersistenceContext.repositories().agvDock();
 
     public Iterable<AGVDock> configureAGVDock() {
         return agvDockRepository.findAll();
