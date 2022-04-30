@@ -119,24 +119,12 @@ public class Product implements AggregateRoot<Long>, Serializable {
 
     @Override
     public String toString() {
-        return "Product{" +
-                "version=" + version +
-                ", productId=" + productId +
-                ", uniqueInternalCode=" + uniqueInternalCode +
-                ", category=" + category +
-                ", shortDescription=" + shortDescription +
-                ", technicalDescription=" + technicalDescription +
-                ", extendedDescription=" + extendedDescription +
-                ", weight=" + weight +
-                ", volume=" + volume +
-                ", reference=" + reference +
-                ", barcode=" + barcode +
-                ", brandName=" + brandName +
-                ", photos=" + photos +
-                ", productionCode=" + productionCode +
-                ", priceWithoutTaxes=" + priceWithoutTaxes +
-                ", priceWithTaxes=" + priceWithTaxes +
-                '}';
+
+        return "------* Product *------\n" +
+                "Product Id - " + productId + "\n" +
+                "Internal Code - " + uniqueInternalCode + "\n" +
+                "Technical Description - " + technicalDescription + "\n" +
+                "Brand Name - " + brandName + "\n";
     }
 
     public Category category(){

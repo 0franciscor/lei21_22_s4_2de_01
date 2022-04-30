@@ -53,14 +53,12 @@ import eapli.framework.validations.Invariants;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-<<<<<<< HEAD
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
-=======
 import java.util.*;
->>>>>>> ea59ceddef2a989944161eb7a37009cbd7359c2f
+
 
 /**
  * Base Bootstrapping data app
@@ -163,12 +161,9 @@ public class BaseBootstrapper implements Action {
 
     private void registerCategories(){
         CreateCategoryController createCategoryController = new CreateCategoryController();
-<<<<<<< HEAD
         createCategoryController.createCategory(new AlphanumericCode("123dc"),new Description("Eletrodomésticos Eficientes"),new SuperCategory("Eletrodomésticos Modernos e Eficientes"));
         createCategoryController.createCategory(new AlphanumericCode("11hagsb"),new Description("This medicine is for the eyes"),new SuperCategory("Eye Category"));
-=======
         createCategoryController.createCategory(new AlphanumericCode("1253dc"),new Description("Televisões Eficientes"),new SuperCategory("Televisões Modernas e Eficientes"));
->>>>>>> ea59ceddef2a989944161eb7a37009cbd7359c2f
     }
 
 
