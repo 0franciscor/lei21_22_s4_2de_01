@@ -1,6 +1,7 @@
 package eapli.base.categorymanagement.domain;
 
 import eapli.framework.domain.model.ValueObject;
+import eapli.framework.strings.util.StringPredicates;
 import eapli.framework.util.HashCoder;
 import eapli.framework.validations.Preconditions;
 
@@ -21,6 +22,7 @@ public class SuperCategory implements ValueObject, Serializable, Comparable<Supe
 
     public SuperCategory(final String superCategory) {
         Preconditions.nonEmpty(superCategory, "Super category cannot be initialized empty!");
+        Preconditions.ensure(StringPredicates.isPhrase(superCategory), "Super Category must be a text.");
         this.superCategory = superCategory;
     }
 

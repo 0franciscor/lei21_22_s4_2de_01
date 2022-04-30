@@ -26,7 +26,7 @@ public class AlphanumericCode implements ValueObject, Serializable, Comparable<A
 
 
     public AlphanumericCode(String alphanumericCode) {
-        final Pattern p = Pattern.compile("^[a-zA-Z0-9]*$");
+        final Pattern p = Pattern.compile("[0-9]+[a-zA-Z]+[a-zA-Z0-9]*$");
 
         Preconditions.nonEmpty(alphanumericCode, "The alphanumeric code cannot be empty!");
         Preconditions.noneNull(alphanumericCode, "The alphanumeric code cannot be null!");
