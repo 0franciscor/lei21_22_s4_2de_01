@@ -108,11 +108,47 @@ public class Product implements AggregateRoot<Long>, Serializable {
         return this.uniqueInternalCode;
     }
 
+
     public Money getPriceWithoutTaxes() {
         return priceWithoutTaxes;
     }
 
     public Money getPriceWithTaxes() {
         return priceWithTaxes;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "version=" + version +
+                ", productId=" + productId +
+                ", uniqueInternalCode=" + uniqueInternalCode +
+                ", category=" + category +
+                ", shortDescription=" + shortDescription +
+                ", technicalDescription=" + technicalDescription +
+                ", extendedDescription=" + extendedDescription +
+                ", weight=" + weight +
+                ", volume=" + volume +
+                ", reference=" + reference +
+                ", barcode=" + barcode +
+                ", brandName=" + brandName +
+                ", photos=" + photos +
+                ", productionCode=" + productionCode +
+                ", priceWithoutTaxes=" + priceWithoutTaxes +
+                ", priceWithTaxes=" + priceWithTaxes +
+                '}';
+    }
+
+    public Category category(){
+        return this.category;
+    }
+
+    public BrandName brandName(){
+        return this.brandName;
+    }
+
+    public TechnicalDescription technicalDescription(){
+        return  this.technicalDescription;
+
     }
 }

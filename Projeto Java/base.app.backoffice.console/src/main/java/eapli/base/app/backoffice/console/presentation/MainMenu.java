@@ -27,6 +27,7 @@ import eapli.base.app.backoffice.console.categoriamanagement.CreateCategoriaUI;
 import eapli.base.app.backoffice.console.clientmanagement.RegisterClientUI;
 import eapli.base.app.backoffice.console.ordermanagement.RegisterClientOrderUI;
 import eapli.base.app.backoffice.console.presentation.authz.ImportJsonUI;
+import eapli.base.app.backoffice.console.productmanagement.ListProductUi;
 import eapli.base.app.backoffice.console.productmanagement.RegisterProductUI;
 import eapli.base.app.common.console.presentation.authz.MyUserMenu;
 import eapli.base.Application;
@@ -75,6 +76,7 @@ public class MainMenu extends AbstractUI {
     private static final int CREATE_CATEGORY = 2;
     private static final int REGISTER_CLIENT_ORDER = 3;
     private static final int REGISTER_PRODUCT = 4;
+    private static final int CREATE_CATALOG = 5;
 
     // MAIN MENU
     private static final int MY_USER_OPTION = 1;
@@ -198,6 +200,7 @@ public class MainMenu extends AbstractUI {
         menu.addItem(CREATE_CATEGORY, "Create a Category", new CreateCategoriaUI()::show);
         menu.addItem(REGISTER_CLIENT_ORDER, "Register a Client Order", new RegisterClientOrderUI()::show);
         menu.addItem(REGISTER_PRODUCT, "Register a Product", new RegisterProductUI()::show);
+        menu.addItem(CREATE_CATALOG, "Create a catalog:", new ListProductUi()::show);
 
         return menu;
     }

@@ -15,9 +15,5 @@ import eapli.framework.domain.repositories.LockableDomainRepository;
  */
 public interface CategoryRepository extends DomainRepository<Long, Category>, LockableDomainRepository<Long, Category> {
 
-    Iterable<Category> findByAlphanumericCode(AlphanumericCode alphanumericCode);
-
-    Iterable<Category> findByDescription(Description description);
-
-    Iterable<Category> findBySuperCategory(SuperCategory superCategory);
+   Iterable<Category> findAll();
 }
