@@ -32,7 +32,8 @@ public class JsonImport {
             int square = jsonObject.getInt("Square");
             String unit = jsonObject.getString("Unit");
 
-            WarehousePlant warehousePlant = new WarehousePlantBuilder(description, length, width, square, unit).buildWarehouse();
+            WarehousePlant warehousePlant = new WarehousePlantBuilder().withDescription(description).withLength(length).withWidth(width).withSquare(square).withUnit(unit).buildWarehouse();
+
             dataBaseImport(warehousePlant);
 
             warehouse = new WarehouseBuilder(1L, warehousePlant, new Dashboard()).build();
@@ -60,19 +61,30 @@ public class JsonImport {
             Depth depth = new Depth(arrayObject.getJSONObject("depth").getInt("lsquare"), arrayObject.getJSONObject("depth").getInt("wsquare"));
             Accessibility accessibility = new Accessibility(arrayObject.getString("accessibility"));
 
-            Aisle aisle = new AisleBuilder(id, warehouse, accessibility, depth, begin, end).build();
+            Aisle aisle = new AisleBuilder().withId(id).withWarehouse(warehouse).withAccessibility(accessibility).withDepth(depth).withBegin(begin).withEnd(end).build();
 
             dataBaseImport(aisle);
 
             JSONArray jsonArray = arrayObject.getJSONArray("rows");
 
+            long index = 0;
             for(int i = 0; i < jsonArray.length(); i++){
                 id = arrayObject.getLong("Id");
                 begin = new Begin(jsonArray.getJSONObject(i).getJSONObject("begin").getInt("lsquare"), jsonArray.getJSONObject(i).getJSONObject("begin").getInt("wsquare"));
                 end = new End(jsonArray.getJSONObject(i).getJSONObject("end").getInt("lsquare"), jsonArray.getJSONObject(i).getJSONObject("end").getInt("wsquare"));
                 int shelves = jsonArray.getJSONObject(i).getInt("shelves");
 
-                dataBaseImport(new LineBuilder(id, aisle, begin, end, shelves).build());
+                Line line = new LineBuilder().withId(new LineId(id, aisle)).withBegin(begin).withEnd(end).withNumShelves(shelves).build();
+
+                dataBaseImport(line);
+
+                for(int j = 0; j < shelves; j++){
+                    Shelf shelf = new ShelfBuilder().withId(new ShelfId(index, line)).withEmpty(true).build();
+                    dataBaseImport(shelf);
+                    Bin bin = new BinBuilder().withId(new BinId(index, shelf)).build();
+                    dataBaseImport(bin);
+                    index++;
+                }
             }
         }
     }
@@ -87,21 +99,25 @@ public class JsonImport {
             Depth depth = new Depth(object.getJSONObject("depth").getInt("lsquare"), object.getJSONObject("depth").getInt("wsquare"));
             Accessibility accessibility = new Accessibility(object.getString("accessibility"));
 
-            dataBaseImport(new AGVDockBuilder(id, warehouse, depth, accessibility, begin, end).build());
+            dataBaseImport(new AGVDockBuilder().withId(id).withWarehouse(warehouse).withDepth(depth).withAccessibility(accessibility).withBegin(begin).withEnd(end).build());
+
         }
     }
 
     private void dataBaseImport(Object object){
-        if(object.getClass().equals(Aisle.class)) {
+        if(object.getClass().equals(Aisle.class))
             PersistenceContext.repositories().aisle().save((Aisle) object);
-        } else if(object.getClass().equals(Line.class)) {
+         else if(object.getClass().equals(Line.class))
             PersistenceContext.repositories().line().save((Line) object);
-        } else if(object.getClass().equals(WarehousePlant.class)) {
+         else if(object.getClass().equals(Shelf.class))
+            PersistenceContext.repositories().shelf().save((Shelf) object);
+         else if(object.getClass().equals(Bin.class))
+            PersistenceContext.repositories().bin().save((Bin) object);
+         else if(object.getClass().equals(WarehousePlant.class))
             PersistenceContext.repositories().plant().save((WarehousePlant) object);
-        } else if(object.getClass().equals(Warehouse.class)) {
+         else if(object.getClass().equals(Warehouse.class))
             PersistenceContext.repositories().warehouse().save((Warehouse) object);
-        } else if(object.getClass().equals(AGVDock.class)){
+         else if(object.getClass().equals(AGVDock.class))
             PersistenceContext.repositories().dock().save((AGVDock) object);
-        }
     }
 }

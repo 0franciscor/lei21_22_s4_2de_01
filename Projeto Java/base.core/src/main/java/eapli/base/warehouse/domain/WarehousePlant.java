@@ -42,7 +42,7 @@ public class WarehousePlant implements AggregateRoot<Long> {
         WarehousePlant newObj = ((WarehousePlant) other);
 
         return description == newObj.description && length == newObj.length && width == newObj.width && square == newObj.square
-                && unit == newObj.unit;
+                && unit.equals(newObj.unit);
     }
 
     @Override

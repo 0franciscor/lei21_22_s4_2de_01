@@ -4,18 +4,25 @@ public class ShelfBuilder {
 
     private Shelf shelf;
 
-    private Aisle aisle;
+    private ShelfId Id;
     private boolean isEmpty;
 
-    public ShelfBuilder(final Aisle aisle, final boolean isEmpty) {
-        this.aisle = aisle;
+    public ShelfBuilder(){}
+
+    public ShelfBuilder withId(final ShelfId Id){
+        this.Id = Id;
+        return this;
+    }
+
+    public ShelfBuilder withEmpty(boolean isEmpty){
         this.isEmpty = isEmpty;
+        return this;
     }
 
     private Shelf buildShelf(){
         if(shelf != null)
             return shelf;
-        this.shelf = new Shelf(aisle, isEmpty);
+        this.shelf = new Shelf(Id, isEmpty);
 
         return shelf;
     }

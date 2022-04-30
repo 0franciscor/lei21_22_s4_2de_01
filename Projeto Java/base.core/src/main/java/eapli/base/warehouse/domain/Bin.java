@@ -2,25 +2,18 @@ package eapli.base.warehouse.domain;
 
 import eapli.framework.domain.model.AggregateRoot;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Entity
-public class Bin implements AggregateRoot<Long> {
+public class Bin implements AggregateRoot<BinId> {
 
-    @Id
-    private Long Id;
-
-    @ManyToOne(optional = false, cascade = CascadeType.MERGE)
-    private Shelf shelf;
+    @EmbeddedId
+    private BinId Id;
 
     public Bin(){}
 
-    public Bin(final Long Id, final Shelf shelf) {
+    public Bin(final BinId Id) {
         this.Id = Id;
-        this.shelf = shelf;
     }
 
     @Override
@@ -31,11 +24,11 @@ public class Bin implements AggregateRoot<Long> {
 
         Bin newObj = ((Bin) other);
 
-        return Id == Id && shelf == newObj.shelf;
+        return Id.compareTo(newObj.Id) == 0;
     }
 
     @Override
-    public Long identity() {
+    public BinId identity() {
         return Id;
     }
 }

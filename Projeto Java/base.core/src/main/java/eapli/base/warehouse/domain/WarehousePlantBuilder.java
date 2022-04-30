@@ -1,6 +1,5 @@
 package eapli.base.warehouse.domain;
 
-import java.util.List;
 
 public class WarehousePlantBuilder {
 
@@ -15,12 +14,31 @@ public class WarehousePlantBuilder {
 
     private String unit;
 
-    public WarehousePlantBuilder(final String description, final int length, final int width, final int square, final String unit){
+    public WarehousePlantBuilder(){}
+
+    public WarehousePlantBuilder withDescription(final String description) {
         this.description = description;
+        return this;
+    }
+
+    public WarehousePlantBuilder withLength(final int length) {
         this.length = length;
+        return this;
+    }
+
+    public WarehousePlantBuilder withWidth(final int width) {
         this.width = width;
+        return this;
+    }
+
+    public WarehousePlantBuilder withSquare(final int square) {
         this.square = square;
+        return this;
+    }
+
+    public WarehousePlantBuilder withUnit(final String unit) {
         this.unit = unit;
+        return this;
     }
 
     private WarehousePlant buildWarehousePlant(){

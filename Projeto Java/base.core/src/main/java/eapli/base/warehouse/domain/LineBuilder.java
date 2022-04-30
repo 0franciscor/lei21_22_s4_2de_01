@@ -3,9 +3,7 @@ public class LineBuilder {
 
     private Line line;
 
-    private Long Id;
-
-    private Aisle aisle;
+    private LineId Id;
 
     private Begin begin;
 
@@ -13,19 +11,32 @@ public class LineBuilder {
 
     private int numShelves;
 
-    public LineBuilder(final Long Id, final Aisle aisle, final Begin begin, final End end, final int numShelves){
-        this.Id = Id;
-        this.aisle = aisle;
-        this.begin = begin;
-        this.end = end;
-        this.numShelves = numShelves;
+    public LineBuilder(){}
 
+    public LineBuilder withId(final LineId lineId){
+        this.Id = Id;
+        return this;
+    }
+
+    public LineBuilder withBegin(final Begin begin){
+        this.begin = begin;
+        return this;
+    }
+
+    public LineBuilder withEnd(final End end){
+        this.end = end;
+        return this;
+    }
+
+    public LineBuilder withNumShelves(final int numShelves){
+        this.numShelves = numShelves;
+        return this;
     }
     private Line buildLine(){
         if(line != null)
             return line;
-        else if(begin != null && end != null) {
-            this.line = new Line(Id, aisle, begin, end, numShelves);
+        else if(Id != null && begin != null && end != null) {
+            this.line = new Line(Id, begin, end, numShelves);
             return line;
         }
         return null;

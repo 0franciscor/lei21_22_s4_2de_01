@@ -45,8 +45,8 @@ public class Aisle implements AggregateRoot<Long> {
 
         Aisle newObj = ((Aisle) other);
 
-        return warehouse == newObj.warehouse && accessibility == newObj.accessibility && depth == newObj.depth && begin == newObj.begin
-                && end == newObj.end;
+        return warehouse.equals(newObj.warehouse) && accessibility.equals(newObj.accessibility) && depth.equals(newObj.depth) && begin.equals(newObj.begin)
+                && end.equals(newObj.end);
     }
 
     @Override

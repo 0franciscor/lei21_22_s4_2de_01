@@ -35,7 +35,7 @@ public class Warehouse implements AggregateRoot<Long> {
 
         Warehouse newObj = ((Warehouse) other);
 
-        return warehousePlant == newObj.warehousePlant && dashboard == newObj.dashboard;
+        return warehousePlant.equals(newObj.warehousePlant) && dashboard.equals(newObj.dashboard);
     }
 
     @Override

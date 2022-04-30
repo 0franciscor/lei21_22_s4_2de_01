@@ -5,21 +5,16 @@ import eapli.framework.domain.model.AggregateRoot;
 import javax.persistence.*;
 
 @Entity
-public class Shelf implements AggregateRoot<Long> {
+public class Shelf implements AggregateRoot<ShelfId> {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
-
-    @ManyToOne(optional = false, cascade = CascadeType.MERGE)
-    private Aisle aisle;
-
+    @EmbeddedId
+    private ShelfId Id;
     private boolean isEmpty;
 
     public Shelf(){}
 
-    public Shelf(final Aisle aisle, final boolean isEmpty){
-        this.aisle = aisle;
+    public Shelf(final ShelfId Id, final boolean isEmpty) {
+        this.Id = Id;
         this.isEmpty = isEmpty;
     }
 
@@ -30,11 +25,11 @@ public class Shelf implements AggregateRoot<Long> {
 
         Shelf otherShelf = ((Shelf) other);
 
-        return Id == otherShelf.Id && aisle == otherShelf.aisle && isEmpty == isEmpty;
+        return Id.compareTo(otherShelf.Id) == 0 && isEmpty == otherShelf.isEmpty;
     }
 
     @Override
-    public Long identity() {
+    public ShelfId identity() {
         return Id;
     }
 }

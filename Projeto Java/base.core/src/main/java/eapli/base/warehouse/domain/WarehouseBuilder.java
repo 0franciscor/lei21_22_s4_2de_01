@@ -17,6 +17,21 @@ public class WarehouseBuilder {
         this.dashboard = dashboard;
     }
 
+    public WarehouseBuilder withId(Long Id){
+        this.Id = Id;
+        return this;
+    }
+
+    public WarehouseBuilder withPlant(WarehousePlant warehousePlant){
+        this.warehousePlant = warehousePlant;
+        return this;
+    }
+
+    public WarehouseBuilder withDashboard(Dashboard dashboard) {
+        this.dashboard = dashboard;
+        return this;
+    }
+
     private Warehouse buildWarehouse(){
         if(warehouse != null)
             return warehouse;

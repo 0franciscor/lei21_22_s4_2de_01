@@ -41,7 +41,8 @@ public class AGVDock implements AggregateRoot<String> {
 
         AGVDock newObj = ((AGVDock) other);
 
-        return warehouse == newObj.warehouse && depth == newObj.depth && accessibility == newObj.accessibility && begin == newObj.begin && end == newObj.end;
+        return warehouse.equals(newObj.warehouse) && depth.equals(newObj.depth) && accessibility.equals(newObj.accessibility) &&
+                begin.equals(newObj.begin) && end.equals(newObj.end);
     }
 
     @Override

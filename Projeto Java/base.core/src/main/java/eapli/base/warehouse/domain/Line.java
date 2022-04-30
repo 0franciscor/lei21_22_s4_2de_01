@@ -3,16 +3,12 @@ package eapli.base.warehouse.domain;
 import eapli.framework.domain.model.AggregateRoot;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
-public class Line implements AggregateRoot<Long> {
+public class Line implements AggregateRoot<LineId> {
 
-    @Id
-    private Long Id;
-
-    @ManyToOne(optional = false, cascade = CascadeType.MERGE)
-    private Aisle aisle;
+    @EmbeddedId
+    private LineId Id;
 
     @Embedded
     private Begin begin;
@@ -23,9 +19,8 @@ public class Line implements AggregateRoot<Long> {
     private int numShelves;
 
     public Line(){}
-    public Line(final Long Id, final Aisle aisle, final Begin begin, final End end, final int numShelves){
+    public Line(final LineId Id, final Begin begin, final End end, final int numShelves){
         this.Id = Id;
-        this.aisle = aisle;
         this.begin = begin;
         this.end = end;
         this.numShelves = numShelves;
@@ -38,11 +33,11 @@ public class Line implements AggregateRoot<Long> {
 
         Line newLine = ((Line) other);
 
-        return Id == newLine.Id && aisle == newLine.aisle && begin == newLine.begin && end == newLine.end && numShelves == newLine.numShelves;
+        return Id.compareTo(newLine.Id) == 0 && begin.equals(newLine.begin) && end.equals(newLine.end) && numShelves == newLine.numShelves;
     }
 
     @Override
-    public Long identity() {
+    public LineId identity() {
         return Id;
     }
 }
