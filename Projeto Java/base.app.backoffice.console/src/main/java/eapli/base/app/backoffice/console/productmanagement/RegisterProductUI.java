@@ -96,6 +96,11 @@ public class RegisterProductUI extends AbstractUI {
 
         }while (option.equalsIgnoreCase("yes"));
 
+        System.out.println("- Product Location -\n");
+
+        final Long aisleId= Console.readLong("Aisle Id:");
+        final Long rowId= Console.readLong("Row Id:");
+        final Long shelfId= Console.readLong("Shelf Id:");
 
         option = Console.readLine("Do you want to insert the production Code?\n (yes|no)\n");
 
@@ -104,7 +109,7 @@ public class RegisterProductUI extends AbstractUI {
         }
 
         try {
-            this.registerProductController.registerProduct(theCategory,uniqueInternalCode,shortDescription,extendedDescription,technicalDescription,barcode,brandName,reference,productionCode,priceWithoutTaxes,priceWithTaxes,weight,volume,photoPaths);
+            this.registerProductController.registerProduct(theCategory,uniqueInternalCode,shortDescription,extendedDescription,technicalDescription,barcode,brandName,reference,productionCode,priceWithoutTaxes,priceWithTaxes,weight,volume,photoPaths,aisleId,rowId,shelfId);
         } catch (@SuppressWarnings("unused") final IntegrityViolationException e) {
             System.out.println("You tried to enter a product which already exists in the database..");
         }

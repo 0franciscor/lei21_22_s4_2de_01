@@ -113,7 +113,10 @@ public class ProductOrder implements AggregateRoot<Long>, Serializable {
         this.salesClerk = salesClerk;
         this.totalAmountWithoutTaxes = obtainTotalAmountWithoutTaxes(new ListProductService());
         this.totalAmountWithTaxes = obtainTotalAmountWithTaxes(new ListProductService());
+        this.orderWeight = obtainTotalOrderWeight(new ListProductService());
+        this.orderVolume = obtainTotalOrderVolume(new ListProductService());
         this.status = new OrderStatus(OrderStatus.Status.TO_BE_PREPARED);
+        this.createdOn= Calendars.now();
     }
 
     public ProductOrder(final Client client, final Address billingAddress, final Address shippingAddress, final Shipment shipment, final SourceChannel sourceChannel, final Calendar interactionDate, final SystemUser salesClerk, final Set<OrderItem> orderItems, final Payment payment) {
@@ -129,7 +132,10 @@ public class ProductOrder implements AggregateRoot<Long>, Serializable {
         this.salesClerk = salesClerk;
         this.totalAmountWithoutTaxes = obtainTotalAmountWithoutTaxes(new ListProductService());
         this.totalAmountWithTaxes = obtainTotalAmountWithTaxes(new ListProductService());
+        this.orderWeight = obtainTotalOrderWeight(new ListProductService());
+        this.orderVolume = obtainTotalOrderVolume(new ListProductService());
         this.status = new OrderStatus(OrderStatus.Status.TO_BE_PREPARED);
+        this.createdOn= Calendars.now();
     }
 
     public Money obtainTotalAmountWithoutTaxes(ListProductService svcProducts) {
@@ -153,7 +159,34 @@ public class ProductOrder implements AggregateRoot<Long>, Serializable {
             Product product = svcProducts.findProductByUniqueInternalCode(new UniqueInternalCode(code));
             totalAmountWithTaxes += (orderItem.quantity() * product.getPriceWithTaxes().amountAsDouble());
         }
-        return this.totalAmountWithTaxes = Money.euros(totalAmountWithTaxes);
+
+        return this.totalAmountWithTaxes = Money.euros(totalAmountWithTaxes + this.shipment.cost());
+    }
+
+    public OrderWeight obtainTotalOrderWeight(ListProductService svcProducts) {
+        long totalWeight = 0;
+
+        for (OrderItem orderItem : items) {
+            String code = orderItem.code();
+            Product product = svcProducts.findProductByUniqueInternalCode(new UniqueInternalCode(code));
+
+            totalWeight += (orderItem.quantity() * product.getWeight());
+
+        }
+        return this.orderWeight = new OrderWeight(totalWeight);
+    }
+
+    public OrderVolume obtainTotalOrderVolume(ListProductService svcProducts) {
+        long totalVolume = 0;
+
+        for (OrderItem orderItem : items) {
+            String code = orderItem.code();
+            Product product = svcProducts.findProductByUniqueInternalCode(new UniqueInternalCode(code));
+
+            totalVolume += (orderItem.quantity() * product.getVolume());
+
+        }
+        return this.orderVolume = new OrderVolume(totalVolume);
     }
 
     protected ProductOrder() {

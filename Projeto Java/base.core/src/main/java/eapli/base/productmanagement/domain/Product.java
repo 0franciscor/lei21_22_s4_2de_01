@@ -66,9 +66,15 @@ public class Product implements AggregateRoot<Long>, Serializable {
     })
     private Money priceWithTaxes;
 
+    private Long rowId;
+
+    private Long shelfId;
+
+    private Long aisleId;
 
 
-    public Product(final Category category,final UniqueInternalCode uniqueInternalCode, final ShortDescription shortDescription,final ExtendedDescription extendedDescription,final TechnicalDescription technicalDescription,final Barcode barcode,final BrandName brandName, final Reference reference,final Money priceWithoutTaxes, final Money priceWithTaxes, final Double weight, final  Double volume, final Set<Photo> photos){
+
+    public Product(final Category category,final UniqueInternalCode uniqueInternalCode, final ShortDescription shortDescription,final ExtendedDescription extendedDescription,final TechnicalDescription technicalDescription,final Barcode barcode,final BrandName brandName, final Reference reference,final Money priceWithoutTaxes, final Money priceWithTaxes, final Double weight, final  Double volume, final Set<Photo> photos, final Long rowId, final Long shelfId, final Long aisleId){
         this.category=category;
         this.uniqueInternalCode=uniqueInternalCode;
         this.shortDescription=shortDescription;
@@ -82,6 +88,9 @@ public class Product implements AggregateRoot<Long>, Serializable {
         this.brandName=brandName;
         this.reference=reference;
         this.photos = photos;
+        this.aisleId = aisleId;
+        this.rowId = rowId;
+        this.shelfId = shelfId;
     }
 
     protected Product() {
@@ -117,12 +126,21 @@ public class Product implements AggregateRoot<Long>, Serializable {
         return priceWithTaxes;
     }
 
+
+    public double getWeight() {
+        return weight;
+    }
+
+    public double getVolume() {
+        return volume;
+    }
+
     @Override
     public String toString() {
 
         return "------* Product *------\n" +
                 "Product Id - " + productId + "\n" +
-                "Internal Code - " + uniqueInternalCode + "\n" +
+                "Unique Internal Code - " + uniqueInternalCode + "\n" +
                 "Technical Description - " + technicalDescription + "\n" +
                 "Brand Name - " + brandName + "\n";
     }

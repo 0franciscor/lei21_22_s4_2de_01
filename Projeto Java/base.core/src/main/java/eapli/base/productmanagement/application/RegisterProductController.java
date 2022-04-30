@@ -33,7 +33,7 @@ public class RegisterProductController {
         return categoryRepository.findAll();
     }
 
-    public Product registerProduct(final Category category,final String uniqueInternalCode, final String shortDescription, final String extendedDescription, final String technicalDescription,final String barcode,final String brandName,final String reference, final String productionCode,final double priceWithoutTaxes, final double priceWithTaxes, final Double weight, final Double volume, final Set<String> photos) {
+    public Product registerProduct(final Category category,final String uniqueInternalCode, final String shortDescription, final String extendedDescription, final String technicalDescription,final String barcode,final String brandName,final String reference, final String productionCode,final double priceWithoutTaxes, final double priceWithTaxes, final Double weight, final Double volume, final Set<String> photos, final Long aisleId, final Long rowId, final Long shelfId) {
 
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER, BaseRoles.SALES_CLERK);
 
@@ -43,7 +43,7 @@ public class RegisterProductController {
             photoSet.add(new Photo(path));
         }
 
-        Product newProduct = new Product(category,new UniqueInternalCode(uniqueInternalCode), new ShortDescription(shortDescription),new ExtendedDescription(extendedDescription),new TechnicalDescription(technicalDescription),new Barcode(barcode), new BrandName(brandName),new Reference(reference),Money.euros(priceWithoutTaxes), Money.euros(priceWithTaxes), weight, volume,photoSet);
+        Product newProduct = new Product(category,new UniqueInternalCode(uniqueInternalCode), new ShortDescription(shortDescription),new ExtendedDescription(extendedDescription),new TechnicalDescription(technicalDescription),new Barcode(barcode), new BrandName(brandName),new Reference(reference),Money.euros(priceWithoutTaxes), Money.euros(priceWithTaxes), weight, volume,photoSet,rowId,shelfId,aisleId);
 
         if(productionCode != null){
             newProduct.addProductionCode(new ProductionCode(productionCode));

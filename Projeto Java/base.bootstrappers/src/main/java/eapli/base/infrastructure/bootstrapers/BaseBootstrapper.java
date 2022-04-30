@@ -139,7 +139,7 @@ public class BaseBootstrapper implements Action {
 
         CreateCategoryController createCategoryController = new CreateCategoryController();
         Category category = createCategoryController.createCategory(new AlphanumericCode("123dc"),new Description("Eletrodomésticos Eficientes"),new SuperCategory("Eletrodomésticos Modernos e Eficientes"));
-        registerProductController.registerProduct(category,"FRIG123","Frigorífico Eficiente","Frigorífico Moderno e Eficiente","Frigorífico Moderno","123456789123","Samsung","frig937",null,150.0,160.0,20.0,30.0,photos);
+        registerProductController.registerProduct(category,"FRIG123","Frigorífico Eficiente","Frigorífico Moderno e Eficiente","Frigorífico Moderno","123456789123","Samsung","frig937",null,150.0,160.0,20.0,30.0,photos, 1L,1L,1L);
     }
 
     private void registerClient() throws ParseException {
