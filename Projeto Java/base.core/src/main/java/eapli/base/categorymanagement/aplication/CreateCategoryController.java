@@ -24,13 +24,13 @@ public class CreateCategoryController {
     private final CategoryRepository categoryRepository = PersistenceContext.repositories().category();
 
 
-    public Category createCategory(final String alphanumericCode, final String description, final String superCategory){
+    public Category createCategory(AlphanumericCode alphanumericCode, Description description, SuperCategory superCategory){
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER, BaseRoles.SALES_CLERK);
 
         final var newCategory = new CategoryFactory()
-                .withAlphanumericaCode(new AlphanumericCode(alphanumericCode))
-                .withSuperCategory(new SuperCategory(superCategory))
-                .withDescription(new Description(description))
+                .withAlphanumericaCode(alphanumericCode)
+                .withSuperCategory(superCategory)
+                .withDescription(description)
                 .build();
 
         return categoryRepository.save(newCategory);
