@@ -107,4 +107,12 @@ public class Product implements AggregateRoot<Long>, Serializable {
     public UniqueInternalCode uniqueInternalCode() {
         return this.uniqueInternalCode;
     }
+
+    public Money getPriceWithoutTaxes() {
+        return priceWithoutTaxes;
+    }
+
+    public Money getPriceWithTaxes() {
+        return priceWithTaxes;
+    }
 }
