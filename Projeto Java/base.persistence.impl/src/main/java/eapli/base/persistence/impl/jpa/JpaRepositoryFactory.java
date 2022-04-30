@@ -26,7 +26,7 @@ import eapli.base.categorymanagement.repositories.CategoryRepository;
 import eapli.base.clientmanagement.repositories.ClientRepository;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
 import eapli.base.infrastructure.persistence.RepositoryFactory;
-import eapli.base.ordermanagement.repository.OrderItemRepository;
+
 import eapli.base.ordermanagement.repository.OrderRepository;
 import eapli.base.productmanagement.repository.ProductRepository;
 import eapli.base.warehouse.repositories.*;
@@ -77,10 +77,6 @@ public class JpaRepositoryFactory implements RepositoryFactory {
         return new JpaOrderRepository(Application.settings().getPersistenceUnitName());
     }
 
-    @Override
-    public OrderItemRepository orderItems() {
-        return new JpaOrderItemRepository(Application.settings().getPersistenceUnitName());
-    }
 
     @Override
     public CategoryRepository category() {

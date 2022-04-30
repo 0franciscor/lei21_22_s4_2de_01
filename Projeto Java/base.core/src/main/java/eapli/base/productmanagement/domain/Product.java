@@ -108,6 +108,15 @@ public class Product implements AggregateRoot<Long>, Serializable {
         return this.uniqueInternalCode;
     }
 
+
+    public Money getPriceWithoutTaxes() {
+        return priceWithoutTaxes;
+    }
+
+    public Money getPriceWithTaxes() {
+        return priceWithTaxes;
+    }
+
     @Override
     public String toString() {
         return "Product{" +
@@ -140,5 +149,6 @@ public class Product implements AggregateRoot<Long>, Serializable {
 
     public TechnicalDescription technicalDescription(){
         return  this.technicalDescription;
+
     }
 }

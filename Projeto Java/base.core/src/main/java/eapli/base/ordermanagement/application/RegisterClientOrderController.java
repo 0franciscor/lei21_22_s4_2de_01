@@ -65,12 +65,9 @@ public class RegisterClientOrderController {
         for (Map.Entry<String, Integer> entry : items.entrySet()) {
             String code = entry.getKey();
             Integer quantity = entry.getValue();
-            Product product = listProductService.findProductByUniqueInternalCode(UniqueInternalCode.valueOf(code));
-            OrderItem orderItem = new OrderItem(quantity, product);
+            OrderItem orderItem = new OrderItem(quantity,code);
             setItems.add(orderItem);
-            PersistenceContext.repositories().orderItems().save(orderItem);
         }
-
     }
 
 

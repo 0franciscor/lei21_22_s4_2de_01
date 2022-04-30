@@ -1,6 +1,8 @@
 package eapli.base.ordermanagement.domain;
 
 import eapli.base.clientmanagement.domain.Client;
+import eapli.base.productmanagement.application.ListProductService;
+import eapli.base.productmanagement.domain.Product;
 import eapli.base.productmanagement.domain.UniqueInternalCode;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
@@ -59,23 +61,8 @@ public class ProductOrder implements AggregateRoot<Long>, Serializable {
     })
     private Address shippingAddress;
 
-    @OneToMany
-    Set<OrderItem> items = new HashSet<>();
-
-
-    /**
-     * Map where:
-     * > Key: Unique Internal Code of Product
-     * > Value: an Order Item entity
-     *
-     * Might be useful for future US's, namely related to the Shopping Cart
-     */
-    @OneToMany
-    @JoinTable(name = "map_items",
-            joinColumns = {@JoinColumn(name = "order_id")},
-            inverseJoinColumns = {@JoinColumn(name = "item_id")})
-    @MapKeyJoinColumn(name = "product_code")
-    private Map<UniqueInternalCode, OrderItem> mapItems = new HashMap<>();
+    @ElementCollection
+    private Set<OrderItem> items;
 
     @Embedded
     @AttributeOverrides({
@@ -124,6 +111,9 @@ public class ProductOrder implements AggregateRoot<Long>, Serializable {
         this.interactionDate = interactionDate;
         this.additionalComment = additionalComment;
         this.salesClerk = salesClerk;
+        this.totalAmountWithoutTaxes = obtainTotalAmountWithoutTaxes(new ListProductService());
+        this.totalAmountWithTaxes = obtainTotalAmountWithTaxes(new ListProductService());
+        this.status = new OrderStatus(OrderStatus.Status.TO_BE_PREPARED);
     }
 
     public ProductOrder(final Client client, final Address billingAddress, final Address shippingAddress, final Shipment shipment, final SourceChannel sourceChannel, final Calendar interactionDate, final SystemUser salesClerk, final Set<OrderItem> orderItems, final Payment payment) {
@@ -137,6 +127,33 @@ public class ProductOrder implements AggregateRoot<Long>, Serializable {
         this.sourceChannel = sourceChannel;
         this.interactionDate = interactionDate;
         this.salesClerk = salesClerk;
+        this.totalAmountWithoutTaxes = obtainTotalAmountWithoutTaxes(new ListProductService());
+        this.totalAmountWithTaxes = obtainTotalAmountWithTaxes(new ListProductService());
+        this.status = new OrderStatus(OrderStatus.Status.TO_BE_PREPARED);
+    }
+
+    public Money obtainTotalAmountWithoutTaxes(ListProductService svcProducts) {
+        double totalAmountWithoutTaxes = 0;
+
+        for (OrderItem orderItem : items) {
+            String code = orderItem.code();
+            Product product = svcProducts.findProductByUniqueInternalCode(new UniqueInternalCode(code));
+
+            totalAmountWithoutTaxes += (orderItem.quantity() * product.getPriceWithoutTaxes().amountAsDouble());
+
+        }
+        return this.totalAmountWithoutTaxes = Money.euros(totalAmountWithoutTaxes);
+    }
+
+    public Money obtainTotalAmountWithTaxes(ListProductService svcProducts) {
+        double totalAmountWithTaxes = 0;
+
+        for (OrderItem orderItem : items) {
+            String code = orderItem.code();
+            Product product = svcProducts.findProductByUniqueInternalCode(new UniqueInternalCode(code));
+            totalAmountWithTaxes += (orderItem.quantity() * product.getPriceWithTaxes().amountAsDouble());
+        }
+        return this.totalAmountWithTaxes = Money.euros(totalAmountWithTaxes);
     }
 
     protected ProductOrder() {
