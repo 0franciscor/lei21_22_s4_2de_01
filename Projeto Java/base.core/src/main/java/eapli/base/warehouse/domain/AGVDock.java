@@ -48,4 +48,8 @@ public class AGVDock implements AggregateRoot<String> {
     public String identity() {
         return Id;
     }
+
+    public String getId() {
+        return Id;
+    }
 }

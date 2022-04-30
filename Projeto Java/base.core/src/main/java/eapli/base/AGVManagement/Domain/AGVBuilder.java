@@ -1,12 +1,7 @@
 package eapli.base.AGVManagement.Domain;
 
-import eapli.base.clientmanagement.domain.Client;
-import eapli.framework.domain.model.AggregateRoot;
+import eapli.base.warehouse.domain.AGVDock;
 import eapli.framework.domain.model.DomainFactory;
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import java.util.Objects;
 
 public class AGVBuilder implements DomainFactory<AGV> {
 
@@ -14,9 +9,13 @@ public class AGVBuilder implements DomainFactory<AGV> {
 
     private AGVId id;
 
+    private AGVDock agvDock;
+
     private Range range;
 
     private MaxWeightCapacity maxWeightCapacity;
+
+    private MaxVolumeCapacity maxVolumeCapacity;
 
     private Model model;
 
@@ -24,8 +23,15 @@ public class AGVBuilder implements DomainFactory<AGV> {
 
     private AGVPosition position;
 
+    private ChangeAGVStatus status;
+
     public AGVBuilder withId(final AGVId id) {
         this.id = id;
+        return this;
+    }
+
+    public AGVBuilder withAGVDock(final AGVDock agvDock){
+        this.agvDock = agvDock;
         return this;
     }
 
@@ -36,6 +42,11 @@ public class AGVBuilder implements DomainFactory<AGV> {
 
     public AGVBuilder withMaxWeightCapacity(final MaxWeightCapacity maxWeightCapacity) {
         this.maxWeightCapacity = maxWeightCapacity;
+        return this;
+    }
+
+    public AGVBuilder withMaxVolumeCapacity(final MaxVolumeCapacity maxVolumeCapacity) {
+        this.maxVolumeCapacity = maxVolumeCapacity;
         return this;
     }
 
@@ -54,6 +65,11 @@ public class AGVBuilder implements DomainFactory<AGV> {
         return this;
     }
 
+    public AGVBuilder withAGVStatus(final String status){
+        this.status = new ChangeAGVStatus(status);
+        return this;
+    }
+
     @Override
     public AGV build() {
         final AGV ret = buildOrThrow();
@@ -64,8 +80,8 @@ public class AGVBuilder implements DomainFactory<AGV> {
     private AGV buildOrThrow() {
         if (agv != null) {
             return agv;
-        } else if (id != null && range != null && maxWeightCapacity != null && model != null && briefDescription != null) {
-            agv = new AGV(id,briefDescription, model, maxWeightCapacity, range, position);
+        } else if (id != null && range != null && maxWeightCapacity != null && maxVolumeCapacity != null && model != null && briefDescription != null && agvDock != null && status != null) {
+            agv = new AGV(id,briefDescription, model, maxWeightCapacity, maxVolumeCapacity, range, position, agvDock, status);
             return agv;
         } else {
             throw new IllegalStateException();
