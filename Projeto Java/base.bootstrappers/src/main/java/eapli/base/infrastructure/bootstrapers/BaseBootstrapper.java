@@ -25,10 +25,12 @@ package eapli.base.infrastructure.bootstrapers;
 
 import eapli.base.categorymanagement.aplication.CreateCategoryController;
 import eapli.base.categorymanagement.domain.AlphanumericCode;
+import eapli.base.categorymanagement.domain.Category;
 import eapli.base.categorymanagement.domain.Description;
 import eapli.base.categorymanagement.domain.SuperCategory;
 import eapli.base.clientmanagement.application.RegisterClientController;
 import eapli.base.clientmanagement.domain.Client;
+import eapli.base.productmanagement.application.RegisterProductController;
 import eapli.base.warehouse.application.ImportJsonController;
 import eapli.framework.time.util.Calendars;
 import org.slf4j.Logger;
@@ -53,6 +55,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -146,7 +149,9 @@ public class BaseBootstrapper implements Action {
     private void registerCategories(){
         CreateCategoryController createCategoryController = new CreateCategoryController();
         createCategoryController.createCategory(new AlphanumericCode("123dc"),new Description("Eletrodomésticos Eficientes"),new SuperCategory("Eletrodomésticos Modernos e Eficientes"));
+        createCategoryController.createCategory(new AlphanumericCode("11hagsb"),new Description("This medicine is for the eyes"),new SuperCategory("Eye Category"));
     }
+
 
     /**
      * authenticate a super user to be able to register new users
