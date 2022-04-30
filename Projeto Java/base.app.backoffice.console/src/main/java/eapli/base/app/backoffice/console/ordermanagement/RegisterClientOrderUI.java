@@ -1,6 +1,7 @@
 package eapli.base.app.backoffice.console.ordermanagement;
 
 import eapli.base.app.backoffice.console.clientmanagement.RegisterClientUI;
+import eapli.base.app.backoffice.console.productmanagement.ListProductUi;
 import eapli.base.ordermanagement.application.RegisterClientOrderController;
 import eapli.base.ordermanagement.domain.ProductOrder;
 import eapli.base.ordermanagement.domain.Shipment;
@@ -32,7 +33,7 @@ public class RegisterClientOrderUI extends AbstractUI {
             String answer = Console.readLine("Do you want to view the Products Catalog?\n (yes|no)\n");
 
             if (answer.equalsIgnoreCase("yes")) {
-                //colocar UI do US1002
+                new ListProductUi().show();
             }
             final String productCode = Console.readLine("Product Unique Internal Code: ");
 

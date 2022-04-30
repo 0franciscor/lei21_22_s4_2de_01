@@ -11,7 +11,6 @@ package "<<aggregate>> Client" {
     class Email
     class Name
     class PhoneNumber
-    class BirthDate
     class PostalAddresses
     class VAT
 }
@@ -19,12 +18,12 @@ package "<<aggregate>> Client" {
 entity Client <<entity>> <<root>> {
     - id
     - gender
+    - birthDate
 }
 
 class Name <<(V,#FF8B40) value object>> {}
 class Email <<(V,#FF8B40) value object>> {}
 class PhoneNumber <<(V,#FF8B40) value object>> {}
-class BirthDate <<(V,#FF8B40) value object>> {}
 class PostalAddresses <<(V,#FF8B40) value object>> {}
 class VAT <<(V,#FF8B40) value object>> {}
 
@@ -32,7 +31,6 @@ Client --> "1" Name : characterized by
 Client ---> "1" Email : identified by
 Client ---> "1" VAT : identified by
 Client --> "1" PhoneNumber: associated with a
-Client --> "0..1" BirthDate: associated with a
 Client --> "1..*" PostalAddresses: associated with a
 
 package "<<aggregate>> User" {

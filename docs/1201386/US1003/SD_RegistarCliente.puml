@@ -48,18 +48,6 @@ UI -> Controller: registerClient(firstnames, surnames, email, phoneNumber,\nvat,
 activate Controller
 note right of Builder:ClientBuilder é usado para criar uma entidade do tipo Client num estado válido
 Controller -> Builder: create
-Controller -> Builder:setFirstName(firstnames)
-Controller -> Builder:setSurnames(surnames)
-Controller -> Builder:setEmail(email)
-Controller -> Builder:setPhoneNumber(phoneNumber)
-Controller -> Builder:setVAT(vat)
-Controller -> Builder:setPostalAddress(postalAddress)
-alt
-    Controller -> Builder:setBirthDate(birthDate)
-end
-alt
-    Controller -> Builder:setGender(gender)
-end
 Controller -> Builder:createClient()
 activate Builder
 Builder -> Domain: create(firstnames, surnames, email, phoneNumber,\nvat, postalAddress, birthDate, gender)
