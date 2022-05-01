@@ -23,7 +23,7 @@ public class ClientTest {
 
 
     @Test
-    public void ensureDishWithNameEmailPhoneNumberVatAndPostalAddress() {
+    public void ensureClientWithNameEmailPhoneNumberVatAndPostalAddress() {
         postalAddresses.add(CLIENT_POSTAL_ADDRESS);
         new Client(CLIENT_NAME,CLIENT_VAT,CLIENT_EMAIL,CLIENT_PHONE_NUMBER,postalAddresses);
         assertTrue(true);

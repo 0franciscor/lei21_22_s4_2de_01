@@ -19,8 +19,6 @@ public class ProductionCode implements ValueObject, Serializable {
     private final String productionCode;
 
     public ProductionCode(String productionCode){
-        Preconditions.nonEmpty(productionCode, "Production Code should neither be null nor empty");
-        Preconditions.noneNull(productionCode,"Production Code should neither be null nor empty");
         Preconditions.ensure(StringPredicates.containsAlpha(productionCode), "The production code entered is not alphanumeric.");
 
         if (productionCode.length() > 23) {
