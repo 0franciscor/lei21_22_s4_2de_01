@@ -74,4 +74,44 @@ public class AGV implements AggregateRoot<AGVId> {
     public AGVId identity() {
         return agvId;
     }
+
+    public AGVId getAgvId() {
+        return agvId;
+    }
+
+    public AGVDock getAgvDock() {
+        return agvDock;
+    }
+
+    public Range getRange() {
+        return range;
+    }
+
+    public MaxWeightCapacity getMaxWeightCapacity() {
+        return maxWeightCapacity;
+    }
+
+    public MaxVolumeCapacity getMaxVolumeCapacity() {
+        return maxVolumeCapacity;
+    }
+
+    public Model getModel() {
+        return model;
+    }
+
+    public BriefDescription getBriefDescription() {
+        return briefDescription;
+    }
+
+    public AGVPosition getPosition() {
+        return position;
+    }
+
+    public ChangeAGVStatus getStatus() {
+        return status;
+    }
+
+    public AGVTask getAgvTask() {
+        return agvTask;
+    }
 }
