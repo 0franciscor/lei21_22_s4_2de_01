@@ -156,7 +156,7 @@ public class BaseBootstrapper implements Action {
         SimpleDateFormat df = new SimpleDateFormat("yyyy/mm/dd");
         Calendar birthDate = Calendars.fromDate(df.parse(strDate));
 
-        registerClientController.registerClient("Carlota","de Castro Ribeiro e Pereira Sobral","carlotasobral15@gmail.com","+351939214644","PT999999999",addresses,birthDate, Client.Gender.FEMININE);
+        registerClientController.registerClient("Carlota","de Castro Ribeiro e Pereira Sobral","arianasobral26@outlook.pt","+351939214644","PT999999999",addresses,birthDate, Client.Gender.FEMININE);
     }
 
     private void registerCategories(){
