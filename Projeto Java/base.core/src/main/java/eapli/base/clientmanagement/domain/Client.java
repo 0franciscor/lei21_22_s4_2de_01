@@ -79,6 +79,10 @@ public class Client implements AggregateRoot<Long>, Serializable {
         this.birthdate = birthdate;
     }
 
+    public Email getEmail() {
+        return email;
+    }
+
     @Override
     public int hashCode() {
         return DomainEntities.hashCode(this);

@@ -116,7 +116,7 @@ public class ProductOrder implements AggregateRoot<Long>, Serializable {
         this.orderWeight = obtainTotalOrderWeight(new ListProductService());
         this.orderVolume = obtainTotalOrderVolume(new ListProductService());
         this.status = new OrderStatus(OrderStatus.Status.TO_BE_PREPARED);
-
+        new Notification(client.getEmail().toString(),"Encomenda Efetuada","A sua encomenda já foi registada no sistema e encontra-se a ser preparada!\nDentro de alguns dias será enviada!\n\nObrigada pela preferência!");
     }
 
     public ProductOrder(final Client client, final Address billingAddress, final Address shippingAddress, final Shipment shipment, final SourceChannel sourceChannel, final Calendar interactionDate, final SystemUser salesClerk, final Set<OrderItem> orderItems, final Payment payment) {
@@ -135,6 +135,7 @@ public class ProductOrder implements AggregateRoot<Long>, Serializable {
         this.orderWeight = obtainTotalOrderWeight(new ListProductService());
         this.orderVolume = obtainTotalOrderVolume(new ListProductService());
         this.status = new OrderStatus(OrderStatus.Status.TO_BE_PREPARED);
+        new Notification(client.getEmail().toString(),"Encomenda Efetuada","A sua encomenda já foi registada no sistema e encontra-se a ser preparada!\nDentro de alguns dias será enviada!\n\nObrigada pela preferência!");
     }
 
     public Money obtainTotalAmountWithoutTaxes(ListProductService svcProducts) {
