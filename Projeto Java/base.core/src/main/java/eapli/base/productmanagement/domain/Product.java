@@ -72,6 +72,8 @@ public class Product implements AggregateRoot<Long>, Serializable {
 
     private Long aisleId;
 
+    private boolean isActive;
+
 
 
     public Product(final Category category,final UniqueInternalCode uniqueInternalCode, final ShortDescription shortDescription,final ExtendedDescription extendedDescription,final TechnicalDescription technicalDescription,final Barcode barcode,final BrandName brandName, final Reference reference,final Money priceWithoutTaxes, final Money priceWithTaxes, final Double weight, final  Double volume, final Set<Photo> photos, final Long rowId, final Long shelfId, final Long aisleId){
@@ -91,6 +93,7 @@ public class Product implements AggregateRoot<Long>, Serializable {
         this.aisleId = aisleId;
         this.rowId = rowId;
         this.shelfId = shelfId;
+        this.isActive = true;
     }
 
     protected Product() {
@@ -117,6 +120,9 @@ public class Product implements AggregateRoot<Long>, Serializable {
         return this.uniqueInternalCode;
     }
 
+    public void deactivateOrActivateProduct (boolean isActive){
+        this.isActive=isActive;
+    }
 
     public Money getPriceWithoutTaxes() {
         return priceWithoutTaxes;

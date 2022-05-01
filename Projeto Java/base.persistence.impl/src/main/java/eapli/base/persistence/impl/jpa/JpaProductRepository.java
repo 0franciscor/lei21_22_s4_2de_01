@@ -27,7 +27,6 @@ public class JpaProductRepository extends BasepaRepositoryBase<Product, Long, Lo
         try {
         Query query = super.entityManager().createQuery("SELECT e FROM Product e WHERE e.uniqueInternalCode=:uniqueInternalCode");
         query.setParameter("uniqueInternalCode", uniqueInternalCode);
-
             Product product = (Product) query.getSingleResult();
             return product;
         } catch (NoResultException e){

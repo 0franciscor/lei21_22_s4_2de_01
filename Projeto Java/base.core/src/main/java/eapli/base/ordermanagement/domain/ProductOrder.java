@@ -116,7 +116,7 @@ public class ProductOrder implements AggregateRoot<Long>, Serializable {
         this.orderWeight = obtainTotalOrderWeight(new ListProductService());
         this.orderVolume = obtainTotalOrderVolume(new ListProductService());
         this.status = new OrderStatus(OrderStatus.Status.TO_BE_PREPARED);
-        this.createdOn= Calendars.now();
+
     }
 
     public ProductOrder(final Client client, final Address billingAddress, final Address shippingAddress, final Shipment shipment, final SourceChannel sourceChannel, final Calendar interactionDate, final SystemUser salesClerk, final Set<OrderItem> orderItems, final Payment payment) {
@@ -135,7 +135,6 @@ public class ProductOrder implements AggregateRoot<Long>, Serializable {
         this.orderWeight = obtainTotalOrderWeight(new ListProductService());
         this.orderVolume = obtainTotalOrderVolume(new ListProductService());
         this.status = new OrderStatus(OrderStatus.Status.TO_BE_PREPARED);
-        this.createdOn= Calendars.now();
     }
 
     public Money obtainTotalAmountWithoutTaxes(ListProductService svcProducts) {
