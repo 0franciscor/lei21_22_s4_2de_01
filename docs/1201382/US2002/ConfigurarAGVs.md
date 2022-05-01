@@ -1,7 +1,6 @@
 US2002
 =======================================
 
-
 # 1. Requirements
 
 ### As a Warehouse Employee, I want to configure the AGV's available in the Warehouse.
@@ -107,45 +106,148 @@ The registration information of the new category is persisted/saved in the syste
 
 # 3. Design
 
-*Nesta secção a equipa deve descrever o design adotado para satisfazer a funcionalidade. Entre outros, a equipa deve apresentar diagrama(s) de realização da funcionalidade, diagrama(s) de classes, identificação de padrões aplicados e quais foram os principais testes especificados para validar a funcionalidade.*
-
-*Para além das secções sugeridas, podem ser incluídas outras.*
-
 ## 3.1. Realização da Funcionalidade
 
-*Nesta secção deve apresentar e descrever o fluxo/sequência que permite realizar a funcionalidade.*
+![US2002_SD](US2002_SD.svg)
 
 ## 3.2. Diagrama de Classes
 
-*Nesta secção deve apresentar e descrever as principais classes envolvidas na realização da funcionalidade.*
+![US2002_CD](US2002_CD.svg)
 
 ## 3.3. Padrões Aplicados
 
-*Nesta secção deve apresentar e explicar quais e como foram os padrões de design aplicados e as melhores práticas.*
+Foram aplicados os princípios SOLID e os padrões de design de software GoF. Sendo o que exigiu maior pensamento e reflexão sobre se faria sentido aplicar foi o Builder.
 
 ## 3.4. Testes 
-*Nesta secção deve sistematizar como os testes foram concebidos para permitir uma correta aferição da satisfação dos requisitos.*
 
-**Teste 1:** Verificar que não é possível criar uma instância da classe Exemplo com valores nulos.
+**Teste 1:** Get Range Method verification.
 
-	@Test(expected = IllegalArgumentException.class)
-		public void ensureNullIsNotAllowed() {
-		Exemplo instance = new Exemplo(null, null);
-	}
+	 @Test
+    void getRange() {
+        AGVId id = new AGVId("12345678");
+        BriefDescription description = new BriefDescription("abcdefg");
+        MaxWeightCapacity weight = new MaxWeightCapacity(200.0);
+        MaxVolumeCapacity volume = new MaxVolumeCapacity(200);
+        Model model = new Model("2.1.1.1");
+        ChangeAGVStatus status = new ChangeAGVStatus("FREE");
+        Range a = new Range(5.0);
+        AGVTask task = new AGVTask("x");
+        AGVPosition pos = new AGVPosition("s");
+        AGVDock dock = new AGVDock();
+
+        AGV a1 = new AGV(id,description,model,weight,volume,a,pos,dock,status,task);
+        AGV a2 = new AGV(id,description,model,weight,volume,a,pos,dock,status,task);
+        Assertions.assertEquals(a1.getRange(), a2.getRange());
+    }
 
 # 4. Implementação
 
-*Nesta secção a equipa deve providenciar, se necessário, algumas evidências de que a implementação está em conformidade com o design efetuado. Para além disso, deve mencionar/descrever a existência de outros ficheiros (e.g. de configuração) relevantes e destacar commits relevantes;*
+### AGVBuilder() implementation
 
-*Recomenda-se que organize este conteúdo por subsecções.*
+    package eapli.base.AGVManagement.Domain;
+
+    import eapli.base.warehouse.domain.AGVDock;
+    import eapli.framework.domain.model.DomainFactory;
+
+    public class AGVBuilder implements DomainFactory<AGV> {
+
+    private AGV agv;
+
+    private AGVId id;
+
+    private AGVDock agvDock;
+
+    private Range range;
+
+    private MaxWeightCapacity maxWeightCapacity;
+
+    private MaxVolumeCapacity maxVolumeCapacity;
+
+    private Model model;
+
+    private BriefDescription briefDescription;
+
+    private AGVPosition position;
+
+    private ChangeAGVStatus status;
+
+    private AGVTask task;
+
+    public AGVBuilder withId(final AGVId id) {
+        this.id = id;
+        return this;
+    }
+
+    public AGVBuilder withAGVDock(final AGVDock agvDock){
+        this.agvDock = agvDock;
+        return this;
+    }
+
+    public AGVBuilder withRange(final Range range) {
+        this.range = range;
+        return this;
+    }
+
+    public AGVBuilder withMaxWeightCapacity(final MaxWeightCapacity maxWeightCapacity) {
+        this.maxWeightCapacity = maxWeightCapacity;
+        return this;
+    }
+
+    public AGVBuilder withMaxVolumeCapacity(final MaxVolumeCapacity maxVolumeCapacity) {
+        this.maxVolumeCapacity = maxVolumeCapacity;
+        return this;
+    }
+
+    public AGVBuilder withModel(final Model model) {
+        this.model = model;
+        return this;
+    }
+
+    public AGVBuilder withBriefDescription(final BriefDescription briefDescription) {
+        this.briefDescription = briefDescription;
+        return this;
+    }
+
+    public AGVBuilder withPosition(final AGVPosition position){
+        this.position = position;
+        return this;
+    }
+
+    public AGVBuilder withAGVStatus(final String status){
+        this.status = new ChangeAGVStatus(status);
+        return this;
+    }
+    public AGVBuilder withAGVTask(final String task){
+       this.task = new AGVTask(task);
+       return this;
+    }
+
+    @Override
+    public AGV build() {
+        final AGV ret = buildOrThrow();
+        agv = null;
+        return  ret;
+    }
+
+    private AGV buildOrThrow() {
+        if (agv != null) {
+            return agv;
+        } else if (id != null && range != null && maxWeightCapacity != null && maxVolumeCapacity != null && model != null && briefDescription != null && agvDock != null && status != null && task != null) {
+            agv = new AGV(id,briefDescription, model, maxWeightCapacity, maxVolumeCapacity, range, position, agvDock, status, task);
+            return agv;
+        } else {
+            throw new IllegalStateException();
+        }
+    }
+    }
 
 # 5. Integração/Demonstração
 
 *Nesta secção a equipa deve descrever os esforços realizados no sentido de integrar a funcionalidade desenvolvida com as restantes funcionalidades do sistema.*
+![US2002_DEMO](US2002_UI_DEMO.jpg)
 
 # 6. Observações
 
-*Nesta secção sugere-se que a equipa apresente uma perspetiva critica sobre o trabalho desenvolvido apontando, por exemplo, outras alternativas e ou trabalhos futuros relacionados.*
 
 
 
