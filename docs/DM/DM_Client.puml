@@ -6,44 +6,45 @@ hide empty attributes
 skinparam classBackgroundColor beige
 skinparam ArrowColor #222222
 
+
+
+
+package "<<aggregate>> Client" {
+    entity Client
+    class PhoneNumber
+    class VAT
+    class Name
+    class Email
+    class PostalAddresses
+}
+
+entity Client <<entity>> <<root>> {
+    - id
+    - birthDate
+    - gender
+}
+
 package "<<aggregate>> User" {
     entity User
-    class Email
-    class Name
+
 }
 
 entity User <<entity>> <<root>> {
 
 }
 
+
+class PhoneNumber <<(V,#FF8B40) value object>> {}
+class VAT <<(V,#FF8B40) value object>> {}
+class PostalAddresses <<(V,#FF8B40) value object>> {}
 class Name <<(V,#FF8B40) value object>> {}
 class Email <<(V,#FF8B40) value object>> {}
 
-User --> "1" Name : characterized by
-User --> "1" Email : identified by
-
-package "<<aggregate>> Client" {
-    entity Client
-    class PhoneNumber
-    class BirthDate
-    class Gender
-    class PostalAddresses
-}
-
-entity Client <<entity>> <<root>> {
-    - id
-    - vat
-}
-
-class PhoneNumber <<(V,#FF8B40) value object>> {}
-class BirthDate <<(V,#FF8B40) value object>> {}
-class Gender <<(V,#FF8B40) value object>> {}
-class PostalAddresses <<(V,#FF8B40) value object>> {}
-
 Client ---> "1" User : is a
 Client ---> "1" PhoneNumber: associated with a
-Client --> "0..1" BirthDate: associated with a
-Client --> "0..1" Gender: associated with a
+Client ---> "1" Name: associated with a
+Client ---> "1" Email: associated with a
+Client --> "1" VAT: associated with a
 Client ---> "1..*" PostalAddresses: associated with a
 
 @enduml
