@@ -1,17 +1,29 @@
 grammar Survey;
 
-alfa: MINUSCULA
-    | MAIUSCULA;
+start: questionario;
 
-alfanumerico: alfa
+alfanumerico: PALAVRA
             | NUMERO;
 
-palavra : (alfa)+ ;
+pontucao: PONTO_FINAL
+        | PONTO_INTERROGACAO
+        | PONTO_EXCLAMACAO;
 
-frase : palavra frase
-      | palavra ;
+regraIdQuestionario: alfanumerico+ HIFEN alfanumerico+;
 
-question : frase PONTO_INTERROGACAO;
+regraTitulo: FRASE;
+
+regraMensagem: (FRASE pontucao NEWLINE)+;
+
+regraId: NUMERO+;
+
+regraPergunta: FRASE PONTO_INTERROGACAO;
+
+questionario: regraIdQuestionario NEWLINE regraTitulo NEWLINE regraMensagem;
+
+seccao: regraId NEWLINE regraTitulo NEWLINE regraMensagem;
+
+pergunta: regraId NEWLINE regraPergunta NEWLINE regraMensagem;
 
 //------------------- TOKENS -------------------
 
@@ -20,9 +32,15 @@ OPTIONAL: 'optional';
 CONDITION_DEPENDENT: 'condition dependent';
 
 NUMERO: [0-9];
-MINUSCULA: [a-z];
-MAIUSCULA: [A-Z];
-HIFEN: '-';
-PONTO_INTERROGACAO: '?';
+LETRA: [a-zA-Z];
+PALAVRA: LETRA+;
+FRASE: PALAVRA (VIRGULA? ESPACO PALAVRA)*;
 
-WS : [ \t\r\n]+ -> skip;
+HIFEN: '-';
+ESPACO: ' ';
+PONTO_FINAL: '.';
+DOIS_PONTOS: ':';
+VIRGULA: ',';
+PONTO_INTERROGACAO: '?';
+PONTO_EXCLAMACAO: '!';
+NEWLINE : [\r\n] ;
