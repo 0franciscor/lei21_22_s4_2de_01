@@ -87,11 +87,17 @@ entity Employee <<entity>> <<root>> {
 
 package "<<aggregate>> AGV" {
     entity AGV
+    entity AGVTask
 
 }
 
 entity AGV <<entity>> <<root>> {
     -state
+}
+
+entity AGVTask <<entity>> {
+    -id
+    -agvTaskDescription
 }
 
 Client -----> "1" ShopCar : associated
@@ -113,5 +119,7 @@ ProductOrder ---> "1" BillingAddress : associated with
 ProductOrder -> "1..*" OrderItem : composed by
 OrderItem --------> "1" Product : composed by
 
-ProductOrder -> "1..*" AGV : associated
+AGVTask -> "1..*" ProductOrder : composed by
+
+AGV -> "1" AGVTask : associated
 @enduml

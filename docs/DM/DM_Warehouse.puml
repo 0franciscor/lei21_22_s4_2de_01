@@ -26,7 +26,7 @@ package "<<aggregate>> AGV" {
     class BriefDescription
     class Model
     class AGVStatus
-    class AGVTask
+    entity AGVTask
     class MaxWeightCapacity
     class MaxVolumeCapacity
     class AGVPosition
@@ -170,9 +170,19 @@ class MaxVolumeCapacity <<(V,#FF8B40) value object>> {
 -volume
 }
 
-class AGVTask<<(V,#FF8B40) value object>> {
-    -agvTask
+entity AGVTask <<entity>> {
+    -id
+    -agvTaskDescription
 }
+
+package "<<aggregate>> ProductOrder"{
+    entity ProductOrder
+}
+
+entity ProductOrder <<entity>> <<root>> {
+- numericIdentifier
+}
+
 
 AGV --> "1" AGVId : has
 AGV --> "1..*" AGVStatus : collects
@@ -183,5 +193,5 @@ AGV --> "1" MaxWeightCapacity : respects
 AGV --> "1" MaxVolumeCapacity : respects
 AGV --> "1" AGVPosition : located in
 AGV --> "1" AGVTask : associated
-
+AGVTask --> "1..*" ProductOrder : composed by
 @enduml
