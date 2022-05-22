@@ -21,6 +21,7 @@
 package eapli.base.persistence.impl.jpa;
 
 import eapli.base.AGV.Repositories.AGVRepository;
+import eapli.base.AGV.Repositories.AGVTaskRepository;
 import eapli.base.Application;
 import eapli.base.categorymanagement.repositories.CategoryRepository;
 import eapli.base.clientmanagement.repositories.ClientRepository;
@@ -88,6 +89,9 @@ public class JpaRepositoryFactory implements RepositoryFactory {
 
     @Override
     public AisleRepository aisle(){return new JpaAisleRepository();}
+
+    @Override
+    public AGVTaskRepository agvTask(){return new JPAAGVTaskRepository();}
 
     @Override
     public LineRepository line(){return new JpaLineRepository();}

@@ -21,6 +21,7 @@
 package eapli.base.persistence.impl.inmemory;
 
 import eapli.base.AGV.Repositories.AGVRepository;
+import eapli.base.AGV.Repositories.AGVTaskRepository;
 import eapli.base.categorymanagement.repositories.CategoryRepository;
 import eapli.base.clientmanagement.repositories.ClientRepository;
 import eapli.base.clientusermanagement.repositories.ClientUserRepository;
@@ -82,7 +83,6 @@ public class InMemoryRepositoryFactory implements RepositoryFactory{
         return new InMemoryOrderRepository();
     }
 
-
     @Override
     public CategoryRepository category() {
         return new InMemoryCategoryRepository();
@@ -90,6 +90,9 @@ public class InMemoryRepositoryFactory implements RepositoryFactory{
 
     @Override
     public AGVDockRepository dock(){return new InMemoryAGVDockRepository();}
+
+    @Override
+    public AGVTaskRepository agvTask(){return new InMemoryAGVTaskRepository();}
 
     @Override
     public AisleRepository aisle(){return new InMemoryAisleRepository();}

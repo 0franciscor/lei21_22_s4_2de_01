@@ -6,7 +6,7 @@ import eapli.base.AGV.Repositories.AGVRepository;
 
 public class JpaAGVRepository extends BasepaRepositoryBase<AGV, AGVId, AGVId> implements AGVRepository {
 
-    JpaAGVRepository() {
+    public JpaAGVRepository() {
         super("id");
     }
 

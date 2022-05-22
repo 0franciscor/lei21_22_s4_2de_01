@@ -21,6 +21,7 @@
 package eapli.base.infrastructure.persistence;
 
 import eapli.base.AGV.Repositories.AGVRepository;
+import eapli.base.AGV.Repositories.AGVTaskRepository;
 import eapli.base.categorymanagement.repositories.CategoryRepository;
 import eapli.base.clientmanagement.repositories.ClientRepository;
 import eapli.base.clientusermanagement.repositories.ClientUserRepository;
@@ -113,6 +114,8 @@ public interface RepositoryFactory {
      * @return
      */
     AisleRepository aisle();
+
+    AGVTaskRepository agvTask();
 
     /**
      * repository will be created in auto transaction mode

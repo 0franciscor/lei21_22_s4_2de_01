@@ -40,7 +40,7 @@ class AGVTaskTest {
         AGVDock dock = new AGVDock();
 
         AGV a1 = new AGV(id,description,model,weight,volume,a,pos,dock,status,task);
-        task.setAgvTask("x");
+        task.setDescription("x");
         AGV a2 = new AGV(id,description,model,weight,volume,a,pos,dock,status,task);
         Assertions.assertEquals(a1.getAgvTask(), a2.getAgvTask());
     }
@@ -60,7 +60,7 @@ class AGVTaskTest {
         AGVDock dock = new AGVDock();
 
         AGV a1 = new AGV(id,description,model,weight,volume,a,pos,dock,status,task);
-        task.setAgvTask("y");
+        task.setDescription("y");
         AGV a2 = new AGV(id,description,model,weight,volume,a,pos,dock,status,t1);
         Assertions.assertNotEquals(a1.getAgvTask(), a2.getAgvTask());
     }

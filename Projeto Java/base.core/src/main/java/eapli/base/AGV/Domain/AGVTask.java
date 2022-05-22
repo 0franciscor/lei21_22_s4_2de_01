@@ -1,30 +1,46 @@
 package eapli.base.AGV.Domain;
 
-import eapli.framework.domain.model.ValueObject;
+import eapli.framework.domain.model.AggregateRoot;
+import eapli.framework.domain.model.DomainEntity;
 
-import javax.persistence.Embeddable;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
-@Embeddable
-public class AGVTask implements ValueObject {
-    private String agvTask;
+@Entity
+public class AGVTask implements DomainEntity<Long>, AggregateRoot<Long> { //IMPLEMENTADO PARA EVITAR ERRO. REVISAO ACONSELHADA
+
+    @Id
+    private Long Id;
+    private String description;
 
     public AGVTask(String id) {
-        this.agvTask = id;
+        this.description = id;
     }
     public AGVTask() {}
 
-    public String getAgvTask() {
-        return agvTask;
+    public String getDescription() {
+        return description;
     }
 
-    public void setAgvTask(String agvTask) {
-        this.agvTask = agvTask;
+    public void setDescription(String agvTask) {
+        this.description = agvTask;
     }
 
     @Override
     public String toString() {
         return "AGVTask{" +
-                "id='" + agvTask + '\'' +
+                "id='" + description + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean sameAs(Object other) {
+        AGVTask obj = (AGVTask) other;
+        return Id == obj.Id && description.equals(obj.description);
+    }
+
+    @Override
+    public Long identity() {
+        return Id;
     }
 }
