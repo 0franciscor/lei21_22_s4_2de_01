@@ -74,4 +74,6 @@ Category --> "1" AlphanumericCode : identified by
 Category --> "1" Description : characterized by
 Category --> "0..1" SuperCategory : belongs to
 
+
+
 @enduml
