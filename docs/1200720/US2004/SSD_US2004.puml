@@ -1,0 +1,20 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+actor "Funcionário do Armazém" as F
+participant Sistema as S
+autonumber
+
+activate F
+F --> S : Pede a lista de produtos preparadas por um AGV
+activate S
+
+S --> F : Mostra a lista de AGV's e pede para selecionar um
+deactivate S
+F --> S: Seleciona o AGV
+activate S
+S --> F : Mostra a lista de produtos preparadas pelo AGV selecionado
+
+deactivate S
+deactivate F
+@enduml
