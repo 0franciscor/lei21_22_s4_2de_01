@@ -72,6 +72,7 @@ Notice that, orders that can be prepared by AGVs are being added to a queue foll
 ![US2003_SSD](US2003_SSD.svg)
 
 ## 2.2. Partial Domain Model
+![US2003_DM](US2003_DM.svg)
 
 
 # 3. Design
