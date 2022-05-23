@@ -58,10 +58,18 @@ Notice that, orders that can be prepared by AGVs are being added to a queue foll
 # 2. Analysis
 
 ### Main success scenario
-
-### Conditions
+>The warehouse employee is able to: 
+> 
+>> (i) select an order that needs to be prepared; 
+> 
+>> (ii): select the AGV from the ones that are available and able to perform the task; 
+> 
+>> (iii) the task is sent to the selected AGV and 
+> 
+>> (iv) the order change its status.
 
 ## 2.1. System Sequence Diagram
+![US2003_SSD](US2003_SSD.svg)
 
 ## 2.2. Partial Domain Model
 
