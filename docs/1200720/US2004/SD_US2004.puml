@@ -1,0 +1,109 @@
+@startuml
+'http://plantuml.com/skinparam.html
+
+actor "Warehouse Employee" as EMPLOYEE
+participant ListOrdersBeingPreparedUI as UI <<presentation>>
+participant ListOrdersBeingPreparedController as CONTROLLER <<application>>
+participant AGVTask as TASK <<domain>>
+participant PersistenceContext as PERSISTENCE <<persistence>>
+participant RepositoryFactory as FACTORY <<factory>>
+database AGVRepository as REPOSITORY_AGV <<repository>>
+database ProductOrderRepository as REPOSITORY_ORDERS <<repository>>
+
+EMPLOYEE -> UI: Ask for the list of products prepared by an
+activate EMPLOYEE
+activate UI
+
+UI -> CONTROLLER: create()
+
+activate CONTROLLER
+deactivate CONTROLLER
+
+UI -> CONTROLLER : getAGVsAvaiable()
+activate CONTROLLER
+
+CONTROLLER -> PERSISTENCE : repositories()
+
+activate PERSISTENCE
+
+PERSISTENCE -> FACTORY : create()
+
+activate FACTORY
+deactivate FACTORY
+
+PERSISTENCE --> CONTROLLER : repositoryFactory
+
+deactivate PERSISTENCE
+
+CONTROLLER -> FACTORY : getAGVRepository()
+
+activate FACTORY
+
+FACTORY -> REPOSITORY_AGV : create()
+
+activate REPOSITORY_AGV
+deactivate REPOSITORY_AGV
+
+FACTORY --> CONTROLLER : agvRepository
+deactivate FACTORY
+
+CONTROLLER -> REPOSITORY_AGV : getAGVsAvaiable()
+
+activate REPOSITORY_AGV
+
+REPOSITORY_AGV --> CONTROLLER : agvsAvaiable
+
+deactivate REPOSITORY_AGV
+
+CONTROLLER --> UI : agvsAvaiable
+deactivate CONTROLLER
+
+UI --> EMPLOYEE: Shows the list of AGVs and asks to select one
+
+
+deactivate CONTROLLER
+deactivate UI
+
+EMPLOYEE -> UI : Select the AGV
+
+activate UI
+
+UI -> CONTROLLER : getOrdersWhoNeedToBePreparedByAGV()
+
+activate CONTROLLER
+
+CONTROLLER -> FACTORY : getOrderRepository()
+
+activate FACTORY
+
+FACTORY --> CONTROLLER : orderRepository
+
+deactivate FACTORY
+
+CONTROLLER -> REPOSITORY_ORDERS : getOrdersWhoNeedToBePreparedByAGV()
+
+activate REPOSITORY_ORDERS
+
+REPOSITORY_ORDERS --> CONTROLLER : listOfOrdersWhoNeedToByPreparedByAgv
+deactivate REPOSITORY_ORDERS
+
+CONTROLLER -> TASK : associateOrdersToAgvSelected(listOfOrdersWhoNeedToByPreparedByAgv, agvSelected)
+
+activate TASK
+deactivate TASK
+
+CONTROLLER -> REPOSITORY_ORDERS : changeTheStatusOfTheOrdersToReadForClient(listOfOrdersWhoNeedToByPreparedByAgv)
+
+activate REPOSITORY_ORDERS
+deactivate REPOSITORY_ORDERS
+
+CONTROLLER --> UI : listOfOrdersWhoNeedToByPreparedByAgv
+deactivate CONTROLLER
+
+UI --> EMPLOYEE : Shows the list of products prepared by the selected AGV
+
+deactivate UI
+
+deactivate EMPLOYEE
+
+@enduml

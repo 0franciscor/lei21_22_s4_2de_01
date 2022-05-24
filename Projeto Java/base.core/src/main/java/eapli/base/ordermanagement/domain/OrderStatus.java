@@ -7,6 +7,7 @@ import javax.persistence.Embeddable;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import java.io.Serializable;
+//rever os status da order
 
 @Embeddable
 public class OrderStatus implements ValueObject, Serializable {
