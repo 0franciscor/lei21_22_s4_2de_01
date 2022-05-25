@@ -1,9 +1,7 @@
 package eapli.base.ordermanagement.domain;
 
 import eapli.base.clientmanagement.domain.Client;
-import eapli.base.productmanagement.application.ListProductService;
 import eapli.base.productmanagement.domain.Product;
-import eapli.base.productmanagement.domain.UniqueInternalCode;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.general.domain.model.Money;
@@ -23,7 +21,7 @@ public class ProductOrder implements AggregateRoot<Long>, Serializable {
     }
 
     public enum Payment {
-        PAYPAL, APPLE_PAY;
+        PAYPAL,APPLE_PAY;
     }
 
     @Version
@@ -61,9 +59,6 @@ public class ProductOrder implements AggregateRoot<Long>, Serializable {
     })
     private Address shippingAddress;
 
-    @ElementCollection
-    private Set<OrderItem> items;
-
     @Embedded
     @AttributeOverrides({
             @AttributeOverride(name = "amount", column = @Column(name = "no_taxes_amount")),
@@ -99,98 +94,108 @@ public class ProductOrder implements AggregateRoot<Long>, Serializable {
     @ManyToOne
     private SystemUser salesClerk;
 
-    public ProductOrder(final Client client, final Address billingAddress, final Address shippingAddress, final Shipment shipment, final SourceChannel sourceChannel, final Calendar interactionDate, final AdditionalComment additionalComment, final SystemUser salesClerk, final Set<OrderItem> orderItems, final Payment payment) {
+    @OneToMany(cascade = CascadeType.ALL,
+                orphanRemoval = true)
+    @JoinColumn(name = "order_id")
+    private List<OrderItem> newOrderItems;
+
+    public ProductOrder(final Client client, final Address billingAddress, final Address shippingAddress, final Shipment shipment, final Payment payment, final SourceChannel sourceChannel, final Calendar interactionDate, final AdditionalComment additionalComment, final SystemUser salesClerk, final List<OrderItem> newOrderItems) {
         this.createdOn = Calendars.now();
         this.client = client;
         this.billingAddress = billingAddress;
         this.shippingAddress = shippingAddress;
-        this.items = orderItems;
         this.shipment = shipment;
         this.payment = payment;
         this.sourceChannel = sourceChannel;
         this.interactionDate = interactionDate;
         this.additionalComment = additionalComment;
         this.salesClerk = salesClerk;
-        this.totalAmountWithoutTaxes = obtainTotalAmountWithoutTaxes(new ListProductService());
-        this.totalAmountWithTaxes = obtainTotalAmountWithTaxes(new ListProductService());
-        this.orderWeight = obtainTotalOrderWeight(new ListProductService());
-        this.orderVolume = obtainTotalOrderVolume(new ListProductService());
+        this.newOrderItems = newOrderItems;
+        this.totalAmountWithoutTaxes = obtainTotalAmountWithoutTaxes();
+        this.totalAmountWithTaxes = obtainTotalAmountWithTaxes();
+        this.orderWeight = obtainTotalOrderWeight();
+        this.orderVolume = obtainTotalOrderVolume();
         this.status = new OrderStatus(OrderStatus.Status.TO_BE_PREPARED);
-        new Notification(client.getEmail().toString(),"Encomenda Efetuada","A sua encomenda já foi registada no sistema e encontra-se a ser preparada!\nDentro de alguns dias será enviada!\n\nObrigada pela preferência!");
+        if(this.client != null) {
+            new Notification(this.client.getEmail().toString(),"Encomenda Efetuada!","A sua encomenda já foi registada no sistema e encontra-se a ser preparada!\n Obrigada pela preferência!");
+        }
     }
 
-    public ProductOrder(final Client client, final Address billingAddress, final Address shippingAddress, final Shipment shipment, final SourceChannel sourceChannel, final Calendar interactionDate, final SystemUser salesClerk, final Set<OrderItem> orderItems, final Payment payment) {
+    public ProductOrder(final Client client, final Address billingAddress, final Address shippingAddress, final Shipment shipment, final Payment payment, final SourceChannel sourceChannel, final Calendar interactionDate, final SystemUser salesClerk, final List<OrderItem> newOrderItems) {
         this.createdOn = Calendars.now();
         this.client = client;
         this.billingAddress = billingAddress;
         this.shippingAddress = shippingAddress;
-        this.items = orderItems;
         this.shipment = shipment;
         this.payment = payment;
         this.sourceChannel = sourceChannel;
         this.interactionDate = interactionDate;
         this.salesClerk = salesClerk;
-        this.totalAmountWithoutTaxes = obtainTotalAmountWithoutTaxes(new ListProductService());
-        this.totalAmountWithTaxes = obtainTotalAmountWithTaxes(new ListProductService());
-        this.orderWeight = obtainTotalOrderWeight(new ListProductService());
-        this.orderVolume = obtainTotalOrderVolume(new ListProductService());
+        this.newOrderItems = newOrderItems;
+        this.totalAmountWithoutTaxes = obtainTotalAmountWithoutTaxes();
+        this.totalAmountWithTaxes = obtainTotalAmountWithTaxes();
+        this.orderWeight = obtainTotalOrderWeight();
+        this.orderVolume = obtainTotalOrderVolume();
         this.status = new OrderStatus(OrderStatus.Status.TO_BE_PREPARED);
-        new Notification(client.getEmail().toString(),"Encomenda Efetuada","A sua encomenda já foi registada no sistema e encontra-se a ser preparada!\nDentro de alguns dias será enviada!\n\nObrigada pela preferência!");
-    }
-
-    public Money obtainTotalAmountWithoutTaxes(ListProductService svcProducts) {
-        double totalAmountWithoutTaxes = 0;
-
-        for (OrderItem orderItem : items) {
-            String code = orderItem.code();
-            Product product = svcProducts.findProductByUniqueInternalCode(new UniqueInternalCode(code));
-
-            totalAmountWithoutTaxes += (orderItem.quantity() * product.getPriceWithoutTaxes().amountAsDouble());
-
+        if(this.client != null) {
+            new Notification(this.client.getEmail().toString(),"Encomenda Efetuada!","A sua encomenda já foi registada no sistema e encontra-se a ser preparada!\n Obrigada pela preferência!");
         }
-        return this.totalAmountWithoutTaxes = Money.euros(totalAmountWithoutTaxes);
-    }
-
-    public Money obtainTotalAmountWithTaxes(ListProductService svcProducts) {
-        double totalAmountWithTaxes = 0;
-
-        for (OrderItem orderItem : items) {
-            String code = orderItem.code();
-            Product product = svcProducts.findProductByUniqueInternalCode(new UniqueInternalCode(code));
-            totalAmountWithTaxes += (orderItem.quantity() * product.getPriceWithTaxes().amountAsDouble());
-        }
-
-        return this.totalAmountWithTaxes = Money.euros(totalAmountWithTaxes + this.shipment.cost());
-    }
-
-    public OrderWeight obtainTotalOrderWeight(ListProductService svcProducts) {
-        long totalWeight = 0;
-
-        for (OrderItem orderItem : items) {
-            String code = orderItem.code();
-            Product product = svcProducts.findProductByUniqueInternalCode(new UniqueInternalCode(code));
-
-            totalWeight += (orderItem.quantity() * product.getWeight());
-
-        }
-        return this.orderWeight = new OrderWeight(totalWeight);
-    }
-
-    public OrderVolume obtainTotalOrderVolume(ListProductService svcProducts) {
-        long totalVolume = 0;
-
-        for (OrderItem orderItem : items) {
-            String code = orderItem.code();
-            Product product = svcProducts.findProductByUniqueInternalCode(new UniqueInternalCode(code));
-
-            totalVolume += (orderItem.quantity() * product.getVolume());
-
-        }
-        return this.orderVolume = new OrderVolume(totalVolume);
     }
 
     protected ProductOrder() {
         //for ORM purposes
+    }
+
+    public Money obtainTotalAmountWithoutTaxes() {
+        double totalAmountWithoutTaxes = 0;
+
+        for (OrderItem orderItem : newOrderItems) {
+            Product product = orderItem.product();
+            totalAmountWithoutTaxes += (orderItem.quantity() * product.getPriceWithoutTaxes().amountAsDouble());
+        }
+        return this.totalAmountWithoutTaxes = Money.euros(totalAmountWithoutTaxes);
+    }
+
+    public Money obtainTotalAmountWithTaxes() {
+        double totalAmountWithTaxes = 0;
+
+        for (OrderItem orderItem : newOrderItems) {
+            Product product = orderItem.product();
+            totalAmountWithTaxes += (orderItem.quantity() * product.getPriceWithTaxes().amountAsDouble());
+        }
+        return this.totalAmountWithTaxes = Money.euros(totalAmountWithTaxes + this.shipment.cost());
+    }
+
+    public OrderWeight obtainTotalOrderWeight() {
+        long totalWeight = 0;
+
+        for (OrderItem orderItem : newOrderItems) {
+            Product product = orderItem.product();
+            totalWeight += (orderItem.quantity() * product.getWeight());
+        }
+        return this.orderWeight = new OrderWeight(totalWeight);
+    }
+
+    public OrderVolume obtainTotalOrderVolume() {
+        long totalVolume = 0;
+
+        for (OrderItem orderItem : newOrderItems) {
+            Product product = orderItem.product();
+            totalVolume += (orderItem.quantity() * product.getVolume());
+        }
+        return this.orderVolume = new OrderVolume(totalVolume);
+    }
+
+    public OrderStatus getOrderStatus(){
+        return this.status;
+    }
+
+    public Long getOrderId() {
+        return orderId;
+    }
+
+    public void setStatus(OrderStatus status) {
+        this.status = status;
     }
 
     @Override

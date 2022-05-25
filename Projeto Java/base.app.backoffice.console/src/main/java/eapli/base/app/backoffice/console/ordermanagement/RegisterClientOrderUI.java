@@ -142,9 +142,10 @@ public class RegisterClientOrderUI extends AbstractUI {
 
         if(option.equalsIgnoreCase("yes")){
             String additionalComment = Console.readLine("Additional Comments:");
-            theController.registerOrder(items,addresses,shipment,sourceChannel,interactionDate,additionalComment,payment);
+            theController.registerOrder(addresses,shipment,payment,sourceChannel,interactionDate,additionalComment,items);
         } else {
-            theController.registerOrder(items,addresses,shipment,sourceChannel,interactionDate,payment);
+            theController.registerOrder(addresses,shipment,payment,sourceChannel,interactionDate,items);
+
         }
 
         return false;
