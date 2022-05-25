@@ -34,7 +34,6 @@ public class AGV implements AggregateRoot<AGVId> {
 
     private ChangeAGVStatus status;
 
-    @Embedded
     private AGVTask agvTask;
 
 
