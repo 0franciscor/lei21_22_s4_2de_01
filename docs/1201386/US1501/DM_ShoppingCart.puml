@@ -1,0 +1,70 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+skinparam classAttributeIconSize 0
+hide empty attributes
+skinparam classBackgroundColor beige
+skinparam ArrowColor #222222
+
+
+
+package "<<aggregate>> Client" {
+    entity Client
+}
+
+entity Client <<entity>> <<root>> {
+
+}
+
+
+entity Client <<entity>> <<root>> {
+
+}
+package "<<aggregate>> ShopCar"{
+    entity ShopCar
+    entity Item
+}
+
+entity ShopCar <<entity>> <<root>>{
+
+}
+entity Item <<entity>> {
+    -productQuantity
+
+}
+package "<<aggregate>> Product"{
+     entity Product
+}
+
+entity Product <<entity>> <<root>> {
+
+}
+
+package "<<aggregate>> User" {
+    entity User
+    class Password
+    class Username
+    class Role
+}
+
+entity User <<entity>> <<root>> {
+
+}
+
+class Password <<(V,#FF8B40) value object>> {}
+class Role <<(V,#FF8B40) value object>> {}
+class Username <<(V,#FF8B40) value object>> {}
+
+
+User ---> "1" Password : associated with a
+User --> "1" Username : characterized by
+User --> "1" Role : identified by
+
+
+Client -----> "1" ShopCar : associated
+Client ---> "1" User : is a
+Item --> "1" Product : composed by
+ShopCar -> "1..*" Item : composed by
+
+
+@enduml
