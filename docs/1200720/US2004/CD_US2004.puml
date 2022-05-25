@@ -1,0 +1,50 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+class ListOrdersBeingPreparedUI
+class ListOrdersBeingPreparedController
+class AGVTask
+class PersistenceContext
+class RepositoryFactory
+class AGVRepository
+class ProductOrderRepository
+
+class ListOrdersBeingPreparedController {
+    - getAGVsAvaiable()
+    - getOrdersWhoNeedToBePreparedByAGV()
+
+
+}
+
+class AGVTask {
+    - associateOrdersToAgvSelected(listOfOrdersWhoNeedToByPreparedByAgv, agvSelected)
+}
+
+class AGVRepository {
+    - getAGVRepository()
+}
+
+
+class ProductOrderRepository {
+    - getOrdersWhoNeedToBePreparedByAGV()
+    - changeTheStatusOfTheOrdersToReadForClient(listOfOrdersWhoNeedToByPreparedByAgv)
+}
+
+class PersistenceContext {
+    - repositories()
+}
+
+class RepositoryFactory{
+
+}
+
+
+ListOrdersBeingPreparedUI ..> ListOrdersBeingPreparedController
+ListOrdersBeingPreparedController ..> PersistenceContext
+PersistenceContext ..> RepositoryFactory
+RepositoryFactory -> AGVRepository
+RepositoryFactory --> ProductOrderRepository
+ListOrdersBeingPreparedController -> AGVTask
+
+
+@enduml
