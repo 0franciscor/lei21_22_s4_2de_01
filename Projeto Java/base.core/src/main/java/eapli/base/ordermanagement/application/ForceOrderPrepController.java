@@ -9,6 +9,7 @@ import eapli.base.AGV.Domain.ChangeAGVStatus;
 import eapli.base.AGV.Repositories.AGVRepository;
 import eapli.base.ordermanagement.domain.OrderStatus;
 import eapli.base.ordermanagement.domain.ProductOrder;
+import eapli.base.ordermanagement.dto.ProductOrderDto;
 import eapli.base.ordermanagement.repository.OrderRepository;
 import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.framework.domain.repositories.TransactionalContext;
@@ -17,6 +18,7 @@ import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 
@@ -50,17 +52,26 @@ public class ForceOrderPrepController {
         return list;
     }
 
-    public List<ProductOrder> getOrdersToBePrepared(){
+    public List<ProductOrderDto> getOrdersToBePrepared(){
         Iterable<ProductOrder> aux = orderRepository.findAll();
-        List<ProductOrder> list = new ArrayList<>();
-        OrderStatus.Status st = OrderStatus.Status.BEING_PREPARED_ON_WAREHOUSE;
-        for(ProductOrder productOrder : aux ){
-            if(productOrder.getOrderStatus().equals(st)){
-                list.add(productOrder);
+        Iterator<ProductOrder> it = aux.iterator();
+        List<ProductOrderDto> list = new ArrayList<>();
+
+        OrderStatus.Status st = OrderStatus.Status.TO_BE_PREPARED;
+        while(it.hasNext()){
+            ProductOrder productOrder = it.next();
+
+            if(productOrder.getOrderStatus().obtainStatus().equals(st)) {
+                Long id = productOrder.getOrderId();
+                String date = productOrder.obtainInteractionDate().toString();
+                String name = productOrder.obtainClient().obtainName().toString();
+                String orderTotal = productOrder.obtainTotalAmountWithTaxes().toString();
+                ProductOrderDto productOrderDto = new ProductOrderDto(id, date, name, orderTotal);
+                list.add(productOrderDto);
             }
-        }
-        return list;
+        } return list;
     }
+
 
     public ProductOrder forceOrderPrep(){
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.WAREHOUSE_EMPLOYEE, BaseRoles.POWER_USER, BaseRoles.ADMIN, BaseRoles.SALES_CLERK);
@@ -71,12 +82,12 @@ public class ForceOrderPrepController {
             OrderStatus.Status st = OrderStatus.Status.BEING_PREPARED_ON_WAREHOUSE;
             OrderStatus orderStatus = new OrderStatus(st);
             this.productOrder.changeProductOrderStatus(orderStatus);
-            //productOrder.preparedByAGV(agv); // TIRAR DE COMENTÁRIO QUANDO ATUALIZAR A PRODUCT ORDER
             orderRepository.save(this.productOrder);
 
             //update agv status
             ChangeAGVStatus agvStatus = new ChangeAGVStatus("Is Occupied Serving");
             this.agv.changeAGVStatus(agvStatus);
+            productOrder.preparedByAGV(agv);
             agvRepository.save(this.agv);
 
             txCtx.commit();

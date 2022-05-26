@@ -28,4 +28,8 @@ public class OrderStatus implements ValueObject, Serializable {
     public OrderStatus() {
         //for ORM purposes
     }
+
+    public Status obtainStatus() {
+        return status;
+    }
 }

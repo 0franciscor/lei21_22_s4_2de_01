@@ -25,6 +25,7 @@ package eapli.base.app.backoffice.console.presentation;
 
 import eapli.base.app.backoffice.console.categoriamanagement.CreateCategoriaUI;
 import eapli.base.app.backoffice.console.clientmanagement.RegisterClientUI;
+import eapli.base.app.backoffice.console.ordermanagement.ForceOrderPrepUI;
 import eapli.base.app.backoffice.console.ordermanagement.RegisterClientOrderUI;
 import eapli.base.app.backoffice.console.presentation.authz.ImportJsonUI;
 import eapli.base.app.backoffice.console.productmanagement.ListProductUi;
@@ -150,6 +151,9 @@ public class MainMenu extends AbstractUI {
 
             final Menu settingsMenu = buildAdminSettingsMenu();
             mainMenu.addSubMenu(SETTINGS_OPTION, settingsMenu);
+
+            final Menu forceOrderPrepMenu = buildForcePrepMenu();
+            mainMenu.addSubMenu(7,forceOrderPrepMenu);
         }
 
         if (!Application.settings().isMenuLayoutHorizontal()) {
@@ -211,6 +215,15 @@ public class MainMenu extends AbstractUI {
         menu.addItem(REGISTER_CLIENT, "Import a Warehouse's Info", new ImportJsonUI()::show);
 
         return menu;
+    }
+
+    private Menu buildForcePrepMenu(){
+        final Menu menu = new Menu("Force Order Preparation");
+
+        menu.addItem(8, "Force Order Preparation", new ForceOrderPrepUI()::show);
+
+        return menu;
+
     }
 
 }

@@ -8,6 +8,7 @@ import eapli.base.ordermanagement.application.ForceOrderPrepController;
 import eapli.base.ordermanagement.application.RegisterClientOrderController;
 import eapli.base.ordermanagement.domain.ProductOrder;
 import eapli.base.ordermanagement.domain.Shipment;
+import eapli.base.ordermanagement.dto.ProductOrderDto;
 import eapli.base.productmanagement.domain.UniqueInternalCode;
 import eapli.base.warehouse.domain.AGVDock;
 import eapli.framework.io.util.Console;
@@ -28,17 +29,18 @@ public class ForceOrderPrepUI extends AbstractUI {
     protected boolean doShow() {
 
         // escolher order
-        List<ProductOrder> list = forceOrderController.getOrdersToBePrepared();
+        List<ProductOrderDto> list = forceOrderController.getOrdersToBePrepared();
+        System.out.println(list);
         int index = 1;
-        for(ProductOrder po: list) {
-            System.out.println(index + " - " + po.getOrderId());
+        for(ProductOrderDto po: list) {
+            System.out.println(index + " - " + po.orderId + " - " + po.customerName + " - " + po.date + " - " + po.total);
             index++;
         }
         int b = Integer.parseInt(Console.readLine("Choose an Order"));
-        ProductOrder productOrder = list.get(b-1);
+        ProductOrderDto productOrder = list.get(b-1);
 
         // save order
-        forceOrderController.saveOrder(productOrder.getOrderId());
+        forceOrderController.saveOrder(productOrder.orderId);
 
 
         // escolher agv
@@ -63,7 +65,7 @@ public class ForceOrderPrepUI extends AbstractUI {
 
     @Override
     public String headline() {
-        return "Register Client Order";
+        return "Force Order Prep";
     }
 
 }
