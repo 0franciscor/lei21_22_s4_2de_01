@@ -5,7 +5,7 @@ package eapli.base.ordermanagement.application;
 import eapli.base.AGV.Application.ConfigureAGVController;
 import eapli.base.AGV.Domain.AGV;
 import eapli.base.AGV.Domain.AGVId;
-import eapli.base.AGV.Domain.ChangeAGVStatus;
+import eapli.base.AGV.Domain.AGVStatus;
 import eapli.base.AGV.Repositories.AGVRepository;
 import eapli.base.ordermanagement.domain.OrderStatus;
 import eapli.base.ordermanagement.domain.ProductOrder;
@@ -45,7 +45,7 @@ public class ForceOrderPrepController {
         Iterable<AGV> aux = agvRepository.findAll();
         List<AGV> list = new ArrayList<>();
         for(AGV agv : aux ){
-            if(agv.getStatus().equals("Is Free")){
+            if(agv.getAgvStatus().equals(AGVStatus.FREE)){
                 list.add(agv);
             }
         }
@@ -85,8 +85,7 @@ public class ForceOrderPrepController {
             orderRepository.save(this.productOrder);
 
             //update agv status
-            ChangeAGVStatus agvStatus = new ChangeAGVStatus("Is Occupied Serving");
-            this.agv.changeAGVStatus(agvStatus);
+            agv.changeStatusOfAGVForOccupied();
             productOrder.preparedByAGV(agv);
             agvRepository.save(this.agv);
 

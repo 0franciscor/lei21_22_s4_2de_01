@@ -59,8 +59,7 @@ public class ConfigureAGVController {
                 .withMaxVolumeCapacity(new MaxVolumeCapacity(maxVolumeCapacity))
                 .withRange(new Range(range))
                 .withPosition(new AGVPosition(position))
-                .withAGVDock(agvDock)
-                .withAGVStatus(status);
+                .withAGVDock(agvDock);
 
 
         AGV agv = newAGV.build();

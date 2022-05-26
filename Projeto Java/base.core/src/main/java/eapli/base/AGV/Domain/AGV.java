@@ -39,13 +39,12 @@ public class AGV implements AggregateRoot<AGVId> {
     @OneToMany
     private AGVTask agvTask;
 
-    private ChangeAGVStatus status;
 
 
 
     public AGV(){}
 
-    public AGV(final AGVId agvId, final BriefDescription briefDescription, final Model model, final MaxWeightCapacity maxWeightCapacity, final MaxVolumeCapacity maxVolumeCapacity, final Range range, final AGVPosition position, final AGVDock agvDock, final ChangeAGVStatus status){
+    public AGV(final AGVId agvId, final BriefDescription briefDescription, final Model model, final MaxWeightCapacity maxWeightCapacity, final MaxVolumeCapacity maxVolumeCapacity, final Range range, final AGVPosition position, final AGVDock agvDock){
         this.agvId = agvId;
         this.range = range;
         this.maxWeightCapacity = maxWeightCapacity;
@@ -54,22 +53,7 @@ public class AGV implements AggregateRoot<AGVId> {
         this.briefDescription = briefDescription;
         this.position = position;
         this.agvDock = agvDock;
-        this.status = status;
         this.agvStatus = AGVStatus.FREE;
-    }
-
-    public AGV(final AGVId agvId, final BriefDescription briefDescription, final Model model, final MaxWeightCapacity maxWeightCapacity, final MaxVolumeCapacity maxVolumeCapacity, final Range range, final AGVPosition position, final AGVDock agvDock, final ChangeAGVStatus status, AGVTask task){
-        this.agvId = agvId;
-        this.range = range;
-        this.maxWeightCapacity = maxWeightCapacity;
-        this.maxVolumeCapacity = maxVolumeCapacity;
-        this.model = model;
-        this.briefDescription = briefDescription;
-        this.position = position;
-        this.agvDock = agvDock;
-        this.status = status;
-        this.agvStatus = AGVStatus.FREE;
-        this.agvTask = task;
     }
 
     @Override
@@ -124,10 +108,6 @@ public class AGV implements AggregateRoot<AGVId> {
         return position;
     }
 
-    public ChangeAGVStatus getStatus() {
-        return status;
-    }
-
     public AGVTask getAgvTask() {
         return agvTask;
     }
@@ -136,13 +116,30 @@ public class AGV implements AggregateRoot<AGVId> {
         return agvStatus;
     }
 
-
-
-
     public void createATask(String description, ProductOrder order){
 
         this.agvTask = new AGVTask(description, order);
 
+    }
+
+    public void changeStatusOfAGVForOccupied(){
+        this.agvStatus = AGVStatus.OCCUPIED_SERVING;
+    }
+
+    public void changeStatusOfAGVForFree(){
+        this.agvStatus = AGVStatus.FREE;
+    }
+
+    public void changeStatusOfAGVForCharging(){
+        this.agvStatus = AGVStatus.CHARGING;
+    }
+
+    public void changeStatusOfAGVForMaintenance(){
+        this.agvStatus = AGVStatus.MAINTENANCE;
+    }
+
+    public void changeStatusOfAGVForGivenOrder(){
+        this.agvStatus = AGVStatus.GIVEN_ORDER;
     }
 
     public void addMoreOrders(ProductOrder order){
@@ -151,11 +148,6 @@ public class AGV implements AggregateRoot<AGVId> {
 
     public void assignATakForAGV(AGVTask task){
         this.agvTask = agvTask;
-    }
-
-
-    public void changeAGVStatus(ChangeAGVStatus status){
-        this.status=status;
     }
 
     public void changeAGVId(AGVId id){this.agvId=id;}

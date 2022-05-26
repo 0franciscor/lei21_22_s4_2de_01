@@ -24,9 +24,6 @@ public class AGVBuilder implements DomainFactory<AGV> {
 
     private AGVPosition position;
 
-    private ChangeAGVStatus status;
-
-
     public AGVBuilder withId(final AGVId id) {
         this.id = id;
         return this;
@@ -67,11 +64,6 @@ public class AGVBuilder implements DomainFactory<AGV> {
         return this;
     }
 
-    public AGVBuilder withAGVStatus(final String status){
-        this.status = new ChangeAGVStatus(status);
-        return this;
-    }
-
     @Override
     public AGV build() {
         final AGV ret = buildOrThrow();
@@ -82,8 +74,8 @@ public class AGVBuilder implements DomainFactory<AGV> {
     private AGV buildOrThrow() {
         if (agv != null) {
             return agv;
-        } else if (id != null && range != null && maxWeightCapacity != null && maxVolumeCapacity != null && model != null && briefDescription != null && agvDock != null && status != null) {
-            agv = new AGV(id,briefDescription, model, maxWeightCapacity, maxVolumeCapacity, range, position, agvDock, status);
+        } else if (id != null && range != null && maxWeightCapacity != null && maxVolumeCapacity != null && model != null && briefDescription != null && agvDock != null) {
+            agv = new AGV(id,briefDescription, model, maxWeightCapacity, maxVolumeCapacity, range, position, agvDock);
             return agv;
         } else {
             throw new IllegalStateException();
