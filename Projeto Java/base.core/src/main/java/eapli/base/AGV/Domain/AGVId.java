@@ -6,6 +6,7 @@ import javax.persistence.Embeddable;
 
 @Embeddable
 public class AGVId implements ValueObject, Comparable<AGVId> {
+
     private String agvId;
 
     public AGVId(String agvId) {

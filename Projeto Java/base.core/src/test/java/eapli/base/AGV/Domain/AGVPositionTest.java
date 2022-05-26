@@ -17,12 +17,11 @@ class AGVPositionTest {
         Model model = new Model("2.1.1.1");
         ChangeAGVStatus status = new ChangeAGVStatus("FREE");
         Range a = new Range(5.0);
-        AGVTask task = new AGVTask("x");
         AGVPosition pos = new AGVPosition("s");
         AGVDock dock = new AGVDock();
 
-        AGV a1 = new AGV(id,description,model,weight,volume,a,pos,dock,status,task);
-        AGV a2 = new AGV(id,description,model,weight,volume,a,pos,dock,status,task);
+        AGV a1 = new AGV(id,description,model,weight,volume,a,pos,dock,status);
+        AGV a2 = new AGV(id,description,model,weight,volume,a,pos,dock,status);
         Assertions.assertEquals(a1.getPosition(), a2.getPosition());
     }
 
@@ -35,13 +34,12 @@ class AGVPositionTest {
         Model model = new Model("2.1.1.1");
         ChangeAGVStatus status = new ChangeAGVStatus("FREE");
         Range a = new Range(5.0);
-        AGVTask task = new AGVTask("x");
         AGVPosition pos = new AGVPosition("s");
         AGVPosition pos1 = new AGVPosition("x");
         AGVDock dock = new AGVDock();
 
-        AGV a1 = new AGV(id,description,model,weight,volume,a,pos,dock,status,task);
-        AGV a2 = new AGV(id,description,model,weight,volume,a,pos1,dock,status,task);
+        AGV a1 = new AGV(id,description,model,weight,volume,a,pos,dock,status);
+        AGV a2 = new AGV(id,description,model,weight,volume,a,pos1,dock,status);
         Assertions.assertNotEquals(a1.getPosition(), a2.getPosition());
     }
 
@@ -54,13 +52,12 @@ class AGVPositionTest {
         Model model = new Model("2.1.1.1");
         ChangeAGVStatus status = new ChangeAGVStatus("FREE");
         Range a = new Range(5.0);
-        AGVTask task = new AGVTask("x");
         AGVPosition pos = new AGVPosition("s");
         AGVDock dock = new AGVDock();
 
-        AGV a1 = new AGV(id,description,model,weight,volume,a,pos,dock,status,task);
+        AGV a1 = new AGV(id,description,model,weight,volume,a,pos,dock,status);
         pos.setAgvPosition("s");
-        AGV a2 = new AGV(id,description,model,weight,volume,a,pos,dock,status,task);
+        AGV a2 = new AGV(id,description,model,weight,volume,a,pos,dock,status);
         Assertions.assertEquals(a1.getPosition(), a2.getPosition());
     }
 

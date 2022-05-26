@@ -3,6 +3,7 @@ package eapli.base.AGV.Application;
 import eapli.base.AGV.Domain.*;
 import eapli.base.AGV.Repositories.AGVRepository;
 import eapli.base.infrastructure.persistence.PersistenceContext;
+import eapli.base.ordermanagement.domain.ProductOrder;
 import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.base.warehouse.domain.AGVDock;
 import eapli.base.warehouse.repositories.AGVDockRepository;
@@ -34,7 +35,7 @@ public class ConfigureAGVController {
     }
 
     public AGV configureAGV(final String agvId, final String briefDescription, final String model, final Double maxWeightCapacity, final Double maxVolumeCapacity,
-                            final Double range, final String position , final AGVDock agvDock, final String status, final String task) {
+                            final Double range, final String position , final AGVDock agvDock, final String status) {
 
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER, BaseRoles.ADMIN, BaseRoles.WAREHOUSE_EMPLOYEE);
 
@@ -59,8 +60,7 @@ public class ConfigureAGVController {
                 .withRange(new Range(range))
                 .withPosition(new AGVPosition(position))
                 .withAGVDock(agvDock)
-                .withAGVStatus(status)
-                .withAGVTask(task);
+                .withAGVStatus(status);
 
 
         AGV agv = newAGV.build();

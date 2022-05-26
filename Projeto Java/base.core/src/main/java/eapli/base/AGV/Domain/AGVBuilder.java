@@ -1,5 +1,6 @@
 package eapli.base.AGV.Domain;
 
+import eapli.base.ordermanagement.domain.ProductOrder;
 import eapli.base.warehouse.domain.AGVDock;
 import eapli.framework.domain.model.DomainFactory;
 
@@ -25,7 +26,6 @@ public class AGVBuilder implements DomainFactory<AGV> {
 
     private ChangeAGVStatus status;
 
-    private AGVTask task;
 
     public AGVBuilder withId(final AGVId id) {
         this.id = id;
@@ -71,10 +71,6 @@ public class AGVBuilder implements DomainFactory<AGV> {
         this.status = new ChangeAGVStatus(status);
         return this;
     }
-    public AGVBuilder withAGVTask(final String task){
-       this.task = new AGVTask(task);
-       return this;
-    }
 
     @Override
     public AGV build() {
@@ -86,8 +82,8 @@ public class AGVBuilder implements DomainFactory<AGV> {
     private AGV buildOrThrow() {
         if (agv != null) {
             return agv;
-        } else if (id != null && range != null && maxWeightCapacity != null && maxVolumeCapacity != null && model != null && briefDescription != null && agvDock != null && status != null && task != null) {
-            agv = new AGV(id,briefDescription, model, maxWeightCapacity, maxVolumeCapacity, range, position, agvDock, status, task);
+        } else if (id != null && range != null && maxWeightCapacity != null && maxVolumeCapacity != null && model != null && briefDescription != null && agvDock != null && status != null) {
+            agv = new AGV(id,briefDescription, model, maxWeightCapacity, maxVolumeCapacity, range, position, agvDock, status);
             return agv;
         } else {
             throw new IllegalStateException();

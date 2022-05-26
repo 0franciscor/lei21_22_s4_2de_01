@@ -5,6 +5,7 @@ actor "Warehouse Employee" as EMPLOYEE
 participant ListOrdersBeingPreparedUI as UI <<presentation>>
 participant ListOrdersBeingPreparedController as CONTROLLER <<application>>
 participant AGVTask as TASK <<domain>>
+participant agvDto as DTO  <<dto>>
 participant PersistenceContext as PERSISTENCE <<persistence>>
 participant RepositoryFactory as FACTORY <<factory>>
 database AGVRepository as REPOSITORY_AGV <<repository>>
@@ -55,6 +56,14 @@ REPOSITORY_AGV --> CONTROLLER : agvsAvaiable
 
 deactivate REPOSITORY_AGV
 
+CONTROLLER -> DTO : toDto()
+
+activate DTO
+
+DTO -> CONTROLLER : agvsAvaiableDto
+
+deactivate DTO
+
 CONTROLLER --> UI : agvsAvaiable
 deactivate CONTROLLER
 
@@ -68,7 +77,7 @@ EMPLOYEE -> UI : Select the AGV
 
 activate UI
 
-UI -> CONTROLLER : getOrdersWhoNeedToBePreparedByAGV()
+UI -> CONTROLLER : getOrdersWhoNeedToBePreparedByAGV(selectedAGV)
 
 activate CONTROLLER
 
@@ -80,7 +89,7 @@ FACTORY --> CONTROLLER : orderRepository
 
 deactivate FACTORY
 
-CONTROLLER -> REPOSITORY_ORDERS : getOrdersWhoNeedToBePreparedByAGV()
+CONTROLLER -> REPOSITORY_ORDERS : getOrdersWhoNeedToBePreparedByAGV(selectedAGV)
 
 activate REPOSITORY_ORDERS
 

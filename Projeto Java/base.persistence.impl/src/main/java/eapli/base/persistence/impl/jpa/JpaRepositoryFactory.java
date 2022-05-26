@@ -78,6 +78,11 @@ public class JpaRepositoryFactory implements RepositoryFactory {
         return new JpaOrderRepository(Application.settings().getPersistenceUnitName());
     }
 
+    @Override
+    public OrderRepository orders(TransactionalContext autoTx) {
+        return new JpaOrderRepository(autoTx, Application.settings().getPersistenceUnitName());
+    }
+
 
     @Override
     public CategoryRepository category() {
@@ -120,7 +125,12 @@ public class JpaRepositoryFactory implements RepositoryFactory {
 
     @Override
     public AGVRepository agv() {
-        return new JpaAGVRepository();
+        return new JpaAGVRepository(Application.settings().getPersistenceUnitName(), "Id");
+    }
+
+    @Override
+    public AGVRepository agv(TransactionalContext autoTx) {
+        return new JpaAGVRepository(autoTx, Application.settings().getPersistenceUnitName());
     }
 
     @Override

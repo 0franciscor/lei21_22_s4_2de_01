@@ -15,12 +15,11 @@ class RangeTest {
         Model model = new Model("2.1.1.1");
         ChangeAGVStatus status = new ChangeAGVStatus("FREE");
         Range a = new Range(5.0);
-        AGVTask task = new AGVTask("x");
         AGVPosition pos = new AGVPosition("s");
         AGVDock dock = new AGVDock();
 
-        AGV a1 = new AGV(id,description,model,weight,volume,a,pos,dock,status,task);
-        AGV a2 = new AGV(id,description,model,weight,volume,a,pos,dock,status,task);
+        AGV a1 = new AGV(id,description,model,weight,volume,a,pos,dock,status);
+        AGV a2 = new AGV(id,description,model,weight,volume,a,pos,dock,status);
         Assertions.assertEquals(a1.getRange(), a2.getRange());
     }
 
@@ -33,13 +32,12 @@ class RangeTest {
         Model model = new Model("2.1.1.1");
         ChangeAGVStatus status = new ChangeAGVStatus("FREE");
         Range a = new Range(5.0);
-        AGVTask task = new AGVTask("x");
         AGVPosition pos = new AGVPosition("s");
         AGVDock dock = new AGVDock();
 
-        AGV a1 = new AGV(id,description,model,weight,volume,a,pos,dock,status,task);
+        AGV a1 = new AGV(id,description,model,weight,volume,a,pos,dock,status);
         a.setRange(5.0);
-        AGV a2 = new AGV(id,description,model,weight,volume,a,pos,dock,status,task);
+        AGV a2 = new AGV(id,description,model,weight,volume,a,pos,dock,status);
         Assertions.assertEquals(a1.getRange(), a2.getRange());
     }
 

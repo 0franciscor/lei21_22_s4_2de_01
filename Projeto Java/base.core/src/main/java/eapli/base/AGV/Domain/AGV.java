@@ -1,5 +1,6 @@
 package eapli.base.AGV.Domain;
 
+import eapli.base.ordermanagement.domain.ProductOrder;
 import eapli.base.warehouse.domain.AGVDock;
 import eapli.framework.domain.model.AggregateRoot;
 
@@ -32,14 +33,19 @@ public class AGV implements AggregateRoot<AGVId> {
     @Embedded
     private AGVPosition position;
 
+    @Embedded
+    private AGVStatus agvStatus;
+
+    @OneToMany
+    private AGVTask agvTask;
+
     private ChangeAGVStatus status;
 
-    private AGVTask agvTask;
 
 
     public AGV(){}
 
-    public AGV(final AGVId agvId, final BriefDescription briefDescription, final Model model, final MaxWeightCapacity maxWeightCapacity, final MaxVolumeCapacity maxVolumeCapacity, final Range range, final AGVPosition position, final AGVDock agvDock, final ChangeAGVStatus status, final AGVTask agvTask){
+    public AGV(final AGVId agvId, final BriefDescription briefDescription, final Model model, final MaxWeightCapacity maxWeightCapacity, final MaxVolumeCapacity maxVolumeCapacity, final Range range, final AGVPosition position, final AGVDock agvDock, final ChangeAGVStatus status){
         this.agvId = agvId;
         this.range = range;
         this.maxWeightCapacity = maxWeightCapacity;
@@ -49,10 +55,22 @@ public class AGV implements AggregateRoot<AGVId> {
         this.position = position;
         this.agvDock = agvDock;
         this.status = status;
-        this.agvTask = agvTask;
+        this.agvStatus = AGVStatus.FREE;
     }
 
-
+    public AGV(final AGVId agvId, final BriefDescription briefDescription, final Model model, final MaxWeightCapacity maxWeightCapacity, final MaxVolumeCapacity maxVolumeCapacity, final Range range, final AGVPosition position, final AGVDock agvDock, final ChangeAGVStatus status, AGVTask task){
+        this.agvId = agvId;
+        this.range = range;
+        this.maxWeightCapacity = maxWeightCapacity;
+        this.maxVolumeCapacity = maxVolumeCapacity;
+        this.model = model;
+        this.briefDescription = briefDescription;
+        this.position = position;
+        this.agvDock = agvDock;
+        this.status = status;
+        this.agvStatus = AGVStatus.FREE;
+        this.agvTask = task;
+    }
 
     @Override
     public boolean sameAs(Object other) {
@@ -113,4 +131,28 @@ public class AGV implements AggregateRoot<AGVId> {
     public AGVTask getAgvTask() {
         return agvTask;
     }
+
+    public AGVStatus getAgvStatus() {
+        return agvStatus;
+    }
+
+
+
+
+    public void createATask(String description, ProductOrder order){
+
+        this.agvTask = new AGVTask(description, order);
+
+    }
+
+
+
+    public void addMoreOrders(ProductOrder order){
+        this.agvTask.addMoreOrders(order);
+    }
+
+    public void assignATakForAGV(AGVTask task){
+        this.agvTask = agvTask;
+    }
+
 }

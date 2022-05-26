@@ -17,6 +17,7 @@ public class ChangeAGVStatus implements ValueObject {
         }
         this.status = status;
     }
+
     public ChangeAGVStatus() {}
 
 

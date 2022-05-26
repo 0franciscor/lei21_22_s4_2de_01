@@ -3,7 +3,7 @@ package eapli.base.AGV.Domain;
 public enum AGVStatus {
     FREE("Is Free"),
     CHARGING("Is Charging"),
-    OCCUPIED_SERVING("Is Occupied Serving"),
+    OCCUPIED_SERVING("Busy preparing an order"),
     GIVEN_ORDER("Given Order"),
     MAINTENANCE("In Maintenance");
 
@@ -12,6 +12,7 @@ public enum AGVStatus {
     AGVStatus(String agvStatus) {
         this.agvStatus = agvStatus;
     }
+
 
     @Override
     public String toString() {

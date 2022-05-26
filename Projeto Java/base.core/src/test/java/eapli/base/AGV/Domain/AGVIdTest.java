@@ -17,12 +17,11 @@ class AGVIdTest {
         Model model = new Model("2.1.1.1");
         ChangeAGVStatus status = new ChangeAGVStatus("FREE");
         Range a = new Range(5.0);
-        AGVTask task = new AGVTask("x");
         AGVPosition pos = new AGVPosition("s");
         AGVDock dock = new AGVDock();
 
         AGV a1 = getAGVId1();
-        AGV a2 = new AGV(id,description,model,weight,volume,a,pos,dock,status,task);
+        AGV a2 = new AGV(id,description,model,weight,volume,a,pos,dock,status);
         Assertions.assertEquals(a1.agvDock().getId(), a2.agvDock().getId());
     }
 
@@ -34,13 +33,12 @@ class AGVIdTest {
         Model model = new Model("2.1.1.1");
         String status = "FREE";
         Range a = new Range(5.0);
-        String task = "X";
         AGVPosition pos = new AGVPosition("s");
         AGVDock dock = new AGVDock();
         AGVBuilder agvBuilder = new AGVBuilder();
         agvBuilder.withId(id).withBriefDescription(description).withMaxWeightCapacity(weight)
                 .withModel(model).withAGVStatus(status).withMaxVolumeCapacity(volume).withRange(a)
-                .withAGVTask(task).withPosition(pos).withAGVDock(dock);
+                .withPosition(pos).withAGVDock(dock);
 
         return agvBuilder.build();
     }

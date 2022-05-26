@@ -84,6 +84,11 @@ public class InMemoryRepositoryFactory implements RepositoryFactory{
     }
 
     @Override
+    public OrderRepository orders(TransactionalContext autoTx) {
+        return null;
+    }
+
+    @Override
     public CategoryRepository category() {
         return new InMemoryCategoryRepository();
     }
@@ -120,6 +125,11 @@ public class InMemoryRepositoryFactory implements RepositoryFactory{
     @Override
     public AGVRepository agv() {
         return new InMemoryAGVRepository();
+    }
+
+    @Override
+    public AGVRepository agv(TransactionalContext autoTx) {
+        return null;
     }
 
     @Override

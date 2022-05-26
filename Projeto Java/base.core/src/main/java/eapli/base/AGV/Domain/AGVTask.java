@@ -1,20 +1,30 @@
 package eapli.base.AGV.Domain;
 
+import eapli.base.ordermanagement.domain.ProductOrder;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class AGVTask implements DomainEntity<Long>, AggregateRoot<Long> { //IMPLEMENTADO PARA EVITAR ERRO. REVISAO ACONSELHADA
 
     @Id
+    @GeneratedValue
     private Long Id;
+
+    @Embedded
     private String description;
 
-    public AGVTask(String id) {
+    @OneToMany
+    private ProductOrder orders;
+
+
+    public AGVTask(String id, ProductOrder orders) {
+
         this.description = id;
+        this.orders = orders;
     }
     public AGVTask() {}
 
@@ -26,6 +36,9 @@ public class AGVTask implements DomainEntity<Long>, AggregateRoot<Long> { //IMPL
         this.description = agvTask;
     }
 
+    public void addMoreOrders(ProductOrder order){
+        orders = order;
+    }
     @Override
     public String toString() {
         return "AGVTask{" +

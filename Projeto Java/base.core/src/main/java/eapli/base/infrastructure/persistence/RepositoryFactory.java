@@ -97,7 +97,7 @@ public interface RepositoryFactory {
      */
     OrderRepository orders();
 
-
+    OrderRepository orders(TransactionalContext autoTx);
 
     CategoryRepository category();
 
@@ -173,4 +173,6 @@ public interface RepositoryFactory {
      * @return
      */
     AGVRepository agv();
+
+    AGVRepository agv(TransactionalContext autoTx);
 }

@@ -1,10 +1,23 @@
 package eapli.base.app.backoffice.console.warehouseEmployeeManagement;
 
 import eapli.base.AGV.Application.ConfigureAGVController;
+import eapli.base.clientmanagement.domain.Client;
+import eapli.base.ordermanagement.domain.Address;
+import eapli.base.ordermanagement.domain.ProductOrder;
+import eapli.base.ordermanagement.domain.Shipment;
 import eapli.base.warehouse.domain.AGVDock;
+import eapli.framework.infrastructure.authz.domain.model.Name;
+import eapli.framework.infrastructure.authz.domain.model.Password;
+import eapli.framework.infrastructure.authz.domain.model.SystemUser;
+import eapli.framework.infrastructure.authz.domain.model.Username;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
+import eapli.framework.time.util.Calendars;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -28,8 +41,6 @@ public class ConfigureAGVUI extends AbstractUI {
         final String range = Console.readLine("Range: (hours)");
         final String position = Console.readLine("Position:");
         final String status = "FREE";
-        final String task = "123";
-
 
 
         boolean flag = configureAGVController.validateData(agvId, briefDescription, model, maxWeightCapacity, maxVolumeCapacity, range, position);
@@ -47,7 +58,7 @@ public class ConfigureAGVUI extends AbstractUI {
         AGVDock dock = list.get(a-1);
 
         Boolean flag1 = false;
-        if(configureAGVController.configureAGV(agvId,briefDescription,model,Double.parseDouble(maxWeightCapacity), Double.parseDouble(maxVolumeCapacity), Double.parseDouble(range), position, dock, status, task)==null){
+        if(configureAGVController.configureAGV(agvId,briefDescription,model,Double.parseDouble(maxWeightCapacity), Double.parseDouble(maxVolumeCapacity), Double.parseDouble(range), position, dock, status)==null){
             System.out.println("AGV Dock occupied");
             flag1 = true;
 
@@ -55,7 +66,7 @@ public class ConfigureAGVUI extends AbstractUI {
         if(!flag1){
             System.out.println("*================== AGV Created ================*");
             System.out.printf("AGVId: %s; \nBrief Description: %s; \nModel: %s \nMax Weight Capacity: %s \nMax Volume Capacity: %s \nRange: %s \nPosition: %s \nDock ID: %s\nStatus: %s\nTask: %s\n",
-                    agvId,briefDescription,model,maxWeightCapacity,maxVolumeCapacity,range,position,dock.getId(),status,task);
+                    agvId,briefDescription,model,maxWeightCapacity,maxVolumeCapacity,range,position,dock.getId(),status);
         }
 
         return true;
