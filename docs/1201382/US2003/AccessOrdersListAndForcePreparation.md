@@ -78,9 +78,10 @@ Notice that, orders that can be prepared by AGVs are being added to a queue foll
 # 3. Design
 
 ## 3.1. Realização da Funcionalidade
-
+![US2003_SD](US2003_SD.svg)
 
 ## 3.2. Diagrama de Classes
+![US2003_CD](US2003_CD.svg)
 
 
 ## 3.3. Padrões Aplicados

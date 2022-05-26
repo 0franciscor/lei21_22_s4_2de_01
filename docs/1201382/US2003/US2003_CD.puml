@@ -1,0 +1,63 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+class ForceOrderPrepUI
+class ForceOrderPrepController
+class PersistenceContext
+class RepositoryFactory
+
+
+class ForceOrderPrepUI{}
+
+class ForceOrderPrepController {
++getOrdersToBePrepared()
++saveOrder(orderId)
++showAvailableAGVs()
++saveAGV(agvId)
++forceOrderPrep()
+}
+
+
+class RepositoryFactory {
++ create()
++ getOrderRepository()
++ getAGVRepository()
+}
+
+class AGVRepository {
++ create()
++ getAGVsAvailable()
++ changeAGVStatus(agvStatus)
+}
+
+class OrderRepository{
++ create()
++ getProductOrdersToBePrepared()
++ getProductOrderById(orderId)
++ preparedByAGV(agvSelected)
++ changeProductOrderStatus(orderStatus)
+
+
+}
+
+
+class PersistenceContext {
+- repositories()
+}
+
+
+
+
+
+ForceOrderPrepUI --> ForceOrderPrepController
+ForceOrderPrepController --> PersistenceContext
+RepositoryFactory --> AGVRepository
+RepositoryFactory --> OrderRepository
+ForceOrderPrepController --> AGVRepository
+ForceOrderPrepController --> OrderRepository
+PersistenceContext --> RepositoryFactory
+
+
+
+
+@enduml
