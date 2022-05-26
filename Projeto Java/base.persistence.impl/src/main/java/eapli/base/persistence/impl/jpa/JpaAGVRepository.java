@@ -10,4 +10,5 @@ public class JpaAGVRepository extends BasepaRepositoryBase<AGV, AGVId, AGVId> im
         super("id");
     }
 
+
 }
