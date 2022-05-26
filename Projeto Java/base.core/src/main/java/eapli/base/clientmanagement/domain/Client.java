@@ -98,4 +98,7 @@ public class Client implements AggregateRoot<Long>, Serializable {
         return this.clientId;
     }
 
+    public Name obtainName() {
+        return name;
+    }
 }

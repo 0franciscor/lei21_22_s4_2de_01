@@ -16,4 +16,11 @@ public class InMemoryOrderRepository extends InMemoryDomainRepository<ProductOrd
     public Iterable<ProductOrder> getOrdersWhoNeedToBePrepared() {
         return match(e->e.getOrderStatus().equals(OrderStatus.Status.TO_BE_PREPARED));
     }
+
+
+
+    @Override
+    public ProductOrder getProductOrderById(Long id){
+        return null;
+    }
 }

@@ -14,4 +14,5 @@ public interface AGVRepository extends DomainRepository<AGVId, AGV> {
     /*public void changeStatusOfAGV(AGV agv);*/
 
     public AGV getAGVById(String id);
+
 }

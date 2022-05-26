@@ -145,8 +145,6 @@ public class AGV implements AggregateRoot<AGVId> {
 
     }
 
-
-
     public void addMoreOrders(ProductOrder order){
         this.agvTask.addMoreOrders(order);
     }
@@ -154,5 +152,12 @@ public class AGV implements AggregateRoot<AGVId> {
     public void assignATakForAGV(AGVTask task){
         this.agvTask = agvTask;
     }
+
+
+    public void changeAGVStatus(ChangeAGVStatus status){
+        this.status=status;
+    }
+
+    public void changeAGVId(AGVId id){this.agvId=id;}
 
 }

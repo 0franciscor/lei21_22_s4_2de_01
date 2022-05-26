@@ -39,6 +39,7 @@ public class AGVTask implements DomainEntity<Long>, AggregateRoot<Long> { //IMPL
     public void addMoreOrders(ProductOrder order){
         orders = order;
     }
+
     @Override
     public String toString() {
         return "AGVTask{" +

@@ -1,5 +1,6 @@
 package eapli.base.ordermanagement.domain;
 
+import eapli.base.AGV.Domain.AGV;
 import eapli.base.clientmanagement.domain.Client;
 import eapli.base.productmanagement.domain.Product;
 import eapli.framework.domain.model.AggregateRoot;
@@ -37,6 +38,7 @@ public class ProductOrder implements AggregateRoot<Long>, Serializable {
     @Temporal(TemporalType.DATE)
     private Calendar createdOn;
 
+    @Embedded
     private OrderStatus status;
 
     @Embedded
@@ -98,6 +100,14 @@ public class ProductOrder implements AggregateRoot<Long>, Serializable {
                 orphanRemoval = true)
     @JoinColumn(name = "order_id")
     private List<OrderItem> newOrderItems;
+
+    @OneToOne
+    private AGV agv;
+
+    public OrderStatus getStatus() {
+        return status;
+    }
+
 
     public ProductOrder(final Client client, final Address billingAddress, final Address shippingAddress, final Shipment shipment, final Payment payment, final SourceChannel sourceChannel, final Calendar interactionDate, final AdditionalComment additionalComment, final SystemUser salesClerk, final List<OrderItem> newOrderItems) {
         this.createdOn = Calendars.now();
@@ -194,9 +204,11 @@ public class ProductOrder implements AggregateRoot<Long>, Serializable {
         return orderId;
     }
 
-    public void setStatus(OrderStatus status) {
+    public void changeProductOrderStatus(OrderStatus status) {
         this.status = status;
     }
+
+    public void preparedByAGV(AGV agv){this.agv = agv;}
 
     @Override
     public int hashCode() {
@@ -214,6 +226,32 @@ public class ProductOrder implements AggregateRoot<Long>, Serializable {
     }
 
 
+    @Override
+    public String toString() {
+        return "ProductOrder{" +
+                "version=" + version +
+                ", orderId=" + orderId +
+                ", client=" + client +
+                ", createdOn=" + createdOn +
+                ", status=" + status +
+                ", billingAddress=" + billingAddress +
+                ", shippingAddress=" + shippingAddress +
+                ", totalAmountWithoutTaxes=" + totalAmountWithoutTaxes +
+                ", totalAmountWithTaxes=" + totalAmountWithTaxes +
+                ", shipment=" + shipment +
+                ", payment=" + payment +
+                ", orderVolume=" + orderVolume +
+                ", orderWeight=" + orderWeight +
+                ", sourceChannel=" + sourceChannel +
+                ", interactionDate=" + interactionDate +
+                ", additionalComment=" + additionalComment +
+                ", salesClerk=" + salesClerk +
+                ", newOrderItems=" + newOrderItems +
+                ", agv=" + agv +
+                '}';
+    }
 
+    public Calendar obtainInteractionDate(){return this.interactionDate;}
 
+    public Client obtainClient(){return this.client;}
 }

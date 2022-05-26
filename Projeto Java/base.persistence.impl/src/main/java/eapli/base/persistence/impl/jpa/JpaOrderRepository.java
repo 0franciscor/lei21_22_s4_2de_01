@@ -18,13 +18,23 @@ public class JpaOrderRepository extends JpaAutoTxRepository<ProductOrder, Long, 
         super(puname, Application.settings().getExtendedPersistenceProperties(),"eapli.base");
     }
 
-    public JpaOrderRepository(TransactionalContext autoTx, String name){
+
+    public JpaOrderRepository(TransactionalContext autoTx, String name) {
         super(autoTx, name);
+    }
+
+    @Override
+    public ProductOrder getProductOrderById (Long id){
+        final TypedQuery<ProductOrder> query = super.createQuery(
+                "SELECT d FROM ProductOrder d WHERE orderid = '" + id + "'",
+                ProductOrder.class);
+        return query.getSingleResult();
+
     }
 
 
     @Override
-    public Iterable<ProductOrder> getOrdersWhoNeedToBePrepared() {
+    public Iterable<ProductOrder> getOrdersWhoNeedToBePrepared () {
         final TypedQuery<ProductOrder> query = entityManager().createQuery(
                 "SELECT d FROM ProductOrder d  WHERE d.status = :status",
                 ProductOrder.class);
