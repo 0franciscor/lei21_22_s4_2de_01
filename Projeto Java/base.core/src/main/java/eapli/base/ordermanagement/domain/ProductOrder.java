@@ -194,7 +194,7 @@ public class ProductOrder implements AggregateRoot<Long>, Serializable {
         return orderId;
     }
 
-    public void setStatus(OrderStatus status) {
+    public void changeProductOrderStatus(OrderStatus status) {
         this.status = status;
     }
 

@@ -4,4 +4,6 @@ import eapli.base.ordermanagement.domain.ProductOrder;
 import eapli.framework.domain.repositories.DomainRepository;
 
 public interface OrderRepository extends DomainRepository<Long, ProductOrder> {
+
+    public ProductOrder getProductOrderById(Long id);
 }

@@ -23,7 +23,7 @@ class ModelTest {
         AGV a2 = new AGV(id,description,model,weight,volume,a,pos,dock,status,task);
         Assertions.assertEquals(a1.getModel(), a2.getModel());
     }
-
+    /*
     @Test
     void setModel() {
         AGVId id = new AGVId("12345678");
@@ -41,7 +41,7 @@ class ModelTest {
         model.setModel("2.1.1.1.");
         AGV a2 = new AGV(id,description,model,weight,volume,a,pos,dock,status,task);
         Assertions.assertEquals(a1.getModel(), a2.getModel());
-    }
+    }*/
 
     @Test
     void testToString() {

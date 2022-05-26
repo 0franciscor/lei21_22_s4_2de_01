@@ -23,7 +23,7 @@ class RangeTest {
         AGV a2 = new AGV(id,description,model,weight,volume,a,pos,dock,status,task);
         Assertions.assertEquals(a1.getRange(), a2.getRange());
     }
-
+    /*
     @Test
     void setRange() {
         AGVId id = new AGVId("12345678");
@@ -41,7 +41,7 @@ class RangeTest {
         a.setRange(5.0);
         AGV a2 = new AGV(id,description,model,weight,volume,a,pos,dock,status,task);
         Assertions.assertEquals(a1.getRange(), a2.getRange());
-    }
+    }*/
 
     @Test
     void testToString() {
