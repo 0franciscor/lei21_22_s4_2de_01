@@ -1,0 +1,120 @@
+@startuml
+autonumber
+actor "Warehouse Employee" as WE
+participant "ForceOrderPrepUI" as UI
+participant "ForceOrderPrepController" as CTR
+participant PersistenceContext as PERSISTENCE <<persistence>>
+participant RepositoryFactory as FACTORY <<factory>>
+database OrderRepository as REPOSITORY_ORDERS <<repository>>
+database AGVRepository as REPOSITORY_AGV <<repository>>
+
+
+activate WE
+WE -> UI : Request to see the list of orders \nwaiting to be prepared
+activate UI
+UI -> CTR : create
+activate CTR
+deactivate CTR
+UI -> CTR : ordersWaitingToBePreparedList = getOrdersToBePrepared()
+activate CTR
+
+CTR -> PERSISTENCE : repositories()
+
+activate PERSISTENCE
+
+PERSISTENCE -> FACTORY : create()
+
+activate FACTORY
+deactivate FACTORY
+
+PERSISTENCE --> CTR : repositoryFactory
+
+deactivate PERSISTENCE
+
+CTR -> FACTORY : getOrderRepository()
+
+activate FACTORY
+
+FACTORY -> REPOSITORY_ORDERS : create()
+
+activate REPOSITORY_ORDERS
+deactivate REPOSITORY_ORDERS
+
+FACTORY --> CTR : orderRepository
+deactivate FACTORY
+
+CTR -> REPOSITORY_ORDERS : getProductOrdersToBePrepared()
+
+activate REPOSITORY_ORDERS
+
+REPOSITORY_ORDERS --> CTR : ordersToBePreparedList
+deactivate REPOSITORY_ORDERS
+
+
+
+
+
+
+
+deactivate CTR
+UI --> WE : Shows orders and requests to \nselect one
+deactivate UI
+
+WE -> UI : Selects the desired order
+activate UI
+UI -> CTR : saveOrder(orderId)
+activate CTR
+CTR -> REPOSITORY_ORDERS : productOrder = getProductOrderById(orderId)
+activate REPOSITORY_ORDERS
+deactivate REPOSITORY_ORDERS
+deactivate CTR
+UI -> CTR : availableAGVlist = showAvailableAGVs()
+activate CTR
+
+
+
+CTR -> FACTORY : getAGVRepository()
+
+activate FACTORY
+
+FACTORY -> REPOSITORY_AGV : create()
+
+activate REPOSITORY_AGV
+deactivate REPOSITORY_AGV
+
+FACTORY --> CTR : agvRepository
+deactivate FACTORY
+
+CTR -> REPOSITORY_AGV : getAGVsAvailable()
+
+activate REPOSITORY_AGV
+
+REPOSITORY_AGV --> CTR : agvsAvailable
+deactivate REPOSITORY_AGV
+deactivate CTR
+UI --> WE : shows available AGVs and \nrequest to select one
+deactivate UI
+
+WE -> UI : Selects the desired AGV
+activate UI
+UI -> CTR : saveAGV(agvId)
+activate CTR
+deactivate CTR
+UI -> CTR : forceOrderPrep()
+activate CTR
+CTR -> REPOSITORY_ORDERS : preparedByAGV(agvSelected)
+activate REPOSITORY_ORDERS
+deactivate REPOSITORY_ORDERS
+CTR -> REPOSITORY_ORDERS : changeProductOrderStatus(orderStatus)
+activate REPOSITORY_ORDERS
+deactivate REPOSITORY_ORDERS
+CTR -> REPOSITORY_AGV : changeAGVStatus(agvStatus))
+activate REPOSITORY_AGV
+deactivate REPOSITORY_AGV
+
+UI --> WE : sent's task to AGV, updates \nstatus and shows operation success
+deactivate UI
+
+deactivate WE
+
+@enduml
