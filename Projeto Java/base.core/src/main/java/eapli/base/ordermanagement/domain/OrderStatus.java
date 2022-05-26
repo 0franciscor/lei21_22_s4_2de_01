@@ -14,7 +14,7 @@ public class OrderStatus implements ValueObject, Serializable {
     private static final long serialVersionUID = 1L;
 
     public enum Status {
-        REGISTERED, PAYMENT_PENDING, TO_BE_PREPARED, BEING_PREPARED_ON_WAREHOUSE,
+        REGISTERED, PAYMENT_PENDING, TO_BE_PREPARED, BEING_PREPARED_BY_AGV,
         READY_FOR_PACKAGING, READY_FOR_CARRIER_DISPATCHING, DISPATCHED, DELIVERED_BY_CARRIER, RECEIVED_BY_COSTUMER;
     }
 
@@ -31,5 +31,9 @@ public class OrderStatus implements ValueObject, Serializable {
 
     public Status obtainStatus() {
         return status;
+    }
+
+    public void changeStatusForBeingPreparedByAGV(){
+        this.status = Status.BEING_PREPARED_BY_AGV;
     }
 }

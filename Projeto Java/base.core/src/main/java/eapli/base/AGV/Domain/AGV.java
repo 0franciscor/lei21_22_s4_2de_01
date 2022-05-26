@@ -5,6 +5,7 @@ import eapli.base.warehouse.domain.AGVDock;
 import eapli.framework.domain.model.AggregateRoot;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class AGV implements AggregateRoot<AGVId> {
@@ -33,13 +34,13 @@ public class AGV implements AggregateRoot<AGVId> {
     @Embedded
     private AGVPosition position;
 
-    @Embedded
+    @Enumerated
     private AGVStatus agvStatus;
 
-    @OneToMany
-    private AGVTask agvTask;
-
-
+    @OneToMany(cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    @JoinColumn(name = "task_id")
+    private List<AGVTask> agvTask;
 
 
     public AGV(){}
@@ -108,17 +109,32 @@ public class AGV implements AggregateRoot<AGVId> {
         return position;
     }
 
-    public AGVTask getAgvTask() {
-        return agvTask;
-    }
-
     public AGVStatus getAgvStatus() {
         return agvStatus;
     }
 
-    public void createATask(String description, ProductOrder order){
+    public List<AGVTask> getAgvTask(){ return agvTask; }
 
-        this.agvTask = new AGVTask(description, order);
+    private AGVTask getTaskByDescription(String description){
+        for (AGVTask task : agvTask){
+            if (task.getDescription().equals(description)) return task;
+        }
+
+        return null;
+    }
+
+    public void addOrdersToATask(String description, ProductOrder order) throws Exception {
+
+        AGVTask agvTask = getTaskByDescription(description);
+
+        if (agvTask != null){
+            if ((agvTask.getTotalWeight() + order.getOrderWeight().getWeight()) < maxWeightCapacity.getMaxWeightCapacity() && (agvTask.getTotalVolume() + order.getOrderVolume().getVolume()) < maxVolumeCapacity.getMaxVolumeCapacity()){
+                agvTask.addMoreOrders(order);
+            }
+        }
+        else{
+            throw new Exception("This order exceeds the limits supported by that AGV");
+        }
 
     }
 
@@ -142,12 +158,8 @@ public class AGV implements AggregateRoot<AGVId> {
         this.agvStatus = AGVStatus.GIVEN_ORDER;
     }
 
-    public void addMoreOrders(ProductOrder order){
-        this.agvTask.addMoreOrders(order);
-    }
-
-    public void assignATakForAGV(AGVTask task){
-        this.agvTask = agvTask;
+    public void assignATaskForAGV(AGVTask task){
+        this.agvTask.add(task);
     }
 
     public void changeAGVId(AGVId id){this.agvId=id;}

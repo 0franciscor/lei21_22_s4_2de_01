@@ -20,4 +20,8 @@ public class OrderVolume implements ValueObject, Serializable {
         //for ORM purposes
         this.volume = null;
     }
+
+    public Long getVolume() {
+        return volume;
+    }
 }

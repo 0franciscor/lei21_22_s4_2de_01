@@ -14,6 +14,10 @@ public class ProductOrderDto implements DTO {
 
     public String total;
 
+    public Long agvId;
+
+    public String productOrderId;
+
     public ProductOrderDto(final long id, final String date, final String customerName, final String total){
         this.orderId = id;
         this.date = date;
@@ -21,6 +25,10 @@ public class ProductOrderDto implements DTO {
         this.total = total;
     }
 
+    public ProductOrderDto(String orderId, Long agvId) {
+        this.productOrderId = orderId;
+        this.agvId = agvId;
+    }
 
     @Override
     public Class<? extends Annotation> annotationType() {

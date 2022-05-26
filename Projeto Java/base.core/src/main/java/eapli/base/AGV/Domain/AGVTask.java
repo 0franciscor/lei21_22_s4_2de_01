@@ -17,27 +17,43 @@ public class AGVTask implements DomainEntity<Long>, AggregateRoot<Long> { //IMPL
     @Embedded
     private String description;
 
-    @OneToMany
-    private ProductOrder orders;
+    @OneToMany(cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    @JoinColumn(name = "productId")
+    private List<ProductOrder> orders;
+
+    private int totalWeight;
+
+    private int totalVolume;
 
 
-    public AGVTask(String id, ProductOrder orders) {
+    public AGVTask(String id) {
 
         this.description = id;
-        this.orders = orders;
+        this.totalWeight = 0;
+        this.totalVolume = 0;
     }
-    public AGVTask() {}
+    public AGVTask() {
+        this.totalWeight = 0;
+        this.totalVolume = 0;
+    }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String agvTask) {
-        this.description = agvTask;
+    public void addMoreOrders(ProductOrder order){
+        this.orders.add(order);
+        totalWeight += order.getOrderWeight().getWeight();
+        totalVolume += order.getOrderVolume().getVolume();
     }
 
-    public void addMoreOrders(ProductOrder order){
-        orders = order;
+    public int getTotalWeight() {
+        return totalWeight;
+    }
+
+    public int getTotalVolume() {
+        return totalVolume;
     }
 
     @Override

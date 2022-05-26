@@ -254,4 +254,18 @@ public class ProductOrder implements AggregateRoot<Long>, Serializable {
     public Calendar obtainInteractionDate(){return this.interactionDate;}
 
     public Client obtainClient(){return this.client;}
+
+    public void changeStatusOfOrderToBeingPreparedByAnAGV(){
+        status.changeStatusForBeingPreparedByAGV();
+    }
+
+    public OrderVolume getOrderVolume() {
+        return orderVolume;
+    }
+
+    public OrderWeight getOrderWeight() {
+        return orderWeight;
+    }
+
+
 }

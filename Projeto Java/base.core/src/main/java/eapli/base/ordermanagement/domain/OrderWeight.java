@@ -21,5 +21,10 @@ public class OrderWeight implements ValueObject, Serializable {
         this.weight = null;
     }
 
+    public Long getWeight() {
+        return weight;
+    }
+
+
 
 }

@@ -6,6 +6,7 @@ import javax.persistence.Embeddable;
 
 @Embeddable
 public class MaxWeightCapacity implements ValueObject {
+
     private Double maxWeightCapacity;
 
     public MaxWeightCapacity(Double maxWeightCapacity) {
@@ -28,4 +29,6 @@ public class MaxWeightCapacity implements ValueObject {
                 "maxWeightCapacity=" + maxWeightCapacity +
                 '}';
     }
+
+
 }

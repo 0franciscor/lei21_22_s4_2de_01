@@ -1,19 +1,20 @@
 package eapli.base.AGV.Application;
 
 import eapli.base.AGV.Domain.AGV;
+import eapli.base.AGV.Domain.AGVTask;
 import eapli.base.AGV.Repositories.AGVRepository;
 import eapli.base.AGV.dto.AgvDto;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.ordermanagement.domain.ProductOrder;
-import eapli.base.ordermanagement.dto.OrderDto;
+import eapli.base.ordermanagement.dto.ProductOrderDto;
 import eapli.base.ordermanagement.repository.OrderRepository;
+import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 
 public class ListOrderBeingPreparedByAGVController {
@@ -25,6 +26,8 @@ public class ListOrderBeingPreparedByAGVController {
 
 
     public List<AgvDto> getAGVsAvaiable(){
+
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER, BaseRoles.WAREHOUSE_EMPLOYEE);
         List<AgvDto> agvsAvaiable = new ArrayList<>();
 
         Iterable<AGV> agvsIterable = agvRepository.getAGVsAvaiable();
@@ -39,20 +42,43 @@ public class ListOrderBeingPreparedByAGVController {
 
     }
 
-    /*public List<OrderDto> getOrdersWhoNeedToBePreparedByAGV(String idAgv){
-        List<OrderDto> orderDtos = new ArrayList<>();
+    public List<ProductOrderDto> getOrdersWhoNeedToBePreparedByAGV(String idAgv, String taskDescription) throws Exception {
+        
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER, BaseRoles.WAREHOUSE_EMPLOYEE);
+        int count = 0;
+
+        List<ProductOrderDto> orderDtos = new ArrayList<>();
 
         Iterable<ProductOrder> orders = orderRepository.getOrdersWhoNeedToBePrepared();
 
-        Optional<AGV> agv = agvRepository.getAGVById(idAgv);
+        AGV agv = agvRepository.getAGVById(idAgv);
 
         context.beginTransaction();
 
-        agvRepository.changeStatusOfAGV(agv.get());
+        agv.changeStatusOfAGVForOccupied();
+        agv.assignATaskForAGV(new AGVTask(taskDescription));
+
+        agvRepository.save(agv);
+
+        for (ProductOrder p : orders){
+
+            p.changeStatusOfOrderToBeingPreparedByAnAGV();
+            try {
+                agv.addOrdersToATask(taskDescription, p);
+            }catch (Exception e){
+                agv.assignATaskForAGV(new AGVTask(taskDescription + " " +  count));
+                agv.addOrdersToATask(taskDescription, p);
+                count++;
+            }
+
+            orderRepository.save(p);
+            orderDtos.add(new ProductOrderDto(agv.getAgvId().getAGVId(), p.getOrderId()));
+        }
+
+        context.commit();
+
+        return orderDtos;
 
 
-
-
-
-    }*/
+    }
 }
