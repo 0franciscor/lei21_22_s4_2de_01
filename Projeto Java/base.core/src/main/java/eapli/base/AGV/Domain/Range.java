@@ -19,10 +19,6 @@ public class Range implements ValueObject {
         return range;
     }
 
-    public void setRange(Double range) {
-        this.range = range;
-    }
-
     @Override
     public String toString() {
         return "Range{" +

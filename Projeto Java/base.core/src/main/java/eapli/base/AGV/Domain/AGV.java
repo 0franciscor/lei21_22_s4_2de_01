@@ -113,4 +113,10 @@ public class AGV implements AggregateRoot<AGVId> {
     public AGVTask getAgvTask() {
         return agvTask;
     }
+
+    public void changeAGVStatus(ChangeAGVStatus status){
+        this.status=status;
+    }
+
+    public void changeAGVId(AGVId id){this.agvId=id;}
 }

@@ -18,11 +18,6 @@ public class Model implements ValueObject {
         return model;
     }
 
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-
     @Override
     public String toString() {
         return "Model{" +

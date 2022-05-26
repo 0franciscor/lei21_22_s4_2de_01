@@ -22,10 +22,6 @@ public class AGVTask implements DomainEntity<Long>, AggregateRoot<Long> { //IMPL
         return description;
     }
 
-    public void setDescription(String agvTask) {
-        this.description = agvTask;
-    }
-
     @Override
     public String toString() {
         return "AGVTask{" +

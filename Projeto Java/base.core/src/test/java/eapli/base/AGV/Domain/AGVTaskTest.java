@@ -26,7 +26,7 @@ class AGVTaskTest {
         Assertions.assertEquals(a1.getAgvTask(), a2.getAgvTask());
     }
 
-    @Test
+   /* @Test
     void setAgvTask() {
         AGVId id = new AGVId("12345678");
         BriefDescription description = new BriefDescription("abcdefg");
@@ -63,7 +63,7 @@ class AGVTaskTest {
         task.setDescription("y");
         AGV a2 = new AGV(id,description,model,weight,volume,a,pos,dock,status,t1);
         Assertions.assertNotEquals(a1.getAgvTask(), a2.getAgvTask());
-    }
+    } */
 
     @Test
     void testEquals1() {
