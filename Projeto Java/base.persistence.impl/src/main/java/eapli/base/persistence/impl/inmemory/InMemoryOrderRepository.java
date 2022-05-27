@@ -20,7 +20,7 @@ public class InMemoryOrderRepository extends InMemoryDomainRepository<ProductOrd
 
 
     @Override
-    public ProductOrder getProductOrderById(Long id){
+    public ProductOrder getOrderById(Long id){
         return null;
     }
 }

@@ -24,6 +24,11 @@ public class ListOrderBeingPreparedByAGVController {
     private final AGVRepository agvRepository = PersistenceContext.repositories().agv(context);
     private final OrderRepository orderRepository = PersistenceContext.repositories().orders(context);
 
+    private AGV agv;
+
+    public ListOrderBeingPreparedByAGVController() {
+        this.agv = null;
+    }
 
     public List<AgvDto> getAGVsAvaiable(){
 
@@ -51,7 +56,7 @@ public class ListOrderBeingPreparedByAGVController {
 
         Iterable<ProductOrder> orders = orderRepository.getOrdersWhoNeedToBePrepared();
 
-        AGV agv = agvRepository.getAGVById(idAgv);
+        agv = agvRepository.getAGVById(idAgv);
 
         context.beginTransaction();
 
@@ -80,5 +85,23 @@ public class ListOrderBeingPreparedByAGVController {
 
     }
 
-    public List<ProductOrderDto>
+    public List<ProductOrderDto> changeTheStatusOfOrdersForDispatchedToCustomer(List<ProductOrderDto> listOfOrdersSelected){
+        List<ProductOrderDto> productOrderDtoList = new ArrayList<>();
+        ProductOrder order;
+
+        context.beginTransaction();
+        for (ProductOrderDto dto : listOfOrdersSelected){
+            order = orderRepository.getOrderById(dto.orderId);
+            order.changeStatusOfOrderToBeingDispatchedToCustomer();
+            agv.changeStatusOfAGVForFree();
+            orderRepository.save(order);
+            agvRepository.save(agv);
+            productOrderDtoList.add(new ProductOrderDto(agv.getAgvId().getAGVId(), order.getOrderId(), order.getOrderStatus().obtainStatus().name()));
+
+        }
+        context.commit();
+        return productOrderDtoList;
+    }
+
+
 }
