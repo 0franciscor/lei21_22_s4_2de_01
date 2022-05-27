@@ -79,7 +79,7 @@ public class ForceOrderPrepController {
 
         try{
             // orderRepository.changeTheStatusOfTheOrderToBeingPreparedOnWarehouse(productOrder))
-            OrderStatus.Status st = OrderStatus.Status.BEING_PREPARED_ON_WAREHOUSE;
+            OrderStatus.Status st = OrderStatus.Status.BEING_PREPARED_BY_AGV;
             OrderStatus orderStatus = new OrderStatus(st);
             this.productOrder.changeProductOrderStatus(orderStatus);
             orderRepository.save(this.productOrder);

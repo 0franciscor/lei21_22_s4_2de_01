@@ -43,7 +43,7 @@ public class ListOrderBeingPreparedByAGVController {
     }
 
     public List<ProductOrderDto> getOrdersWhoNeedToBePreparedByAGV(String idAgv, String taskDescription) throws Exception {
-        
+
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER, BaseRoles.WAREHOUSE_EMPLOYEE);
         int count = 0;
 
@@ -72,7 +72,7 @@ public class ListOrderBeingPreparedByAGVController {
             }
 
             orderRepository.save(p);
-            orderDtos.add(new ProductOrderDto(agv.getAgvId().getAGVId(), p.getOrderId()));
+            orderDtos.add(new ProductOrderDto(agv.getAgvId().getAGVId(), p.getOrderId(), taskDescription + " " + count, p.getStatus().obtainStatus().name()));
         }
 
         context.commit();

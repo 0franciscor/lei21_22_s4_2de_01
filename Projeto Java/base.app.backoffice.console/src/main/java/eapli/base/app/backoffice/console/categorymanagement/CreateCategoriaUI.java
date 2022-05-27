@@ -1,4 +1,4 @@
-package eapli.base.app.backoffice.console.categoriamanagement;
+package eapli.base.app.backoffice.console.categorymanagement;
 
 import eapli.base.categorymanagement.aplication.CreateCategoryController;
 import eapli.base.categorymanagement.domain.AlphanumericCode;
@@ -52,7 +52,7 @@ public class CreateCategoriaUI extends AbstractUI {
 
 
         try {
-            //this.createCategoryController.createCategory(alphanumericCode, description, superCategory);
+            this.createCategoryController.createCategory(alphanumericCode, description, superCategory);
 
         } catch (@SuppressWarnings("unused") final IntegrityViolationException e) {
             System.out.println("You tried to enter a category that already exists in the system.");

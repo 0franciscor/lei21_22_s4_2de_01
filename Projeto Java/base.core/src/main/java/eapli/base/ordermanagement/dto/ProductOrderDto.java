@@ -18,6 +18,10 @@ public class ProductOrderDto implements DTO {
 
     public String productOrderId;
 
+    public String taskDescription;
+
+    public String status;
+
     public ProductOrderDto(final long id, final String date, final String customerName, final String total){
         this.orderId = id;
         this.date = date;
@@ -25,9 +29,11 @@ public class ProductOrderDto implements DTO {
         this.total = total;
     }
 
-    public ProductOrderDto(String orderId, Long agvId) {
+    public ProductOrderDto(String orderId, Long agvId, String taskDescription, String status) {
         this.productOrderId = orderId;
         this.agvId = agvId;
+        this.taskDescription = taskDescription;
+        this.status = status;
     }
 
     @Override

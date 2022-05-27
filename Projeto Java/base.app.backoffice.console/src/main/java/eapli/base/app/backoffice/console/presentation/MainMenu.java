@@ -23,13 +23,14 @@
  */
 package eapli.base.app.backoffice.console.presentation;
 
-import eapli.base.app.backoffice.console.categoriamanagement.CreateCategoriaUI;
+import eapli.base.app.backoffice.console.categorymanagement.CreateCategoriaUI;
 import eapli.base.app.backoffice.console.clientmanagement.RegisterClientUI;
 import eapli.base.app.backoffice.console.ordermanagement.ForceOrderPrepUI;
 import eapli.base.app.backoffice.console.ordermanagement.RegisterClientOrderUI;
 import eapli.base.app.backoffice.console.presentation.authz.ImportJsonUI;
 import eapli.base.app.backoffice.console.productmanagement.ListProductUi;
 import eapli.base.app.backoffice.console.productmanagement.RegisterProductUI;
+import eapli.base.app.backoffice.console.warehouseEmployeeManagement.ListOrderBeingPreparedByAGVUI;
 import eapli.base.app.common.console.presentation.authz.MyUserMenu;
 import eapli.base.Application;
 import eapli.base.app.backoffice.console.presentation.authz.AddUserUI;
@@ -78,6 +79,10 @@ public class MainMenu extends AbstractUI {
     private static final int REGISTER_CLIENT_ORDER = 3;
     private static final int REGISTER_PRODUCT = 4;
     private static final int CREATE_CATALOG = 5;
+
+    //WAREHOUSE EMPLOYEE
+    private static final int IMPORT_JSONFILE = 1;
+    private static final int LIST_ORDERS = 2;
 
     // MAIN MENU
     private static final int MY_USER_OPTION = 1;
@@ -210,9 +215,10 @@ public class MainMenu extends AbstractUI {
     }
 
     private Menu buildWarehouseEmployeeMenu() {
-        final Menu menu = new Menu(".json Functionality");
+        final Menu menu = new Menu("Warehouse Employee >");
 
-        menu.addItem(REGISTER_CLIENT, "Import a Warehouse's Info", new ImportJsonUI()::show);
+        menu.addItem(IMPORT_JSONFILE, "Import a Warehouse's Info", new ImportJsonUI()::show);
+        menu.addItem(LIST_ORDERS, "List Orders being prepared by an AGV", new ListOrderBeingPreparedByAGVUI()::show);
 
         return menu;
     }
