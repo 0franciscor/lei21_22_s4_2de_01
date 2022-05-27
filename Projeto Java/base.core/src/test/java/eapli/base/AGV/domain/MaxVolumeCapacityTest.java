@@ -13,13 +13,12 @@ class MaxVolumeCapacityTest {
         MaxWeightCapacity weight = new MaxWeightCapacity(200.0);
         MaxVolumeCapacity volume = new MaxVolumeCapacity(200);
         Model model = new Model("2.1.1.1");
-        ChangeAGVStatus status = new ChangeAGVStatus("FREE");
         Range a = new Range(5.0);
         AGVPosition pos = new AGVPosition("s");
         AGVDock dock = new AGVDock();
 
-        AGV a1 = new AGV(id,description,model,weight,volume,a,pos,dock,status);
-        AGV a2 = new AGV(id,description,model,weight,volume,a,pos,dock,status);
+        AGV a1 = new AGV(id,description,model,weight,volume,a,pos,dock);
+        AGV a2 = new AGV(id,description,model,weight,volume,a,pos,dock);
         Assertions.assertEquals(a1.getMaxVolumeCapacity(), a2.getMaxVolumeCapacity());
     }
 
@@ -31,13 +30,12 @@ class MaxVolumeCapacityTest {
         MaxVolumeCapacity volume = new MaxVolumeCapacity(200);
         MaxVolumeCapacity volume1 = new MaxVolumeCapacity(199);
         Model model = new Model("2.1.1.1");
-        ChangeAGVStatus status = new ChangeAGVStatus("FREE");
         Range a = new Range(5.0);
         AGVPosition pos = new AGVPosition("s");
         AGVDock dock = new AGVDock();
 
-        AGV a1 = new AGV(id,description,model,weight,volume,a,pos,dock,status);
-        AGV a2 = new AGV(id,description,model,weight,volume1,a,pos,dock,status);
+        AGV a1 = new AGV(id,description,model,weight,volume,a,pos,dock);
+        AGV a2 = new AGV(id,description,model,weight,volume1,a,pos,dock);
         Assertions.assertNotEquals(a1.getMaxVolumeCapacity(), a2.getMaxVolumeCapacity());
     }
 
@@ -48,14 +46,13 @@ class MaxVolumeCapacityTest {
         MaxWeightCapacity weight = new MaxWeightCapacity(200.0);
         MaxVolumeCapacity volume = new MaxVolumeCapacity(200);
         Model model = new Model("2.1.1.1");
-        ChangeAGVStatus status = new ChangeAGVStatus("FREE");
         Range a = new Range(5.0);
         AGVPosition pos = new AGVPosition("s");
         AGVDock dock = new AGVDock();
 
-        AGV a1 = new AGV(id,description,model,weight,volume,a,pos,dock,status);
+        AGV a1 = new AGV(id,description,model,weight,volume,a,pos,dock);
         volume.setMaxVolumeCapacity(56.0);
-        AGV a2 = new AGV(id,description,model,weight,volume,a,pos,dock,status);
+        AGV a2 = new AGV(id,description,model,weight,volume,a,pos,dock);
         Assertions.assertEquals(a1.getMaxVolumeCapacity(), a2.getMaxVolumeCapacity());
     }
 

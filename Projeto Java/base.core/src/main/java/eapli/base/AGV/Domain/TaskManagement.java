@@ -1,10 +1,7 @@
-package eapli.base.AGV.Domain;
-
-import eapli.base.infrastructure.persistence.PersistenceContext;
-
-import java.util.List;
+package eapli.base.AGV.domain;
 
 public class TaskManagement {
+
     private final TaskQueue taskQueue;
 
     public TaskManagement(){

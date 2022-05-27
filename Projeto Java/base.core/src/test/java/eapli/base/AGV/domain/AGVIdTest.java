@@ -1,6 +1,7 @@
 package eapli.base.AGV.domain;
 
 import eapli.base.warehouse.domain.AGVDock;
+import eapli.base.AGV.domain.AGV;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -15,13 +16,12 @@ class AGVIdTest {
         MaxWeightCapacity weight = new MaxWeightCapacity(200.0);
         MaxVolumeCapacity volume = new MaxVolumeCapacity(200);
         Model model = new Model("2.1.1.1");
-        ChangeAGVStatus status = new ChangeAGVStatus("FREE");
         Range a = new Range(5.0);
         AGVPosition pos = new AGVPosition("s");
         AGVDock dock = new AGVDock();
 
         AGV a1 = getAGVId1();
-        AGV a2 = new AGV(id,description,model,weight,volume,a,pos,dock,status);
+        AGV a2 = new AGV(id,description,model,weight,volume,a,pos,dock);
         Assertions.assertEquals(a1.agvDock().getId(), a2.agvDock().getId());
     }
 
@@ -31,13 +31,12 @@ class AGVIdTest {
         MaxWeightCapacity weight = new MaxWeightCapacity(200.0);
         MaxVolumeCapacity volume = new MaxVolumeCapacity(200);
         Model model = new Model("2.1.1.1");
-        String status = "FREE";
         Range a = new Range(5.0);
         AGVPosition pos = new AGVPosition("s");
         AGVDock dock = new AGVDock();
         AGVBuilder agvBuilder = new AGVBuilder();
         agvBuilder.withId(id).withBriefDescription(description).withMaxWeightCapacity(weight)
-                .withModel(model).withAGVStatus(status).withMaxVolumeCapacity(volume).withRange(a)
+                .withModel(model).withMaxVolumeCapacity(volume).withRange(a)
                 .withPosition(pos).withAGVDock(dock);
 
         return agvBuilder.build();

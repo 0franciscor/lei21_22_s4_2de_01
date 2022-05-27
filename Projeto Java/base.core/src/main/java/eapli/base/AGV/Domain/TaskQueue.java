@@ -1,6 +1,5 @@
-package eapli.base.AGV.Domain;
+package eapli.base.AGV.domain;
 
-import eapli.base.AGV.Domain.AGVTask;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 
 import java.util.LinkedList;
