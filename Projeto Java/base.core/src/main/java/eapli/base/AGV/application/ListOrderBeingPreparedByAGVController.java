@@ -1,6 +1,7 @@
 package eapli.base.AGV.application;
 
 import eapli.base.AGV.domain.AGV;
+import eapli.base.AGV.domain.AGVId;
 import eapli.base.AGV.domain.AGVTask;
 import eapli.base.AGV.repositories.AGVRepository;
 import eapli.base.AGV.dto.AgvDto;
@@ -56,7 +57,7 @@ public class ListOrderBeingPreparedByAGVController {
 
         Iterable<ProductOrder> orders = orderRepository.getOrdersWhoNeedToBePrepared();
 
-        agv = agvRepository.getAGVById(idAgv);
+        agv = agvRepository.getAGVById(new AGVId(idAgv));
 
         context.beginTransaction();
 

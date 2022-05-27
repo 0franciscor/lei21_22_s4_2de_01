@@ -1,4 +1,5 @@
 package eapli.base.ordermanagement.application;
+import eapli.base.AGV.domain.AGVId;
 import eapli.base.AGV.dto.AgvDto;
 import eapli.base.AGV.application.ConfigureAGVController;
 import eapli.base.AGV.domain.AGV;
@@ -36,7 +37,7 @@ public class ForceOrderPrepController {
 
     }
 
-    public AGV getAGV(String agvId){
+    public AGV getAGV(AGVId agvId){
         return agvRepository.getAGVById(agvId);
     }
 
@@ -88,7 +89,7 @@ public class ForceOrderPrepController {
     }
 
 
-    public ProductOrder forceOrderPrep(String productOrderid, String agvid){
+    public ProductOrder forceOrderPrep(String productOrderid, AGVId agvid){
 
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.WAREHOUSE_EMPLOYEE, BaseRoles.POWER_USER, BaseRoles.ADMIN, BaseRoles.SALES_CLERK);
         txCtx.beginTransaction();
