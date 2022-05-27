@@ -7,10 +7,11 @@ import eapli.base.AGV.Domain.AGV;
 import eapli.base.AGV.Domain.AGVId;
 import eapli.base.AGV.Domain.AGVStatus;
 import eapli.base.AGV.Repositories.AGVRepository;
+import eapli.base.AGV.dto.AgvDto;
 import eapli.base.ordermanagement.domain.OrderStatus;
 import eapli.base.ordermanagement.domain.ProductOrder;
-import eapli.base.ordermanagement.dto.ProductOrderDto;
 import eapli.base.ordermanagement.repository.OrderRepository;
+import eapli.base.productmanagement.dto.ProductOrderDto;
 import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
@@ -33,15 +34,33 @@ public class ForceOrderPrepController {
     private ProductOrder productOrder;
     private AGV agv;
 
-    public void saveOrder(Long orderId){
-        orderRepository.getProductOrderById(orderId);
+    public ProductOrder getOrder(Long orderId){
+        System.out.println("ola1");
+        return orderRepository.getProductOrderById(orderId);
+
     }
 
-    public void saveAGV(AGVId agvId){
-        agv.changeAGVId(agvId);
+    public AGV getAGV(String agvId){
+        return agvRepository.getAGVById(agvId);
     }
 
-    public List<AGV> showAvailableAGVs(){
+
+    public List<AgvDto> showAvailableAGVs(){
+        Iterable<AGV> aux = agvRepository.findAll();
+        List<AgvDto> list = new ArrayList<>();
+        for(AGV agv : aux ){
+            if(agv.getAgvStatus().equals(AGVStatus.FREE)){
+                String id = agv.getAgvId().toString();
+                String volume = agv.getMaxVolumeCapacity().toString();
+                String weight = agv.getMaxWeightCapacity().toString();
+                AgvDto dto = new AgvDto(id,volume,weight);
+                list.add(dto);
+            }
+        }
+        return list;
+    }
+
+    /*public List<AGV> showAvailableAGVs(){
         Iterable<AGV> aux = agvRepository.findAll();
         List<AGV> list = new ArrayList<>();
         for(AGV agv : aux ){
@@ -50,7 +69,7 @@ public class ForceOrderPrepController {
             }
         }
         return list;
-    }
+    }*/
 
     public List<ProductOrderDto> getOrdersToBePrepared(){
         Iterable<ProductOrder> aux = orderRepository.findAll();
@@ -73,21 +92,28 @@ public class ForceOrderPrepController {
     }
 
 
-    public ProductOrder forceOrderPrep(){
+    public ProductOrder forceOrderPrep(String productOrderid, String agvid){
+
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.WAREHOUSE_EMPLOYEE, BaseRoles.POWER_USER, BaseRoles.ADMIN, BaseRoles.SALES_CLERK);
         txCtx.beginTransaction();
 
         try{
-            // orderRepository.changeTheStatusOfTheOrderToBeingPreparedOnWarehouse(productOrder))
+            // orderRepository.changeTheStatusOfTheOrderToBeingPreparedOnWarehouse(productOrder));
             OrderStatus.Status st = OrderStatus.Status.BEING_PREPARED_BY_AGV;
             OrderStatus orderStatus = new OrderStatus(st);
-            this.productOrder.changeProductOrderStatus(orderStatus);
-            orderRepository.save(this.productOrder);
-
+            System.out.println("ola");
+            System.out.println("product id em string:" + productOrderid);
+            System.out.println("a" + Long.parseLong(productOrderid) );
+            ProductOrder order = getOrder(Long.parseLong(productOrderid));
+            order.changeProductOrderStatus(orderStatus);
             //update agv status
-            agv.changeStatusOfAGVForOccupied();
-            productOrder.preparedByAGV(agv);
-            agvRepository.save(this.agv);
+            AGV agv1 = getAGV(agvid);
+            agv1.changeStatusOfAGVForOccupied();
+            order.preparedByAGV(agv);
+            System.out.println(productOrderid);
+            System.out.println(agvid);
+            agvRepository.save(agv1);
+            orderRepository.save(order);
 
             txCtx.commit();
         } catch (Exception e){
