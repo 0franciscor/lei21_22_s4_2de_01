@@ -1,6 +1,6 @@
 package eapli.base.infrastructure.bootstrapers.demo;
 
-import eapli.base.AGV.Application.ConfigureAGVController;
+import eapli.base.AGV.application.ConfigureAGVController;
 import eapli.base.warehouse.domain.AGVDock;
 import eapli.framework.actions.Action;
 

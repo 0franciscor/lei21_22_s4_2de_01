@@ -1,12 +1,14 @@
 package eapli.base.app.backoffice.console.warehouseEmployeeManagement;
 
-import eapli.base.AGV.Application.ListOrderBeingPreparedByAGVController;
+import eapli.base.AGV.application.ListOrderBeingPreparedByAGVController;
 import eapli.base.AGV.dto.AgvDto;
+import eapli.base.app.backoffice.console.ordermanagement.ProductOrderDtoPrinter;
 import eapli.base.ordermanagement.dto.ProductOrderDto;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 import eapli.framework.presentation.console.SelectWidget;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ListOrderBeingPreparedByAGVUI extends AbstractUI {
@@ -45,6 +47,31 @@ public class ListOrderBeingPreparedByAGVUI extends AbstractUI {
                 System.out.printf("Order Status -> %s\n", p.status);
 
             }
+        }
+
+        int option;
+        List<ProductOrderDto> orders1 = new ArrayList<>();
+        do {
+            final SelectWidget<ProductOrderDto> selector1 = new SelectWidget<>("Orders:", orders, new ProductOrderDtoPrinter());
+            selector1.show();
+
+            ProductOrderDto productOrderDto = selector1.selectedElement();
+            orders1.add(productOrderDto);
+            System.out.println("Do you want to select any more orders?");
+            System.out.println("1 - yes");
+            System.out.println("2 - no");
+            option = Console.readOption(1, 2, 0);
+
+        } while (option == 1);
+
+        List<ProductOrderDto> orders3 = listOrderBeingPreparedByAGVController.changeTheStatusOfOrdersForDispatchedToCustomer(orders1);
+
+        for (ProductOrderDto p : orders3){
+
+            System.out.printf("\n-----> Order number %d <-----\n", p.orderId);
+            System.out.printf("AGV ID assigned to this order -> %s\n", p.agvId);
+            System.out.printf("Order Status -> %s\n", p.status);
+
         }
 
         return false;

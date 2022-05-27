@@ -1,15 +1,12 @@
 package eapli.base.persistence.impl.jpa;
 
-import eapli.base.AGV.Domain.AGV;
-import eapli.base.AGV.Domain.AGVId;
-import eapli.base.AGV.Domain.AGVStatus;
-import eapli.base.AGV.Repositories.AGVRepository;
+import eapli.base.AGV.domain.AGV;
+import eapli.base.AGV.domain.AGVId;
+import eapli.base.AGV.repositories.AGVRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
-import eapli.framework.infrastructure.repositories.impl.jpa.JpaBaseRepository;
 
 import javax.persistence.TypedQuery;
-import java.util.Optional;
 
 public class JpaAGVRepository extends JpaAutoTxRepository<AGV, AGVId, AGVId> implements AGVRepository {
 

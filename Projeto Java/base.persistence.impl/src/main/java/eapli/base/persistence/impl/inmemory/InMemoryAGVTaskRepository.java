@@ -1,7 +1,7 @@
 package eapli.base.persistence.impl.inmemory;
 
-import eapli.base.AGV.Domain.AGVTask;
-import eapli.base.AGV.Repositories.AGVTaskRepository;
+import eapli.base.AGV.domain.AGVTask;
+import eapli.base.AGV.repositories.AGVTaskRepository;
 import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
 
 

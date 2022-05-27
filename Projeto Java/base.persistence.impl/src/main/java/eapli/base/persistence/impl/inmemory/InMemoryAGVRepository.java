@@ -1,12 +1,10 @@
 package eapli.base.persistence.impl.inmemory;
 
-import eapli.base.AGV.Domain.AGV;
-import eapli.base.AGV.Domain.AGVId;
-import eapli.base.AGV.Domain.AGVStatus;
-import eapli.base.AGV.Repositories.AGVRepository;
+import eapli.base.AGV.domain.AGV;
+import eapli.base.AGV.domain.AGVId;
+import eapli.base.AGV.domain.AGVStatus;
+import eapli.base.AGV.repositories.AGVRepository;
 import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
-
-import java.util.Optional;
 
 public class InMemoryAGVRepository extends InMemoryDomainRepository<AGV, AGVId> implements AGVRepository {
 

@@ -1,6 +1,5 @@
 package eapli.base.persistence.impl.jpa;
 
-import eapli.base.AGV.Domain.AGV;
 import eapli.base.Application;
 import eapli.base.ordermanagement.domain.OrderStatus;
 import eapli.base.ordermanagement.domain.ProductOrder;
@@ -24,7 +23,7 @@ public class JpaOrderRepository extends JpaAutoTxRepository<ProductOrder, Long, 
     }
 
     @Override
-    public ProductOrder getProductOrderById (Long id){
+    public ProductOrder getOrderById (Long id){
         final TypedQuery<ProductOrder> query = super.createQuery(
                 "SELECT d FROM ProductOrder d WHERE orderid = '" + id + "'",
                 ProductOrder.class);

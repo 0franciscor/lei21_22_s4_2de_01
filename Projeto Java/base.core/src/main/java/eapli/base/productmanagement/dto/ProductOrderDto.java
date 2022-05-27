@@ -14,9 +14,7 @@ public class ProductOrderDto implements DTO {
 
     public String total;
 
-    public Long agvId;
-
-    public String productOrderId;
+    public String agvId;
 
     public String taskDescription;
 
@@ -29,13 +27,21 @@ public class ProductOrderDto implements DTO {
         this.total = total;
     }
 
-    public ProductOrderDto(String orderId, Long agvId, String taskDescription, String status) {
-        this.productOrderId = orderId;
+    public ProductOrderDto(String agvId, Long orderId, String taskDescription, String status) {
+        this.orderId = orderId;
         this.agvId = agvId;
         this.taskDescription = taskDescription;
         this.status = status;
     }
-    public String getProductOrderId(){return this.productOrderId.toString();}
+
+
+    public ProductOrderDto(String agvId, Long orderId, String status) {
+        this.orderId = orderId;
+        this.agvId = agvId;
+
+        this.status = status;
+    }
+
     @Override
     public Class<? extends Annotation> annotationType() {
         return null;

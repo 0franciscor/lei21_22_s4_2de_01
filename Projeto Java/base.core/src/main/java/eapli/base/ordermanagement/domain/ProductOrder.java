@@ -1,6 +1,6 @@
 package eapli.base.ordermanagement.domain;
 
-import eapli.base.AGV.Domain.AGV;
+import eapli.base.AGV.domain.AGV;
 import eapli.base.clientmanagement.domain.Client;
 import eapli.base.productmanagement.domain.Product;
 import eapli.framework.domain.model.AggregateRoot;
@@ -256,6 +256,10 @@ public class ProductOrder implements AggregateRoot<Long>, Serializable {
     public Client obtainClient(){return this.client;}
 
     public void changeStatusOfOrderToBeingPreparedByAnAGV(){
+        status.changeStatusForBeingPreparedByAGV();
+    }
+
+    public void changeStatusOfOrderToBeingDispatchedToCustomer(){
         status.changeStatusForBeingPreparedByAGV();
     }
 

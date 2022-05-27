@@ -2,7 +2,6 @@ package eapli.base.app.backoffice.console.ordermanagement;
 
 import eapli.base.AGV.dto.AgvDto;
 import eapli.base.ordermanagement.application.ForceOrderPrepController;
-import eapli.base.ordermanagement.domain.ProductOrder;
 import eapli.base.productmanagement.dto.ProductOrderDto;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
@@ -45,7 +44,7 @@ public class ForceOrderPrepUI extends AbstractUI {
 
 
                 System.out.println("##po##");
-                System.out.println(productOrder.getProductOrderId());
+                System.out.println(productOrder.orderId);
 
 
                 // escolher agv
@@ -59,12 +58,12 @@ public class ForceOrderPrepUI extends AbstractUI {
                 AgvDto agv = list1.get(a-1);
 
                 System.out.println("####");
-                System.out.println(productOrder.getProductOrderId());
+                System.out.println(productOrder.orderId);
                 System.out.println(agv.getId());
                 System.out.println("####");
 
                 // force order prep
-                forceOrderController.forceOrderPrep(productOrder.getProductOrderId(), agv.getId());
+                forceOrderController.forceOrderPrep(Long.toString(productOrder.orderId), agv.getId());
 
             } catch(Exception e){
                 System.out.println(e.getMessage());

@@ -20,8 +20,8 @@
  */
 package eapli.base.persistence.impl.jpa;
 
-import eapli.base.AGV.Repositories.AGVRepository;
-import eapli.base.AGV.Repositories.AGVTaskRepository;
+import eapli.base.AGV.repositories.AGVRepository;
+import eapli.base.AGV.repositories.AGVTaskRepository;
 import eapli.base.Application;
 import eapli.base.categorymanagement.repositories.CategoryRepository;
 import eapli.base.clientmanagement.repositories.ClientRepository;

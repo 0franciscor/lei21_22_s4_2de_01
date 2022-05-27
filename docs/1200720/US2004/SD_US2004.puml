@@ -4,8 +4,11 @@
 actor "Warehouse Employee" as EMPLOYEE
 participant ListOrdersBeingPreparedUI as UI <<presentation>>
 participant ListOrdersBeingPreparedController as CONTROLLER <<application>>
+participant "agv : AGV" as AGV <<domain>>
 participant AGVTask as TASK <<domain>>
-participant agvDto as DTO  <<dto>>
+participant ProductOrder as ORDER <<domain>>
+participant AgvDto as DTO_AGV <<dto>>
+participant ProductOrderDto as DTO_ORDER <<dto>>
 participant PersistenceContext as PERSISTENCE <<persistence>>
 participant RepositoryFactory as FACTORY <<factory>>
 database AGVRepository as REPOSITORY_AGV <<repository>>
@@ -56,15 +59,15 @@ REPOSITORY_AGV --> CONTROLLER : agvsAvaiable
 
 deactivate REPOSITORY_AGV
 
-CONTROLLER -> DTO : toDto()
+CONTROLLER -> DTO_AGV : toDto()
 
-activate DTO
+activate DTO_AGV
 
-DTO -> CONTROLLER : agvsAvaiableDto
+DTO_AGV -> CONTROLLER : agvsAvaiableDto
 
-deactivate DTO
+deactivate DTO_AGV
 
-CONTROLLER --> UI : agvsAvaiable
+CONTROLLER --> UI : agvsAvaiableDto
 deactivate CONTROLLER
 
 UI --> EMPLOYEE: Shows the list of AGVs and asks to select one
@@ -77,7 +80,7 @@ EMPLOYEE -> UI : Select the AGV
 
 activate UI
 
-UI -> CONTROLLER : getOrdersWhoNeedToBePreparedByAGV(selectedAGV)
+UI -> CONTROLLER : getOrdersWhoNeedToBePreparedByAGV(idAGV, taskDescription)
 
 activate CONTROLLER
 
@@ -89,29 +92,91 @@ FACTORY --> CONTROLLER : orderRepository
 
 deactivate FACTORY
 
-CONTROLLER -> REPOSITORY_ORDERS : getOrdersWhoNeedToBePreparedByAGV(selectedAGV)
+CONTROLLER -> REPOSITORY_ORDERS : getOrdersWhoNeedToBePrepared()
 
 activate REPOSITORY_ORDERS
 
-REPOSITORY_ORDERS --> CONTROLLER : listOfOrdersWhoNeedToByPreparedByAgv
+REPOSITORY_ORDERS --> CONTROLLER : listOfOrdersWhoNeedToByPrepared
 deactivate REPOSITORY_ORDERS
 
-CONTROLLER -> TASK : associateOrdersToAgvSelected(listOfOrdersWhoNeedToByPreparedByAgv, agvSelected)
+CONTROLLER -> REPOSITORY_AGV : getAGVById(idAGV)
+activate REPOSITORY_AGV
 
+REPOSITORY_AGV --> CONTROLLER : agvSelected
+deactivate REPOSITORY_AGV
+
+CONTROLLER -> AGV : assignATaskForAGV(taskDescription)
+activate AGV
+
+AGV -> TASK : assignATaskForAGV(taskDescription)
 activate TASK
 deactivate TASK
 
-CONTROLLER -> REPOSITORY_ORDERS : changeTheStatusOfTheOrdersToReadForClient(listOfOrdersWhoNeedToByPreparedByAgv)
+CONTROLLER -> AGV : changeStatusOfAGVForOccupied()
+deactivate AGV
 
+
+
+loop for each productOrder in listOfOrdersWhoNeedToByPrepared
+CONTROLLER -> ORDER : changeStatusOfOrderToBeingPreparedByAnAGV()
+activate ORDER
+deactivate ORDER
+
+CONTROLLER -> AGV : addOrdersToATask(taskDescription, productOrder)
+activate AGV
+deactivate AGV
+CONTROLLER -> REPOSITORY_AGV : save(agvSelected)
+activate REPOSITORY_AGV
+deactivate REPOSITORY_AGV
+CONTROLLER -> REPOSITORY_ORDERS : save(productOrder)
 activate REPOSITORY_ORDERS
 deactivate REPOSITORY_ORDERS
 
-CONTROLLER --> UI : listOfOrdersWhoNeedToByPreparedByAgv
+CONTROLLER -> DTO_ORDER : toDto(productOrder)
+end
+
+CONTROLLER --> UI : listOfOrdersWhoNeedToByPreparedDto
 deactivate CONTROLLER
 
 UI --> EMPLOYEE : Shows the list of products prepared by the selected AGV
 
 deactivate UI
+
+EMPLOYEE -> UI : Select the orders you want to change the status to 'dispatched for customer'
+activate UI
+
+UI -> CONTROLLER : changeTheStatusOfOrdersForDispatchedToCustomer(listOfOrdersSelected)
+activate CONTROLLER
+
+loop for each ProducOrderDto in listOfOrdersSelected
+CONTROLLER -> ORDER : getOrderById(orderId)
+activate ORDER
+ORDER --> CONTROLLER : order
+deactivate ORDER
+
+CONTROLLER -> ORDER : changeStatusToDispatchedToCustomer()
+activate ORDER
+deactivate ORDER
+
+CONTROLLER -> AGV : changeStatusOfAGVForFree()
+activate AGV
+deactivate AGV
+
+CONTROLLER -> REPOSITORY_ORDERS : save(productOrder)
+activate REPOSITORY_ORDERS
+deactivate REPOSITORY_ORDERS
+
+CONTROLLER -> REPOSITORY_AGV : save(agv)
+activate REPOSITORY_AGV
+deactivate REPOSITORY_AGV
+end loop
+
+CONTROLLER --> UI : listOfOrdersSelected
+UI --> EMPLOYEE : Shows orders with the new status
+
+deactivate CONTROLLER
+deactivate UI
+
 
 deactivate EMPLOYEE
 

@@ -14,6 +14,13 @@ deactivate S
 F -> S: Select the AGV
 activate S
 S --> F : Shows the list of products prepared by the selected AGV
+deactivate S
+
+F -> S : Select the orders you want to change the status to 'dispatched for customer'
+activate S
+
+S --> F : Shows orders with the new status
+deactivate S
 
 deactivate S
 deactivate F
