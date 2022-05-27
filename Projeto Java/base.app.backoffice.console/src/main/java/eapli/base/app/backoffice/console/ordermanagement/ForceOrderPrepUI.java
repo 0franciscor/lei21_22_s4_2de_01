@@ -43,9 +43,6 @@ public class ForceOrderPrepUI extends AbstractUI {
                 ProductOrderDto productOrder = list.get(order-1);
 
 
-                System.out.println("##po##");
-                System.out.println(productOrder.orderId);
-
 
                 // escolher agv
                 List<AgvDto> list1 = forceOrderController.showAvailableAGVs();
@@ -57,13 +54,8 @@ public class ForceOrderPrepUI extends AbstractUI {
                 int a = Integer.parseInt(Console.readLine("Choose an agv"));
                 AgvDto agv = list1.get(a-1);
 
-                System.out.println("####");
-                System.out.println(productOrder.orderId);
-                System.out.println(agv.getId());
-                System.out.println("####");
-
                 // force order prep
-                forceOrderController.forceOrderPrep(Long.toString(productOrder.orderId), agv.getId());
+                forceOrderController.forceOrderPrep(Long.toString(productOrder.orderId), agv.id);
 
             } catch(Exception e){
                 System.out.println(e.getMessage());

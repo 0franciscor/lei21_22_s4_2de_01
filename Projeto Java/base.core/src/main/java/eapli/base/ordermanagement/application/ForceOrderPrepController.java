@@ -31,12 +31,12 @@ public class ForceOrderPrepController {
     private AGV agv;
 
     public ProductOrder getOrder(Long orderId){
-        System.out.println("ola1");
         return orderRepository.getOrderById(orderId);
 
     }
 
     public AGV getAGV(String agvId){
+        System.out.println("entrou: " + agvId);
         return agvRepository.getAGVById(agvId);
     }
 
@@ -55,17 +55,6 @@ public class ForceOrderPrepController {
         }
         return list;
     }
-
-    /*public List<AGV> showAvailableAGVs(){
-        Iterable<AGV> aux = agvRepository.findAll();
-        List<AGV> list = new ArrayList<>();
-        for(AGV agv : aux ){
-            if(agv.getAgvStatus().equals(AGVStatus.FREE)){
-                list.add(agv);
-            }
-        }
-        return list;
-    }*/
 
     public List<ProductOrderDto> getOrdersToBePrepared(){
         Iterable<ProductOrder> aux = orderRepository.findAll();
@@ -97,19 +86,33 @@ public class ForceOrderPrepController {
             // orderRepository.changeTheStatusOfTheOrderToBeingPreparedOnWarehouse(productOrder));
             OrderStatus.Status st = OrderStatus.Status.BEING_PREPARED_BY_AGV;
             OrderStatus orderStatus = new OrderStatus(st);
-            System.out.println("ola");
             System.out.println("product id em string:" + productOrderid);
+            System.out.println("a");
             System.out.println("a" + Long.parseLong(productOrderid) );
+            System.out.println("b");
             ProductOrder order = getOrder(Long.parseLong(productOrderid));
+            System.out.println("c");
             order.changeProductOrderStatus(orderStatus);
+            System.out.println("d");
+
             //update agv status
+            System.out.println("d2");
             AGV agv1 = getAGV(agvid);
+            System.out.println("e");
+            System.out.println("agv id em string:" + agvid);
+            System.out.println("f");
             agv1.changeStatusOfAGVForOccupied();
+            System.out.println("g");
             order.preparedByAGV(agv);
+            System.out.println("h");
             System.out.println(productOrderid);
+            System.out.println("i");
             System.out.println(agvid);
+            System.out.println("j");
             agvRepository.save(agv1);
+            System.out.println("k");
             orderRepository.save(order);
+            System.out.println("l");
 
             txCtx.commit();
         } catch (Exception e){
