@@ -7,23 +7,46 @@ alfanumerico: PALAVRA
 
 pontucao: PONTO_FINAL
         | PONTO_INTERROGACAO
+        | RETICENCIAS
         | PONTO_EXCLAMACAO;
+
+frase : PALAVRA (VIRGULA? ESPACO (PALAVRA|NUMERO)+)*
+       | NUMERO+ (VIRGULA? ESPACO (PALAVRA|NUMERO)+)*
+       | PALAVRA VIRGULA ;
 
 regraIdQuestionario: alfanumerico+ HIFEN alfanumerico+;
 
-regraTitulo: FRASE NEWLINE;
+regraTitulo: frase NEWLINE;
 
-regraMensagem: (FRASE pontucao NEWLINE)+;
+regraMensagem: (frase pontucao? NEWLINE)+;
 
 regraId: NUMERO+;
 
-regraPergunta: FRASE PONTO_INTERROGACAO NEWLINE;
+obrigatoriedade: MANDATORY
+               | OPTIONAL
+               | CONDITION_DEPENDENT DOIS_PONTOS ESPACO frase;
 
-pergunta: regraId FIM regraPergunta regraMensagem?;
+repetibilidade : NUMERO+ ;
 
-seccao: regraId FIM regraTitulo regraMensagem pergunta+;
+opcao: regraId PARENTESIS_DIREITO frase (DOIS_PONTOS)? NEWLINE;
 
-questionario: regraIdQuestionario FIM regraTitulo regraMensagem? seccao+ regraMensagem;
+type: FREE_TEXT NEWLINE
+    | NUMERIC (ESPACO PARENTESIS_ESQUERDO DECIMALS_ALLOWED PARENTESIS_DIREITO)? NEWLINE
+    | SINGLE_CHOICE NEWLINE (opcao)+
+    | MULTIPLE_CHOICE NEWLINE (opcao)+
+    | SINGLE_CHOICE1 NEWLINE (opcao)+
+    | MULTIPLE_CHOICE1 NEWLINE (opcao)+
+    | SORTING_OPTIONS NEWLINE (opcao)+
+    | SCALING_OPTIONS NEWLINE 'Scale: ' frase NEWLINE (opcao)+
+    ;
+
+regraPergunta: frase PONTO_INTERROGACAO NEWLINE;
+
+pergunta: regraId NEWLINE regraPergunta PARENTESIS_ESQUERDO obrigatoriedade PARENTESIS_DIREITO  (NEWLINE regraMensagem)? NEWLINE 'Type: ' type NEWLINE regraMensagem?;
+
+seccao: regraId NEWLINE regraTitulo regraMensagem? 'Section Obligatoriness: ' obrigatoriedade (NEWLINE 'Repeatability: ' repetibilidade)? NEWLINE pergunta+;
+
+questionario: regraIdQuestionario NEWLINE regraTitulo regraMensagem? (NEWLINE seccao)+ NEWLINE NEWLINE regraMensagem;
 
 //------------------- TOKENS -------------------
 
@@ -40,16 +63,19 @@ MULTIPLE_CHOICE1: 'Multiple-Choice with input value';
 SORTING_OPTIONS:'Sorting Options';
 SCALING_OPTIONS:'Scaling Options';
 
+DECIMALS_ALLOWED: 'Decimal numbers are allowed!';
+
 NUMERO: [0-9];
 PALAVRA: [a-zA-Z]+;
-FRASE: PALAVRA (VIRGULA? ESPACO (PALAVRA|NUMERO+))*;
 
 HIFEN: '-';
 ESPACO: ' '|'\t';
 PONTO_FINAL: '.';
 DOIS_PONTOS: ':';
+RETICENCIAS: '...';
 VIRGULA: ',';
-FIM: ';';
 PONTO_INTERROGACAO: '?';
 PONTO_EXCLAMACAO: '!';
+PARENTESIS_DIREITO: ')';
+PARENTESIS_ESQUERDO: '(';
 NEWLINE : [\r\n] ;
