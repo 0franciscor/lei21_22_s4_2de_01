@@ -1,4 +1,4 @@
-package eapli.base.AGV.Application;
+package eapli.base.AGV.application;
 
 import eapli.base.AGV.domain.TaskManagement;
 import eapli.base.usermanagement.domain.BaseRoles;

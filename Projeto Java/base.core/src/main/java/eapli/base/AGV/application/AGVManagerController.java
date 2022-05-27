@@ -1,4 +1,4 @@
-package eapli.base.AGV.Application;
+package eapli.base.AGV.application;
 
 public interface AGVManagerController {
 

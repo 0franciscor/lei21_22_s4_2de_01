@@ -15,7 +15,7 @@ public class OrderStatus implements ValueObject, Serializable {
 
     public enum Status {
         REGISTERED, PAYMENT_PENDING, TO_BE_PREPARED, BEING_PREPARED_BY_AGV,
-        READY_FOR_PACKAGING, READY_FOR_CARRIER_DISPATCHING, DISPATCHED, DELIVERED_BY_CARRIER, RECEIVED_BY_COSTUMER;
+        READY_FOR_PACKAGING, READY_FOR_CARRIER_DISPATCHING, DISPATCHED_FOR_COSTUMER, DELIVERED_BY_CARRIER, RECEIVED_BY_COSTUMER;
     }
 
     @Enumerated(EnumType.STRING)
@@ -35,5 +35,9 @@ public class OrderStatus implements ValueObject, Serializable {
 
     public void changeStatusForBeingPreparedByAGV(){
         this.status = Status.BEING_PREPARED_BY_AGV;
+    }
+
+    public void changeStatusForBeingDispatchedForCostumer(){
+        this.status = Status.DISPATCHED_FOR_COSTUMER;
     }
 }

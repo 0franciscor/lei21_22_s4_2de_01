@@ -3,39 +3,69 @@
 
 class ListOrdersBeingPreparedUI
 class ListOrdersBeingPreparedController
+class AGV
 class AGVTask
+class ProductOrder
 class PersistenceContext
 class RepositoryFactory
 class AGVRepository
 class ProductOrderRepository
+class AgvDto
+class ProductOrderDto
 
+
+class ProductOrderDto {
+    + toDto()
+}
+
+class AgvDto {
+    + toDto()
+
+}
+
+class ProductOrder {
+
+    + changeStatusOfOrderToBeingPreparedByAnAGV()
+    + getOrderById(orderId)
+    + changeStatusToDispatchedToCustomer()
+
+}
+
+class AGV {
+    + changeStatusOfAGVForOccupied()
+    + addOrdersToATask(taskDescription, productOrder)
+    + changeStatusOfAGVForFree()
+}
 class ListOrdersBeingPreparedController {
-    - getAGVsAvaiable()
-    - getOrdersWhoNeedToBePreparedByAGV()
-
+    + getAGVsAvaiable()
+    + getOrdersWhoNeedToBePreparedByAGV(idAGV, taskDescription)
+    + changeTheStatusOfOrdersForDispatchedToCustomer(listOfOrdersSelected)
 
 }
 
 class AGVTask {
-    - associateOrdersToAgvSelected(listOfOrdersWhoNeedToByPreparedByAgv, agvSelected)
+    + assignATaskForAGV(taskDescription)
 }
 
 class AGVRepository {
-    - getAGVRepository()
+    + getAGVsAvaiable()
+    + getAGVById
+    + save(agv)
 }
 
 
 class ProductOrderRepository {
-    - getOrdersWhoNeedToBePreparedByAGV()
-    - changeTheStatusOfTheOrdersToReadForClient(listOfOrdersWhoNeedToByPreparedByAgv)
+    + save(productOrder)
 }
 
 class PersistenceContext {
-    - repositories()
+    + repositories()
 }
 
 class RepositoryFactory{
 
+    + getOrderRepository()
+    + getAGVRepository()
 }
 
 
@@ -44,7 +74,11 @@ ListOrdersBeingPreparedController ..> PersistenceContext
 PersistenceContext ..> RepositoryFactory
 RepositoryFactory -> AGVRepository
 RepositoryFactory --> ProductOrderRepository
-ListOrdersBeingPreparedController -> AGVTask
+ListOrdersBeingPreparedController -> AGV
+ListOrdersBeingPreparedController --> ProductOrder
+AGV --> AGVTask
 
+ListOrdersBeingPreparedController --> AgvDto
+ListOrdersBeingPreparedController --> ProductOrderDto
 
 @enduml
