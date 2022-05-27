@@ -40,11 +40,9 @@ public class JpaAGVRepository extends JpaAutoTxRepository<AGV, AGVId, AGVId> imp
 
     @Override
     public AGV getAGVById(String id) {
-        final TypedQuery<AGV> query = entityManager().createQuery(
-                "SELECT d FROM AGV d  WHERE d.agvId = :id",
+        final TypedQuery<AGV> query = super.createQuery(
+                "SELECT d FROM AGV d  WHERE agvId = '" + id + "'",
                 AGV.class);
-        query.setParameter("id", id);
-
         return query.getSingleResult();
     }
 }

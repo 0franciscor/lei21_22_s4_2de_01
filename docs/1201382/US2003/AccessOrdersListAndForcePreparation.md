@@ -49,10 +49,13 @@ Notice that, orders that can be prepared by AGVs are being added to a queue foll
 However, if such option is not available (e.g.: turned off) or by some reason an order needs to be prepared faster than it would normally be, the warehouse employee has the ability to assign tasks manually (US 2003).
 Notice that, orders that can be prepared by AGVs are being added to a queue following a FIFO algorithm (part of the US 4002). In the scope of US 2003 the FIFO algorithm does not apply... the employee might choose the order (s)he wants.
 
+> Question: If a warehouse employee wants to assign a task to an available AGV, shouldn't it be done through a request to the AGV manager?
+>
+> [Awnser:](https://moodle.isep.ipp.pt/mod/forum/discuss.php?d=16626#p21335) According to what is explicitly stated on the specifications' document is there any other alternative? If yes, which one(s)?
+
 > Question:
 >
 > [Awnser:]()
-
 
 
 # 2. Analysis

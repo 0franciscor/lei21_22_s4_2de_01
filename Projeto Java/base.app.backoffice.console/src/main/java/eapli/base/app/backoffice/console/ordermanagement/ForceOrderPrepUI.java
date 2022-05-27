@@ -1,8 +1,8 @@
 package eapli.base.app.backoffice.console.ordermanagement;
 
-import eapli.base.AGV.domain.AGV;
+import eapli.base.AGV.dto.AgvDto;
 import eapli.base.ordermanagement.application.ForceOrderPrepController;
-import eapli.base.ordermanagement.dto.ProductOrderDto;
+import eapli.base.productmanagement.dto.ProductOrderDto;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 
@@ -17,39 +17,60 @@ public class ForceOrderPrepUI extends AbstractUI {
 
     private final ForceOrderPrepController forceOrderController = new ForceOrderPrepController();
 
+    private Boolean operationError=false;
+
+
     @Override
     protected boolean doShow() {
 
-        // escolher order
-        List<ProductOrderDto> list = forceOrderController.getOrdersToBePrepared();
-        System.out.println(list);
-        int index = 1;
-        for(ProductOrderDto po: list) {
-            System.out.println(index + " - " + po.orderId + " - " + po.customerName + " - " + po.date + " - " + po.total);
-            index++;
-        }
-        int b = Integer.parseInt(Console.readLine("Choose an Order"));
-        ProductOrderDto productOrder = list.get(b-1);
+        do{
+            try {
 
-        // save order
-        forceOrderController.saveOrder(productOrder.orderId);
+                // escolher order
+
+                System.out.println("Select the order you want to force:");
+                List<ProductOrderDto> list = forceOrderController.getOrdersToBePrepared();
+                if(list.isEmpty()){
+                    System.out.println("\nThere are no orders needing preparation.");
+                    operationError=true;
+                }
+                int index = 1;
+                for(ProductOrderDto po: list) {
+                    System.out.println(index + " - " + po.orderId + " - " + po.customerName + " - " + po.date + " - " + po.total);
+                    index++;
+                }
+                int order = Integer.parseInt(Console.readLine("Choose an Order"));
+                ProductOrderDto productOrder = list.get(order-1);
 
 
-        // escolher agv
-        List<AGV> list1 = forceOrderController.showAvailableAGVs();
-        int index1 = 1;
-        for(AGV agv: list1) {
-            System.out.println(index + " - " + agv.getAgvId());
-            index1++;
-        }
-        int a = Integer.parseInt(Console.readLine("Choose an agv"));
-        AGV agv = list1.get(a-1);
+                System.out.println("##po##");
+                System.out.println(productOrder.orderId);
 
-        // save AGV
-        forceOrderController.saveAGV(agv.getAgvId());
 
-        // force order prep
-        forceOrderController.forceOrderPrep();
+                // escolher agv
+                List<AgvDto> list1 = forceOrderController.showAvailableAGVs();
+                int index1 = 1;
+                for(AgvDto agv: list1) {
+                    System.out.println(index1 + " - id:" + agv.getId() + " - volume:" + agv.getVolume() + " - weight:" + agv.getWeight());
+                    index1++;
+                }
+                int a = Integer.parseInt(Console.readLine("Choose an agv"));
+                AgvDto agv = list1.get(a-1);
+
+                System.out.println("####");
+                System.out.println(productOrder.orderId);
+                System.out.println(agv.getId());
+                System.out.println("####");
+
+                // force order prep
+                forceOrderController.forceOrderPrep(Long.toString(productOrder.orderId), agv.getId());
+
+            } catch(Exception e){
+                System.out.println(e.getMessage());
+                operationError=true;
+            }
+
+        } while(operationError);
 
         return true;
 

@@ -1,6 +1,6 @@
 package eapli.base.app.backoffice.console.ordermanagement;
 
-import eapli.base.ordermanagement.dto.ProductOrderDto;
+import eapli.base.productmanagement.dto.ProductOrderDto;
 import eapli.framework.visitor.Visitor;
 
 public class ProductOrderDtoPrinter implements Visitor {
