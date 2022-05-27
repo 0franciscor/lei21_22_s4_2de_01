@@ -3,9 +3,13 @@ package eapli.base.app.user.console.tcp;
 import java.io.*;
 import java.net.*;
 
-class TcpCliOrder {
+public class TcpCliOrder {
     static InetAddress serverIP;
     static Socket sock;
+
+    public TcpCliOrder(String ip){
+        new Thread(new TcpCliOrderThread(ip)).start();
+    }
 
     public static void main(String args[]) throws Exception {
         if(args.length!=1) {

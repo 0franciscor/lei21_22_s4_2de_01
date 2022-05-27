@@ -6,7 +6,7 @@ import eapli.base.Application;
 import java.io.*;
 import java.net.*;
 
-class TcpSrvOrder {
+public class TcpSrvOrder {
     static ServerSocket sock;
 
     static AppSettings app = Application.settings();

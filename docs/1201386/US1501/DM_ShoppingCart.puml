@@ -34,6 +34,9 @@ entity Item <<entity>> {
 }
 package "<<aggregate>> Product"{
      entity Product
+     class UniqueInternalCode
+     class ShortDescription
+     class PriceWithoutVAT
 }
 
 entity Product <<entity>> <<root>> {
@@ -46,6 +49,11 @@ package "<<aggregate>> User" {
     class Username
     class Role
 }
+
+class UniqueInternalCode <<(V,#FF8B40) value object>> {}
+class ShortDescription <<(V,#FF8B40) value object>> {}
+class PriceWithoutVAT <<(V,#FF8B40) value object>> {}
+
 
 entity User <<entity>> <<root>> {
 
@@ -65,6 +73,10 @@ Client -----> "1" ShopCar : associated
 Client ---> "1" User : is a
 Item --> "1" Product : composed by
 ShopCar -> "1..*" Item : composed by
+
+Product ---> "1" ShortDescription: characterized by
+Product ---> "1" UniqueInternalCode: characterized by
+Product --> "1" PriceWithoutVAT: associated
 
 
 @enduml
