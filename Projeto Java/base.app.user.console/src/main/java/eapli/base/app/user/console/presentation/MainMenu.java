@@ -24,6 +24,7 @@
 package eapli.base.app.user.console.presentation;
 
 import eapli.base.app.common.console.presentation.authz.MyUserMenu;
+import eapli.base.app.user.console.presentation.shopingCarManagement.AddProductToShoppingCar;
 import eapli.framework.actions.menu.Menu;
 import eapli.framework.actions.menu.MenuItem;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
@@ -48,19 +49,7 @@ class MainMenu extends ClientUserBaseUI {
 
     // MAIN MENU
     private static final int MY_USER_OPTION = 1;
-    private static final int BOOKINGS_OPTION = 2;
-    private static final int ACCOUNT_OPTION = 3;
-    private static final int SETTINGS_OPTION = 4;
-
-    // BOOKINGS MENU
-    private static final int BOOK_A_MEAL_OPTION = 2;
-    private static final int LIST_MY_BOOKINGS_OPTION = 3;
-
-    // ACCOUNT MENU
-    private static final int LIST_MOVEMENTS_OPTION = 1;
-
-    // SETTINGS
-    private static final int SET_USER_ALERT_LIMIT_OPTION = 1;
+    private static final int ADICIONAR_PRODUTO_CARRINHO_COMPRAS = 2;
 
     private final AuthorizationService authz =
             AuthzRegistry.authorizationService();
@@ -87,9 +76,8 @@ class MainMenu extends ClientUserBaseUI {
 
         final Menu myUserMenu = new MyUserMenu();
         mainMenu.addSubMenu(MY_USER_OPTION, myUserMenu);
-
+        mainMenu.addItem(ADICIONAR_PRODUTO_CARRINHO_COMPRAS, "Adicionar produto ao carrinho de compras", new AddProductToShoppingCar()::show);
         mainMenu.addItem(MenuItem.separator(SEPARATOR_LABEL));
-
         mainMenu.addItem(EXIT_OPTION, "Exit", new ExitWithMessageAction("Bye, Bye"));
 
         return mainMenu;
