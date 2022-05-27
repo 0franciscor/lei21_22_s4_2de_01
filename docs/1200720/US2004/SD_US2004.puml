@@ -4,10 +4,11 @@
 actor "Warehouse Employee" as EMPLOYEE
 participant ListOrdersBeingPreparedUI as UI <<presentation>>
 participant ListOrdersBeingPreparedController as CONTROLLER <<application>>
-participant "agvSelected : AGV" as AGV <<domain>>
+participant "agv : AGV" as AGV <<domain>>
 participant AGVTask as TASK <<domain>>
 participant ProductOrder as ORDER <<domain>>
-participant agvDto as DTO  <<dto>>
+participant AgvDto as DTO_AGV <<dto>>
+participant ProductOrderDto as DTO_ORDER <<dto>>
 participant PersistenceContext as PERSISTENCE <<persistence>>
 participant RepositoryFactory as FACTORY <<factory>>
 database AGVRepository as REPOSITORY_AGV <<repository>>
@@ -58,13 +59,13 @@ REPOSITORY_AGV --> CONTROLLER : agvsAvaiable
 
 deactivate REPOSITORY_AGV
 
-CONTROLLER -> DTO : toDto()
+CONTROLLER -> DTO_AGV : toDto()
 
-activate DTO
+activate DTO_AGV
 
-DTO -> CONTROLLER : agvsAvaiableDto
+DTO_AGV -> CONTROLLER : agvsAvaiableDto
 
-deactivate DTO
+deactivate DTO_AGV
 
 CONTROLLER --> UI : agvsAvaiableDto
 deactivate CONTROLLER
@@ -128,11 +129,13 @@ CONTROLLER -> REPOSITORY_AGV : save(agvSelected)
 activate REPOSITORY_AGV
 deactivate REPOSITORY_AGV
 CONTROLLER -> REPOSITORY_ORDERS : save(productOrder)
-end
 activate REPOSITORY_ORDERS
 deactivate REPOSITORY_ORDERS
 
-CONTROLLER --> UI : listOfOrdersWhoNeedToByPrepared
+CONTROLLER -> DTO_ORDER : toDto(productOrder)
+end
+
+CONTROLLER --> UI : listOfOrdersWhoNeedToByPreparedDto
 deactivate CONTROLLER
 
 UI --> EMPLOYEE : Shows the list of products prepared by the selected AGV
@@ -155,9 +158,17 @@ CONTROLLER -> ORDER : changeStatusToDispatchedToCustomer()
 activate ORDER
 deactivate ORDER
 
-CONTROLLER -> REPOSITORY_ORDERS : save(order)
+CONTROLLER -> AGV : changeStatusOfAGVForFree()
+activate AGV
+deactivate AGV
+
+CONTROLLER -> REPOSITORY_ORDERS : save(productOrder)
 activate REPOSITORY_ORDERS
 deactivate REPOSITORY_ORDERS
+
+CONTROLLER -> REPOSITORY_AGV : save(agv)
+activate REPOSITORY_AGV
+deactivate REPOSITORY_AGV
 end loop
 
 CONTROLLER --> UI : listOfOrdersSelected
