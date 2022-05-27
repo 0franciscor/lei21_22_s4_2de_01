@@ -24,8 +24,8 @@
     <class>eapli.base.warehouse.domain.AGVDock</class>
     <class>eapli.base.warehouse.domain.WarehousePlant</class>
     <class>eapli.base.warehouse.domain.Warehouse</class>
-    <class>eapli.base.AGV.Domain.AGV</class>
-    <class>eapli.base.AGV.Domain.AGVTask</class>
+    <class>eapli.base.AGV.domain.AGV</class>
+    <class>eapli.base.AGV.domain.AGVTask</class>
 
 
     <properties>

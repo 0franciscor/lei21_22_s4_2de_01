@@ -1,9 +1,8 @@
-package eapli.base.AGV.Application;
+package eapli.base.AGV.application;
 
-import eapli.base.AGV.Domain.*;
-import eapli.base.AGV.Repositories.AGVRepository;
+import eapli.base.AGV.domain.*;
+import eapli.base.AGV.repositories.AGVRepository;
 import eapli.base.infrastructure.persistence.PersistenceContext;
-import eapli.base.ordermanagement.domain.ProductOrder;
 import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.base.warehouse.domain.AGVDock;
 import eapli.base.warehouse.repositories.AGVDockRepository;

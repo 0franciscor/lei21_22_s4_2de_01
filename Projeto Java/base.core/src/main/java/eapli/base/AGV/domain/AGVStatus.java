@@ -1,4 +1,4 @@
-package eapli.base.AGV.Domain;
+package eapli.base.AGV.domain;
 
 public enum AGVStatus {
     FREE("Is Free"),

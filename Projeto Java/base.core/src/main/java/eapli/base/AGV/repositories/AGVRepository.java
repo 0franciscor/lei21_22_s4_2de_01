@@ -1,11 +1,8 @@
-package eapli.base.AGV.Repositories;
+package eapli.base.AGV.repositories;
 
-import eapli.base.AGV.Domain.AGV;
-import eapli.base.AGV.Domain.AGVId;
-import eapli.base.AGV.Domain.AGVStatus;
+import eapli.base.AGV.domain.AGV;
+import eapli.base.AGV.domain.AGVId;
 import eapli.framework.domain.repositories.DomainRepository;
-
-import java.util.Optional;
 
 public interface AGVRepository extends DomainRepository<AGVId, AGV> {
 

@@ -1,6 +1,5 @@
 package eapli.base.persistence.impl.jpa;
 
-import eapli.base.AGV.Domain.AGV;
 import eapli.base.Application;
 import eapli.base.ordermanagement.domain.OrderStatus;
 import eapli.base.ordermanagement.domain.ProductOrder;

@@ -1,4 +1,4 @@
-package eapli.base.AGV.Domain;
+package eapli.base.AGV.domain;
 
 import eapli.base.ordermanagement.domain.ProductOrder;
 import eapli.framework.domain.model.AggregateRoot;

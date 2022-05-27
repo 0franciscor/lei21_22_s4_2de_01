@@ -1,13 +1,13 @@
-package eapli.base.AGV.Domain;
+package eapli.base.AGV.domain;
 
 import eapli.base.warehouse.domain.AGVDock;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-class ModelTest {
+class RangeTest {
 
     @Test
-    void getModel() {
+    void getRange() {
         AGVId id = new AGVId("12345678");
         BriefDescription description = new BriefDescription("abcdefg");
         MaxWeightCapacity weight = new MaxWeightCapacity(200.0);
@@ -20,11 +20,11 @@ class ModelTest {
 
         AGV a1 = new AGV(id,description,model,weight,volume,a,pos,dock,status);
         AGV a2 = new AGV(id,description,model,weight,volume,a,pos,dock,status);
-        Assertions.assertEquals(a1.getModel(), a2.getModel());
+        Assertions.assertEquals(a1.getRange(), a2.getRange());
     }
     /*
     @Test
-    void setModel() {
+    void setRange() {
         AGVId id = new AGVId("12345678");
         BriefDescription description = new BriefDescription("abcdefg");
         MaxWeightCapacity weight = new MaxWeightCapacity(200.0);
@@ -36,22 +36,22 @@ class ModelTest {
         AGVDock dock = new AGVDock();
 
         AGV a1 = new AGV(id,description,model,weight,volume,a,pos,dock,status);
-        model.setModel("2.1.1.1.");
+        a.setRange(5.0);
         AGV a2 = new AGV(id,description,model,weight,volume,a,pos,dock,status);
-        Assertions.assertEquals(a1.getModel(), a2.getModel());
+        Assertions.assertEquals(a1.getRange(), a2.getRange());
     }*/
 
     @Test
     void testToString() {
-        Model m2 = new Model("a");
-        String expected = "Model{model='a'}";
+        Range m2 = new Range(16.0);
+        String expected = "Range{range=16.0}";
         Assertions.assertEquals( m2.toString(),expected);
     }
 
     @Test
     void testToString2() {
-        Model m = new Model();
-        Model m2 = new Model("a");
+        Range m = new Range();
+        Range m2 = new Range(16.0);
         Assertions.assertNotEquals(m.toString(), m2.toString());
     }
 }

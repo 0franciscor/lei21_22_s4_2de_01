@@ -1,4 +1,4 @@
-package eapli.base.AGV.Domain;
+package eapli.base.AGV.domain;
 
 import eapli.base.ordermanagement.domain.ProductOrder;
 import eapli.base.warehouse.domain.AGVDock;
@@ -62,7 +62,7 @@ public class AGV implements AggregateRoot<AGVId> {
         if(other == null) return false;
         if(this == other) return true;
 
-        eapli.base.AGV.Domain.AGV newObj = ((eapli.base.AGV.Domain.AGV) other);
+        eapli.base.AGV.domain.AGV newObj = ((eapli.base.AGV.domain.AGV) other);
 
         return agvId == newObj.agvId && range == newObj.range && maxWeightCapacity == newObj.maxWeightCapacity && maxVolumeCapacity == newObj.maxVolumeCapacity
                 && model == newObj.model && briefDescription == newObj.briefDescription && position == newObj.position && agvDock == newObj.agvDock && agvTask == newObj.agvTask;

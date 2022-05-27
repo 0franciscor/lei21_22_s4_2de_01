@@ -1,8 +1,8 @@
-package eapli.base.AGV.Application;
+package eapli.base.AGV.application;
 
-import eapli.base.AGV.Domain.AGV;
-import eapli.base.AGV.Domain.AGVTask;
-import eapli.base.AGV.Repositories.AGVRepository;
+import eapli.base.AGV.domain.AGV;
+import eapli.base.AGV.domain.AGVTask;
+import eapli.base.AGV.repositories.AGVRepository;
 import eapli.base.AGV.dto.AgvDto;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.ordermanagement.domain.ProductOrder;
@@ -55,10 +55,8 @@ public class ListOrderBeingPreparedByAGVController {
 
         context.beginTransaction();
 
-        agv.changeStatusOfAGVForOccupied();
         agv.assignATaskForAGV(new AGVTask(taskDescription));
-
-        agvRepository.save(agv);
+        agv.changeStatusOfAGVForOccupied();
 
         for (ProductOrder p : orders){
 
@@ -71,6 +69,7 @@ public class ListOrderBeingPreparedByAGVController {
                 count++;
             }
 
+            agvRepository.save(agv);
             orderRepository.save(p);
             orderDtos.add(new ProductOrderDto(agv.getAgvId().getAGVId(), p.getOrderId(), taskDescription + " " + count, p.getStatus().obtainStatus().name()));
         }

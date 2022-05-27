@@ -2,11 +2,11 @@ package eapli.base.ordermanagement.application;
 
 
 
-import eapli.base.AGV.Application.ConfigureAGVController;
-import eapli.base.AGV.Domain.AGV;
-import eapli.base.AGV.Domain.AGVId;
-import eapli.base.AGV.Domain.AGVStatus;
-import eapli.base.AGV.Repositories.AGVRepository;
+import eapli.base.AGV.application.ConfigureAGVController;
+import eapli.base.AGV.domain.AGV;
+import eapli.base.AGV.domain.AGVId;
+import eapli.base.AGV.domain.AGVStatus;
+import eapli.base.AGV.repositories.AGVRepository;
 import eapli.base.ordermanagement.domain.OrderStatus;
 import eapli.base.ordermanagement.domain.ProductOrder;
 import eapli.base.ordermanagement.dto.ProductOrderDto;

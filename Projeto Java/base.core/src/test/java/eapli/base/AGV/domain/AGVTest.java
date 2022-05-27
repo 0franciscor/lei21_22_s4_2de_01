@@ -1,4 +1,4 @@
-package eapli.base.AGV.Domain;
+package eapli.base.AGV.domain;
 
 import eapli.base.warehouse.domain.AGVDock;
 import org.junit.jupiter.api.Assertions;

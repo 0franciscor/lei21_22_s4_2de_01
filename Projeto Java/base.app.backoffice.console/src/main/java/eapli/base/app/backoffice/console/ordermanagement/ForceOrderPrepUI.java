@@ -1,16 +1,8 @@
 package eapli.base.app.backoffice.console.ordermanagement;
 
-import eapli.base.AGV.Domain.AGV;
-import eapli.base.AGV.Domain.AGVId;
-import eapli.base.app.backoffice.console.clientmanagement.RegisterClientUI;
-import eapli.base.app.backoffice.console.productmanagement.ListProductUi;
+import eapli.base.AGV.domain.AGV;
 import eapli.base.ordermanagement.application.ForceOrderPrepController;
-import eapli.base.ordermanagement.application.RegisterClientOrderController;
-import eapli.base.ordermanagement.domain.ProductOrder;
-import eapli.base.ordermanagement.domain.Shipment;
 import eapli.base.ordermanagement.dto.ProductOrderDto;
-import eapli.base.productmanagement.domain.UniqueInternalCode;
-import eapli.base.warehouse.domain.AGVDock;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 
