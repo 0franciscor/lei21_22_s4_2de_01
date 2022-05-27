@@ -19,7 +19,7 @@ public class ListProductDTOService {
 
     private final ProductRepository productRepository = PersistenceContext.repositories().products();
 
-    public Iterable<ProductDTO> allDishes() {
+    public Iterable<ProductDTO> allProducts() {
 
         final Iterable<Product> products = this.productRepository.findAll();
 

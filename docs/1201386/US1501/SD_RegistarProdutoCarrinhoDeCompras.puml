@@ -4,18 +4,47 @@ autonumber
 actor "Client" as C
 participant AddProductToShoppingCarUI as UI <<presentation>>
 participant AddProductToShoppingCarController as Controller <<application>>
-participant ViewProductCatalogUI as ui <<presentation>>
-database ProductRepository as repository <<repository>>
-database ClientRepository as rep <<repository>>
-
+participant ListProductDTOService as Service <<application>>
 participant "Product" as Domain <<domain>>
+participant "ProductDTO" as DTO <<dto>>
+participant "ShoppingCar" as domain <<domain>>
 participant PersistenceContext as Persistence <<persistence>>
 participant RepositoryFactory as Factory <<factory>>
-database ProductOrderRepository as Repository <<repository>>
+database ProductRepository as repository <<repository>>
+database ClientRepository as rep <<repository>>
+database ShoppingCarRepository as r <<repository>>
 
 activate C
 C -> UI : Inicia o processo de adicionar um produto \n ao seu carrinho de compras
 activate UI
+UI -> Controller: allProducts()
+activate Controller
+Controller -> Service: allProducts()
+activate Service
+Service -> Persistence: repositories()
+activate Persistence
+note right of Persistence: pode criar repositório em memória ou JPA
+Persistence -> Factory: create
+Persistence -> Service: factory
+deactivate Persistence
+Service -> Factory: products()
+activate Factory
+Factory -> repository: create
+Factory -> Service: productRepository
+deactivate Factory
+Service->repository:findAll()
+activate repository
+repository --> Service: productsList
+deactivate repository
+loop
+Service -> Domain: toDTO()
+activate Domain
+end
+deactivate Domain
+Service --> Controller: productsListDTO
+deactivate Service
+Controller --> UI: productsListDTO
+deactivate Controller
 UI --> C : Mostra o catálogo de produtos
 deactivate UI
 C -> UI : Escolhe o produto pretendido
