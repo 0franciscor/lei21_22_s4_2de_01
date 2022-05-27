@@ -1,4 +1,4 @@
-package eapli.base.ordermanagement.dto;
+package eapli.base.productmanagement.dto;
 
 import eapli.framework.representations.dto.DTO;
 
@@ -35,7 +35,7 @@ public class ProductOrderDto implements DTO {
         this.taskDescription = taskDescription;
         this.status = status;
     }
-
+    public String getProductOrderId(){return this.productOrderId.toString();}
     @Override
     public Class<? extends Annotation> annotationType() {
         return null;
