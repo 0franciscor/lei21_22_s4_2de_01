@@ -27,12 +27,13 @@ public class AGVTask implements DomainEntity<Long>, AggregateRoot<Long> { //IMPL
     private int totalVolume;
 
 
-    public AGVTask(String id) {
+    public AGVTask(String description) {
 
-        this.description = id;
+        this.description = description;
         this.totalWeight = 0;
         this.totalVolume = 0;
     }
+
     public AGVTask() {
         this.totalWeight = 0;
         this.totalVolume = 0;

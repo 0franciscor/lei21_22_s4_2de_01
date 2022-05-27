@@ -3,7 +3,7 @@ package eapli.base.app.backoffice.console.warehouseEmployeeManagement;
 import eapli.base.AGV.application.ListOrderBeingPreparedByAGVController;
 import eapli.base.AGV.dto.AgvDto;
 import eapli.base.app.backoffice.console.ordermanagement.ProductOrderDtoPrinter;
-import eapli.base.ordermanagement.dto.ProductOrderDto;
+import eapli.base.productmanagement.dto.ProductOrderDto;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 import eapli.framework.presentation.console.SelectWidget;
