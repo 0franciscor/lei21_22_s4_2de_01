@@ -26,8 +26,8 @@ import java.net.Socket;
 
 import agvmanager.tcpprotocol.server.AGVManagerProtocolRequest;
 import agvmanager.tcpprotocol.server.RequestMessageParser;
-import eapli.base.AGV.application.AGVManagerController;
-import eapli.base.AGV.application.AGVManagerControllerImplementation;
+import eapli.base.AGV.Application.AGVManagerController;
+import eapli.base.AGV.Application.AGVManagerControllerImplementation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
