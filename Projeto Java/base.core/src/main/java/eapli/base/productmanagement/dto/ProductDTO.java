@@ -1,6 +1,9 @@
 package eapli.base.productmanagement.dto;
 
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
 /**
  * DTO for products.
  *
@@ -13,5 +16,11 @@ public class ProductDTO {
 
     private String productShortDescription;
 
-    private double price;
+    private BigDecimal price;
+
+    public ProductDTO(final String productUniqueInternalCode,final String productShortDescription,final BigDecimal price){
+        this.price=price;
+        this.productShortDescription=productShortDescription;
+        this.productUniqueInternalCode=productUniqueInternalCode;
+    }
 }

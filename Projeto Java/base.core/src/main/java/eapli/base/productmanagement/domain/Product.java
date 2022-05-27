@@ -2,9 +2,11 @@ package eapli.base.productmanagement.domain;
 
 import eapli.base.categorymanagement.domain.Category;
 
+import eapli.base.productmanagement.dto.ProductDTO;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.general.domain.model.Money;
+import eapli.framework.representations.dto.DTOable;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,7 +14,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class Product implements AggregateRoot<Long>, Serializable {
+public class Product implements AggregateRoot<Long>, Serializable, DTOable<ProductDTO> {
 
     private static final long serialVersionUID = 1L;
 
@@ -162,5 +164,11 @@ public class Product implements AggregateRoot<Long>, Serializable {
     public TechnicalDescription technicalDescription(){
         return  this.technicalDescription;
 
+    }
+
+
+    @Override
+    public ProductDTO toDTO() {
+        return new ProductDTO(uniqueInternalCode.toString(),shortDescription.toString(),priceWithoutTaxes.amount());
     }
 }
