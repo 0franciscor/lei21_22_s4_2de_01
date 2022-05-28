@@ -20,7 +20,7 @@
  */
 package agvmanager.tcpprotocol.server;
 
-import eapli.base.AGV.application.AGVManagerControllerImplementation;
+import eapli.base.AGV.Application.AGVManagerControllerImplementation;
 
 /**
  * @author Paulo Gandra Sousa 01/06/2020
