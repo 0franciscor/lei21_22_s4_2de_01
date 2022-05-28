@@ -23,7 +23,14 @@ public class InMemoryAGVRepository extends InMemoryDomainRepository<AGV, AGVId> 
     }*/
 
     @Override
-    public AGV getAGVById(String id) {
-        return matchOne(e->e.getAgvId().getAGVId().equals(id)).get();
+    public AGV getAGVById(AGVId agvId) {
+        return matchOne(e->e.getAgvId().equals(agvId)).get();
     }
+
+    @Override
+    public AGV getAGVByIdSt(String agvId) {
+        return null;
+    }
+
+
 }
