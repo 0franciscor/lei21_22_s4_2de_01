@@ -8,7 +8,7 @@ import eapli.base.AGV.repositories.AGVRepository;
 import eapli.base.ordermanagement.domain.OrderStatus;
 import eapli.base.ordermanagement.domain.ProductOrder;
 import eapli.base.ordermanagement.repository.OrderRepository;
-import eapli.base.productmanagement.dto.ProductOrderDto;
+import eapli.base.ordermanagement.dto.ProductOrderDto;
 import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;

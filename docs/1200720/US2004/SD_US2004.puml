@@ -80,7 +80,7 @@ EMPLOYEE -> UI : Select the AGV
 
 activate UI
 
-UI -> CONTROLLER : getOrdersWhoNeedToBePreparedByAGV(idAGV, taskDescription)
+UI -> CONTROLLER : getOrdersWhoNeedToBePreparedByAGV(idAGV)
 
 activate CONTROLLER
 
@@ -99,6 +99,19 @@ activate REPOSITORY_ORDERS
 REPOSITORY_ORDERS --> CONTROLLER : listOfOrdersWhoNeedToByPrepared
 deactivate REPOSITORY_ORDERS
 
+CONTROLLER --> UI : listOfOrdersWhoNeedToByPreparedDto
+deactivate CONTROLLER
+
+
+UI --> EMPLOYEE : Shows the list of products prepared by the selected AGV
+
+deactivate UI
+
+EMPLOYEE -> UI : Select the orders you want to change the status to 'dispatched for customer'
+activate UI
+
+UI -> CONTROLLER : changeStatusOfOrdersSelectToBeingPreparedByAGV(listOfOrdersSelected)
+activate CONTROLLER
 CONTROLLER -> REPOSITORY_AGV : getAGVById(idAGV)
 activate REPOSITORY_AGV
 
@@ -132,18 +145,10 @@ CONTROLLER -> REPOSITORY_ORDERS : save(productOrder)
 activate REPOSITORY_ORDERS
 deactivate REPOSITORY_ORDERS
 
-CONTROLLER -> DTO_ORDER : toDto(productOrder)
 end
 
-CONTROLLER --> UI : listOfOrdersWhoNeedToByPreparedDto
+
 deactivate CONTROLLER
-
-UI --> EMPLOYEE : Shows the list of products prepared by the selected AGV
-
-deactivate UI
-
-EMPLOYEE -> UI : Select the orders you want to change the status to 'dispatched for customer'
-activate UI
 
 UI -> CONTROLLER : changeTheStatusOfOrdersForDispatchedToCustomer(listOfOrdersSelected)
 activate CONTROLLER
@@ -169,12 +174,17 @@ deactivate REPOSITORY_ORDERS
 CONTROLLER -> REPOSITORY_AGV : save(agv)
 activate REPOSITORY_AGV
 deactivate REPOSITORY_AGV
+CONTROLLER -> DTO_ORDER : toDto(order)
+activate DTO_ORDER
+deactivate DTO_ORDER
 end loop
 
-CONTROLLER --> UI : listOfOrdersSelected
+CONTROLLER --> UI : listOfOrdersReadyForClientsDto
+deactivate CONTROLLER
+
 UI --> EMPLOYEE : Shows orders with the new status
 
-deactivate CONTROLLER
+
 deactivate UI
 
 
