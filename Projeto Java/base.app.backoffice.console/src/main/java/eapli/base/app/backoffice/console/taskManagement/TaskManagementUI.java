@@ -18,6 +18,11 @@ public class TaskManagementUI extends AbstractUI {
         }
         controller.callFIFO();
         System.out.println("The automatic task assignment service has been called");
+        try {
+            controller.closeConnection();
+        } catch (IOException e) {
+            System.out.println("There was an error when closing the connection");
+        }
         return true;
     }
 
