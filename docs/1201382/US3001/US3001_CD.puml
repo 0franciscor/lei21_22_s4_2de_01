@@ -1,0 +1,81 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+skinparam classAttributeIconSize 0
+
+package ui {
+class NewQuestionnaireUI{}
+}
+
+package surveymanagement {
+
+package application{
+class CreateNewQuestionnaireController{
++createQuestionnaire(file)
+}
+}
+
+package antlr{
+package eapli.base.surveymanagement.antr {
+class SurveyLexer {
+-makeLiteralNames()
+-makeSymbolicNames()
++getTokenNames()
++getVocabulary()
++getGrammarFileName()
++getRuleNames()
++getSerializedATN()
++getChannelNames()
++getModelNames()
++getATN()
+}
+
+class SurveyParser {
+-makeLiteralNames()
+-makeSymbolicNames()
++getTokenNames()
++getVocabulary()
++getGrammarFileName()
++getRuleNames()
++getSerializedATN()
++getChannelNames()
++getModelNames()
++getATN()
++start()
+}
+
+class QuestionnaireVisitor {}
+
+class SurveyBaseListener {}
+
+}
+}
+
+
+
+package domain{
+class Questionnaire {}
+}
+
+}
+
+
+NewQuestionnaireUI ..> CreateNewQuestionnaireController
+
+CreateNewQuestionnaireController ----> Questionnaire
+CreateNewQuestionnaireController -> QuestionnaireVisitor
+CreateNewQuestionnaireController ---> SurveyBaseListener
+CreateNewQuestionnaireController -> SurveyParser
+CreateNewQuestionnaireController -> SurveyLexer
+
+QuestionnaireVisitor -> Questionnaire
+
+
+
+
+
+
+
+
+
+@enduml
