@@ -30,30 +30,30 @@ public class ForceOrderPrepUI extends AbstractUI {
                 // escolher order
 
                 System.out.println("Select the order you want to force:");
-                List<ProductOrderDto> list = forceOrderController.getOrdersToBePrepared();
-                if(list.isEmpty()){
+                List<ProductOrderDto> ordersToBePreparedList = forceOrderController.getOrdersToBePrepared();
+                if(ordersToBePreparedList.isEmpty()){
                     System.out.println("\nThere are no orders needing preparation.");
                     operationError=true;
                 }
                 int index = 1;
-                for(ProductOrderDto po: list) {
+                for(ProductOrderDto po: ordersToBePreparedList) {
                     System.out.println(index + " - " + po.orderId + " - " + po.customerName + " - " + po.date + " - " + po.total);
                     index++;
                 }
                 int order = Integer.parseInt(Console.readLine("Choose an Order"));
-                ProductOrderDto productOrder = list.get(order-1);
+                ProductOrderDto productOrder = ordersToBePreparedList.get(order-1);
 
 
 
                 // escolher agv
-                List<AgvDto> list1 = forceOrderController.showAvailableAGVs();
+                List<AgvDto> availableAGVList = forceOrderController.showAvailableAGVs();
                 int index1 = 1;
-                for(AgvDto agv: list1) {
+                for(AgvDto agv: availableAGVList) {
                     System.out.println(index1 + " - id:" + agv.getId() + " - volume:" + agv.getVolume() + " - weight:" + agv.getWeight());
                     index1++;
                 }
                 int a = Integer.parseInt(Console.readLine("Choose an agv"));
-                AgvDto agv = list1.get(a-1);
+                AgvDto agv = availableAGVList.get(a-1);
 
                 // force order prep
                 forceOrderController.forceOrderPrep(Long.toString(productOrder.orderId), new AGVId(agv.id));
