@@ -30,6 +30,7 @@ import eapli.base.app.backoffice.console.ordermanagement.RegisterClientOrderUI;
 import eapli.base.app.backoffice.console.presentation.authz.ImportJsonUI;
 import eapli.base.app.backoffice.console.productmanagement.ListProductUi;
 import eapli.base.app.backoffice.console.productmanagement.RegisterProductUI;
+import eapli.base.app.backoffice.console.surveymanagement.NewQuestionnaireUI;
 import eapli.base.app.backoffice.console.warehouseEmployeeManagement.ListOrderBeingPreparedByAGVUI;
 import eapli.base.app.common.console.presentation.authz.MyUserMenu;
 import eapli.base.Application;
@@ -37,6 +38,7 @@ import eapli.base.app.backoffice.console.presentation.authz.AddUserUI;
 import eapli.base.app.backoffice.console.presentation.authz.DeactivateUserAction;
 import eapli.base.app.backoffice.console.presentation.authz.ListUsersAction;
 import eapli.base.app.backoffice.console.presentation.clientuser.AcceptRefuseSignupRequestAction;
+import eapli.base.surveymanagement.application.CreateNewQuestionnaireController;
 import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
@@ -85,6 +87,7 @@ public class MainMenu extends AbstractUI {
     private static final int IMPORT_JSONFILE = 2;
     private static final int LIST_ORDERS = 3;
     private static final int FORCE_ORDERS_PREPARATION = 4;
+    private static final int CREATE_NEW_QUESTIONNAIRE = 5;
 
     // MAIN MENU
     private static final int MY_USER_OPTION = 1;
@@ -210,6 +213,7 @@ public class MainMenu extends AbstractUI {
         menu.addItem(IMPORT_JSONFILE, "Import a Warehouse's Info", new ImportJsonUI()::show);
         menu.addItem(LIST_ORDERS, "List Orders being prepared by an AGV", new ListOrderBeingPreparedByAGVUI()::show);
         menu.addItem(FORCE_ORDERS_PREPARATION, "Force Order Preparation", new ForceOrderPrepUI()::show);
+        menu.addItem(CREATE_NEW_QUESTIONNAIRE, "Create New Questionnaire", new NewQuestionnaireUI()::show);
         return menu;
     }
 
