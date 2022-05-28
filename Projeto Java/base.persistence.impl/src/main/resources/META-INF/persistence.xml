@@ -17,6 +17,8 @@
     <class>eapli.base.clientusermanagement.domain.SignupRequest</class>
     <class>eapli.base.clientmanagement.domain.Client</class>
     <class>eapli.base.ordermanagement.domain.ProductOrder</class>
+    <class>eapli.base.shoppingcarmanagement.domain.ShoppingCar</class>
+    <class>eapli.base.shoppingcarmanagement.domain.ShopCarItem</class>
     <class>eapli.base.warehouse.domain.Bin</class>
     <class>eapli.base.warehouse.domain.Shelf</class>
     <class>eapli.base.warehouse.domain.Line</class>

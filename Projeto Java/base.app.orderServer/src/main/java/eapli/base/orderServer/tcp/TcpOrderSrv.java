@@ -1,21 +1,28 @@
 package eapli.base.orderServer.tcp;
 
-import eapli.base.AppSettings;
-import eapli.base.Application;
+import eapli.base.clientmanagement.domain.Client;
+import eapli.base.clientmanagement.domain.Email;
+import eapli.base.clientmanagement.repositories.ClientRepository;
+import eapli.base.infrastructure.persistence.PersistenceContext;
+import eapli.base.productmanagement.application.ListProductDTOService;
+import eapli.base.productmanagement.domain.Product;
+import eapli.base.productmanagement.domain.UniqueInternalCode;
+import eapli.base.productmanagement.dto.ProductDTO;
+import eapli.base.productmanagement.repository.ProductRepository;
+import eapli.base.shoppingcarmanagement.domain.ShopCarItem;
+import eapli.base.shoppingcarmanagement.domain.ShoppingCar;
+import eapli.base.shoppingcarmanagement.repository.ShopCarItemRepository;
+import eapli.base.shoppingcarmanagement.repository.ShoppingCarRepository;
 
-import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.io.*;
+import java.net.*;
+import java.util.Optional;
+
 
 public class TcpOrderSrv {
-
-    static AppSettings app = Application.settings();
-    static final int serverPortProperties = app.getServerPortKey();
-
     static ServerSocket sock;
 
-
-    public static void main(String[] args) throws Exception {
+    public static void main(String args[]) throws Exception {
         Socket cliSock;
 
         try { sock = new ServerSocket(9999); }
@@ -26,21 +33,127 @@ public class TcpOrderSrv {
 
         while(true) {
             cliSock=sock.accept();
-            new Thread(new TcpOrderSrvThread(cliSock)).start();
-        }
-    }
-
-     static class TcpOrderSrvThread implements Runnable {
-
-        private Socket s;
-
-        public TcpOrderSrvThread(Socket cli_s) {
-            s=cli_s;
-        }
-
-        @Override
-        public void run() {
-
+            new Thread(new TcpSrvOrderThread(cliSock)).start();
         }
     }
 }
+
+
+
+class TcpSrvOrderThread implements Runnable {
+    private Socket s;
+
+    private final ListProductDTOService service = new ListProductDTOService();
+    private final ProductRepository productRepository = PersistenceContext.repositories().products();
+    private final ClientRepository clientRepository = PersistenceContext.repositories().client();
+    private final ShoppingCarRepository shoppingCarRepository = PersistenceContext.repositories().shoppingCar();
+    private final ShopCarItemRepository shopCarItemRepository = PersistenceContext.repositories().shoppingCarItem();
+    private Product product;
+    private Optional<Client> client;
+    private Optional<ShoppingCar> shoppingCar;
+
+    public TcpSrvOrderThread(Socket cli_s) {
+        s = cli_s;
+    }
+
+    public void run() {
+        InetAddress clientIP;
+
+        try {
+
+            clientIP = this.s.getInetAddress();
+            System.out.println("[INFO] Nova conexão de cliente: " + clientIP.getHostAddress() + ", porta: " + this.s.getPort() + ".");
+
+            DataInputStream sIn = new DataInputStream(this.s.getInputStream());
+            DataOutputStream sOut = new DataOutputStream(this.s.getOutputStream());
+
+            byte[] clientMessage = sIn.readNBytes(4);
+
+            if (clientMessage[1] == 0) {
+                System.out.println("[SUCCESS] Código de Teste (0) do Cliente recebido.");
+
+                byte[] serverMessage = {(byte) 0, (byte) 2, (byte) 0, (byte) 0};
+                System.out.println("[INFO] A Mandar Código de Entendido (2) ao Cliente.");
+                sOut.write(serverMessage);
+                sOut.flush();
+
+                byte[] clientMessageUS = new byte[4];
+                eapli.base.utils.MessageUtils.readMessage(clientMessageUS, sIn);
+
+                /*============Enviar produtos ao cliente============*/
+                if(clientMessageUS[1] == 4) {
+                    ObjectOutputStream sOutputObject = new ObjectOutputStream(this.s.getOutputStream());
+
+                    Iterable<ProductDTO> productCatalog = service.allProducts();
+                    sOutputObject.writeObject(productCatalog);
+                    sOutputObject.flush();
+                }
+
+                /*============Verificar se Produto Existe============*/
+                if(clientMessageUS[1] == 3) {
+                    String productUniqueInternalCode = eapli.base.utils.MessageUtils.getDataFromMessage(clientMessageUS,sIn);
+                    product = productRepository.findByUniqueInternalCode(UniqueInternalCode.valueOf(productUniqueInternalCode));
+                    if(product == null) {
+                        eapli.base.utils.MessageUtils.writeMessageWithData((byte) 3, "[FAILURE] Product not found! Please try again.", sOut);
+                    } else {
+                        eapli.base.utils.MessageUtils.writeMessageWithData((byte) 3, "[SUCCESS] Product found!", sOut);
+                    }
+                }
+
+                /*============Adicionar Produto ao Carrinho de Compras============*/
+                if(clientMessageUS[1] == 5) {
+                    String info = eapli.base.utils.MessageUtils.getDataFromMessage(clientMessageUS,sIn);
+                    String[] array = info.split(" ");
+                    String quantidade = array[0];
+                    String email = array[1];
+                    String productUniqueInternalCode = array[2];
+                    product = productRepository.findByUniqueInternalCode(UniqueInternalCode.valueOf(productUniqueInternalCode));
+                    client = clientRepository.findByEmail(Email.valueOf(email));
+                    ShopCarItem item = new ShopCarItem(Integer.parseInt(quantidade),product);
+                    if(client.isPresent()) {
+                        shoppingCar = shoppingCarRepository.findByClient(client.get());
+                        if(shoppingCar.isPresent()) {
+                            shoppingCar.get().addProductToShoppingCar(item);
+                        } else {
+                            ShoppingCar shoppingCar1 = new ShoppingCar(client.get());
+                            shoppingCarRepository.save(shoppingCar1);
+                            shoppingCar1.addProductToShoppingCar(item);
+                        }
+                        shopCarItemRepository.save(item);
+
+                    }
+
+                }
+
+                byte[] clientMessageEnd = sIn.readNBytes(4);
+
+                if (clientMessageEnd[1] == 1) {
+                    System.out.println("[SUCCESS] Código de Fim (1) do Cliente recebido.");
+                    byte[] serverMessageEnd = {(byte) 0, (byte) 2, (byte) 0, (byte) 0};
+                    System.out.println("[INFO] A Mandar Código de Entendido (2) ao Cliente.");
+                    sOut.write(serverMessageEnd);
+                    sOut.flush();
+                    System.out.println("[INFO] Cliente " + clientIP.getHostAddress() + ", porta: " + this.s.getPort() + " desconectado.");
+                } else {
+                    System.out.println("[ERROR] Pacote do Cliente invalido.");
+                }
+
+            } else {
+                System.out.println("[ERROR] Pacote do Cliente invalido.");
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                this.s.close();
+            } catch (IOException e) {
+                System.out.println("[ERROR] Problemas a Fechar o Socket.\n\n");
+            }
+            System.out.println("[SUCCESS] Socket Fechado.\n\n");
+        }
+
+    }
+
+}
+

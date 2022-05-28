@@ -3,7 +3,7 @@ package eapli.base.app.backoffice.console.ordermanagement;
 import eapli.base.AGV.domain.AGVId;
 import eapli.base.AGV.dto.AgvDto;
 import eapli.base.ordermanagement.application.ForceOrderPrepController;
-import eapli.base.productmanagement.dto.ProductOrderDto;
+import eapli.base.ordermanagement.dto.ProductOrderDto;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 

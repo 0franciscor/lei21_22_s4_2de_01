@@ -38,7 +38,8 @@ class AGV {
 }
 class ListOrdersBeingPreparedController {
     + getAGVsAvaiable()
-    + getOrdersWhoNeedToBePreparedByAGV(idAGV, taskDescription)
+    + getOrdersWhoNeedToBePreparedByAGV(idAGV)
+    + changeStatusOfOrdersSelectToBeingPreparedByAGV(listOfOrdersSelected)
     + changeTheStatusOfOrdersForDispatchedToCustomer(listOfOrdersSelected)
 
 }

@@ -26,8 +26,8 @@ import java.net.Socket;
 
 import agvmanager.tcpprotocol.server.AGVManagerProtocolRequest;
 import agvmanager.tcpprotocol.server.RequestMessageParser;
-import eapli.base.AGV.application.AGVManagerController;
-import eapli.base.AGV.application.AGVManagerControllerImplementation;
+import eapli.base.AGV.Application.AGVManagerController;
+import eapli.base.AGV.Application.AGVManagerControllerImplementation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -54,60 +54,6 @@ public class AgvManagerProtocolServer {
             this.clientSocket = socket;
             parser = new RequestMessageParser(new AGVManagerControllerImplementation());
         }
-
-        /*@Override
-        public void run() {
-
-            final var clientIP = clientSocket.getInetAddress();
-
-            LOGGER.debug("Accepted connection from {}:{}", clientIP.getHostAddress(), clientSocket.getPort());
-
-            try (var out = new DataOutputStream(clientSocket.getOutputStream());
-                 var in = new DataInputStream(clientSocket.getInputStream()); BufferedOutputStream bufferedOut = new BufferedOutputStream(out)) {
-                byte [] array_comm_test = in.readNBytes(4);
-                LOGGER.debug("Initial request message received");
-                RequestMessageParser.parseMessage(array_comm_test, in, out);
-                LOGGER.debug("Response from initial request sent\n");
-
-                byte[] array = in.readNBytes(4);
-                LOGGER.debug("Received message: {}", array);
-                final AgvManagerProtocolRequest request = RequestMessageParser.parseMessage(array, in, out);
-                final String response = request.execute();
-                final byte[] responseByte = request.outputProtocol();
-                out.write(responseByte);
-                out.write(response.getBytes(StandardCharsets.UTF_8));
-                LOGGER.debug("Sent message: {}\n", response);
-
-                byte [] array_end_of_session = in.readNBytes(4);
-                LOGGER.debug("End of session request");
-                RequestMessageParser.parseMessage(array_end_of_session, in, out);
-                LOGGER.debug("End of session request received\n");
-            } catch (final Exception e) {
-                LOGGER.error(e);
-            } finally {
-                try {
-                    clientSocket.close();
-                    LOGGER.debug("Closing client socket {}:{}", clientIP.getHostAddress(), clientSocket.getPort());
-                } catch (final IOException e) {
-                    LOGGER.error("While closing the client socket {}:{}", clientIP.getHostAddress(),
-                            clientSocket.getPort(), e);
-                }
-                // null the reference to ensure it will be caught by the garbage collector
-                clientSocket = null;
-
-                // helper debug - SHOULD NOT BE USED IN PRODUCTION CODE!!!
-                if (LOGGER.isDebugEnabled()) {
-                    final int finalThreadCount = Thread.activeCount();
-                    LOGGER.debug("Ending client thread - final thread count: {}", finalThreadCount);
-                    final Thread[] t = new Thread[finalThreadCount];
-                    final int n = Thread.enumerate(t);
-                    for (var i = 0; i < n; i++) {
-                        LOGGER.debug("T {}: {}", t[i].getId(), t[i].getName());
-                    }
-                }
-            }
-        }
-    }*/
 
         @Override
         public void run() {

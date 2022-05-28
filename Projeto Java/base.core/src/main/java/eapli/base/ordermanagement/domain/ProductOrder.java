@@ -151,6 +151,25 @@ public class ProductOrder implements AggregateRoot<Long>, Serializable {
             new Notification(this.client.getEmail().toString(),"Encomenda Efetuada!","A sua encomenda já foi registada no sistema e encontra-se a ser preparada!\n Obrigada pela preferência!");
         }
     }
+    public ProductOrder(final Client client, final Address billingAddress, final Address shippingAddress, final Shipment shipment, final Payment payment, final SourceChannel sourceChannel, final Calendar interactionDate, final List<OrderItem> newOrderItems) {
+        this.createdOn = Calendars.now();
+        this.client = client;
+        this.billingAddress = billingAddress;
+        this.shippingAddress = shippingAddress;
+        this.shipment = shipment;
+        this.payment = payment;
+        this.sourceChannel = sourceChannel;
+        this.interactionDate = interactionDate;
+        this.newOrderItems = newOrderItems;
+        this.totalAmountWithoutTaxes = obtainTotalAmountWithoutTaxes();
+        this.totalAmountWithTaxes = obtainTotalAmountWithTaxes();
+        this.orderWeight = obtainTotalOrderWeight();
+        this.orderVolume = obtainTotalOrderVolume();
+        this.status = new OrderStatus(OrderStatus.Status.TO_BE_PREPARED);
+        if(this.client != null) {
+            new Notification(this.client.getEmail().toString(),"Encomenda Efetuada!","A sua encomenda já foi registada no sistema e encontra-se a ser preparada!\n Obrigada pela preferência!");
+        }
+    }
 
     protected ProductOrder() {
         //for ORM purposes
@@ -260,7 +279,7 @@ public class ProductOrder implements AggregateRoot<Long>, Serializable {
     }
 
     public void changeStatusOfOrderToBeingDispatchedToCustomer(){
-        status.changeStatusForBeingPreparedByAGV();
+        status.changeStatusForBeingDispatchedForCostumer();
     }
 
     public OrderVolume getOrderVolume() {

@@ -244,6 +244,7 @@ Foram aplicados os princípios SOLID e os padrões de design de software GoF. Se
 # 5. Integração/Demonstração
 
 *Nesta secção a equipa deve descrever os esforços realizados no sentido de integrar a funcionalidade desenvolvida com as restantes funcionalidades do sistema.*
+
 ![US2002_DEMO](US2002_UI_DEMO.jpg)
 
 # 6. Observações
