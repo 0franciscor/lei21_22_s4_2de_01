@@ -24,7 +24,7 @@
 package eapli.base.app.user.console.presentation;
 
 import eapli.base.app.common.console.presentation.authz.MyUserMenu;
-import eapli.base.app.user.console.presentation.shopingCarManagement.AddProductToShoppingCarUI;
+import eapli.base.app.user.console.presentation.shopingCarManagement.AddProductToShoppingCarUi;
 import eapli.framework.actions.menu.Menu;
 import eapli.framework.actions.menu.MenuItem;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
@@ -76,7 +76,7 @@ class MainMenu extends ClientUserBaseUI {
 
         final Menu myUserMenu = new MyUserMenu();
         mainMenu.addSubMenu(MY_USER_OPTION, myUserMenu);
-        mainMenu.addItem(ADICIONAR_PRODUTO_CARRINHO_COMPRAS, "Adicionar produto ao carrinho de compras", new AddProductToShoppingCarUI()::show);
+        mainMenu.addItem(ADICIONAR_PRODUTO_CARRINHO_COMPRAS, "Adicionar produto ao carrinho de compras", new AddProductToShoppingCarUi()::show);
         mainMenu.addItem(MenuItem.separator(SEPARATOR_LABEL));
         mainMenu.addItem(EXIT_OPTION, "Exit", new ExitWithMessageAction("Bye, Bye"));
 

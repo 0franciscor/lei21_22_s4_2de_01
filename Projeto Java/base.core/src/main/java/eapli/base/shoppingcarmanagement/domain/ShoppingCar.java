@@ -1,12 +1,13 @@
 package eapli.base.shoppingcarmanagement.domain;
 
 import eapli.base.clientmanagement.domain.Client;
-import eapli.base.ordermanagement.domain.OrderItem;
+import eapli.base.productmanagement.domain.Product;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -23,11 +24,11 @@ public class ShoppingCar implements AggregateRoot<Long>, Serializable {
     @OneToMany(cascade = CascadeType.ALL,
             orphanRemoval = true)
     @JoinColumn(name = "shopping_car_id")
-    private List<OrderItem> items;
+    private List<ShopCarItem> items;
 
-    public ShoppingCar(final Client client, final List<OrderItem> items) {
+    public ShoppingCar(final Client client) {
         this.client = client;
-        this.items = items;
+        this.items = new ArrayList<>();
     }
 
     protected ShoppingCar() {
@@ -47,5 +48,9 @@ public class ShoppingCar implements AggregateRoot<Long>, Serializable {
     @Override
     public Long identity() {
         return this.shoppingCarId;
+    }
+
+    public boolean addProductToShoppingCar(ShopCarItem shopCarItem) {
+        return items.add(shopCarItem);
     }
 }
