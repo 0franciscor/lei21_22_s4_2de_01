@@ -1,4 +1,5 @@
 package eapli.base.ordermanagement.application;
+import eapli.base.AGV.domain.AGVId;
 import eapli.base.AGV.dto.AgvDto;
 import eapli.base.AGV.application.ConfigureAGVController;
 import eapli.base.AGV.domain.AGV;
@@ -35,9 +36,13 @@ public class ForceOrderPrepController {
 
     }
 
-    public AGV getAGV(String agvId){
-        System.out.println("entrou: " + agvId);
+
+    public AGV getAGV(AGVId agvId){
         return agvRepository.getAGVById(agvId);
+    }
+
+    public AGV getAGVSt(String agvId){
+        return agvRepository.getAGVByIdSt(agvId);
     }
 
 
@@ -46,7 +51,7 @@ public class ForceOrderPrepController {
         List<AgvDto> list = new ArrayList<>();
         for(AGV agv : aux ){
             if(agv.getAgvStatus().equals(AGVStatus.FREE)){
-                String id = agv.getAgvId().toString();
+                String id = agv.getAgvId().getAGVId();
                 String volume = agv.getMaxVolumeCapacity().toString();
                 String weight = agv.getMaxWeightCapacity().toString();
                 AgvDto dto = new AgvDto(id,volume,weight);
@@ -77,42 +82,32 @@ public class ForceOrderPrepController {
     }
 
 
-    public ProductOrder forceOrderPrep(String productOrderid, String agvid){
+    public ProductOrder forceOrderPrep(String productOrderid, AGVId agvid){
 
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.WAREHOUSE_EMPLOYEE, BaseRoles.POWER_USER, BaseRoles.ADMIN, BaseRoles.SALES_CLERK);
         txCtx.beginTransaction();
 
         try{
-            // orderRepository.changeTheStatusOfTheOrderToBeingPreparedOnWarehouse(productOrder));
             OrderStatus.Status st = OrderStatus.Status.BEING_PREPARED_BY_AGV;
             OrderStatus orderStatus = new OrderStatus(st);
-            System.out.println("product id em string:" + productOrderid);
-            System.out.println("a");
-            System.out.println("a" + Long.parseLong(productOrderid) );
-            System.out.println("b");
             ProductOrder order = getOrder(Long.parseLong(productOrderid));
-            System.out.println("c");
             order.changeProductOrderStatus(orderStatus);
-            System.out.println("d");
 
-            //update agv status
-            System.out.println("d2");
-            AGV agv1 = getAGV(agvid);
-            System.out.println("e");
-            System.out.println("agv id em string:" + agvid);
-            System.out.println("f");
+
+            AGV agv1 = null;
+
+            try{
+                agv1 = getAGVSt(agvid.getAGVId());
+                System.out.println();
+
+            } catch(Exception e){
+                System.out.println(e.getMessage());
+            }
+
             agv1.changeStatusOfAGVForOccupied();
-            System.out.println("g");
-            order.preparedByAGV(agv);
-            System.out.println("h");
-            System.out.println(productOrderid);
-            System.out.println("i");
-            System.out.println(agvid);
-            System.out.println("j");
+            order.preparedByAGV(agv1);
             agvRepository.save(agv1);
-            System.out.println("k");
             orderRepository.save(order);
-            System.out.println("l");
 
             txCtx.commit();
         } catch (Exception e){
@@ -121,6 +116,7 @@ public class ForceOrderPrepController {
         return this.productOrder;
 
     }
+
 
 
 
