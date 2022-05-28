@@ -30,6 +30,7 @@ import eapli.base.infrastructure.persistence.RepositoryFactory;
 
 import eapli.base.ordermanagement.repository.OrderRepository;
 import eapli.base.productmanagement.repository.ProductRepository;
+import eapli.base.shoppingcarmanagement.repository.ShopCarItemRepository;
 import eapli.base.shoppingcarmanagement.repository.ShoppingCarRepository;
 import eapli.base.warehouse.repositories.*;
 import eapli.framework.domain.repositories.TransactionalContext;
@@ -72,6 +73,11 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     @Override
     public ShoppingCarRepository shoppingCar() {
         return new JpaShoppingCarRepository();
+    }
+
+    @Override
+    public ShopCarItemRepository shoppingCarItem() {
+        return new JpaShopCarItemRepository();
     }
 
     @Override

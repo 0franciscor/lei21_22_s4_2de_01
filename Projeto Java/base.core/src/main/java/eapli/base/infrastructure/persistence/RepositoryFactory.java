@@ -29,6 +29,7 @@ import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
 
 import eapli.base.ordermanagement.repository.OrderRepository;
 import eapli.base.productmanagement.repository.ProductRepository;
+import eapli.base.shoppingcarmanagement.repository.ShopCarItemRepository;
 import eapli.base.shoppingcarmanagement.repository.ShoppingCarRepository;
 import eapli.base.warehouse.repositories.*;
 import eapli.framework.domain.repositories.TransactionalContext;
@@ -85,6 +86,8 @@ public interface RepositoryFactory {
     ClientRepository client();
 
     ShoppingCarRepository shoppingCar();
+
+    ShopCarItemRepository shoppingCarItem();
 
     /**
      * repository will be created in auto transaction mode
