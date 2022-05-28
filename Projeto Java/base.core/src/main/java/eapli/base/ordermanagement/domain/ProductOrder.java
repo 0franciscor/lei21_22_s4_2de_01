@@ -260,7 +260,7 @@ public class ProductOrder implements AggregateRoot<Long>, Serializable {
     }
 
     public void changeStatusOfOrderToBeingDispatchedToCustomer(){
-        status.changeStatusForBeingPreparedByAGV();
+        status.changeStatusForBeingDispatchedForCostumer();
     }
 
     public OrderVolume getOrderVolume() {

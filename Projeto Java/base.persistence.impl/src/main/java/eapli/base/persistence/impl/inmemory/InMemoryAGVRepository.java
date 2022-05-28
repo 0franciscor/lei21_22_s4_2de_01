@@ -14,16 +14,18 @@ public class InMemoryAGVRepository extends InMemoryDomainRepository<AGV, AGVId> 
 
     @Override
     public Iterable<AGV> getAGVsAvaiable() {
-        return match(e->e.getAgvStatus().equals(AGVStatus.FREE));
+        return match(e->e.getAgvStatus().obtainStatus().equals(AGVStatus.Status.FREE));
     }
-
-    /*@Override
-    public AGVStatus changeStatusOfAGV(AGV agv) {
-        return agv.getAgvStatus();
-    }*/
 
     @Override
-    public AGV getAGVById(String id) {
-        return matchOne(e->e.getAgvId().getAGVId().equals(id)).get();
+    public AGV getAGVById(AGVId agvId) {
+        return matchOne(e->e.getAgvId().equals(agvId)).get();
     }
+
+    @Override
+    public AGV getAGVByIdSt(String agvId) {
+        return null;
+    }
+
+
 }

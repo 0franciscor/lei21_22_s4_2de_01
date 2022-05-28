@@ -6,6 +6,7 @@ import javax.persistence.Embeddable;
 
 @Embeddable
 public class BriefDescription implements ValueObject {
+
     private String briefDescription;
 
     public BriefDescription(String briefDescription) {

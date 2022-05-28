@@ -90,7 +90,7 @@ public class BaseBootstrapper implements Action {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        registerCategories();
+
         registerProduct();
 
         // execute all bootstrapping
@@ -133,13 +133,7 @@ public class BaseBootstrapper implements Action {
     }
 
     private void registerProduct(){
-        RegisterProductController registerProductController = new RegisterProductController();
-        Set<String> photos = new HashSet<>();
-        photos.add("frigorífico.jpg");
 
-        CreateCategoryController createCategoryController = new CreateCategoryController();
-        Category category = createCategoryController.createCategory(new AlphanumericCode("123dc"),new Description("Eletrodomésticos Eficientes"),new SuperCategory("Eletrodomésticos Modernos e Eficientes"));
-        registerProductController.registerProduct(category,"FRIG123","Frigorífico Eficiente","Frigorífico Moderno e Eficiente","Frigorífico Moderno","123456789123","Samsung","frig937",null,150.0,160.0,20.0,30.0,photos, 1L,1L,1L);
     }
 
     private void registerClient() throws ParseException {
@@ -157,14 +151,20 @@ public class BaseBootstrapper implements Action {
         Calendar birthDate = Calendars.fromDate(df.parse(strDate));
 
         registerClientController.registerClient("Carlota","de Castro Ribeiro e Pereira Sobral","arianasobral26@outlook.pt","+351939214644","PT999999999",addresses,birthDate, Client.Gender.FEMININE);
+        registerClientController.registerClient("Manuela","Leite","manuela@isep.ipp.pt","+351999999999","PT999999999",addresses, birthDate, Client.Gender.FEMININE);
+        registerClientController.registerClient("Francisco","Redol","francisco@isep.ipp.pt","+351999999989","PT999999999",addresses, birthDate, Client.Gender.MASCULINE);
+        registerClientController.registerClient("Pedro","Celestino","pedro@isep.ipp.pt","+351999979999","PT999999999",addresses, birthDate, Client.Gender.MASCULINE);
+        registerClientController.registerClient("Rita","Ariana","rita@isep.ipp.pt","+351996999999","PT999999999",addresses, birthDate, Client.Gender.FEMININE);
+        registerClientController.registerClient("Diogo","Lourenco","locenzo@isep.ipp.pt","+351997999999","PT999999999",addresses, birthDate, Client.Gender.MASCULINE);
+        registerClientController.registerClient("Ines","Cesar","ines@isep.ipp.pt","+351996998999","PT999999999",addresses, birthDate, Client.Gender.FEMININE);
+        registerClientController.registerClient("Luis","Busto","busto@isep.ipp.pt","+351996989999","PT999999999",addresses, birthDate, Client.Gender.MASCULINE);
+        registerClientController.registerClient("Daniel","Leitao","leitao@isep.ipp.pt","+351956989999","PT999999999",addresses, birthDate, Client.Gender.MASCULINE);
+        registerClientController.registerClient("Diogo","Soares","diogo@isep.ipp.pt","+351996989979","PT999999999",addresses, birthDate, Client.Gender.MASCULINE);
+        registerClientController.registerClient("Joao Pedro","Xino","joaoPedro@gmail.com","+351996989999","PT999999999",addresses, birthDate, Client.Gender.MASCULINE);
+        registerClientController.registerClient("Tiago","Soares","tiago@isep.ipp.pt","+351996989999","PT999999999",addresses, birthDate, Client.Gender.MASCULINE);
+
     }
 
-    private void registerCategories(){
-        CreateCategoryController createCategoryController = new CreateCategoryController();
-        createCategoryController.createCategory(new AlphanumericCode("123dc"),new Description("Eletrodomésticos Eficientes"),new SuperCategory("Eletrodomésticos Modernos e Eficientes"));
-        createCategoryController.createCategory(new AlphanumericCode("11hagsb"),new Description("This medicine is for the eyes"),new SuperCategory("Eye Category"));
-        createCategoryController.createCategory(new AlphanumericCode("1253dc"),new Description("Televisões Eficientes"),new SuperCategory("Televisões Modernas e Eficientes"));
-    }
 
 
     /**

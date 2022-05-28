@@ -1,6 +1,7 @@
 package eapli.base.AGV.application;
 
 import eapli.base.AGV.domain.AGV;
+import eapli.base.AGV.domain.AGVId;
 import eapli.base.AGV.domain.AGVTask;
 import eapli.base.AGV.repositories.AGVRepository;
 import eapli.base.AGV.dto.AgvDto;
@@ -12,6 +13,7 @@ import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,36 +49,57 @@ public class ListOrderBeingPreparedByAGVController {
 
     }
 
-    public List<ProductOrderDto> getOrdersWhoNeedToBePreparedByAGV(String idAgv, String taskDescription) throws Exception {
+    public List<ProductOrderDto> getOrdersWhoNeedToBePreparedByAGV(String idAgv){
 
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER, BaseRoles.WAREHOUSE_EMPLOYEE);
-        int count = 0;
+
+        agv = agvRepository.getAGVById(new AGVId(idAgv));
 
         List<ProductOrderDto> orderDtos = new ArrayList<>();
 
         Iterable<ProductOrder> orders = orderRepository.getOrdersWhoNeedToBePrepared();
 
-        agv = agvRepository.getAGVById(idAgv);
+        for (ProductOrder po : orders){
+            orderDtos.add(new ProductOrderDto(agv.getAgvId().getAGVId(), po.getOrderId(), po.getStatus().obtainStatus().name()));
+        }
 
+        return orderDtos;
+
+    }
+
+    public List<ProductOrderDto> changeStatusOfOrdersSelectToBeingPreparedByAGV(String taskDescription, List<ProductOrderDto> productsSelected) throws Exception {
+
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER, BaseRoles.WAREHOUSE_EMPLOYEE);
+        int count = 0;
+
+        List<ProductOrderDto> orderDtos = new ArrayList<>();
+        List<ProductOrder> productOrders = new ArrayList<>();
+
+        for (ProductOrderDto dto : productsSelected){
+            productOrders.add(orderRepository.getOrderById(dto.orderId));
+        }
         context.beginTransaction();
 
         agv.assignATaskForAGV(new AGVTask(taskDescription));
         agv.changeStatusOfAGVForOccupied();
 
-        for (ProductOrder p : orders){
+        String taskDescriptionAux = taskDescription;
+
+        for (ProductOrder p : productOrders){
 
             p.changeStatusOfOrderToBeingPreparedByAnAGV();
             try {
-                agv.addOrdersToATask(taskDescription, p);
+                agv.addOrdersToATask(taskDescriptionAux, p);
             }catch (Exception e){
-                agv.assignATaskForAGV(new AGVTask(taskDescription + " " +  count));
-                agv.addOrdersToATask(taskDescription, p);
+                taskDescriptionAux = taskDescription + " " + count;
+                agv.assignATaskForAGV(new AGVTask(taskDescriptionAux));
+                agv.addOrdersToATask(taskDescriptionAux, p);
                 count++;
             }
-
+            orderDtos.add(new ProductOrderDto(agv.getAgvId().getAGVId(), p.getOrderId(), taskDescriptionAux, p.getStatus().obtainStatus().name()));
             agvRepository.save(agv);
             orderRepository.save(p);
-            orderDtos.add(new ProductOrderDto(agv.getAgvId().getAGVId(), p.getOrderId(), taskDescription + " " + count, p.getStatus().obtainStatus().name()));
+
         }
 
         context.commit();
@@ -86,6 +109,7 @@ public class ListOrderBeingPreparedByAGVController {
     }
 
     public List<ProductOrderDto> changeTheStatusOfOrdersForDispatchedToCustomer(List<ProductOrderDto> listOfOrdersSelected){
+
         List<ProductOrderDto> productOrderDtoList = new ArrayList<>();
         ProductOrder order;
 
@@ -93,12 +117,14 @@ public class ListOrderBeingPreparedByAGVController {
         for (ProductOrderDto dto : listOfOrdersSelected){
             order = orderRepository.getOrderById(dto.orderId);
             order.changeStatusOfOrderToBeingDispatchedToCustomer();
-            agv.changeStatusOfAGVForFree();
+
             orderRepository.save(order);
-            agvRepository.save(agv);
             productOrderDtoList.add(new ProductOrderDto(agv.getAgvId().getAGVId(), order.getOrderId(), order.getOrderStatus().obtainStatus().name()));
 
         }
+        agv.changeStatusOfAGVForFree();
+        agvRepository.save(agv);
+
         context.commit();
         return productOrderDtoList;
     }

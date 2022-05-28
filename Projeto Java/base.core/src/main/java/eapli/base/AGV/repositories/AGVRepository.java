@@ -8,6 +8,8 @@ public interface AGVRepository extends DomainRepository<AGVId, AGV> {
 
     public Iterable<AGV> getAGVsAvaiable();
 
-    public AGV getAGVById(String id);
+    public AGV getAGVById(AGVId agvId);
+
+    public AGV getAGVByIdSt(String agvId);
 
 }

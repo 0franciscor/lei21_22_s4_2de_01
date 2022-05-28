@@ -1,6 +1,7 @@
 package eapli.base.app.backoffice.console.warehouseEmployeeManagement;
 
 import eapli.base.AGV.application.ConfigureAGVController;
+import eapli.base.AGV.domain.AGVStatus;
 import eapli.base.warehouse.domain.AGVDock;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
@@ -27,7 +28,6 @@ public class ConfigureAGVUI extends AbstractUI {
         final String maxVolumeCapacity = Console.readLine("Max Volume Capacity: (cm3)");
         final String range = Console.readLine("Range: (hours)");
         final String position = Console.readLine("Position:");
-        final String status = "FREE";
 
 
         boolean flag = configureAGVController.validateData(agvId, briefDescription, model, maxWeightCapacity, maxVolumeCapacity, range, position);
@@ -45,15 +45,15 @@ public class ConfigureAGVUI extends AbstractUI {
         AGVDock dock = list.get(a-1);
 
         Boolean flag1 = false;
-        if(configureAGVController.configureAGV(agvId,briefDescription,model,Double.parseDouble(maxWeightCapacity), Double.parseDouble(maxVolumeCapacity), Double.parseDouble(range), position, dock, status)==null){
+        if(configureAGVController.configureAGV(agvId,briefDescription,model,Double.parseDouble(maxWeightCapacity), Double.parseDouble(maxVolumeCapacity), Double.parseDouble(range), position, dock)==null){
             System.out.println("AGV Dock occupied");
             flag1 = true;
 
         }
         if(!flag1){
             System.out.println("*================== AGV Created ================*");
-            System.out.printf("AGVId: %s; \nBrief Description: %s; \nModel: %s \nMax Weight Capacity: %s \nMax Volume Capacity: %s \nRange: %s \nPosition: %s \nDock ID: %s\nStatus: %s\nTask: %s\n",
-                    agvId,briefDescription,model,maxWeightCapacity,maxVolumeCapacity,range,position,dock.getId(),status);
+            System.out.printf("AGVId: %s; \nBrief Description: %s; \nModel: %s \nMax Weight Capacity: %s \nMax Volume Capacity: %s \nRange: %s \nPosition: %s \nDock ID: %s\nStatus: %s\n",
+                    agvId,briefDescription,model,maxWeightCapacity,maxVolumeCapacity,range,position,dock.getId(), AGVStatus.Status.FREE);
         }
 
         return true;

@@ -37,6 +37,7 @@ import eapli.framework.domain.repositories.IntegrityViolationException;
  * @author Paulo Sousa
  */
 public class ClientUserBootstrapper implements Action {
+
     private static final Logger LOGGER = LoggerFactory.getLogger(
             ClientUserBootstrapper.class);
 

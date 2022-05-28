@@ -34,7 +34,7 @@ public class ConfigureAGVController {
     }
 
     public AGV configureAGV(final String agvId, final String briefDescription, final String model, final Double maxWeightCapacity, final Double maxVolumeCapacity,
-                            final Double range, final String position , final AGVDock agvDock, final String status) {
+                            final Double range, final String position , final AGVDock agvDock) {
 
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER, BaseRoles.ADMIN, BaseRoles.WAREHOUSE_EMPLOYEE);
 
@@ -58,7 +58,8 @@ public class ConfigureAGVController {
                 .withMaxVolumeCapacity(new MaxVolumeCapacity(maxVolumeCapacity))
                 .withRange(new Range(range))
                 .withPosition(new AGVPosition(position))
-                .withAGVDock(agvDock);
+                .withAGVDock(agvDock)
+                .withAGVStatus(new AGVStatus(AGVStatus.Status.FREE));
 
 
         AGV agv = newAGV.build();

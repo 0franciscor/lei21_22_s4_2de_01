@@ -19,7 +19,7 @@ public class AGVTask implements DomainEntity<Long>, AggregateRoot<Long> { //IMPL
 
     @OneToMany(cascade = CascadeType.ALL,
             orphanRemoval = true)
-    @JoinColumn(name = "productId")
+    @JoinColumn(name = "Orders")
     private List<ProductOrder> orders;
 
     private int totalWeight;
