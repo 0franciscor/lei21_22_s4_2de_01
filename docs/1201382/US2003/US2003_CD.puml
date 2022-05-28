@@ -11,10 +11,8 @@ class ForceOrderPrepUI{}
 
 class ForceOrderPrepController {
 +getOrdersToBePrepared()
-+saveOrder(orderId)
 +showAvailableAGVs()
-+saveAGV(agvId)
-+forceOrderPrep()
++forceOrderPrep(productOrderid,agvid)
 }
 
 
@@ -27,24 +25,32 @@ class RepositoryFactory {
 class AGVRepository {
 + create()
 + getAGVsAvailable()
++ getAGVSt(agvid)
 + changeAGVStatus(agvStatus)
++ save(agv1)
 }
 
 class OrderRepository{
 + create()
 + getProductOrdersToBePrepared()
 + getProductOrderById(orderId)
-+ preparedByAGV(agvSelected)
++getOrder(productOrderid)
 + changeProductOrderStatus(orderStatus)
-
-
++ preparedByAGV(agv1)
++ save(order)
 }
-
 
 class PersistenceContext {
 - repositories()
 }
 
+class AgvDto{
++toDto(agvid)
+}
+
+class ProductOrderDto{
++toDto(order)
+}
 
 
 
@@ -56,6 +62,8 @@ RepositoryFactory --> OrderRepository
 ForceOrderPrepController --> AGVRepository
 ForceOrderPrepController --> OrderRepository
 PersistenceContext --> RepositoryFactory
+ForceOrderPrepController ..> AgvDto
+ForceOrderPrepController ..> ProductOrderDto
 
 
 
