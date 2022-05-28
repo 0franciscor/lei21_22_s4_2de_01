@@ -1,0 +1,32 @@
+@startuml
+autonumber
+actor "Sales Manager" as SM
+participant "NewQuestionnaireUI" as SYS
+participant "CreateNewQuestionnaireController" as CTR
+participant "SurveyLexer" as SL
+participant "CommonTokenStream" as CMS
+participant "SurveyParser" as SP
+
+
+activate SM
+SM -> SYS : Request to create a new questionnaire
+activate SYS
+SYS -> CTR : create()
+activate CTR
+deactivate CTR
+SYS --> SM : Requests to enter the file path
+deactivate SYS
+
+SM -> SYS : Types the file path
+activate SYS
+SYS -> CTR : createQuestionnaire(fileName)
+activate CTR
+CTR -> SL** : lexer = create(fileName)
+CTR -> CMS** : tokens = create(lexer)
+CTR -> SP** : parser = create(tokens)
+deactivate CTR
+SYS --> SM : Evaluates the fulfillment of specific criteria \nand shows the success of the operation
+deactivate SYS
+
+deactivate SM
+@enduml
