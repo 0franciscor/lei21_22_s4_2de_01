@@ -88,14 +88,15 @@ public class ListOrderBeingPreparedByAGVController {
         for (ProductOrder p : productOrders){
 
             p.changeStatusOfOrderToBeingPreparedByAnAGV();
-            try {
-                agv.addOrdersToATask(taskDescriptionAux, p);
-            }catch (Exception e){
+
+            boolean flag = agv.addOrdersToATask(taskDescriptionAux, p);
+
+            if (!flag){
                 taskDescriptionAux = taskDescription + " " + count;
                 agv.assignATaskForAGV(new AGVTask(taskDescriptionAux));
                 agv.addOrdersToATask(taskDescriptionAux, p);
-                count++;
             }
+
             orderDtos.add(new ProductOrderDto(agv.getAgvId().getAGVId(), p.getOrderId(), taskDescriptionAux, p.getStatus().obtainStatus().name()));
             agvRepository.save(agv);
             orderRepository.save(p);

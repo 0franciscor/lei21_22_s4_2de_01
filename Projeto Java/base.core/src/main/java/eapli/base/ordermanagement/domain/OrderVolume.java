@@ -8,6 +8,7 @@ import java.io.Serializable;
 
 @Embeddable
 public class OrderVolume implements ValueObject, Serializable {
+
     private final Long volume;
 
     public OrderVolume(final Long volume) {

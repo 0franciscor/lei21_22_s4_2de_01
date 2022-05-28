@@ -5,6 +5,7 @@ import eapli.base.warehouse.domain.AGVDock;
 import eapli.framework.domain.model.AggregateRoot;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -54,6 +55,7 @@ public class AGV implements AggregateRoot<AGVId> {
         this.position = position;
         this.agvDock = agvDock;
         this.agvStatus = agvStatus;
+        this.agvTask = new ArrayList<>();
     }
 
     @Override
@@ -122,18 +124,25 @@ public class AGV implements AggregateRoot<AGVId> {
         return null;
     }
 
-    public void addOrdersToATask(String description, ProductOrder order) throws Exception {
+    public boolean addOrdersToATask(String description, ProductOrder order) {
+
+        boolean flag = true;
 
         AGVTask agvTask = getTaskByDescription(description);
 
         if (agvTask != null){
-            if ((agvTask.getTotalWeight() + order.getOrderWeight().getWeight()) < maxWeightCapacity.getMaxWeightCapacity() && (agvTask.getTotalVolume() + order.getOrderVolume().getVolume()) < maxVolumeCapacity.getMaxVolumeCapacity()){
+            if ((agvTask.getTotalWeight() + order.getOrderWeight().getWeight()) <=  maxWeightCapacity.getMaxWeightCapacity() && (agvTask.getTotalVolume() + order.getOrderVolume().getVolume()) <= maxVolumeCapacity.getMaxVolumeCapacity()){
                 agvTask.addMoreOrders(order);
+                agvTask.incrementVolume(order.getOrderVolume().getVolume());
+                agvTask.incrementWeight(order.getOrderWeight().getWeight());
+            }
+            else{
+                flag = false;
             }
         }
-        else{
-            throw new Exception("This order exceeds the limits supported by that AGV");
-        }
+
+
+        return flag;
 
     }
 

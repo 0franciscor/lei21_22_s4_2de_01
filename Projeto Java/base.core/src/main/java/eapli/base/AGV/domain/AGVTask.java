@@ -5,6 +5,7 @@ import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -22,21 +23,23 @@ public class AGVTask implements DomainEntity<Long>, AggregateRoot<Long> { //IMPL
     @JoinColumn(name = "Orders")
     private List<ProductOrder> orders;
 
-    private int totalWeight;
+    private Long totalWeight;
 
-    private int totalVolume;
+    private Long totalVolume;
 
 
     public AGVTask(String description) {
 
         this.description = description;
-        this.totalWeight = 0;
-        this.totalVolume = 0;
+        this.totalWeight = 0L;
+        this.totalVolume = 0L;
+        this.orders = new ArrayList<>();
     }
 
-    public AGVTask() {
-        this.totalWeight = 0;
-        this.totalVolume = 0;
+    protected AGVTask() {
+        this.totalWeight = 0L;
+        this.totalVolume = 0L;
+        this.orders = new ArrayList<>();
     }
 
     public String getDescription() {
@@ -49,12 +52,20 @@ public class AGVTask implements DomainEntity<Long>, AggregateRoot<Long> { //IMPL
         totalVolume += order.getOrderVolume().getVolume();
     }
 
-    public int getTotalWeight() {
+    public Long getTotalWeight() {
         return totalWeight;
     }
 
-    public int getTotalVolume() {
+    public Long getTotalVolume() {
         return totalVolume;
+    }
+
+    public void incrementVolume(Long volume){
+        this.totalVolume += volume;
+    }
+
+    public void incrementWeight(Long weight){
+        this.totalWeight += weight;
     }
 
     @Override
