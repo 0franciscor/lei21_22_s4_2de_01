@@ -7,7 +7,8 @@ participant PersistenceContext as PERSISTENCE <<persistence>>
 participant RepositoryFactory as FACTORY <<factory>>
 database OrderRepository as REPOSITORY_ORDERS <<repository>>
 database AGVRepository as REPOSITORY_AGV <<repository>>
-
+participant ProductOrderDto as PODTO
+participant AgvDto as AGVDTO
 
 activate WE
 WE -> UI : Request to see the list of orders \nwaiting to be prepared
@@ -15,7 +16,7 @@ activate UI
 UI -> CTR : create
 activate CTR
 deactivate CTR
-UI -> CTR : ordersWaitingToBePreparedList = getOrdersToBePrepared()
+UI -> CTR : ordersToBePreparedList = getOrdersToBePrepared()
 activate CTR
 
 CTR -> PERSISTENCE : repositories()
@@ -36,7 +37,6 @@ CTR -> FACTORY : getOrderRepository()
 activate FACTORY
 
 FACTORY -> REPOSITORY_ORDERS : create()
-
 activate REPOSITORY_ORDERS
 deactivate REPOSITORY_ORDERS
 
@@ -46,6 +46,17 @@ deactivate FACTORY
 CTR -> REPOSITORY_ORDERS : getProductOrdersToBePrepared()
 
 activate REPOSITORY_ORDERS
+
+loop For each order
+REPOSITORY_ORDERS -> PODTO** : create(order)
+REPOSITORY_ORDERS -> PODTO : orderDto = getOrderDto()
+activate PODTO
+deactivate PODTO
+REPOSITORY_ORDERS -> REPOSITORY_ORDERS : ordersToBePreparedList.add(orderDto)
+activate REPOSITORY_ORDERS
+deactivate REPOSITORY_ORDERS
+end loop
+
 
 REPOSITORY_ORDERS --> CTR : ordersToBePreparedList
 deactivate REPOSITORY_ORDERS
@@ -62,12 +73,7 @@ deactivate UI
 
 WE -> UI : Selects the desired order
 activate UI
-UI -> CTR : saveOrder(orderId)
-activate CTR
-CTR -> REPOSITORY_ORDERS : productOrder = getProductOrderById(orderId)
-activate REPOSITORY_ORDERS
-deactivate REPOSITORY_ORDERS
-deactivate CTR
+
 UI -> CTR : availableAGVlist = showAvailableAGVs()
 activate CTR
 
@@ -89,6 +95,16 @@ CTR -> REPOSITORY_AGV : getAGVsAvailable()
 
 activate REPOSITORY_AGV
 
+loop For each agv
+REPOSITORY_AGV -> AGVDTO** : create(agv)
+REPOSITORY_AGV -> AGVDTO : agvDto = getAgvDto()
+activate AGVDTO
+deactivate AGVDTO
+REPOSITORY_AGV -> REPOSITORY_AGV : availableAGVlist.add(agvDto)
+activate REPOSITORY_AGV
+deactivate REPOSITORY_AGV
+end loop
+
 REPOSITORY_AGV --> CTR : agvsAvailable
 deactivate REPOSITORY_AGV
 deactivate CTR
@@ -97,20 +113,32 @@ deactivate UI
 
 WE -> UI : Selects the desired AGV
 activate UI
-UI -> CTR : saveAGV(agvId)
+UI -> CTR : forceOrderPrep(productOrderid,agvid)
 activate CTR
-deactivate CTR
-UI -> CTR : forceOrderPrep()
-activate CTR
-CTR -> REPOSITORY_ORDERS : preparedByAGV(agvSelected)
+
+CTR -> REPOSITORY_ORDERS : order = getOrder(productOrderid)
 activate REPOSITORY_ORDERS
 deactivate REPOSITORY_ORDERS
+
+CTR -> REPOSITORY_AGV : agv1 = getAGVSt(agvid)
+activate REPOSITORY_AGV
+deactivate REPOSITORY_AGV
+
 CTR -> REPOSITORY_ORDERS : changeProductOrderStatus(orderStatus)
 activate REPOSITORY_ORDERS
 deactivate REPOSITORY_ORDERS
-CTR -> REPOSITORY_AGV : changeAGVStatus(agvStatus))
+CTR -> REPOSITORY_AGV : changeAGVStatusForOccupied())
 activate REPOSITORY_AGV
 deactivate REPOSITORY_AGV
+CTR -> REPOSITORY_ORDERS : preparedByAGV(agv1)
+activate REPOSITORY_ORDERS
+deactivate REPOSITORY_ORDERS
+CTR -> REPOSITORY_AGV : save(agv1)
+activate REPOSITORY_AGV
+deactivate REPOSITORY_AGV
+CTR -> REPOSITORY_ORDERS : save(order)
+activate REPOSITORY_ORDERS
+deactivate REPOSITORY_ORDERS
 
 UI --> WE : sent's task to AGV, updates \nstatus and shows operation success
 deactivate UI
