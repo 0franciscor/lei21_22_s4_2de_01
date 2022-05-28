@@ -4,9 +4,24 @@ import eapli.base.warehouse.domain.AGVDock;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 class AGVTest {
+
+    private static final AGVId ID = new AGVId("12345678");
+    private static final BriefDescription DESCRIPTION = new BriefDescription("abcdefg");
+    private static final MaxWeightCapacity WEIGHT = new MaxWeightCapacity(300.00);
+    private static final MaxVolumeCapacity VOLUME = new MaxVolumeCapacity(600.00);
+    private static final Model MODEL = new Model("2.1.1.1");
+    private static final Range RANGE = new Range(5.0);
+    private static final AGVPosition POSITION = new AGVPosition("s");
+    private static final AGVDock DOCK = new AGVDock();
+    private static final AGVStatus STATUS = new AGVStatus(AGVStatus.Status.FREE);
+
+    private AGV buildAGV(){
+        return new AGVBuilder().withId(ID).withBriefDescription(DESCRIPTION).withMaxWeightCapacity(WEIGHT).withMaxVolumeCapacity(VOLUME).withModel(MODEL).withRange(RANGE).withPosition(POSITION).withAGVDock(DOCK).withAGVStatus(STATUS).build();
+    }
 
     @Test
     void sameAs() {
@@ -58,7 +73,7 @@ class AGVTest {
 
         AGV a1 = new AGV(id,description,model,weight,volume,a,pos,dock, agvStatus);
         AGV a2 = new AGV(id,description,model,weight,volume,a,pos,dock, agvStatus);
-        Assertions.assertEquals(a1.agvDock().getId(), a2.agvDock().getId());
+        assertEquals(a1.agvDock().getId(), a2.agvDock().getId());
     }
 
     @Test
@@ -94,7 +109,7 @@ class AGVTest {
 
         AGV a1 = new AGV(id,description,model,weight,volume,a,pos,dock, agvStatus);
         AGV a2 = new AGV(id,description,model,weight,volume,a,pos,dock, agvStatus);
-        Assertions.assertEquals(a1.identity(), a2.identity());
+        assertEquals(a1.identity(), a2.identity());
     }
 
     @Test
@@ -114,4 +129,39 @@ class AGVTest {
         AGV a2 = new AGV(id1,description,model,weight,volume,a,pos,dock, agvStatus);
         Assertions.assertNotEquals(a1.identity(), a2.identity());
     }
+
+    @Test
+    void changeStatusOfAGVForFree(){
+        AGV agv = buildAGV();
+        agv.changeStatusOfAGVForFree();
+
+        assertEquals(agv.getAgvStatus().obtainStatus(), AGVStatus.Status.FREE);
+    }
+
+    @Test
+    void changeStatusOfAGVForCharging(){
+        AGV agv = buildAGV();
+        agv.changeStatusOfAGVForCharging();
+
+        assertEquals(agv.getAgvStatus().obtainStatus(), AGVStatus.Status.CHARGING);
+    }
+
+    @Test
+    void changeStatusOfAGVForGivenOrder(){
+        AGV agv = buildAGV();
+        agv.changeStatusOfAGVForGivenOrder();
+
+        assertEquals(agv.getAgvStatus().obtainStatus(), AGVStatus.Status.GIVEN_ORDER);
+    }
+
+    @Test
+    void changeStatusOfAGVForOccupied(){
+        AGV agv = buildAGV();
+        agv.changeStatusOfAGVForOccupied();
+
+        assertEquals(agv.getAgvStatus().obtainStatus(), AGVStatus.Status.OCCUPIED_SERVING);
+    }
+
+
+
 }
