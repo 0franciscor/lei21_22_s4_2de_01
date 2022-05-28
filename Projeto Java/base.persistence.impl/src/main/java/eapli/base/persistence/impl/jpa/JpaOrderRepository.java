@@ -37,7 +37,7 @@ public class JpaOrderRepository extends JpaAutoTxRepository<ProductOrder, Long, 
         final TypedQuery<ProductOrder> query = entityManager().createQuery(
                 "SELECT d FROM ProductOrder d  WHERE d.status = :status",
                 ProductOrder.class);
-        query.setParameter("status", OrderStatus.Status.TO_BE_PREPARED);
+        query.setParameter("status", new OrderStatus(OrderStatus.Status.TO_BE_PREPARED));
 
         return query.getResultList();
     }

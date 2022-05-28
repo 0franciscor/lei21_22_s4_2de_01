@@ -18,9 +18,10 @@ class AGVTest {
         Range a = new Range(5.0);
         AGVPosition pos = new AGVPosition("s");
         AGVDock dock = new AGVDock();
+        AGVStatus agvStatus = new AGVStatus(AGVStatus.Status.FREE);
 
-        AGV a1 = new AGV(id,description,model,weight,volume,a,pos,dock);
-        Object a2 = new AGV(id,description,model,weight,volume,a,pos,dock);
+        AGV a1 = new AGV(id,description,model,weight,volume,a,pos,dock, agvStatus);
+        Object a2 = new AGV(id,description,model,weight,volume,a,pos,dock, agvStatus);
         Assertions.assertTrue(a1.sameAs(a2));
     }
 
@@ -35,9 +36,10 @@ class AGVTest {
         Range a = new Range(5.0);
         AGVPosition pos = new AGVPosition("s");
         AGVDock dock = new AGVDock();
+        AGVStatus agvStatus = new AGVStatus(AGVStatus.Status.FREE);
 
-        AGV a1 = new AGV(id,description,model,weight,volume,a,pos,dock);
-        Object a2 = new AGV(id1,description,model,weight,volume,a,pos,dock);
+        AGV a1 = new AGV(id,description,model,weight,volume,a,pos,dock, agvStatus);
+        Object a2 = new AGV(id1,description,model,weight,volume,a,pos,dock, agvStatus);
         Assertions.assertFalse(a1.sameAs(a2));
     }
 
@@ -52,9 +54,10 @@ class AGVTest {
         Range a = new Range(5.0);
         AGVPosition pos = new AGVPosition("s");
         AGVDock dock = new AGVDock();
+        AGVStatus agvStatus = new AGVStatus(AGVStatus.Status.FREE);
 
-        AGV a1 = new AGV(id,description,model,weight,volume,a,pos,dock);
-        AGV a2 = new AGV(id,description,model,weight,volume,a,pos,dock);
+        AGV a1 = new AGV(id,description,model,weight,volume,a,pos,dock, agvStatus);
+        AGV a2 = new AGV(id,description,model,weight,volume,a,pos,dock, agvStatus);
         Assertions.assertEquals(a1.agvDock().getId(), a2.agvDock().getId());
     }
 
@@ -69,9 +72,10 @@ class AGVTest {
         AGVPosition pos = new AGVPosition("s");
         AGVDock dock = new AGVDock();
         AGVDock dock2 = new AGVDock();
+        AGVStatus agvStatus = new AGVStatus(AGVStatus.Status.FREE);
 
-        AGV a1 = new AGV(id,description,model,weight,volume,a,pos,dock);
-        AGV a2 = new AGV(id,description,model,weight,volume,a,pos,dock2);
+        AGV a1 = new AGV(id,description,model,weight,volume,a,pos,dock, agvStatus);
+        AGV a2 = new AGV(id,description,model,weight,volume,a,pos,dock2, agvStatus);
         Assertions.assertNotEquals(a1.agvDock(), a2.agvDock());
     }
 
@@ -86,9 +90,10 @@ class AGVTest {
         Range a = new Range(5.0);
         AGVPosition pos = new AGVPosition("s");
         AGVDock dock = new AGVDock();
+        AGVStatus agvStatus = new AGVStatus(AGVStatus.Status.FREE);
 
-        AGV a1 = new AGV(id,description,model,weight,volume,a,pos,dock);
-        AGV a2 = new AGV(id,description,model,weight,volume,a,pos,dock);
+        AGV a1 = new AGV(id,description,model,weight,volume,a,pos,dock, agvStatus);
+        AGV a2 = new AGV(id,description,model,weight,volume,a,pos,dock, agvStatus);
         Assertions.assertEquals(a1.identity(), a2.identity());
     }
 
@@ -103,9 +108,10 @@ class AGVTest {
         Range a = new Range(5.0);
         AGVPosition pos = new AGVPosition("s");
         AGVDock dock = new AGVDock();
+        AGVStatus agvStatus = new AGVStatus(AGVStatus.Status.FREE);
 
-        AGV a1 = new AGV(id,description,model,weight,volume,a,pos,dock);
-        AGV a2 = new AGV(id1,description,model,weight,volume,a,pos,dock);
+        AGV a1 = new AGV(id,description,model,weight,volume,a,pos,dock, agvStatus);
+        AGV a2 = new AGV(id1,description,model,weight,volume,a,pos,dock, agvStatus);
         Assertions.assertNotEquals(a1.identity(), a2.identity());
     }
 }

@@ -51,28 +51,32 @@ public class ListOrderBeingPreparedByAGVUI extends AbstractUI {
 
         int option;
         List<ProductOrderDto> orders1 = new ArrayList<>();
-        do {
-            final SelectWidget<ProductOrderDto> selector1 = new SelectWidget<>("Orders:", orders, new ProductOrderDtoPrinter());
-            selector1.show();
+        if (orders.size() != 0){
+            do {
+                final SelectWidget<ProductOrderDto> selector1 = new SelectWidget<>("Orders:", orders, new ProductOrderDtoPrinter());
+                selector1.show();
 
-            ProductOrderDto productOrderDto = selector1.selectedElement();
-            orders1.add(productOrderDto);
-            System.out.println("Do you want to select any more orders?");
-            System.out.println("1 - yes");
-            System.out.println("2 - no");
-            option = Console.readOption(1, 2, 0);
+                ProductOrderDto productOrderDto = selector1.selectedElement();
+                orders1.add(productOrderDto);
+                System.out.println("Do you want to select any more orders?");
+                System.out.println("1 - yes");
+                System.out.println("2 - no");
+                option = Console.readOption(1, 2, 0);
 
-        } while (option == 1);
+            } while (option == 1);
 
-        List<ProductOrderDto> orders3 = listOrderBeingPreparedByAGVController.changeTheStatusOfOrdersForDispatchedToCustomer(orders1);
+            List<ProductOrderDto> orders3 = listOrderBeingPreparedByAGVController.changeTheStatusOfOrdersForDispatchedToCustomer(orders1);
 
-        for (ProductOrderDto p : orders3){
+            for (ProductOrderDto p : orders3){
 
-            System.out.printf("\n-----> Order number %d <-----\n", p.orderId);
-            System.out.printf("AGV ID assigned to this order -> %s\n", p.agvId);
-            System.out.printf("Order Status -> %s\n", p.status);
+                System.out.printf("\n-----> Order number %d <-----\n", p.orderId);
+                System.out.printf("AGV ID assigned to this order -> %s\n", p.agvId);
+                System.out.printf("Order Status -> %s\n", p.status);
 
+            }
         }
+        else System.out.println("!WARNING! - There is no order in the system that needs to be prepared by an AGV");
+
 
         return false;
     }

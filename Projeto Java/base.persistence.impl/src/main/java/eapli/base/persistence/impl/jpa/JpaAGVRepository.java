@@ -2,6 +2,7 @@ package eapli.base.persistence.impl.jpa;
 
 import eapli.base.AGV.domain.AGV;
 import eapli.base.AGV.domain.AGVId;
+import eapli.base.AGV.domain.AGVStatus;
 import eapli.base.AGV.repositories.AGVRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
@@ -24,24 +25,16 @@ public class JpaAGVRepository extends JpaAutoTxRepository<AGV, AGVId, AGVId> imp
         final TypedQuery<AGV> query = entityManager().createQuery(
                 "SELECT d FROM AGV d  WHERE d.agvStatus = :status",
                 AGV.class);
-        query.setParameter("status", "Is Free");
+        query.setParameter("status", new AGVStatus(AGVStatus.Status.FREE));
 
         return query.getResultList();
     }
 
-    /*@Override
-    public AGVStatus changeStatusOfAGV(AGV agv) {
-        final TypedQuery<AGV> query = entityManager().createQuery(
-                "SELECT d FROM AGV d  WHERE d.agvId = :id",
-                AGVStatus.class);
-        query.setParameter("id", id);
-
-    }*/
 
     @Override
     public AGV getAGVById(final AGVId agvId) {
         final TypedQuery<AGV> query = super.createQuery(
-                "SELECT d FROM AGV d  WHERE agvId ='" + agvId + "'",
+                "SELECT d FROM AGV d  WHERE agvId ='" + agvId.getAGVId() + "'",
                 AGV.class);
 
         return query.getSingleResult();

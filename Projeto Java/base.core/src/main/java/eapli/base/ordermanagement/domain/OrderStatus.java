@@ -1,13 +1,11 @@
 package eapli.base.ordermanagement.domain;
 
 import eapli.framework.domain.model.ValueObject;
-import eapli.framework.validations.Preconditions;
 
 import javax.persistence.Embeddable;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import java.io.Serializable;
-//rever os status da order
 
 @Embeddable
 public class OrderStatus implements ValueObject, Serializable {

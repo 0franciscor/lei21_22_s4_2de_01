@@ -16,9 +16,10 @@ class MaxWeightCapacityTest {
         Range a = new Range(5.0);
         AGVPosition pos = new AGVPosition("s");
         AGVDock dock = new AGVDock();
+        AGVStatus agvStatus = new AGVStatus(AGVStatus.Status.FREE);
 
-        AGV a1 = new AGV(id,description,model,weight,volume,a,pos,dock);
-        AGV a2 = new AGV(id,description,model,weight,volume,a,pos,dock);
+        AGV a1 = new AGV(id,description,model,weight,volume,a,pos,dock, agvStatus);
+        AGV a2 = new AGV(id,description,model,weight,volume,a,pos,dock, agvStatus);
         Assertions.assertEquals(a1.getMaxWeightCapacity(), a2.getMaxWeightCapacity());
     }
 
@@ -32,10 +33,11 @@ class MaxWeightCapacityTest {
         Range a = new Range(5.0);
         AGVPosition pos = new AGVPosition("s");
         AGVDock dock = new AGVDock();
+        AGVStatus agvStatus = new AGVStatus(AGVStatus.Status.FREE);
 
-        AGV a1 = new AGV(id,description,model,weight,volume,a,pos,dock);
+        AGV a1 = new AGV(id,description,model,weight,volume,a,pos,dock, agvStatus);
         weight.setMaxWeightCapacity(10.0);
-        AGV a2 = new AGV(id,description,model,weight,volume,a,pos,dock);
+        AGV a2 = new AGV(id,description,model,weight,volume,a,pos,dock, agvStatus);
         Assertions.assertEquals(a1.getMaxWeightCapacity(), a2.getMaxWeightCapacity());
     }
 

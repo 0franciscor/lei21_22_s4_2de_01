@@ -16,9 +16,10 @@ class MaxVolumeCapacityTest {
         Range a = new Range(5.0);
         AGVPosition pos = new AGVPosition("s");
         AGVDock dock = new AGVDock();
+        AGVStatus agvStatus = new AGVStatus(AGVStatus.Status.FREE);
 
-        AGV a1 = new AGV(id,description,model,weight,volume,a,pos,dock);
-        AGV a2 = new AGV(id,description,model,weight,volume,a,pos,dock);
+        AGV a1 = new AGV(id,description,model,weight,volume,a,pos,dock, agvStatus);
+        AGV a2 = new AGV(id,description,model,weight,volume,a,pos,dock, agvStatus);
         Assertions.assertEquals(a1.getMaxVolumeCapacity(), a2.getMaxVolumeCapacity());
     }
 
@@ -33,9 +34,10 @@ class MaxVolumeCapacityTest {
         Range a = new Range(5.0);
         AGVPosition pos = new AGVPosition("s");
         AGVDock dock = new AGVDock();
+        AGVStatus agvStatus = new AGVStatus(AGVStatus.Status.FREE);
 
-        AGV a1 = new AGV(id,description,model,weight,volume,a,pos,dock);
-        AGV a2 = new AGV(id,description,model,weight,volume1,a,pos,dock);
+        AGV a1 = new AGV(id,description,model,weight,volume,a,pos,dock, agvStatus);
+        AGV a2 = new AGV(id,description,model,weight,volume1,a,pos,dock, agvStatus);
         Assertions.assertNotEquals(a1.getMaxVolumeCapacity(), a2.getMaxVolumeCapacity());
     }
 
@@ -49,10 +51,11 @@ class MaxVolumeCapacityTest {
         Range a = new Range(5.0);
         AGVPosition pos = new AGVPosition("s");
         AGVDock dock = new AGVDock();
+        AGVStatus agvStatus = new AGVStatus(AGVStatus.Status.FREE);
 
-        AGV a1 = new AGV(id,description,model,weight,volume,a,pos,dock);
+        AGV a1 = new AGV(id,description,model,weight,volume,a,pos,dock, agvStatus);
         volume.setMaxVolumeCapacity(56.0);
-        AGV a2 = new AGV(id,description,model,weight,volume,a,pos,dock);
+        AGV a2 = new AGV(id,description,model,weight,volume,a,pos,dock, agvStatus);
         Assertions.assertEquals(a1.getMaxVolumeCapacity(), a2.getMaxVolumeCapacity());
     }
 

@@ -34,18 +34,17 @@ public class AGV implements AggregateRoot<AGVId> {
     @Embedded
     private AGVPosition position;
 
-    @Enumerated
+    @Embedded
     private AGVStatus agvStatus;
 
     @OneToMany(cascade = CascadeType.ALL,
             orphanRemoval = true)
-    @JoinColumn(name = "task_id")
+    @JoinColumn(name = "agv_id")
     private List<AGVTask> agvTask;
-
 
     public AGV(){}
 
-    public AGV(final AGVId agvId, final BriefDescription briefDescription, final Model model, final MaxWeightCapacity maxWeightCapacity, final MaxVolumeCapacity maxVolumeCapacity, final Range range, final AGVPosition position, final AGVDock agvDock){
+    public AGV(final AGVId agvId, final BriefDescription briefDescription, final Model model, final MaxWeightCapacity maxWeightCapacity, final MaxVolumeCapacity maxVolumeCapacity, final Range range, final AGVPosition position, final AGVDock agvDock, final  AGVStatus agvStatus){
         this.agvId = agvId;
         this.range = range;
         this.maxWeightCapacity = maxWeightCapacity;
@@ -54,7 +53,7 @@ public class AGV implements AggregateRoot<AGVId> {
         this.briefDescription = briefDescription;
         this.position = position;
         this.agvDock = agvDock;
-        this.agvStatus = AGVStatus.FREE;
+        this.agvStatus = agvStatus;
     }
 
     @Override
@@ -139,23 +138,23 @@ public class AGV implements AggregateRoot<AGVId> {
     }
 
     public void changeStatusOfAGVForOccupied(){
-        this.agvStatus = AGVStatus.OCCUPIED_SERVING;
+        this.agvStatus.changeStatusOfAGVForOccupied();
     }
 
     public void changeStatusOfAGVForFree(){
-        this.agvStatus = AGVStatus.FREE;
+        this.agvStatus.changeStatusOfAGVForFree();
     }
 
     public void changeStatusOfAGVForCharging(){
-        this.agvStatus = AGVStatus.CHARGING;
+        this.agvStatus.changeStatusOfAGVForCharging();
     }
 
     public void changeStatusOfAGVForMaintenance(){
-        this.agvStatus = AGVStatus.MAINTENANCE;
+        this.agvStatus.changeStatusOfAGVForMaintenance();
     }
 
     public void changeStatusOfAGVForGivenOrder(){
-        this.agvStatus = AGVStatus.GIVEN_ORDER;
+        this.agvStatus.changeStatusOfAGVForGivenOrder();
     }
 
     public void assignATaskForAGV(AGVTask task){

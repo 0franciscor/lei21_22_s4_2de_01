@@ -1,7 +1,6 @@
 package eapli.base.AGV.domain;
 
 import eapli.base.warehouse.domain.AGVDock;
-import eapli.base.AGV.domain.AGV;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -19,9 +18,10 @@ class AGVIdTest {
         Range a = new Range(5.0);
         AGVPosition pos = new AGVPosition("s");
         AGVDock dock = new AGVDock();
+        AGVStatus agvStatus = new AGVStatus(AGVStatus.Status.FREE);
 
         AGV a1 = getAGVId1();
-        AGV a2 = new AGV(id,description,model,weight,volume,a,pos,dock);
+        AGV a2 = new AGV(id,description,model,weight,volume,a,pos,dock, agvStatus);
         Assertions.assertEquals(a1.agvDock().getId(), a2.agvDock().getId());
     }
 
@@ -34,10 +34,11 @@ class AGVIdTest {
         Range a = new Range(5.0);
         AGVPosition pos = new AGVPosition("s");
         AGVDock dock = new AGVDock();
+        AGVStatus agvStatus = new AGVStatus(AGVStatus.Status.FREE);
         AGVBuilder agvBuilder = new AGVBuilder();
         agvBuilder.withId(id).withBriefDescription(description).withMaxWeightCapacity(weight)
                 .withModel(model).withMaxVolumeCapacity(volume).withRange(a)
-                .withPosition(pos).withAGVDock(dock);
+                .withPosition(pos).withAGVDock(dock).withAGVStatus(agvStatus);
 
         return agvBuilder.build();
     }

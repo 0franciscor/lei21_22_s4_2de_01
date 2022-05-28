@@ -50,7 +50,7 @@ public class ForceOrderPrepController {
         Iterable<AGV> aux = agvRepository.findAll();
         List<AgvDto> list = new ArrayList<>();
         for(AGV agv : aux ){
-            if(agv.getAgvStatus().equals(AGVStatus.FREE)){
+            if(agv.getAgvStatus().equals(AGVStatus.Status.FREE)){
                 String id = agv.getAgvId().getAGVId();
                 String volume = agv.getMaxVolumeCapacity().toString();
                 String weight = agv.getMaxWeightCapacity().toString();

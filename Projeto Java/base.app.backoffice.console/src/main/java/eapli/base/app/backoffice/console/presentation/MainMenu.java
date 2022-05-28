@@ -81,8 +81,10 @@ public class MainMenu extends AbstractUI {
     private static final int CREATE_CATALOG = 5;
 
     //WAREHOUSE EMPLOYEE
-    private static final int IMPORT_JSONFILE = 1;
-    private static final int LIST_ORDERS = 2;
+    private static final int AGV_CONFIGURATION = 1;
+    private static final int IMPORT_JSONFILE = 2;
+    private static final int LIST_ORDERS = 3;
+    private static final int FORCE_ORDERS_PREPARATION = 4;
 
     // MAIN MENU
     private static final int MY_USER_OPTION = 1;
@@ -151,14 +153,9 @@ public class MainMenu extends AbstractUI {
             final Menu usersMenu = buildWarehouseEmployeeMenu();
             mainMenu.addSubMenu(USERS_OPTION, usersMenu);
 
-            final Menu configMenu = configAGVAdminSettingsMenu();
-            mainMenu.addSubMenu(CONFIGURE_OPTION, configMenu);
-
             final Menu settingsMenu = buildAdminSettingsMenu();
             mainMenu.addSubMenu(SETTINGS_OPTION, settingsMenu);
 
-            final Menu forceOrderPrepMenu = buildForcePrepMenu();
-            mainMenu.addSubMenu(7,forceOrderPrepMenu);
         }
 
         if (!Application.settings().isMenuLayoutHorizontal()) {
@@ -180,14 +177,6 @@ public class MainMenu extends AbstractUI {
         return menu;
     }
 
-    private Menu configAGVAdminSettingsMenu() {
-        final Menu menu = new Menu("AGV Configuration >");
-
-        menu.addItem(SET_KITCHEN_ALERT_LIMIT_OPTION, "Configure AGV", new ConfigureAGVUI()::show);
-        menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
-
-        return menu;
-    }
 
     private Menu buildUsersMenu() {
         final Menu menu = new Menu("Users >");
@@ -217,19 +206,12 @@ public class MainMenu extends AbstractUI {
     private Menu buildWarehouseEmployeeMenu() {
         final Menu menu = new Menu("Warehouse Employee >");
 
+        menu.addItem(AGV_CONFIGURATION, "AGV Configuration", new ConfigureAGVUI()::show);
         menu.addItem(IMPORT_JSONFILE, "Import a Warehouse's Info", new ImportJsonUI()::show);
         menu.addItem(LIST_ORDERS, "List Orders being prepared by an AGV", new ListOrderBeingPreparedByAGVUI()::show);
-
+        menu.addItem(FORCE_ORDERS_PREPARATION, "Force Order Preparation", new ForceOrderPrepUI()::show);
         return menu;
     }
 
-    private Menu buildForcePrepMenu(){
-        final Menu menu = new Menu("Force Order Preparation");
-
-        menu.addItem(8, "Force Order Preparation", new ForceOrderPrepUI()::show);
-
-        return menu;
-
-    }
 
 }
