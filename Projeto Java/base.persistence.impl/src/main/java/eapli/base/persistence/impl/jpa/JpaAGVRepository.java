@@ -39,10 +39,20 @@ public class JpaAGVRepository extends JpaAutoTxRepository<AGV, AGVId, AGVId> imp
     }*/
 
     @Override
-    public AGV getAGVById(String id) {
+    public AGV getAGVById(final AGVId agvId) {
         final TypedQuery<AGV> query = super.createQuery(
-                "SELECT d FROM AGV d  WHERE agvId = '" + id + "'",
+                "SELECT d FROM AGV d  WHERE agvId ='" + agvId + "'",
                 AGV.class);
+
+        return query.getSingleResult();
+    }
+
+    @Override
+    public AGV getAGVByIdSt(final String agvId) {
+        final TypedQuery<AGV> query = super.createQuery(
+                "SELECT d FROM AGV d  WHERE agvId ='" + agvId + "'",
+                AGV.class);
+
         return query.getSingleResult();
     }
 }
