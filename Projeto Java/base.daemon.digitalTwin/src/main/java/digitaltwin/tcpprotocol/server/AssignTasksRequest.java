@@ -20,7 +20,6 @@
  */
 package digitaltwin.tcpprotocol.server;
 
-import digitaltwin.tcpprotocol.server.DigitalTwinProtocolRequest;
 import eapli.base.AGV.Application.AGVManagerControllerImplementation;
 
 /**

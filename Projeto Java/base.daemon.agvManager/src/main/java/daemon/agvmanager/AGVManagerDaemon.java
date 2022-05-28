@@ -22,6 +22,7 @@ package daemon.agvmanager;
 
 import agvmanager.tcpprotocol.server.RequestMessageParser;
 import daemon.agvmanager.presentation.AgvManagerProtocolServer;
+import eapli.base.AGV.Application.AGVManagerControllerImplementation;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.usermanagement.domain.BasePasswordPolicy;
 import org.apache.logging.log4j.LogManager;
@@ -33,7 +34,7 @@ import eapli.framework.infrastructure.authz.domain.model.PlainTextEncoder;
 
 public final class AGVManagerDaemon {
 
-    private static final int MANAGER_PORT = 8899;
+    private static final int MANAGER_PORT = 8890;
     private static final Logger LOGGER = LogManager.getLogger(AGVManagerDaemon.class);
 
     /**
@@ -49,10 +50,14 @@ public final class AGVManagerDaemon {
                 new BasePasswordPolicy(), new PlainTextEncoder());
 
         LOGGER.info("Starting the server socket");
-        final var server = new AgvManagerProtocolServer();
+        final var server = new AgvManagerProtocolServer(buildServerDependencies());
         server.start(MANAGER_PORT, true);
 
         LOGGER.info("Exiting the daemon");
         System.exit(0);
+    }
+
+    private static RequestMessageParser buildServerDependencies() {
+        return new RequestMessageParser(new AGVManagerControllerImplementation());
     }
 }

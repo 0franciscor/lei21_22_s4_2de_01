@@ -63,7 +63,7 @@ public class RequestMessageParser {
         String[] tokens;
         try {
             tokens = CsvLineMarshaler.tokenize(inputLine).toArray(new String[0]);
-            if ("AUTO_TASK_ASSIGNMENT".equals(tokens[0]))
+            if (String.valueOf(1).equals(tokens[0]))
                 request = callTaskAssignment(inputLine, tokens);
         } catch (final ParseException e) {
             LOGGER.info("Unable to parse request: {}", inputLine);
@@ -81,9 +81,7 @@ public class RequestMessageParser {
         AGVManagerProtocolRequest request;
         if (tokens.length != 3) {
             request = new BadRequest(inputLine, "Wrong number of parameters");
-        } else if (!isStringParam(tokens[1]) || !isStringParam(tokens[2])) {
-            request = new BadRequest(inputLine, "Both date and meal type must be inside quotes");
-        } else {
+        } else{
             request = new AssignTasksRequest(inputLine);
         }
         return request;
