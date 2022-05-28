@@ -24,6 +24,7 @@
 package eapli.base.infrastructure.bootstrapers.demo;
 
 import eapli.base.infrastructure.bootstrapers.BaseBootstrapper;
+import eapli.base.ordermanagement.domain.ProductOrder;
 import eapli.framework.actions.Action;
 import eapli.framework.infrastructure.authz.application.AuthenticationService;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
@@ -50,7 +51,7 @@ public class BaseDemoBootstrapper implements Action {
     public boolean execute() {
         // declare bootstrap actions
         final Action[] actions = { new BackofficeUsersBootstrapper(),
-                new ClientUserBootstrapper(), new ImportWarehouseBootstrapper(), new AGVBootstrapper(), new CategoryBootstrapper(), new ProductBootstrapper()};
+                new ClientUserBootstrapper(), new ImportWarehouseBootstrapper(), new AGVBootstrapper(), new CategoryBootstrapper(), new ProductBootstrapper(), new ProductOrdersBootstraper()};
 
         authenticateForBootstrapping();
 

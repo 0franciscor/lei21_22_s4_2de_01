@@ -151,10 +151,10 @@ public class BaseBootstrapper implements Action {
         Calendar birthDate = Calendars.fromDate(df.parse(strDate));
 
         registerClientController.registerClient("Carlota","de Castro Ribeiro e Pereira Sobral","arianasobral26@outlook.pt","+351939214644","PT999999999",addresses,birthDate, Client.Gender.FEMININE);
-        registerClientController.registerClient("Manuela","Leite","1200720@isep.ipp.pt","+351999999999","PT999999999",addresses, birthDate, Client.Gender.FEMININE);
-        registerClientController.registerClient("Francisco","Redol","1201239@isep.ipp.pt","+351999999989","PT999999999",addresses, birthDate, Client.Gender.MASCULINE);
-        registerClientController.registerClient("Pedro","Celestino","1201382@isep.ipp.pt","+351999979999","PT999999999",addresses, birthDate, Client.Gender.MASCULINE);
-        registerClientController.registerClient("Rita","Ariana","1201386@isep.ipp.pt","+351996999999","PT999999999",addresses, birthDate, Client.Gender.FEMININE);
+        registerClientController.registerClient("Manuela","Leite","manuela@isep.ipp.pt","+351999999999","PT999999999",addresses, birthDate, Client.Gender.FEMININE);
+        registerClientController.registerClient("Francisco","Redol","francisco@isep.ipp.pt","+351999999989","PT999999999",addresses, birthDate, Client.Gender.MASCULINE);
+        registerClientController.registerClient("Pedro","Celestino","pedro@isep.ipp.pt","+351999979999","PT999999999",addresses, birthDate, Client.Gender.MASCULINE);
+        registerClientController.registerClient("Rita","Ariana","rita@isep.ipp.pt","+351996999999","PT999999999",addresses, birthDate, Client.Gender.FEMININE);
         registerClientController.registerClient("Diogo","Lourenco","locenzo@isep.ipp.pt","+351997999999","PT999999999",addresses, birthDate, Client.Gender.MASCULINE);
         registerClientController.registerClient("Ines","Cesar","ines@isep.ipp.pt","+351996998999","PT999999999",addresses, birthDate, Client.Gender.FEMININE);
         registerClientController.registerClient("Luis","Busto","busto@isep.ipp.pt","+351996989999","PT999999999",addresses, birthDate, Client.Gender.MASCULINE);
