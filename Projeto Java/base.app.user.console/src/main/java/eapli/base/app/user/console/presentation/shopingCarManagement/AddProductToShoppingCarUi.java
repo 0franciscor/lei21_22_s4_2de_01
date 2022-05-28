@@ -4,7 +4,7 @@ import eapli.base.app.user.console.tcp.TcpCliOrder;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 
-public class AddProductToShoppingCar extends AbstractUI {
+public class AddProductToShoppingCarUi extends AbstractUI {
     @Override
     protected boolean doShow() {
         String address = Console.readLine("Insira o ip do seu computador!\n");

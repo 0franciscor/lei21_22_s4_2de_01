@@ -12,11 +12,11 @@ import java.math.BigInteger;
  */
 public class ProductDTO {
 
-    private String productUniqueInternalCode;
+    private final String productUniqueInternalCode;
 
-    private String productShortDescription;
+    private final String productShortDescription;
 
-    private BigDecimal price;
+    private final BigDecimal price;
 
     public ProductDTO(final String productUniqueInternalCode,final String productShortDescription,final BigDecimal price){
         this.price=price;
