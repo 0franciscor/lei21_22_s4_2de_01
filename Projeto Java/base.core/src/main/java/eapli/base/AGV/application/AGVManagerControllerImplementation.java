@@ -8,13 +8,11 @@ public class AGVManagerControllerImplementation implements AGVManagerController 
 
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
 
-    private final TaskManagement taskManagement = new TaskManagement();
-
     public AGVManagerControllerImplementation(){}
 
     @Override
     public boolean assignTasks() {
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.WAREHOUSE_EMPLOYEE, BaseRoles.POWER_USER);
-        return taskManagement.assignTasks();
+        return new TaskManagement().assignTasks();
     }
 }
