@@ -3,7 +3,7 @@ package eapli.base.app.backoffice.console.warehouseEmployeeManagement;
 import eapli.base.AGV.application.ListOrderBeingPreparedByAGVController;
 import eapli.base.AGV.dto.AgvDto;
 import eapli.base.app.backoffice.console.ordermanagement.ProductOrderDtoPrinter;
-import eapli.base.productmanagement.dto.ProductOrderDto;
+import eapli.base.ordermanagement.dto.ProductOrderDto;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 import eapli.framework.presentation.console.SelectWidget;
@@ -60,8 +60,9 @@ public class ListOrderBeingPreparedByAGVUI extends AbstractUI {
             for (ProductOrderDto dto : orders2){
                 System.out.printf("Order number -> %d \n", dto.orderId);
                 System.out.printf("AGV ID assigned to this order -> %s\n", dto.agvId);
-                System.out.printf("Task description -> %s\n", dto.status);
+                System.out.printf("Task description -> %s\n", dto.taskDescription);
                 System.out.printf("Order Status -> %s\n", dto.status);
+                System.out.println("--------------------------------------------------------");
 
             }
             System.out.println();
@@ -74,6 +75,7 @@ public class ListOrderBeingPreparedByAGVUI extends AbstractUI {
                 System.out.printf("Order number -> %d\n", p.orderId);
                 System.out.printf("AGV ID assigned to this order -> %s\n", p.agvId);
                 System.out.printf("Order Status -> %s\n", p.status);
+                System.out.println("--------------------------------------------------------");
 
             }
             System.out.println();

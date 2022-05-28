@@ -7,7 +7,7 @@ import eapli.base.AGV.repositories.AGVRepository;
 import eapli.base.AGV.dto.AgvDto;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.ordermanagement.domain.ProductOrder;
-import eapli.base.productmanagement.dto.ProductOrderDto;
+import eapli.base.ordermanagement.dto.ProductOrderDto;
 import eapli.base.ordermanagement.repository.OrderRepository;
 import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.framework.domain.repositories.TransactionalContext;
@@ -67,7 +67,7 @@ public class ListOrderBeingPreparedByAGVController {
 
     }
 
-    public List<ProductOrderDto> changeStatusOfOrdersSelectToBeingPreparedByAGV(String taskDescription, List<ProductOrderDto> productsSelected) throws Exception {
+    public List<ProductOrderDto> changeStatusOfOrdersSelectToBeingPreparedByAGV(String taskDescription, List<ProductOrderDto> productsOrderSelected) throws Exception {
 
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER, BaseRoles.WAREHOUSE_EMPLOYEE);
         int count = 0;
@@ -75,7 +75,7 @@ public class ListOrderBeingPreparedByAGVController {
         List<ProductOrderDto> orderDtos = new ArrayList<>();
         List<ProductOrder> productOrders = new ArrayList<>();
 
-        for (ProductOrderDto dto : productsSelected){
+        for (ProductOrderDto dto : productsOrderSelected){
             productOrders.add(orderRepository.getOrderById(dto.orderId));
         }
         context.beginTransaction();
