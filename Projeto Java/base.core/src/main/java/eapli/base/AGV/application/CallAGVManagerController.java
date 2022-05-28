@@ -20,7 +20,6 @@ public class CallAGVManagerController {
     private BufferedReader input;
 
     public void connectDaemon(final String address, final int port) throws IOException {
-        //"localhost", 8890
         InetAddress serverIP = InetAddress.getByName(address);
 
         sock = new Socket(serverIP, port);
