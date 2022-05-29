@@ -21,7 +21,7 @@
 package digitaltwin.tcpprotocol.server;
 
 import eapli.base.AGV.application.CallAGVManagerController;
-import eapli.base.AGV.application.DashBoardController;
+import eapli.base.AGV.application.GetAGVInformation;
 import eapli.framework.csv.util.CsvLineMarshaler;
 import eapli.framework.util.Utility;
 import org.apache.logging.log4j.LogManager;
@@ -39,9 +39,9 @@ public class RequestMessageParser {
 
     private static final Logger LOGGER = LogManager.getLogger(RequestMessageParser.class);
 
-    private final DashBoardController controller;
+    private final GetAGVInformation controller;
 
-    public RequestMessageParser(final DashBoardController controller) {
+    public RequestMessageParser(final GetAGVInformation controller) {
         this.controller = controller;
     }
 

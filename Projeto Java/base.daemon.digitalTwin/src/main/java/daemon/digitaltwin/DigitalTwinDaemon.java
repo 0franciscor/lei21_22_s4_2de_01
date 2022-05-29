@@ -22,7 +22,7 @@ package daemon.digitaltwin;
 
 import digitaltwin.tcpprotocol.server.RequestMessageParser;
 import daemon.digitaltwin.presentation.DigitalTwinProtocolServer;
-import eapli.base.AGV.application.DashBoardController;
+import eapli.base.AGV.application.GetAGVInformation;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.usermanagement.domain.BasePasswordPolicy;
 import org.apache.logging.log4j.LogManager;
@@ -58,7 +58,7 @@ public final class DigitalTwinDaemon {
     }
 
     private static RequestMessageParser buildServerDependencies() {
-        return new RequestMessageParser(new DashBoardController());
+        return new RequestMessageParser(new GetAGVInformation());
     }
 
 }

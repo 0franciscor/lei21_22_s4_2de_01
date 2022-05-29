@@ -15,7 +15,6 @@ public class HTTPAjaxDashboardRequest extends Thread {
     public HTTPAjaxDashboardRequest(Socket s, String f) {
         baseFolder=f;
         sock=s;
-
     }
 
     public void run() {
@@ -25,13 +24,15 @@ public class HTTPAjaxDashboardRequest extends Thread {
         }
         catch(IOException ex) { System.out.println("Thread error on data streams creation"); }
         try {
+            System.out.println("Chego aqui");
             HTTPMessage request = new HTTPMessage(inS);
             HTTPMessage response = new HTTPMessage();
             // System.out.println(request.getURI());
 
+            System.out.println("Chego aqui 2");
             if(request.getMethod().equals("GET")) {
                 if(request.getURI().equals("/data")) {
-                    response.setContentFromString(HTTPServerAjaxDashboard.getVotesStandingInHTML(), "text/html");
+                    //response.setContentFromString(HTTPServerAjaxDashboard.getData(), "text/html");
                     response.setResponseStatus("200 Ok");
                 }
                 else {
@@ -49,6 +50,20 @@ public class HTTPAjaxDashboardRequest extends Thread {
                     }
                 }
                 response.send(outS);
+            }
+            else { // NOT GET
+                System.out.println(request.getURI());
+                if(request.getMethod().equals("PUT")
+                        && request.getURI().startsWith("/agvData/")) {
+                    HTTPServerAjaxDashboard.getData(request.getURI().substring(9));
+                    response.setResponseStatus("200 Ok");
+                }
+                else {
+                    response.setContentFromString(
+                            "<html><body><h1>ERROR: 405 Method Not Allowed</h1></body></html>",
+                            "text/html");
+                    response.setResponseStatus("405 Method Not Allowed");
+                }
             }
 
         }

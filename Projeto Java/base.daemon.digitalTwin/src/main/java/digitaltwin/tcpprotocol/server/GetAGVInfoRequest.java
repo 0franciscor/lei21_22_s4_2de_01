@@ -20,7 +20,7 @@
  */
 package digitaltwin.tcpprotocol.server;
 
-import eapli.base.AGV.application.DashBoardController;
+import eapli.base.AGV.application.GetAGVInformation;
 import eapli.base.AGV.domain.AGV;
 
 /**
@@ -31,7 +31,7 @@ public class GetAGVInfoRequest extends DigitalTwinProtocolRequest {
     private final String agvId;
 
     public GetAGVInfoRequest(String inputRequest, String agvId) {
-        super(new DashBoardController(), inputRequest);
+        super(new GetAGVInformation(), inputRequest);
         this.agvId = agvId;
     }
 

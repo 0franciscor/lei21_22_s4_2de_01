@@ -32,6 +32,7 @@ import eapli.base.app.backoffice.console.productmanagement.ListProductUi;
 import eapli.base.app.backoffice.console.productmanagement.RegisterProductUI;
 import eapli.base.app.backoffice.console.surveymanagement.NewQuestionnaireUI;
 import eapli.base.app.backoffice.console.taskManagement.TaskManagementUI;
+import eapli.base.app.backoffice.console.warehouseEmployeeManagement.DashboardUI;
 import eapli.base.app.backoffice.console.warehouseEmployeeManagement.ListOrderBeingPreparedByAGVUI;
 import eapli.base.app.common.console.presentation.authz.MyUserMenu;
 import eapli.base.Application;
@@ -89,6 +90,7 @@ public class MainMenu extends AbstractUI {
     private static final int LIST_ORDERS = 3;
     private static final int FORCE_ORDERS_PREPARATION = 4;
     private static final int CALL_FIFO = 5;
+    private static final int DASHBOARD = 6;
 
     // MAIN MENU
     private static final int MY_USER_OPTION = 1;
@@ -223,6 +225,7 @@ public class MainMenu extends AbstractUI {
         menu.addItem(LIST_ORDERS, "List Orders being prepared by an AGV", new ListOrderBeingPreparedByAGVUI()::show);
         menu.addItem(FORCE_ORDERS_PREPARATION, "Force Order Preparation", new ForceOrderPrepUI()::show);
         menu.addItem(CALL_FIFO, "Call FIFO", new TaskManagementUI()::show);
+        menu.addItem(DASHBOARD, "Dashboard", new DashboardUI()::show);
 
         return menu;
     }

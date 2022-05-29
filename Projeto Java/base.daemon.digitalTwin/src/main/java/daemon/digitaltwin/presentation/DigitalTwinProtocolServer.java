@@ -22,7 +22,7 @@ package daemon.digitaltwin.presentation;
 
 import digitaltwin.tcpprotocol.server.DigitalTwinProtocolRequest;
 import digitaltwin.tcpprotocol.server.RequestMessageParser;
-import eapli.base.AGV.application.DashBoardController;
+import eapli.base.AGV.application.GetAGVInformation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -54,7 +54,7 @@ public class DigitalTwinProtocolServer {
 
         public ClientHandler(final Socket socket) {
             this.clientSocket = socket;
-            parser = new RequestMessageParser(new DashBoardController());
+            parser = new RequestMessageParser(new GetAGVInformation());
         }
 
         @Override

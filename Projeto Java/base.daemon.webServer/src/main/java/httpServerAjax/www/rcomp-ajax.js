@@ -1,8 +1,3 @@
-
-// IMPORTANT: notice the next request is scheduled only after the
-//            previous request is fully processed either successfully
-//	      or not.
-
 function getData() {
 
     var request = new XMLHttpRequest();
@@ -26,9 +21,7 @@ function getData() {
         setTimeout(getData, 5000);
     };
 
-    request.open("GET", "/data", true);
+    request.open("PUT", "/getData/", true);
     request.timeout = 1000;
     request.send();
 }
-
-

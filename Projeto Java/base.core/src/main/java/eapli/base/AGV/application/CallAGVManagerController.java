@@ -26,7 +26,7 @@ public class CallAGVManagerController {
 
     private BufferedReader input;
 
-    private DashBoardController dashBoardController;
+    private GetAGVInformation getAGVInformation;
 
     public void connectDaemon(final String address, final int port) throws IOException {
         InetAddress serverIP = InetAddress.getByName(address);

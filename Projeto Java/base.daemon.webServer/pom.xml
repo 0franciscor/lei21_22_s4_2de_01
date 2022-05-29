@@ -9,11 +9,11 @@
         <relativePath>../</relativePath>
         <version>1.4.0-SNAPSHOT</version>
     </parent>
-    
-    <artifactId>base.core</artifactId>
+
+    <artifactId>base.daemon.webServer</artifactId>
     <packaging>jar</packaging>
 
-    <name>base.core</name>
+    <name>base.daemon.webServer</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -21,12 +21,6 @@
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>eapli</groupId>
-            <artifactId>base.daemon.webServer</artifactId>
-            <version>1.4.0-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
+
     </dependencies>
 </project>
-
