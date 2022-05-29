@@ -1,5 +1,6 @@
 package eapli.base.orderServer.tcp;
 
+import eapli.base.MessageUtils;
 import eapli.base.clientmanagement.domain.Client;
 import eapli.base.clientmanagement.domain.Email;
 import eapli.base.clientmanagement.repositories.ClientRepository;
@@ -11,14 +12,15 @@ import eapli.base.productmanagement.dto.ProductDTO;
 import eapli.base.productmanagement.repository.ProductRepository;
 import eapli.base.shoppingcarmanagement.domain.ShopCarItem;
 import eapli.base.shoppingcarmanagement.domain.ShoppingCar;
-import eapli.base.shoppingcarmanagement.repository.ShopCarItemRepository;
+
 import eapli.base.shoppingcarmanagement.repository.ShoppingCarRepository;
 
 import java.io.*;
 import java.net.*;
 import java.util.Optional;
 
-import static eapli.base.utils.MessageUtils.writeMessage;
+import static eapli.base.MessageUtils.writeMessage;
+
 
 
 public class TcpOrderSrv {
@@ -73,11 +75,11 @@ class TcpSrvOrderThread implements Runnable {
             if (clientMessage[1] == 0) {
                 System.out.println("[SUCCESS] Código de Teste (0) do Cliente recebido.");
 
-                writeMessage((byte) 2,sOut);
+                MessageUtils.writeMessage((byte) 2,sOut);
                 System.out.println("[INFO] A Mandar Código de Entendido (2) ao Cliente.");
 
                 byte[] clientMessageUS = new byte[4];
-                eapli.base.utils.MessageUtils.readMessage(clientMessageUS, sIn);
+                MessageUtils.readMessage(clientMessageUS, sIn);
 
                 /*============Enviar produtos ao cliente============*/
                 if(clientMessageUS[1] == 4) {
@@ -90,18 +92,18 @@ class TcpSrvOrderThread implements Runnable {
 
                 /*============Verificar se Produto Existe============*/
                 if(clientMessageUS[1] == 3) {
-                    String productUniqueInternalCode = eapli.base.utils.MessageUtils.getDataFromMessage(clientMessageUS,sIn);
+                    String productUniqueInternalCode = MessageUtils.getDataFromMessage(clientMessageUS,sIn);
                     product = productRepository.findByUniqueInternalCode(UniqueInternalCode.valueOf(productUniqueInternalCode));
                     if(product == null) {
-                        eapli.base.utils.MessageUtils.writeMessageWithData((byte) 3, "[FAILURE] Product not found! Please try again.", sOut);
+                        MessageUtils.writeMessageWithData((byte) 3, "[FAILURE] Product not found! Please try again.", sOut);
                     } else {
-                        eapli.base.utils.MessageUtils.writeMessageWithData((byte) 3, "[SUCCESS] Product found!", sOut);
+                        MessageUtils.writeMessageWithData((byte) 3, "[SUCCESS] Product found!", sOut);
                     }
                 }
 
                 /*============Adicionar Produto ao Carrinho de Compras============*/
                 if(clientMessageUS[1] == 5) {
-                    String info = eapli.base.utils.MessageUtils.getDataFromMessage(clientMessageUS,sIn);
+                    String info = MessageUtils.getDataFromMessage(clientMessageUS,sIn);
                     String[] array = info.split(" ");
                     String quantidade = array[0];
                     String email = array[1];

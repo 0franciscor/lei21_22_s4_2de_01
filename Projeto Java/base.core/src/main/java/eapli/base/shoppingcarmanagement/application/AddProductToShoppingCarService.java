@@ -1,268 +1,209 @@
 package eapli.base.shoppingcarmanagement.application;
 
+import eapli.base.MessageUtils;
 import eapli.base.productmanagement.dto.ProductDTO;
 
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.Arrays;
+
 import java.util.Iterator;
+
 
 public class AddProductToShoppingCarService {
 
-    private InetAddress serverIP;
-    private Socket sock;
+    private static class ClientSocket {
+        private Socket sock;
+        private InetAddress serverIP;
+        private DataOutputStream sOutData;
+        private DataInputStream sInData;
 
-    public boolean allProducts(){
-        try {
+        public void connect(final String address, final int port) throws IOException {
 
             try {
-                serverIP = InetAddress.getByName("localhost");
+                serverIP = InetAddress.getByName(address);
             } catch (UnknownHostException ex) {
                 System.out.println("Invalid server specified: " + serverIP);
                 System.exit(1);
             }
 
             try {
-                sock = new Socket(serverIP, 9999); }
-            catch(IOException ex) {
+                sock = new Socket(serverIP, port);
+            } catch (IOException ex) {
                 System.out.println("Failed to establish TCP connection");
                 System.exit(1);
             }
 
-            System.out.println("Connected to: " + serverIP + ":" + 9999);
+            System.out.println("Connected to: " + serverIP + ":" + 10001);
 
-            try {
+            sOutData = new DataOutputStream(sock.getOutputStream());
+            sInData = new DataInputStream(sock.getInputStream());
+        }
 
-                DataOutputStream sOutData = new DataOutputStream(sock.getOutputStream());
-                DataInputStream sInData = new DataInputStream(sock.getInputStream());
-
-                //Mandar um pedido para o servido -> codigo: 0 (Teste)
-                byte[] clienteMessage = {(byte) 0, (byte) 0, (byte) 0, (byte) 0};
-                sOutData.write(clienteMessage);
-                sOutData.flush();
-
-                //Esperar a resposta do servidor a dizer que entendeu a mensagem
-                byte[] serverMessage = sInData.readNBytes(4);
-                if (serverMessage[1] == 2) {
-
-                    byte[] clientMessage = {(byte) 0, (byte) 4, (byte) 0, (byte) 0};
-                    sOutData.write(clientMessage);
-                    sOutData.flush();
-
-                    // mostrar os produtos existentes
-                    ObjectInputStream sInputObject = new ObjectInputStream(sock.getInputStream());
-                    Iterable<ProductDTO> productCatalog = (Iterable<ProductDTO>) sInputObject.readObject();
-
-                    System.out.println("######## Produtos Existentes em Catálogo ########");
-
-                    Iterator<ProductDTO> listProducts = productCatalog.iterator();
-
-                    while(listProducts.hasNext()) {
-                        ProductDTO produto = listProducts.next();
-                        System.out.println(produto);
-                    }
-                    System.out.println();
-
-
-                    //Mandar um pedido para o servido -> codigo: 1 (Fim)
-                    byte[] clienteMessageEnd = {(byte) 0, (byte) 1, (byte) 0, (byte) 0};
-                    sOutData.write(clienteMessageEnd);
-                    sOutData.flush();
-
-                    System.out.println("aquiii 2");
-
-                    byte[] serverMessageEnd = sInData.readNBytes(4);
-                    if (serverMessageEnd[1] == 2) {
-                        sock.close();
-
-                    } else {
-                        System.out.println("==> ERROR: Erro no pacote do Servidor");
-
-                    }
-                } else {
-                    System.out.println("==> ERROR: Erro no pacote do Servidor");
-                }
-            } catch (IOException e) {
-                System.out.println("==> ERROR: Falha durante a troca de informação com o server");
-            } finally {
-                try {
-                    sock.close();
-                } catch (IOException e) {
-                    System.out.println("==> ERROR: Falha a fechar o socket");
-                }
-            }
-
-            return true;
-        } catch (Exception e) {
-            System.out.println("Server down");
-            System.out.println(e.getMessage());
-            return false;
+        public void stop() throws IOException {
+            sock.close();
         }
     }
-
-    public boolean findByUniqueInternalCode(String productUniqueInternalCode) {
-        try {
-
-            try {
-                serverIP = InetAddress.getByName("localhost");
-            } catch (UnknownHostException ex) {
-                System.out.println("Invalid server specified: " + serverIP);
-                System.exit(1);
-            }
-
-            try {
-                sock = new Socket(serverIP, 9999); }
-            catch(IOException ex) {
-                System.out.println("Failed to establish TCP connection");
-                System.exit(1);
-            }
-
-            System.out.println("Connected to: " + serverIP + ":" + 9999);
-
+        public boolean allProducts() {
             try {
 
-                DataOutputStream sOutData = new DataOutputStream(sock.getOutputStream());
-                DataInputStream sInData = new DataInputStream(sock.getInputStream());
+                final var socket = new ClientSocket();
+                socket.connect(getAddress(), getPort());
+                try {
+                    if (MessageUtils.testCommunicationWithServer(socket.sOutData,socket.sInData)) {
 
-                //Mandar um pedido para o servido -> codigo: 0 (Teste)
-                byte[] clienteMessage = {(byte) 0, (byte) 0, (byte) 0, (byte) 0};
-                sOutData.write(clienteMessage);
-                sOutData.flush();
+                        MessageUtils.writeMessage((byte) 4, socket.sOutData);
 
-                //Esperar a resposta do servidor a dizer que entendeu a mensagem
-                byte[] serverMessage = sInData.readNBytes(4);
-                if (serverMessage[1] == 2) {
+                        // mostrar os produtos existentes
+                        ObjectInputStream sInputObject = new ObjectInputStream(socket.sock.getInputStream());
+                        Iterable<ProductDTO> productCatalog = (Iterable<ProductDTO>) sInputObject.readObject();
 
-                    //enviar produto escolhido e verificar se existe
-                    eapli.base.utils.MessageUtils.writeMessageWithData((byte) 3, productUniqueInternalCode, sOutData);
-                    byte[] clientMessageUS = new byte[4];
-                    eapli.base.utils.MessageUtils.readMessage(clientMessageUS, sInData);
+                        System.out.println("Produtos Existentes em Catálogo");
 
-                    if(clientMessageUS[1] == 3) {
-                        String productExists = eapli.base.utils.MessageUtils.getDataFromMessage(clientMessageUS,sInData);
-                        if(!productExists.equals("[SUCCESS] Product found!")){
-                            //Mandar um pedido para o servido -> codigo: 1 (Fim)
-                            byte[] clienteMessageEnd = {(byte) 0, (byte) 1, (byte) 0, (byte) 0};
-                            sOutData.write(clienteMessageEnd);
-                            sOutData.flush();
+                        Iterator<ProductDTO> listProducts = productCatalog.iterator();
 
-                            byte[] serverMessageEnd = sInData.readNBytes(4);
-                            if (serverMessageEnd[1] == 2) {
-                                sock.close();
-
-                            } else {
-                                System.out.println("==> ERROR: Erro no pacote do Servidor");
-
-                            }
-                            return false;
+                        while (listProducts.hasNext()) {
+                            ProductDTO produto = listProducts.next();
+                            System.out.println(produto);
                         }
-                    }
+                        System.out.println();
 
-                    //Mandar um pedido para o servido -> codigo: 1 (Fim)
-                    byte[] clienteMessageEnd = {(byte) 0, (byte) 1, (byte) 0, (byte) 0};
-                    sOutData.write(clienteMessageEnd);
-                    sOutData.flush();
+                        if (MessageUtils.wantsToExit(socket.sOutData,socket.sInData)) {
+                            socket.stop();
 
-                    byte[] serverMessageEnd = sInData.readNBytes(4);
-                    if (serverMessageEnd[1] == 2) {
-                        sock.close();
+                        } else {
+                            System.out.println("==> ERROR: Erro no pacote do Servidor");
 
+                        }
                     } else {
                         System.out.println("==> ERROR: Erro no pacote do Servidor");
-
                     }
-                } else {
-                    System.out.println("==> ERROR: Erro no pacote do Servidor");
-                }
-            } catch (IOException e) {
-                System.out.println("==> ERROR: Falha durante a troca de informação com o server");
-            } finally {
-                try {
-                    sock.close();
                 } catch (IOException e) {
-                    System.out.println("==> ERROR: Falha a fechar o socket");
+                    System.out.println("==> ERROR: Falha durante a troca de informação com o server");
+                } finally {
+                    try {
+                        socket.stop();
+                    } catch (IOException e) {
+                        System.out.println("==> ERROR: Falha a fechar o socket");
+                    }
                 }
-            }
 
-            return true;
-        } catch (Exception e) {
-            System.out.println("Server down");
-            System.out.println(e.getMessage());
-            return false;
+                return true;
+            } catch (Exception e) {
+                System.out.println("Server down");
+                System.out.println(e.getMessage());
+                return false;
+            }
         }
 
+        public boolean findByUniqueInternalCode(String productUniqueInternalCode) {
+            try {
+
+                final var socket = new ClientSocket();
+                socket.connect(getAddress(), getPort());
+
+                try {
+
+                    if (MessageUtils.testCommunicationWithServer(socket.sOutData,socket.sInData)) {
+
+                        //enviar produto escolhido e verificar se existe
+                        MessageUtils.writeMessageWithData((byte) 3, productUniqueInternalCode,socket.sOutData);
+                        byte[] clientMessageUS = new byte[4];
+                        MessageUtils.readMessage(clientMessageUS, socket.sInData);
+
+                        if (clientMessageUS[1] == 3) {
+                            String productExists = MessageUtils.getDataFromMessage(clientMessageUS, socket.sInData);
+                            if (!productExists.equals("[SUCCESS] Product found!")) {
+
+                                if (MessageUtils.wantsToExit(socket.sOutData,socket.sInData)) {
+                                    socket.stop();
+
+                                } else {
+                                    System.out.println("==> ERROR: Erro no pacote do Servidor");
+
+                                }
+                                return false;
+                            }
+                        }
+
+                        if (MessageUtils.wantsToExit(socket.sOutData,socket.sInData)) {
+                            socket.stop();
+
+                        } else {
+                            System.out.println("==> ERROR: Erro no pacote do Servidor");
+
+                        }
+                    } else {
+                        System.out.println("==> ERROR: Erro no pacote do Servidor");
+                    }
+                } catch (IOException e) {
+                    System.out.println("==> ERROR: Falha durante a troca de informação com o server");
+                } finally {
+                    try {
+                        socket.stop();
+                    } catch (IOException e) {
+                        System.out.println("==> ERROR: Falha a fechar o socket");
+                    }
+                }
+
+                return true;
+            } catch (Exception e) {
+                System.out.println("Server down");
+                System.out.println(e.getMessage());
+                return false;
+            }
+
+        }
+
+        public boolean addProductToShoppingCarService(String uniqueInternalCode, int quantidade, String clientEmail) {
+
+            try {
+
+                final var socket = new ClientSocket();
+                socket.connect(getAddress(), getPort());
+
+                try {
+
+                    if (MessageUtils.testCommunicationWithServer(socket.sOutData,socket.sInData)) {
+
+                        String info = quantidade + " " + clientEmail + " " + uniqueInternalCode;
+                        MessageUtils.writeMessageWithData((byte) 5, info, socket.sOutData);
+
+                        if (MessageUtils.wantsToExit(socket.sOutData,socket.sInData)) {
+                            socket.stop();
+
+                        } else {
+                            System.out.println("==> ERROR: Erro no pacote do Servidor");
+
+                        }
+                    } else {
+                        System.out.println("==> ERROR: Erro no pacote do Servidor");
+                    }
+                } catch (IOException e) {
+                    System.out.println("==> ERROR: Falha durante a troca de informação com o server");
+                } finally {
+                    try {
+                        socket.stop();
+                    } catch (IOException e) {
+                        System.out.println("==> ERROR: Falha a fechar o socket");
+                    }
+                }
+
+                return true;
+            } catch (Exception e) {
+                System.out.println("Server down");
+                System.out.println(e.getMessage());
+                return false;
+            }
+        }
+
+
+    private int getPort() {
+        return 10001;
     }
 
-    public boolean addProductToShoppingCarService( String uniqueInternalCode, int quantidade, String clientEmail) {
-
-        try {
-
-            try {
-                serverIP = InetAddress.getByName("localhost");
-            } catch (UnknownHostException ex) {
-                System.out.println("Invalid server specified: " + serverIP);
-                System.exit(1);
-            }
-
-            try {
-                sock = new Socket(serverIP, 9999); }
-            catch(IOException ex) {
-                System.out.println("Failed to establish TCP connection");
-                System.exit(1);
-            }
-
-            System.out.println("Connected to: " + serverIP + ":" + 9999);
-
-            try {
-
-                DataOutputStream sOutData = new DataOutputStream(sock.getOutputStream());
-                DataInputStream sInData = new DataInputStream(sock.getInputStream());
-
-                //Mandar um pedido para o servido -> codigo: 0 (Teste)
-                byte[] clienteMessage = {(byte) 0, (byte) 0, (byte) 0, (byte) 0};
-                sOutData.write(clienteMessage);
-                sOutData.flush();
-
-                //Esperar a resposta do servidor a dizer que entendeu a mensagem
-                byte[] serverMessage = sInData.readNBytes(4);
-                if (serverMessage[1] == 2) {
-
-                    String info = quantidade + " " + clientEmail + " " + uniqueInternalCode;
-                    eapli.base.utils.MessageUtils.writeMessageWithData((byte) 5, info, sOutData);
-
-                    //Mandar um pedido para o servido -> codigo: 1 (Fim)
-                    byte[] clienteMessageEnd = {(byte) 0, (byte) 1, (byte) 0, (byte) 0};
-                    sOutData.write(clienteMessageEnd);
-                    sOutData.flush();
-
-                    byte[] serverMessageEnd = sInData.readNBytes(4);
-                    if (serverMessageEnd[1] == 2) {
-                        sock.close();
-
-                    } else {
-                        System.out.println("==> ERROR: Erro no pacote do Servidor");
-
-                    }
-                } else {
-                    System.out.println("==> ERROR: Erro no pacote do Servidor");
-                }
-            } catch (IOException e) {
-                System.out.println("==> ERROR: Falha durante a troca de informação com o server");
-            } finally {
-                try {
-                    sock.close();
-                } catch (IOException e) {
-                    System.out.println("==> ERROR: Falha a fechar o socket");
-                }
-            }
-
-            return true;
-        } catch (Exception e) {
-            System.out.println("Server down");
-            System.out.println(e.getMessage());
-            return false;
-        }
+    private String getAddress() {
+        return "localhost";
     }
 }
