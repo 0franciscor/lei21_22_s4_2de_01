@@ -49,15 +49,15 @@ public class RequestMessageParser {
      */
     public AGVManagerProtocolRequest parse(final String inputLine) {
         // as a fallback make sure we return unknown
-        AGVManagerProtocolRequest request = new UnknownRequest(inputLine);
+        AGVManagerProtocolRequest request = null;
 
         // parse to determine which type of request and if it is sintactally valid
         String[] tokens;
         try {
             tokens = CsvLineMarshaler.tokenize(inputLine).toArray(new String[0]);
-            if (String.valueOf(CallAGVManagerController.CALL_FIFO).equals(tokens[0]))
+            if (String.valueOf(CallAGVManagerController.CALL_FIFO).equals(tokens[1]))
                 request = callTaskAssignment(inputLine, tokens);
-            if (String.valueOf(CallAGVManagerController.DASHBOARD_REQUEST).equals(tokens[0]))
+            if (String.valueOf(CallAGVManagerController.DASHBOARD_REQUEST).equals(tokens[1]))
                 request = parseGetAGVInformations(inputLine, tokens);
         } catch (final ParseException e) {
             LOGGER.info("Unable to parse request: {}", inputLine);
@@ -80,8 +80,10 @@ public class RequestMessageParser {
         AGVManagerProtocolRequest request;
         if (tokens.length != 4) {
             request = new ErrorInRequest(inputLine, "Wrong number of parameters");
+
         } else if (!tokens[3].isBlank()) {
-            request = new ErrorInRequest(inputLine, "File name must me Pointed");
+            request = new ErrorInRequest(inputLine, "File name must be Pointed");
+
         } else {
             request = new DashboardRequest(inputLine, tokens[3]);
         }

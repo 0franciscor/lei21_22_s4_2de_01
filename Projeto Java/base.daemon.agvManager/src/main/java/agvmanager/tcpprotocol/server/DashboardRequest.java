@@ -31,7 +31,7 @@ public class DashboardRequest extends AGVManagerProtocolRequest{
 
     public String buildResponse(final String agvId) throws IOException {
         InetAddress serverIP = InetAddress.getByName("localhost");
-        int port = 9000;
+        int port = 8891;
 
         Socket socket = new Socket(serverIP, port);
         PrintWriter output = new PrintWriter(socket.getOutputStream(), true);

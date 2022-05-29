@@ -7,9 +7,16 @@ import eapli.base.infrastructure.persistence.PersistenceContext;
 
 public class DashBoardController {
 
-    AGVRepository agvRepository = PersistenceContext.repositories().agv();
+    private AGVRepository agvRepository = PersistenceContext.repositories().agv();
+
+    public Iterable<AGV> getAGVsInformationForDashBoard() {
+        return agvRepository.findAll();
+    }
 
     public AGV getAGVsInformationForDashBoard(String agvID){
+        System.out.println("aqui cheguei");
         return agvRepository.getAGVByIdSt(agvID);
+
     }
+
 }
