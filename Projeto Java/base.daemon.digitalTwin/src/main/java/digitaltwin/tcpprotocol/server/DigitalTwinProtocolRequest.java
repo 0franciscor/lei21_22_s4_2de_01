@@ -22,6 +22,7 @@ package digitaltwin.tcpprotocol.server;
 
 
 import eapli.base.AGV.application.AGVManagerController;
+import eapli.base.AGV.application.DashBoardController;
 
 /**
  *
@@ -31,9 +32,10 @@ import eapli.base.AGV.application.AGVManagerController;
 public abstract class DigitalTwinProtocolRequest {
 
     protected final String request;
-    protected final AGVManagerController controller;
 
-    protected DigitalTwinProtocolRequest(final AGVManagerController controller, final String inputRequest) {
+    protected DashBoardController controller;
+
+    protected DigitalTwinProtocolRequest(final DashBoardController controller, final String inputRequest) {
         this.request = inputRequest;
         this.controller = controller;
     }

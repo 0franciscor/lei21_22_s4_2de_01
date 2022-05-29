@@ -45,6 +45,6 @@ public class AssignTasksRequest extends AGVManagerProtocolRequest {
     }
 
     private String buildResponse() {
-        return "Tasks Successfully assigned\n";
+        return "Tasks Succssfully assigned\n";
     }
 }

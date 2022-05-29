@@ -9,8 +9,13 @@ public class DashBoardController {
 
     private AGVRepository agvRepository = PersistenceContext.repositories().agv();
 
-    public Iterable<AGV> getAGVsInformationForDashBoard(){
+    public Iterable<AGV> getAGVsInformationForDashBoard() {
         return agvRepository.findAll();
+    }
+
+    public AGV getAGVsInformationForDashBoard(String agvID){
+        System.out.println("aqui cheguei");
+        return agvRepository.getAGVByIdSt(agvID);
 
     }
 

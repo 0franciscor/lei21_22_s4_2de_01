@@ -20,31 +20,37 @@
  */
 package digitaltwin.tcpprotocol.server;
 
-import eapli.base.AGV.application.AGVManagerControllerImplementation;
+import eapli.base.AGV.application.DashBoardController;
+import eapli.base.AGV.domain.AGV;
 
 /**
  * @author Paulo Gandra Sousa 01/06/2020
  */
-public class AssignTasksRequest extends DigitalTwinProtocolRequest {
+public class GetAGVInfoRequest extends DigitalTwinProtocolRequest {
 
-    public AssignTasksRequest(final String request) {
-        super(new AGVManagerControllerImplementation(), request);
+    private final String agvId;
+
+    public GetAGVInfoRequest(String inputRequest, String agvId) {
+        super(new DashBoardController(), inputRequest);
+        this.agvId = agvId;
     }
 
     @Override
     public String execute() {
-        String output = null;
 
-        try{
-            if(controller.assignTasks())
-            output = buildResponse();
-        }catch (Exception e){
-            output = "There was a problem when executing the automatic task assignment";
+        try {
+            return buildResponse();
+        } catch (final Exception e) {
+            // we should be careful about exposing the Exception to the outside!
+            return buildServerError(e.getMessage());
         }
-        return output;
     }
 
-    private String buildResponse() {
-        return "Tasks Successfully assigned\n";
+    public String buildResponse() {
+        AGV agv = controller.getAGVsInformationForDashBoard(agvId);
+
+        String info = agv.getAgvId().getAGVId() + "," + agv.getAgvPosition().getAgvPosition() + "," + agv.getAgvStatus().obtainStatus().name()+ "\n";
+
+        return info;
     }
 }

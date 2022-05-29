@@ -7,5 +7,4 @@ public interface AGVManagerController {
 
     boolean assignTasks();
 
-    Iterable<AGV> getAGVsInformationForDashboard();
 }

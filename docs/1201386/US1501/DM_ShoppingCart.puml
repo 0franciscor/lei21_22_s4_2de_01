@@ -20,15 +20,15 @@ entity Client <<entity>> <<root>> {
 entity Client <<entity>> <<root>> {
 
 }
-package "<<aggregate>> ShopCar"{
-    entity ShopCar
-    entity Item
+package "<<aggregate>> ShoppingCar"{
+    entity ShoppingCar
+    entity ShopCarItem
 }
 
-entity ShopCar <<entity>> <<root>>{
+entity ShoppingCar <<entity>> <<root>>{
 
 }
-entity Item <<entity>> {
+entity  ShopCarItem <<entity>> {
     -productQuantity
 
 }
@@ -69,10 +69,10 @@ User --> "1" Username : characterized by
 User --> "1" Role : identified by
 
 
-Client -----> "1" ShopCar : associated
+Client -----> "1" ShoppingCar : associated
 Client ---> "1" User : is a
-Item --> "1" Product : composed by
-ShopCar -> "1..*" Item : composed by
+ShopCarItem --> "1" Product : composed by
+ShoppingCar -> "1..*"  ShopCarItem : composed by
 
 Product ---> "1" ShortDescription: characterized by
 Product ---> "1" UniqueInternalCode: characterized by
