@@ -12,7 +12,7 @@ pontucao: PONTO_FINAL
 
 frase : PALAVRA (VIRGULA? ESPACO (PALAVRA|NUMERO)+)*
        | NUMERO+ (VIRGULA? ESPACO (PALAVRA|NUMERO)+)*
-       | PALAVRA VIRGULA ;
+       | PALAVRA VIRGULA;
 
 regraIdQuestionario: alfanumerico+ HIFEN alfanumerico+;
 

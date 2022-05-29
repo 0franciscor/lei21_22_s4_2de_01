@@ -1,4 +1,4 @@
-// Generated from C:/Users/Pedro Celestino/Desktop/2A2S/LAPR4/lei21_22_s4_2de_01/Projeto Java/base.core/src/main/java/eapli/base/surveymanagement/antlr\Survey.g4 by ANTLR 4.10.1
+// Generated from C:/Users/arian/lei21_22_s4_2de_01/Projeto Java/base.core/src/main/java/eapli/base/surveymanagement/antlr/eapli/base/surveymanagement/antlr\Survey.g4 by ANTLR 4.10.1
 package eapli.base.surveymanagement.antlr.eapli.base.surveymanagement.antlr;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -117,7 +117,7 @@ public class SurveyParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_start; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof SurveyListener) ((SurveyListener)listener).enterStart(this);
+			if ( listener instanceof SurveyListener ) ((SurveyListener)listener).enterStart(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
