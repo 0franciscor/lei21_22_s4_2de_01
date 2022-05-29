@@ -89,40 +89,120 @@ I really advice you to debate this issue with technical advisers (i.e. lab class
 The set of questions/answers composing the questionnaire should be expressed and validated (parsed) using the grammar being developed for this purpose.
 
 # 2. Analysis
-
-
-
 ### Main success scenario
+* The user inserts the path of the file, and the system makes evaluates the file's grammar and gives feedback.
 
 ## 2.1. System Sequence Diagram
-![US2003_SSD](US3001_SSD.svg)
+![US3001_SSD](US3001_SSD.svg)
 
 ## 2.2. Partial Domain Model
-![US2003_DM](US3001_DM.svg)
+![US3001_DM](US3001_DM.svg)
 
 
 # 3. Design
 
-## 3.1. Realização da Funcionalidade
-![US2003_SD](US3001_SD.svg)
+## 3.1. Functionality realization
+![US3001_SD](US3001_SD.svg)
 
 ## 3.2. Diagrama de Classes
-![US2003_CD](US3001_CD.svg)
+![US3001_CD](US3001_CD.svg)
+
+ 
+
+# 4. Implementation
+
+**NewQuestionnaireUI**
+
+    package eapli.base.app.backoffice.console.surveymanagement;
+    
+    import eapli.base.surveymanagement.application.CreateNewQuestionnaireController;
+    import eapli.framework.io.util.Console;
+    import eapli.framework.presentation.console.AbstractUI;
 
 
-## 3.3. Padrões Aplicados
+    /**
+    * UI for register a client order to the application.
+    *
+    * Created by 1201382@isep.ipp.pt & 1201239@isep.ipp.pt
+    */
+
+     public class NewQuestionnaireUI extends AbstractUI {
+    
+     private final CreateNewQuestionnaireController createNewQuestionnaireController = new CreateNewQuestionnaireController();
+    
+     private Boolean operationError=false;
 
 
-## 3.4. Testes 
-	 
+    @Override
+    protected boolean doShow() {
 
-# 4. Implementação
+        do{
+            try {
+                String fileName = Console.readLine("Please insert the file path:");
+                createNewQuestionnaireController.createQuestionnaire(fileName);
+
+            } catch(Exception e){
+                System.out.println(e.getMessage());
+                operationError=true;
+            }
+
+        } while(operationError);
+
+        System.out.println("File path entered Successfuly");
+        return true;
+
+    }
+
+    @Override
+    public String headline() {
+        return "Create New Questionnaire";
+    }
+
+    }
+
+**CreateNewQuestionnaireController**
+   
+     package eapli.base.surveymanagement.application;
+    
+    import eapli.base.surveymanagement.antlr.SurveyLexer;
+    import eapli.base.surveymanagement.antlr.eapli.base.surveymanagement.antlr.QuestionnaireVisitor;
+    import eapli.base.surveymanagement.antlr.eapli.base.surveymanagement.antlr.SurveyParser;
+    import eapli.base.surveymanagement.domain.Questionnaire;
+    import eapli.base.usermanagement.domain.BaseRoles;
+    import eapli.framework.infrastructure.authz.application.AuthorizationService;
+    import eapli.framework.infrastructure.authz.application.AuthzRegistry;
+    import org.antlr.v4.runtime.ANTLRInputStream;
+    import org.antlr.v4.runtime.CommonTokenStream;
+    import org.antlr.v4.runtime.tree.ParseTree;
+    import java.io.FileInputStream;
+    import java.io.IOException;
+
+    public class CreateNewQuestionnaireController {
+    private final AuthorizationService authz = AuthzRegistry.authorizationService();
+
+    public Questionnaire createQuestionnaire(final String file) throws IOException{
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.SALES_MANAGER, BaseRoles.POWER_USER, BaseRoles.ADMIN, BaseRoles.WAREHOUSE_EMPLOYEE);
+
+        FileInputStream fis = new FileInputStream(file);
+        SurveyLexer lexer = new SurveyLexer(new ANTLRInputStream(fis));
+        CommonTokenStream tokens = new CommonTokenStream(lexer);
+        SurveyParser parser = new SurveyParser(tokens);
+        ParseTree tree = parser.start(); // parse
+        QuestionnaireVisitor quest = new QuestionnaireVisitor();
+        Questionnaire questionnaire = (Questionnaire) quest.visit(tree);
+
+        System.out.println(questionnaire);
+
+        return null;
+
+    }
+    }
 
 
-# 5. Integração/Demonstração
+# 5. Integration/Demo
 
 
-# 6. Observações
+# 6. Observations
 
 
 
