@@ -1,4 +1,4 @@
-package eapli.base.utils;
+package eapli.base;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -37,6 +37,27 @@ public class MessageUtils {
         sOut.write(message, 0, 4);
         sOut.write(data,0,dataToSend.length());
         sOut.flush();
+    }
+
+    public static boolean testCommunicationWithServer(DataOutputStream sOut, DataInputStream sIn) throws IOException {
+        //Mandar um pedido para o servido -> codigo: 0 (Teste)
+        MessageUtils.writeMessage((byte) 0, sOut);
+
+        //Esperar a resposta do servidor a dizer que entendeu a mensagem
+        byte[] serverMessage = new byte[4];
+        MessageUtils.readMessage(serverMessage, sIn);
+
+        return serverMessage[1] == 2;
+    }
+
+    public static boolean wantsToExit(DataOutputStream sOut, DataInputStream sIn) throws IOException {
+        //Mandar um pedido para o servido -> codigo: 1 (Fim)
+        MessageUtils.writeMessage((byte) 1, sOut);
+
+        byte[] serverMessageEnd = new byte[4];
+        MessageUtils.readMessage(serverMessageEnd, sIn);
+
+        return serverMessageEnd[1] == 2;
     }
 
 

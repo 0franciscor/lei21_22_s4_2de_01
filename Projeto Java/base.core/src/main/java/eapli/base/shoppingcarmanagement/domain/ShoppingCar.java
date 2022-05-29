@@ -4,6 +4,7 @@ import eapli.base.clientmanagement.domain.Client;
 import eapli.base.productmanagement.domain.Product;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
+import eapli.framework.validations.Preconditions;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -27,6 +28,7 @@ public class ShoppingCar implements AggregateRoot<Long>, Serializable {
     private List<ShopCarItem> items;
 
     public ShoppingCar(final Client client) {
+        Preconditions.noneNull(client);
         this.client = client;
         this.items = new ArrayList<>();
     }
@@ -35,6 +37,9 @@ public class ShoppingCar implements AggregateRoot<Long>, Serializable {
         //for ORM purposes
     }
 
+    public List<ShopCarItem> getItems(){
+        return items;
+    }
     @Override
     public int hashCode() {
         return DomainEntities.hashCode(this);
