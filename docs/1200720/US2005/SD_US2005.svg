@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="754px" preserveAspectRatio="none" style="width:1263px;height:754px;background:#FFFFFF;" version="1.1" viewBox="0 0 1263 754" width="1263px" zoomAndPan="magnify"><defs><filter height="300%" id="fe7gyggqxjnb4" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><rect fill="#FFFFFF" filter="url(#fe7gyggqxjnb4)" height="342.5156" style="stroke:#A80036;stroke-width:1.0;" width="10" x="89.5" y="303.3672"/><rect fill="#FFFFFF" filter="url(#fe7gyggqxjnb4)" height="151.0547" style="stroke:#A80036;stroke-width:1.0;" width="10" x="238.5" y="121.9609"/><rect fill="#FFFFFF" filter="url(#fe7gyggqxjnb4)" height="342.5156" style="stroke:#A80036;stroke-width:1.0;" width="10" x="238.5" y="303.3672"/><rect fill="#FFFFFF" filter="url(#fe7gyggqxjnb4)" height="30" style="stroke:#A80036;stroke-width:1.0;" width="10" x="350" y="333.7188"/><rect fill="#FFFFFF" filter="url(#fe7gyggqxjnb4)" height="30.3516" style="stroke:#A80036;stroke-width:1.0;" width="10" x="350" y="419.4219"/><rect fill="#FFFFFF" filter="url(#fe7gyggqxjnb4)" height="30" style="stroke:#A80036;stroke-width:1.0;" width="10" x="459.5" y="121.9609"/><rect fill="#FFFFFF" filter="url(#fe7gyggqxjnb4)" height="90.7031" style="stroke:#A80036;stroke-width:1.0;" width="10" x="593.5" y="182.3125"/><rect fill="#FFFFFF" filter="url(#fe7gyggqxjnb4)" height="60.3516" style="stroke:#A80036;stroke-width:1.0;" width="10" x="782.5" y="212.6641"/><rect fill="#FFFFFF" filter="url(#fe7gyggqxjnb4)" height="30" style="stroke:#A80036;stroke-width:1.0;" width="10" x="988.5" y="243.0156"/><rect fill="#FFFFFF" filter="url(#fe7gyggqxjnb4)" height="172.7578" style="stroke:#A80036;stroke-width:1.0;" width="10" x="988.5" y="487.125"/><rect fill="#FFFFFF" filter="url(#fe7gyggqxjnb4)" height="30.3516" style="stroke:#A80036;stroke-width:1.0;" width="10" x="1164" y="542.8281"/><rect fill="#FFFFFF" filter="url(#fe7gyggqxjnb4)" height="79.0547" style="stroke:#000000;stroke-width:2.0;" width="247" x="185.5" y="378.7188"/><rect fill="#FFFFFF" filter="url(#fe7gyggqxjnb4)" height="79.0547" style="stroke:#000000;stroke-width:2.0;" width="361" x="888.5" y="502.125"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="94" x2="94" y1="89.6094" y2="668.8828"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="243.5" x2="243.5" y1="89.6094" y2="668.8828"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="354.5" x2="354.5" y1="89.6094" y2="668.8828"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="464.5" x2="464.5" y1="89.6094" y2="668.8828"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="598.5" x2="598.5" y1="89.6094" y2="668.8828"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="787.5" x2="787.5" y1="89.6094" y2="668.8828"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="993.5" x2="993.5" y1="89.6094" y2="668.8828"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="1168.5" x2="1168.5" y1="89.6094" y2="668.8828"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="139" x="22" y="86.5332">Warehouse Employee</text><ellipse cx="94.5" cy="15" fill="#FEFECE" filter="url(#fe7gyggqxjnb4)" rx="8" ry="8" style="stroke:#A80036;stroke-width:2.0;"/><path d="M94.5,23 L94.5,50 M81.5,31 L107.5,31 M94.5,50 L81.5,65 M94.5,50 L107.5,65 " fill="none" filter="url(#fe7gyggqxjnb4)" style="stroke:#A80036;stroke-width:2.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="139" x="22" y="682.416">Warehouse Employee</text><ellipse cx="94.5" cy="695.4922" fill="#FEFECE" filter="url(#fe7gyggqxjnb4)" rx="8" ry="8" style="stroke:#A80036;stroke-width:2.0;"/><path d="M94.5,703.4922 L94.5,730.4922 M81.5,711.4922 L107.5,711.4922 M94.5,730.4922 L81.5,745.4922 M94.5,730.4922 L107.5,745.4922 " fill="none" filter="url(#fe7gyggqxjnb4)" style="stroke:#A80036;stroke-width:2.0;"/><rect fill="#FEFECE" filter="url(#fe7gyggqxjnb4)" height="49.2188" style="stroke:#A80036;stroke-width:1.5;" width="92" x="195.5" y="35.3906"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="67" x="208" y="56.9238">«daemon»</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="78" x="202.5" y="74.5332">HTTPServer</text><rect fill="#FEFECE" filter="url(#fe7gyggqxjnb4)" height="49.2188" style="stroke:#A80036;stroke-width:1.5;" width="92" x="195.5" y="667.8828"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="67" x="208" y="689.416">«daemon»</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="78" x="202.5" y="707.0254">HTTPServer</text><rect fill="#FEFECE" filter="url(#fe7gyggqxjnb4)" height="49.2188" style="stroke:#A80036;stroke-width:1.5;" width="103" x="301.5" y="35.3906"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="55" x="325.5" y="56.9238">«server»</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="89" x="308.5" y="74.5332">HTTPRequest</text><rect fill="#FEFECE" filter="url(#fe7gyggqxjnb4)" height="49.2188" style="stroke:#A80036;stroke-width:1.5;" width="103" x="301.5" y="667.8828"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="55" x="325.5" y="689.416">«server»</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="89" x="308.5" y="707.0254">HTTPRequest</text><rect fill="#FEFECE" filter="url(#fe7gyggqxjnb4)" height="31.6094" style="stroke:#A80036;stroke-width:1.5;" width="88" x="418.5" y="53"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="74" x="425.5" y="74.5332">SPOMSP22</text><rect fill="#FEFECE" filter="url(#fe7gyggqxjnb4)" height="31.6094" style="stroke:#A80036;stroke-width:1.5;" width="88" x="418.5" y="667.8828"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="74" x="425.5" y="689.416">SPOMSP22</text><rect fill="#FEFECE" filter="url(#fe7gyggqxjnb4)" height="49.2188" style="stroke:#A80036;stroke-width:1.5;" width="152" x="520.5" y="35.3906"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="67" x="563" y="56.9238">«daemon»</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="138" x="527.5" y="74.5332">AGVManagerDeamon</text><rect fill="#FEFECE" filter="url(#fe7gyggqxjnb4)" height="49.2188" style="stroke:#A80036;stroke-width:1.5;" width="152" x="520.5" y="667.8828"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="67" x="563" y="689.416">«daemon»</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="138" x="527.5" y="707.0254">AGVManagerDeamon</text><rect fill="#FEFECE" filter="url(#fe7gyggqxjnb4)" height="49.2188" style="stroke:#A80036;stroke-width:1.5;" width="198" x="686.5" y="35.3906"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="62" x="754.5" y="56.9238">«Thread»</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="184" x="693.5" y="74.5332">AGVManagerDeamonThread</text><rect fill="#FEFECE" filter="url(#fe7gyggqxjnb4)" height="49.2188" style="stroke:#A80036;stroke-width:1.5;" width="198" x="686.5" y="667.8828"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="62" x="754.5" y="689.416">«Thread»</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="184" x="693.5" y="707.0254">AGVManagerDeamonThread</text><rect fill="#FEFECE" filter="url(#fe7gyggqxjnb4)" height="49.2188" style="stroke:#A80036;stroke-width:1.5;" width="186" x="898.5" y="35.3906"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="55" x="964" y="56.9238">«server»</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="172" x="905.5" y="74.5332">DashboardRequestHandler</text><rect fill="#FEFECE" filter="url(#fe7gyggqxjnb4)" height="49.2188" style="stroke:#A80036;stroke-width:1.5;" width="186" x="898.5" y="667.8828"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="55" x="964" y="689.416">«server»</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="172" x="905.5" y="707.0254">DashboardRequestHandler</text><rect fill="#FEFECE" filter="url(#fe7gyggqxjnb4)" height="49.2188" style="stroke:#A80036;stroke-width:1.5;" width="137" x="1098.5" y="35.3906"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="55" x="1139.5" y="56.9238">«server»</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="123" x="1105.5" y="74.5332">DashboardRequest</text><rect fill="#FEFECE" filter="url(#fe7gyggqxjnb4)" height="49.2188" style="stroke:#A80036;stroke-width:1.5;" width="137" x="1098.5" y="667.8828"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="55" x="1139.5" y="689.416">«server»</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="123" x="1105.5" y="707.0254">DashboardRequest</text><rect fill="#FFFFFF" filter="url(#fe7gyggqxjnb4)" height="342.5156" style="stroke:#A80036;stroke-width:1.0;" width="10" x="89.5" y="303.3672"/><rect fill="#FFFFFF" filter="url(#fe7gyggqxjnb4)" height="151.0547" style="stroke:#A80036;stroke-width:1.0;" width="10" x="238.5" y="121.9609"/><rect fill="#FFFFFF" filter="url(#fe7gyggqxjnb4)" height="342.5156" style="stroke:#A80036;stroke-width:1.0;" width="10" x="238.5" y="303.3672"/><rect fill="#FFFFFF" filter="url(#fe7gyggqxjnb4)" height="30" style="stroke:#A80036;stroke-width:1.0;" width="10" x="350" y="333.7188"/><rect fill="#FFFFFF" filter="url(#fe7gyggqxjnb4)" height="30.3516" style="stroke:#A80036;stroke-width:1.0;" width="10" x="350" y="419.4219"/><rect fill="#FFFFFF" filter="url(#fe7gyggqxjnb4)" height="30" style="stroke:#A80036;stroke-width:1.0;" width="10" x="459.5" y="121.9609"/><rect fill="#FFFFFF" filter="url(#fe7gyggqxjnb4)" height="90.7031" style="stroke:#A80036;stroke-width:1.0;" width="10" x="593.5" y="182.3125"/><rect fill="#FFFFFF" filter="url(#fe7gyggqxjnb4)" height="60.3516" style="stroke:#A80036;stroke-width:1.0;" width="10" x="782.5" y="212.6641"/><rect fill="#FFFFFF" filter="url(#fe7gyggqxjnb4)" height="30" style="stroke:#A80036;stroke-width:1.0;" width="10" x="988.5" y="243.0156"/><rect fill="#FFFFFF" filter="url(#fe7gyggqxjnb4)" height="172.7578" style="stroke:#A80036;stroke-width:1.0;" width="10" x="988.5" y="487.125"/><rect fill="#FFFFFF" filter="url(#fe7gyggqxjnb4)" height="30.3516" style="stroke:#A80036;stroke-width:1.0;" width="10" x="1164" y="542.8281"/><polygon fill="#A80036" points="447.5,117.9609,457.5,121.9609,447.5,125.9609,451.5,121.9609" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="248.5" x2="453.5" y1="121.9609" y2="121.9609"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="84" x="255.5" y="117.1045">sendRequest()</text><polygon fill="#A80036" points="581.5,178.3125,591.5,182.3125,581.5,186.3125,585.5,182.3125" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="248.5" x2="587.5" y1="182.3125" y2="182.3125"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="43" x="255.5" y="177.4561">request</text><polygon fill="#A80036" points="770.5,208.6641,780.5,212.6641,770.5,216.6641,774.5,212.6641" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="603.5" x2="776.5" y1="212.6641" y2="212.6641"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="34" x="610.5" y="207.8076">start()</text><polygon fill="#A80036" points="976.5,239.0156,986.5,243.0156,976.5,247.0156,980.5,243.0156" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="792.5" x2="982.5" y1="243.0156" y2="243.0156"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="26" x="799.5" y="238.1592">run()</text><polygon fill="#A80036" points="226.5,299.3672,236.5,303.3672,226.5,307.3672,230.5,303.3672" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="99.5" x2="232.5" y1="303.3672" y2="303.3672"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="125" x="106.5" y="298.5107">Request for web page</text><polygon fill="#A80036" points="338,329.7188,348,333.7188,338,337.7188,342,333.7188" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="248.5" x2="344" y1="333.7188" y2="333.7188"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="34" x="255.5" y="328.8623">start()</text><path d="M185.5,378.7188 L258.5,378.7188 L258.5,386.7188 L248.5,396.7188 L185.5,396.7188 L185.5,378.7188 " fill="#EEEEEE" style="stroke:#000000;stroke-width:1.0;"/><rect fill="none" height="79.0547" style="stroke:#000000;stroke-width:2.0;" width="247" x="185.5" y="378.7188"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="28" x="200.5" y="393.2139">loop</text><text fill="#000000" font-family="sans-serif" font-size="11" font-weight="bold" lengthAdjust="spacing" textLength="154" x="273.5" y="392.1377">[auto refresh with timetout]</text><polygon fill="#A80036" points="338,415.4219,348,419.4219,338,423.4219,342,419.4219" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="248.5" x2="344" y1="419.4219" y2="419.4219"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="26" x="255.5" y="414.5654">run()</text><polygon fill="#A80036" points="259.5,445.7734,249.5,449.7734,259.5,453.7734,255.5,449.7734" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="253.5" x2="354" y1="449.7734" y2="449.7734"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="53" x="265.5" y="444.917">getData()</text><polygon fill="#A80036" points="976.5,483.125,986.5,487.125,976.5,491.125,980.5,487.125" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="248.5" x2="982.5" y1="487.125" y2="487.125"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="43" x="255.5" y="482.2686">request</text><path d="M888.5,502.125 L961.5,502.125 L961.5,510.125 L951.5,520.125 L888.5,520.125 L888.5,502.125 " fill="#EEEEEE" style="stroke:#000000;stroke-width:1.0;"/><rect fill="none" height="79.0547" style="stroke:#000000;stroke-width:2.0;" width="361" x="888.5" y="502.125"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="28" x="903.5" y="516.6201">loop</text><text fill="#000000" font-family="sans-serif" font-size="11" font-weight="bold" lengthAdjust="spacing" textLength="144" x="976.5" y="515.5439">[while receives message]</text><polygon fill="#A80036" points="1152,538.8281,1162,542.8281,1152,546.8281,1156,542.8281" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="998.5" x2="1158" y1="542.8281" y2="542.8281"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="54" x="1005.5" y="537.9717">execute()</text><polygon fill="#A80036" points="1009.5,569.1797,999.5,573.1797,1009.5,577.1797,1005.5,573.1797" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="1003.5" x2="1168" y1="573.1797" y2="573.1797"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="53" x="1015.5" y="568.3232">response</text><polygon fill="#A80036" points="259.5,606.5313,249.5,610.5313,259.5,614.5313,255.5,610.5313" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="253.5" x2="987.5" y1="610.5313" y2="610.5313"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="53" x="265.5" y="605.6748">response</text><polygon fill="#A80036" points="105.5,641.8828,95.5,645.8828,105.5,649.8828,101.5,645.8828" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="99.5" x2="242.5" y1="645.8828" y2="645.8828"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="53" x="111.5" y="641.0264">responds</text><path d="M5,623.5313 L5,649.5313 L81,649.5313 L81,633.5313 L71,623.5313 L5,623.5313 " fill="#FBFB77" filter="url(#fe7gyggqxjnb4)" style="stroke:#A80036;stroke-width:1.0;"/><path d="M71,623.5313 L71,633.5313 L81,633.5313 L71,623.5313 " fill="#FBFB77" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="55" x="11" y="642.0264">web page</text><!--MD5=[39e6ca6c7628f41cb9bbbeadbd6504b1]
+@startuml
+'https://plantuml.com/sequence-diagram
+
+actor "Warehouse Employee" as EMPLOYEE
+
+participant HTTPServer as SERVER <<daemon>>
+
+participant HTTPRequest as REQUEST <<server>>
+
+participant SPOMSP22 as PROTOCOL
+
+participant AGVManagerDeamon as AGVSERVER <<daemon>>
+
+participant AGVManagerDeamonThread AS THREAD <<Thread>>
+
+participant DashboardRequestHandler as HANDLER <<server>>
+
+participant DashboardRequest as DASHBOARD_REQUEST <<server>>
+
+
+SERVER -> PROTOCOL : sendRequest()
+activate SERVER
+activate PROTOCOL
+deactivate PROTOCOL
+
+SERVER -> AGVSERVER : request
+activate AGVSERVER
+
+
+AGVSERVER -> THREAD : start()
+activate THREAD
+
+THREAD -> HANDLER : run()
+activate HANDLER
+deactivate HANDLER
+
+
+deactivate AGVSERVER
+deactivate SERVER
+
+deactivate THREAD
+
+deactivate AGVSERVER
+deactivate SERVER
+
+EMPLOYEE -> SERVER :  Request for web page
+activate EMPLOYEE
+activate SERVER
+SERVER -> REQUEST : start()
+activate REQUEST
+deactivate REQUEST
+
+loop auto refresh with timetout
+
+SERVER -> REQUEST : run()
+activate REQUEST
+
+REQUEST - -> SERVER : getData()
+deactivate REQUEST
+
+end
+
+SERVER -> HANDLER : request
+activate HANDLER
+
+
+loop while receives message
+
+HANDLER -> DASHBOARD_REQUEST: execute()
+activate DASHBOARD_REQUEST
+
+DASHBOARD_REQUEST - -> HANDLER : response
+deactivate DASHBOARD_REQUEST
+
+
+end
+
+HANDLER - -> SERVER : response
+
+
+
+SERVER - -> EMPLOYEE : responds
+deactivate SERVER
+deactivate EMPLOYEE
+note left: web page
+
+
+
+@enduml
+
+@startuml
+
+actor "Warehouse Employee" as EMPLOYEE
+
+participant HTTPServer as SERVER <<daemon>>
+
+participant HTTPRequest as REQUEST <<server>>
+
+participant SPOMSP22 as PROTOCOL
+
+participant AGVManagerDeamon as AGVSERVER <<daemon>>
+
+participant AGVManagerDeamonThread AS THREAD <<Thread>>
+
+participant DashboardRequestHandler as HANDLER <<server>>
+
+participant DashboardRequest as DASHBOARD_REQUEST <<server>>
+
+
+SERVER -> PROTOCOL : sendRequest()
+activate SERVER
+activate PROTOCOL
+deactivate PROTOCOL
+
+SERVER -> AGVSERVER : request
+activate AGVSERVER
+
+
+AGVSERVER -> THREAD : start()
+activate THREAD
+
+THREAD -> HANDLER : run()
+activate HANDLER
+deactivate HANDLER
+
+
+deactivate AGVSERVER
+deactivate SERVER
+
+deactivate THREAD
+
+deactivate AGVSERVER
+deactivate SERVER
+
+EMPLOYEE -> SERVER :  Request for web page
+activate EMPLOYEE
+activate SERVER
+SERVER -> REQUEST : start()
+activate REQUEST
+deactivate REQUEST
+
+loop auto refresh with timetout
+
+SERVER -> REQUEST : run()
+activate REQUEST
+
+REQUEST - -> SERVER : getData()
+deactivate REQUEST
+
+end
+
+SERVER -> HANDLER : request
+activate HANDLER
+
+
+loop while receives message
+
+HANDLER -> DASHBOARD_REQUEST: execute()
+activate DASHBOARD_REQUEST
+
+DASHBOARD_REQUEST - -> HANDLER : response
+deactivate DASHBOARD_REQUEST
+
+
+end
+
+HANDLER - -> SERVER : response
+
+
+
+SERVER - -> EMPLOYEE : responds
+deactivate SERVER
+deactivate EMPLOYEE
+note left: web page
+
+
+
+@enduml
+
+PlantUML version 1.2022.1(Tue Feb 01 18:19:58 GMT 2022)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: Cp1252
+Language: pt
+Country: BR
+--></g></svg>

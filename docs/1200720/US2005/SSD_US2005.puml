@@ -9,7 +9,7 @@ activate EMPLOYEE
 activate SYSTEM
 deactivate SYSTEM
 
-SYSTEM --> EMPLOYEE : responds
+SYSTEM --> EMPLOYEE : Responds
 deactivate EMPLOYEE
 
 @enduml

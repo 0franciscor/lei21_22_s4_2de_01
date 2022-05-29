@@ -1,0 +1,89 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+actor "Warehouse Employee" as EMPLOYEE
+
+participant HTTPServer as SERVER <<daemon>>
+
+participant HTTPRequest as REQUEST <<server>>
+
+participant SPOMSP22 as PROTOCOL
+
+participant AGVManagerDeamon as AGVSERVER <<daemon>>
+
+participant AGVManagerDeamonThread AS THREAD <<Thread>>
+
+participant DashboardRequestHandler as HANDLER <<server>>
+
+participant DashboardRequest as DASHBOARD_REQUEST <<server>>
+
+
+SERVER -> PROTOCOL : sendRequest()
+activate SERVER
+activate PROTOCOL
+deactivate PROTOCOL
+
+SERVER -> AGVSERVER : request
+activate AGVSERVER
+
+
+AGVSERVER -> THREAD : start()
+activate THREAD
+
+THREAD -> HANDLER : run()
+activate HANDLER
+deactivate HANDLER
+
+
+deactivate AGVSERVER
+deactivate SERVER
+
+deactivate THREAD
+
+deactivate AGVSERVER
+deactivate SERVER
+
+EMPLOYEE -> SERVER :  Request for web page
+activate EMPLOYEE
+activate SERVER
+SERVER -> REQUEST : start()
+activate REQUEST
+deactivate REQUEST
+
+loop auto refresh with timetout
+
+SERVER -> REQUEST : run()
+activate REQUEST
+
+REQUEST --> SERVER : getData()
+deactivate REQUEST
+
+end
+
+SERVER -> HANDLER : request
+activate HANDLER
+
+
+loop while receives message
+
+HANDLER -> DASHBOARD_REQUEST: execute()
+activate DASHBOARD_REQUEST
+
+DASHBOARD_REQUEST --> HANDLER : response
+deactivate DASHBOARD_REQUEST
+
+
+end
+
+HANDLER --> SERVER : response
+
+
+
+SERVER --> EMPLOYEE : responds
+deactivate SERVER
+deactivate EMPLOYEE
+note left: web page
+
+
+
+@enduml
