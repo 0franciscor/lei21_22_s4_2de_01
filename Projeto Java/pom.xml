@@ -32,6 +32,8 @@
         <module>base.bootstrappers</module>
         <module>base.core</module>
         <module>base.persistence.impl</module>
+        <module>base.app.rcomp.web</module>
+
     </modules>
 
     <dependencies>

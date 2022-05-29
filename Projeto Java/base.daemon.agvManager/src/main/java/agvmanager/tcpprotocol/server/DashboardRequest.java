@@ -2,12 +2,9 @@ package agvmanager.tcpprotocol.server;
 
 import eapli.base.AGV.application.AGVManagerControllerImplementation;
 import eapli.base.AGV.domain.AGV;
-import eapli.framework.csv.CsvRecord;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Writer;
 
 public class DashboardRequest extends AGVManagerProtocolRequest{
 
@@ -50,7 +47,7 @@ public class DashboardRequest extends AGVManagerProtocolRequest{
           
         }
 
-        String response =
+        String response = String.format("%d,%d,%d,%d,%d");
 
         return response;
     }

@@ -94,8 +94,9 @@ public class RequestMessageParser {
         } else if (!isStringParam(tokens[1]) || !isStringParam(tokens[2])) {
             request = new ErrorInRequest(inputLine, "Both date and meal type must be inside quotes");
         } else {
-            request = new DashboardRequest (getController(), inputLine);
-        return request;
+            request = new DashboardRequest(getController(), inputLine);
+            return request;
+        }
     }
 
 }
