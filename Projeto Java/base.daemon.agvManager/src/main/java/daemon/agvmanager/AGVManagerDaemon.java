@@ -58,6 +58,6 @@ public final class AGVManagerDaemon {
     }
 
     private static RequestMessageParser buildServerDependencies() {
-        return new RequestMessageParser(new AGVManagerControllerImplementation());
+        return new RequestMessageParser();
     }
 }

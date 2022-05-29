@@ -13,6 +13,8 @@ public class CallAGVManagerController {
 
     public static final int CALL_FIFO = 1;
 
+    public static final int DASHBOARD_REQUEST = 2;
+
     private Socket sock;
 
     private PrintWriter output;

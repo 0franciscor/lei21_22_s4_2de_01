@@ -22,6 +22,7 @@ package agvmanager.tcpprotocol.server;
 
 
 import eapli.base.AGV.application.AGVManagerController;
+import eapli.base.AGV.application.DashBoardController;
 
 /**
  *
@@ -31,11 +32,18 @@ import eapli.base.AGV.application.AGVManagerController;
 public abstract class AGVManagerProtocolRequest {
 
     protected final String request;
-    protected final AGVManagerController controller;
+    protected AGVManagerController managerController;
 
-    protected AGVManagerProtocolRequest(final AGVManagerController controller, final String inputRequest) {
+    protected DashBoardController dashBoardController;
+
+    protected AGVManagerProtocolRequest(final AGVManagerController managerController, final String inputRequest) {
         this.request = inputRequest;
-        this.controller = controller;
+        this.managerController = managerController;
+    }
+
+    protected AGVManagerProtocolRequest(final DashBoardController dashBoardController, final String inputRequest) {
+        this.request = inputRequest;
+        this.dashBoardController = dashBoardController;
     }
 
     /**
