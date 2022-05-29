@@ -1,7 +1,7 @@
 package eapli.base.app.backoffice.console.taskManagement;
 
-import eapli.base.AGV.Application.CallAGVManagerController;
-import eapli.base.AGV.Application.TaskManagement;
+import eapli.base.AGV.application.CallAGVManagerController;
+import eapli.base.AGV.application.TaskManagement;
 import eapli.framework.presentation.console.AbstractUI;
 
 import java.io.IOException;

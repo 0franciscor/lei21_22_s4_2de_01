@@ -20,7 +20,7 @@
  */
 package digitaltwin.tcpprotocol.server;
 
-import eapli.base.AGV.Application.AGVManagerControllerImplementation;
+import eapli.base.AGV.application.AGVManagerControllerImplementation;
 
 /**
  * @author Paulo Gandra Sousa 01/06/2020

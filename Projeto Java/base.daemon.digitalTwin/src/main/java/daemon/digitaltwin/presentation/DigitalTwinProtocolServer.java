@@ -26,7 +26,7 @@ import java.net.Socket;
 
 import digitaltwin.tcpprotocol.server.DigitalTwinProtocolRequest;
 import digitaltwin.tcpprotocol.server.RequestMessageParser;
-import eapli.base.AGV.Application.AGVManagerControllerImplementation;
+import eapli.base.AGV.application.AGVManagerControllerImplementation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
