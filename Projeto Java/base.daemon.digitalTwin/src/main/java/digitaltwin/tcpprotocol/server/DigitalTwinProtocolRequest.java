@@ -20,12 +20,7 @@
  */
 package digitaltwin.tcpprotocol.server;
 
-<<<<<<< HEAD
-
 import eapli.base.AGV.application.GetAGVInformation;
-=======
-import eapli.base.AGV.application.DashBoardController;
->>>>>>> 4f55094f9f6480ca3415d8d019ab4c9db6b0519c
 
 /**
  *

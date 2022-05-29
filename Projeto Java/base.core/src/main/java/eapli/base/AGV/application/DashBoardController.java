@@ -2,7 +2,7 @@ package eapli.base.AGV.application;
 
 import java.io.IOException;
 
-public class DashboardController {
+public class DashBoardController {
     private final DashboardService service = new DashboardService();
 
     public void runDashboard() throws IOException {

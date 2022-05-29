@@ -1,13 +1,13 @@
 package eapli.base.app.backoffice.console.warehouseEmployeeManagement;
 
-import eapli.base.AGV.application.DashboardController;
+import eapli.base.AGV.application.DashBoardController;
 import eapli.framework.presentation.console.AbstractUI;
 
 import java.io.IOException;
 
 public class DashboardUI extends AbstractUI {
 
-    private final DashboardController theController = new DashboardController();
+    private final DashBoardController theController = new DashBoardController();
 
 
     @Override
