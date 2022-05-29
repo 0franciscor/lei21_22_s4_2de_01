@@ -89,14 +89,14 @@ deactivate r
 alt cliente não tem carrinho de compras
 OrderServer -> domain: create(client)
 
-else
+end
 OrderServer -> domain:addProductToShoppingCar(item)
 activate domain
 deactivate domain
 OrderServer -> r: save(shoppingCar)
 activate r
 deactivate r
-end
+
 deactivate OrderServer
 deactivate Service
 deactivate Controller
