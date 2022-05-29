@@ -14,7 +14,7 @@ public class AGVManagerControllerImplementation implements AGVManagerController 
 
     @Override
     public boolean assignTasks() {
-        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.WAREHOUSE_EMPLOYEE, BaseRoles.POWER_USER);
+        //authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.WAREHOUSE_EMPLOYEE, BaseRoles.ADMIN);
         return new TaskManagement().assignTasks();
     }
 }
