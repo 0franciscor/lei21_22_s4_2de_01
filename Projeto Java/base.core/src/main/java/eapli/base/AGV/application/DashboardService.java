@@ -1,7 +1,4 @@
 package eapli.base.AGV.application;
-
-
-
 import httpServerAjax.HTTPMessage;
 
 import java.io.DataInputStream;
@@ -73,6 +70,6 @@ public class DashboardService {
         sendAGVInformation();
 
 
-        java.awt.Desktop.getDesktop().browse(URI.create("http://localhost:100/"));
+        java.awt.Desktop.getDesktop().browse(URI.create("http://localhost:63342/Projeto%20Java/base.daemon.webServer/httpServerAjax/www/index.html?_ijt=r9fb4lfohul7qbkfrbdttg1601&_ij_reload=RELOAD_ON_SAVE"));
     }
 }
