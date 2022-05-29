@@ -116,6 +116,10 @@ public class AGV implements AggregateRoot<AGVId> {
 
     public List<AGVTask> getAgvTask(){ return agvTask; }
 
+    public AGVPosition getAgvPosition(){
+        return position;
+    }
+
     private AGVTask getTaskByDescription(String description){
         for (AGVTask task : agvTask){
             if (task.getDescription().equals(description)) return task;
