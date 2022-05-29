@@ -27,9 +27,10 @@ public class AGVTask implements DomainEntity<Long>, AggregateRoot<Long> { //IMPL
 
     private Long totalVolume;
 
+    private int status;
 
     public AGVTask(String description) {
-
+        this.status = 0;
         this.description = description;
         this.totalWeight = 0L;
         this.totalVolume = 0L;
@@ -60,12 +61,20 @@ public class AGVTask implements DomainEntity<Long>, AggregateRoot<Long> { //IMPL
         return totalVolume;
     }
 
+    public int getStatus(){
+        return status;
+    }
+
     public void incrementVolume(Long volume){
         this.totalVolume += volume;
     }
 
     public void incrementWeight(Long weight){
         this.totalWeight += weight;
+    }
+
+    public void updateStatus(int status){
+        this.status = status;
     }
 
     @Override
