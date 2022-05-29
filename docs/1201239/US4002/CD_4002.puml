@@ -3,7 +3,7 @@
 class TaskManagementUI {}
 
 class CallAGVManagerController {
-+creat()
++create()
 +connectDaemon(address,port)
 +callFIFO()
 +getAGVInfo()
