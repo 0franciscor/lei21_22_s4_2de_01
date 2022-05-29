@@ -113,7 +113,7 @@ public class RequestMessageParser {
 
             request = new ErrorInRequest(inputLine, "Wrong number of parameters");
         } else if (!tokens[3].isBlank()) {
-            request = new ErrorInRequest(inputLine, "File name must me Pointed");
+            request = new ErrorInRequest(inputLine, "File name must be Pointed");
         } else {
             request = new DashboardRequest(inputLine);
         }
