@@ -44,6 +44,10 @@ class SurveyParser {
 +start()
 }
 
+class QuestionnaireMain {
++parseWithVisitor(file)
+
+}
 class QuestionnaireVisitor {}
 
 class SurveyBaseListener {}
@@ -54,7 +58,14 @@ class SurveyBaseListener {}
 
 
 package domain{
-class Questionnaire {}
+class Questionnaire {
+-code
+-title
+-initialMessage
+-finalMessage
+---
++sectionsAndQuestions()
++Questionaire(code,title,initialMessage,sectionsAndQuestions,finalMessage)
 }
 
 }
@@ -62,11 +73,12 @@ class Questionnaire {}
 
 NewQuestionnaireUI ..> CreateNewQuestionnaireController
 
-CreateNewQuestionnaireController ----> Questionnaire
-CreateNewQuestionnaireController -> QuestionnaireVisitor
-CreateNewQuestionnaireController ---> SurveyBaseListener
-CreateNewQuestionnaireController -> SurveyParser
-CreateNewQuestionnaireController -> SurveyLexer
+CreateNewQuestionnaireController ----> QuestionnaireMain
+QuestionnaireMain ----> Questionnaire
+QuestionnaireMain -> QuestionnaireVisitor
+QuestionnaireMain ---> SurveyBaseListener
+QuestionnaireMain -> SurveyParser
+QuestionnaireMain -> SurveyLexer
 
 QuestionnaireVisitor -> Questionnaire
 
