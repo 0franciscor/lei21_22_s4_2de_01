@@ -199,11 +199,19 @@ The set of questions/answers composing the questionnaire should be expressed and
     }
 
 
-# 5. Integration/Demo
 
 
-# 6. Observations
+# 5. Observations
+* When running through the UI, some errors appeared however in the antlr preview the questionnaire complies with the rules.
 
+# 6. Demo
+### UI
+![DEMO_UI](resources/UI_demo.png)
 
+### ANTLR preview teste
+![ANTLR_PREVIEW_TESTE](resources/test_antlrPreview.png)
+
+### ANTLR preview teste1
+![ANTLR_PREVIEW_TESTE1](resources/test1_antlrPreview.png)
 
 
