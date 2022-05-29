@@ -20,6 +20,7 @@
  */
 package agvmanager.tcpprotocol.server;
 
+import eapli.base.AGV.application.AGVManagerController;
 import eapli.framework.csv.CsvRecord;
 
 /**
@@ -32,13 +33,9 @@ public abstract class BaseErrorRequest extends AGVManagerProtocolRequest {
     private final String errorDescription;
 
     protected BaseErrorRequest(final String request, final String errorDescription) {
-        super(null, request);
+        super((AGVManagerController) null, request);
+        this.buildBadRequest(request);
         this.errorDescription = errorDescription;
-    }
-
-    protected BaseErrorRequest(final String request) {
-        super(null, request);
-        this.errorDescription = null;
     }
 
     @Override
