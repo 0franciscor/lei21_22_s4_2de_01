@@ -1,6 +1,12 @@
 package eapli.base.AGV.Application;
 
+import eapli.base.AGV.domain.AGV;
+import eapli.base.AGV.domain.AGVStatus;
+import eapli.base.AGV.domain.AGVTask;
 import eapli.base.AGV.domain.TaskQueue;
+import eapli.base.infrastructure.persistence.PersistenceContext;
+
+import java.util.List;
 
 public class TaskManagement {
 
@@ -9,9 +15,8 @@ public class TaskManagement {
     public TaskManagement(){
         this.taskQueue = new TaskQueue();
     }
-
+    
     public boolean assignTasks(){
-        /*
         List<AGV> agvList = (List<AGV>) PersistenceContext.repositories().agv().findAll();
         removeUnfittedAGVs(agvList);
 
@@ -26,20 +31,27 @@ public class TaskManagement {
                 agvTask = null;
             }
 
-            if(agv.getAgvTask() != null) {
-                agv.getAgvTask().setStatus(1);
-                PersistenceContext.repositories().agvTask().save(agv.getAgvTask());
+            boolean available = true;
+            for(AGVTask task : agv.getAgvTask()){
+                if(task.getStatus() == 1) {
+                    available = false;
+                    break;
+                }
             }
-            agv.getStatus().status = AGVStatus.OCCUPIED_SERVING.toString();
-            agvTask.setStatus(1);
-            agv.updateTask(agvTask);
-            PersistenceContext.repositories().agv().save(agv);
-            taskQueue.removeTask(agvTask);
-        }*/
+
+            if(available) {
+                agv.changeStatusOfAGVForOccupied();
+                agvTask.updateStatus(1);
+                agv.assignATaskForAGV(agvTask);
+                PersistenceContext.repositories().agvTask().save(agvTask);
+                PersistenceContext.repositories().agv().save(agv);
+                taskQueue.removeTask(agvTask);
+            }
+        }
         return true;
     }
 
-    /*private void removeUnfittedAGVs(List<AGV> agvList){
-        agvList.removeIf(agv -> !agv.getStatus().status.equals("FREE"));
-    }*/
+    private void removeUnfittedAGVs(List<AGV> agvList){
+        agvList.removeIf(agv -> !(agv.getAgvStatus().obtainStatus().equals(AGVStatus.Status.FREE)));
+    }
 }
