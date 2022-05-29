@@ -60,7 +60,7 @@ public class RequestMessageParser {
         String[] tokens;
         try {
             tokens = CsvLineMarshaler.tokenize(inputLine).toArray(new String[0]);
-            if (String.valueOf(CallAGVManagerController.DASHBOARD_REQUEST).equals(tokens[0]))
+            if (String.valueOf(CallAGVManagerController.DASHBOARD_REQUEST).equals(tokens[1]))
                 request = callAGVInfoRequest(inputLine, tokens);
         } catch (final ParseException e) {
             LOGGER.info("Unable to parse request: {}", inputLine);

@@ -40,7 +40,7 @@ public class CallAGVManagerController {
         output.println(request);
     }
 
-    public void getAGVInfo() throws IOException {
+    public List<String> getAGVInfo() throws IOException {
         List<String> agvInfoList = new ArrayList<>();
 
         for(AGV agv : PersistenceContext.repositories().agv().findAll()){
@@ -49,6 +49,7 @@ public class CallAGVManagerController {
             output.println(request);
             agvInfoList.add(input.readLine());
         }
+        return agvInfoList;
     }
 
     public void closeConnection() throws IOException {
