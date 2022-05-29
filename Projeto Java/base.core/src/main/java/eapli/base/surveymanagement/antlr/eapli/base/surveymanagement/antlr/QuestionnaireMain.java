@@ -9,14 +9,9 @@ import java.io.IOException;
 
 public class QuestionnaireMain {
 
-    public static void main(String[] args) throws IOException {
-        parseWithVisitor();
-    }
-
-
-    public static void parseWithVisitor() {
+    public static void parseWithVisitor(String file) {
         try {
-            SurveyLexer lexer = new SurveyLexer(CharStreams.fromFileName("teste.txt"));
+            SurveyLexer lexer = new SurveyLexer(CharStreams.fromFileName(file));
             CommonTokenStream tokens = new CommonTokenStream(lexer);
             SurveyParser parser = new SurveyParser(tokens);
             ParseTree tree = parser.start();

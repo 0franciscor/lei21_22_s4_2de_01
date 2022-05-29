@@ -1,6 +1,7 @@
 package eapli.base.surveymanagement.application;
 
 import eapli.base.surveymanagement.antlr.SurveyLexer;
+import eapli.base.surveymanagement.antlr.eapli.base.surveymanagement.antlr.QuestionnaireMain;
 import eapli.base.surveymanagement.antlr.eapli.base.surveymanagement.antlr.QuestionnaireVisitor;
 import eapli.base.surveymanagement.antlr.eapli.base.surveymanagement.antlr.SurveyParser;
 import eapli.base.surveymanagement.domain.Questionnaire;
@@ -19,15 +20,8 @@ public class CreateNewQuestionnaireController {
     public Questionnaire createQuestionnaire(final String file) throws IOException{
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.SALES_MANAGER, BaseRoles.POWER_USER, BaseRoles.ADMIN, BaseRoles.WAREHOUSE_EMPLOYEE);
 
-        FileInputStream fis = new FileInputStream(file);
-        SurveyLexer lexer = new SurveyLexer(new ANTLRInputStream(fis));
-        CommonTokenStream tokens = new CommonTokenStream(lexer);
-        SurveyParser parser = new SurveyParser(tokens);
-        ParseTree tree = parser.start(); // parse
-        QuestionnaireVisitor quest = new QuestionnaireVisitor();
-        Questionnaire questionnaire = (Questionnaire) quest.visit(tree);
-
-        System.out.println(questionnaire);
+        QuestionnaireMain qmain = new QuestionnaireMain();
+        qmain.parseWithVisitor(file);
 
         return null;
 
