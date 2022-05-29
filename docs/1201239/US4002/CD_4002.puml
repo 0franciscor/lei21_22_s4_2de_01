@@ -1,10 +1,28 @@
 @startuml
 
-autonumber
+class TaskManagementUI {}
 
-Alice -> Bob: Authentication Request
-Bob --> Alice: Authentication Response
+class CallAGVManagerController {
++creat()
++connectDaemon(address,port)
++callFIFO()
++getAGVInfo()
++closeConnection()
+}
 
-Alice -> Bob: Another authentication Request
-Alice <-- Bob: another authentication Response
+class AgvManager {
++execute()
+}
+
+class TaskManagement {
++assignTasks()
+-removeUnfittedAGVs(agvList)
+}
+
+
+TaskManagementUI ..> CallAGVManagerController
+
+CallAGVManagerController -> AgvManager
+CallAGVManagerController -> TaskManagement
+
 @enduml
