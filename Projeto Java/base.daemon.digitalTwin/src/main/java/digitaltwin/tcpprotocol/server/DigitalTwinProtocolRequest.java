@@ -22,8 +22,6 @@ package digitaltwin.tcpprotocol.server;
 
 import eapli.base.AGV.application.GetAGVInformation;
 
-
-
 /**
  *
  * @author Paulo Gandra Sousa 01/06/2020
