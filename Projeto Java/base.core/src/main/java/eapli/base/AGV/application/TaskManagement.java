@@ -1,4 +1,6 @@
-package eapli.base.AGV.domain;
+package eapli.base.AGV.Application;
+
+import eapli.base.AGV.domain.TaskQueue;
 
 public class TaskManagement {
 

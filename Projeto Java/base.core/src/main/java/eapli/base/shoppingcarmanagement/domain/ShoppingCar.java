@@ -51,6 +51,13 @@ public class ShoppingCar implements AggregateRoot<Long>, Serializable {
     }
 
     public boolean addProductToShoppingCar(ShopCarItem shopCarItem) {
+        for (ShopCarItem item : items){
+            if(item.product().uniqueInternalCode().equals(shopCarItem.product().uniqueInternalCode())){
+                int quant = item.quantity() + shopCarItem.quantity();
+                item.setQuantity(quant);
+                return true;
+            }
+        }
         return items.add(shopCarItem);
     }
 }

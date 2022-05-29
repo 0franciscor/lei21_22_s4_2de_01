@@ -20,16 +20,17 @@
  */
 package daemon.agvmanager.presentation;
 
-import java.io.*;
-import java.net.ServerSocket;
-import java.net.Socket;
-
 import agvmanager.tcpprotocol.server.AGVManagerProtocolRequest;
 import agvmanager.tcpprotocol.server.RequestMessageParser;
-import eapli.base.AGV.Application.AGVManagerController;
-import eapli.base.AGV.Application.AGVManagerControllerImplementation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.ServerSocket;
+import java.net.Socket;
 
 /**
  * Server socket for booking daemon using the CSV-based protocol.
@@ -50,9 +51,9 @@ public class AgvManagerProtocolServer {
 
         private final RequestMessageParser parser;
 
-        public ClientHandler(final Socket socket) {
+        public ClientHandler(final Socket socket, final RequestMessageParser parser) {
             this.clientSocket = socket;
-            parser = new RequestMessageParser(new AGVManagerControllerImplementation());
+            this.parser = parser;
         }
 
         @Override
@@ -100,6 +101,12 @@ public class AgvManagerProtocolServer {
         }
     }
 
+    private final RequestMessageParser parser;
+
+    public AgvManagerProtocolServer(final RequestMessageParser requestMessageParser){
+        this.parser = requestMessageParser;
+    }
+
     /**
      * Wait for connections.
      * <p>
@@ -112,7 +119,7 @@ public class AgvManagerProtocolServer {
         try (var serverSocket = new ServerSocket(port)) {
             while (true) {
                 final var clientSocket = serverSocket.accept();
-                new ClientHandler(clientSocket).start();
+                new ClientHandler(clientSocket, parser).start();
             }
         } catch (final IOException e) {
             LOGGER.error(e);

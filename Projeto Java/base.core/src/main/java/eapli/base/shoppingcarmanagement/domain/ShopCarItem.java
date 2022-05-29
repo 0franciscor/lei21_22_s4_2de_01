@@ -56,4 +56,7 @@ public class ShopCarItem implements AggregateRoot<Long>, Serializable {
         return this.shopCarId;
     }
 
+    public void setQuantity(int quantidade) {
+        this.quantity=quantidade;
+    }
 }
