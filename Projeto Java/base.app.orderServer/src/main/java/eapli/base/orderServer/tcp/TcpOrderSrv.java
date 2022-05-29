@@ -25,7 +25,7 @@ public class TcpOrderSrv {
     public static void main(String args[]) throws Exception {
         Socket cliSock;
 
-        try { sock = new ServerSocket(9999); }
+        try { sock = new ServerSocket(10001); }
         catch(IOException ex) {
             System.out.println("Failed to open server socket");
             System.exit(1);
@@ -114,13 +114,12 @@ class TcpSrvOrderThread implements Runnable {
                         shoppingCar = shoppingCarRepository.findByClient(client.get());
                         if(shoppingCar.isPresent()) {
                             shoppingCar.get().addProductToShoppingCar(item);
+                            shoppingCarRepository.save(shoppingCar.get());
                         } else {
                             ShoppingCar shoppingCar1 = new ShoppingCar(client.get());
-                            shoppingCarRepository.save(shoppingCar1);
                             shoppingCar1.addProductToShoppingCar(item);
+                            shoppingCarRepository.save(shoppingCar1);
                         }
-                        shopCarItemRepository.save(item);
-
                     }
 
                 }
