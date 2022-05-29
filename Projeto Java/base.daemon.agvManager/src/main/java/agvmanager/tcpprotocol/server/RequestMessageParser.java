@@ -20,10 +20,7 @@
  */
 package agvmanager.tcpprotocol.server;
 
-import eapli.base.AGV.application.AGVManagerController;
-import eapli.base.AGV.application.AGVManagerControllerImplementation;
 import eapli.base.AGV.application.CallAGVManagerController;
-import eapli.base.AGV.application.DashBoardController;
 import eapli.framework.csv.util.CsvLineMarshaler;
 import eapli.framework.util.Utility;
 import org.apache.logging.log4j.LogManager;
@@ -41,30 +38,7 @@ public class RequestMessageParser {
 
     private static final Logger LOGGER = LogManager.getLogger(RequestMessageParser.class);
 
-    private AGVManagerController managerController;
-
-    private DashBoardController dashBoardController;
-
-    public RequestMessageParser() {
-        this.managerController = new AGVManagerControllerImplementation();
-        this.dashBoardController = new DashBoardController();
-    }
-
-    public RequestMessageParser(final AGVManagerController controller) {
-        this.managerController = controller;
-    }
-
-    public RequestMessageParser(final DashBoardController controller) {
-        this.dashBoardController = controller;
-    }
-
-    private AGVManagerController getManagerController() {
-        return managerController;
-    }
-
-    private DashBoardController getDashboardController() {
-        return dashBoardController;
-    }
+    public RequestMessageParser() {}
 
     /**
      * Parse and build the request.
@@ -92,11 +66,6 @@ public class RequestMessageParser {
         return request;
     }
 
-
-    private boolean isStringParam(final String string) {
-        return string.length() >= 2 && string.charAt(0) == '"' && string.charAt(string.length() - 1) == '"';
-    }
-
     private AGVManagerProtocolRequest callTaskAssignment(final String inputLine, final String[] tokens) {
         AGVManagerProtocolRequest request;
         if (tokens.length != 3) {
@@ -110,15 +79,13 @@ public class RequestMessageParser {
     private AGVManagerProtocolRequest parseGetAGVInformations(final String inputLine, final String[] tokens) {
         AGVManagerProtocolRequest request;
         if (tokens.length != 4) {
-
             request = new ErrorInRequest(inputLine, "Wrong number of parameters");
         } else if (!tokens[3].isBlank()) {
             request = new ErrorInRequest(inputLine, "File name must me Pointed");
         } else {
-            request = new DashboardRequest(inputLine);
+            request = new DashboardRequest(inputLine, tokens[3]);
         }
 
         return request;
     }
-
 }

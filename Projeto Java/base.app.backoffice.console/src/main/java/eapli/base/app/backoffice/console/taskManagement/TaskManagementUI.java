@@ -14,6 +14,7 @@ public class TaskManagementUI extends AbstractUI {
     protected boolean doShow() {
         try {
             controller.connectDaemon("localhost", 8890);
+            controller.getAGVInfo();
         } catch (IOException e) {
             System.out.println("There was an error when executing the Algorithm Call");
         }

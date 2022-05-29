@@ -20,15 +20,18 @@
  */
 package daemon.digitaltwin.presentation;
 
-import java.io.*;
-import java.net.ServerSocket;
-import java.net.Socket;
-
 import digitaltwin.tcpprotocol.server.DigitalTwinProtocolRequest;
 import digitaltwin.tcpprotocol.server.RequestMessageParser;
-import eapli.base.AGV.application.AGVManagerControllerImplementation;
+import eapli.base.AGV.application.DashBoardController;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.ServerSocket;
+import java.net.Socket;
 
 /**
  * Server socket for booking daemon using the CSV-based protocol.
@@ -51,7 +54,7 @@ public class DigitalTwinProtocolServer {
 
         public ClientHandler(final Socket socket) {
             this.clientSocket = socket;
-            parser = new RequestMessageParser(new AGVManagerControllerImplementation());
+            parser = new RequestMessageParser(new DashBoardController());
         }
 
         @Override
@@ -97,6 +100,12 @@ public class DigitalTwinProtocolServer {
                 }
             }
         }
+    }
+
+    private final RequestMessageParser parser;
+
+    public DigitalTwinProtocolServer(final RequestMessageParser requestMessageParser){
+        this.parser = requestMessageParser;
     }
 
     /**
