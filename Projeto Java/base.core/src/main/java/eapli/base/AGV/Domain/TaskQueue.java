@@ -17,7 +17,7 @@ public class TaskQueue {
     public void retrieveTasks(){
         List<AGVTask> taskList = (List<AGVTask>) PersistenceContext.repositories().agvTask().findAll();
         for(AGVTask task : taskList)
-            //if(task.getStatus() == 0)
+            if(task.getStatus() == 0)
                 queue.add(task);
     }
 
