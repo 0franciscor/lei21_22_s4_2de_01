@@ -47,6 +47,7 @@ public class ForceOrderPrepUI extends AbstractUI {
 
                 // escolher agv
                 List<AgvDto> availableAGVList = forceOrderController.showAvailableAGVs();
+
                 int index1 = 1;
                 for(AgvDto agv: availableAGVList) {
                     System.out.println(index1 + " - id:" + agv.getId() + " - volume:" + agv.getVolume() + " - weight:" + agv.getWeight());
