@@ -20,7 +20,9 @@
  */
 package daemon.digitaltwin;
 
+import digitaltwin.tcpprotocol.server.RequestMessageParser;
 import daemon.digitaltwin.presentation.DigitalTwinProtocolServer;
+import eapli.base.AGV.application.AGVManagerControllerImplementation;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.usermanagement.domain.BasePasswordPolicy;
 import org.apache.logging.log4j.LogManager;
@@ -32,7 +34,7 @@ import eapli.framework.infrastructure.authz.domain.model.PlainTextEncoder;
 
 public final class DigitalTwinDaemon {
 
-    private static final int MANAGER_PORT = 8899;
+    private static final int MANAGER_PORT = 8890;
     private static final Logger LOGGER = LogManager.getLogger(DigitalTwinDaemon.class);
 
     /**
@@ -48,10 +50,14 @@ public final class DigitalTwinDaemon {
                 new BasePasswordPolicy(), new PlainTextEncoder());
 
         LOGGER.info("Starting the server socket");
-        final var server = new DigitalTwinProtocolServer();
+        final var server = new DigitalTwinProtocolServer(buildServerDependencies());
         server.start(MANAGER_PORT, true);
 
         LOGGER.info("Exiting the daemon");
         System.exit(0);
+    }
+
+    private static RequestMessageParser buildServerDependencies() {
+        return new RequestMessageParser(new AGVManagerControllerImplementation());
     }
 }

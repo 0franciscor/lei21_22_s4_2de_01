@@ -36,7 +36,7 @@ public class AssignTasksRequest extends AGVManagerProtocolRequest {
         String output = null;
 
         try{
-            if(controller.assignTasks())
+            if(managerController.assignTasks())
             output = buildResponse();
         }catch (Exception e){
             output = "There was a problem when executing the automatic task assignment";

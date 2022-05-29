@@ -1,6 +1,5 @@
 package eapli.base.surveymanagement.antlr.eapli.base.surveymanagement.antlr;
 
-import eapli.base.surveymanagement.antlr.SurveyLexer;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
@@ -23,6 +22,10 @@ public class QuestionnaireMain {
         } catch (Exception e) {
             System.out.println("The Survey does not follow the required format.");
         }
+    }
+
+    public static void main(String[] args) {
+        parseWithVisitor("C:\\Users\\arian\\lei21_22_s4_2de_01\\Projeto Java\\teste.txt");
     }
 
 }

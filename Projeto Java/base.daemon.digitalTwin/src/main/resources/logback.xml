@@ -43,10 +43,10 @@
         <appender-ref ref="STDOUT" />
     </logger>
     -->
-    <logger name="daemon.digitaltwin" level="DEBUG" additivity="false">
+    <logger name="daemon.agvmanager" level="DEBUG" additivity="false">
         <appender-ref ref="STDOUT" />
     </logger>
-    <logger name="daemon.digitaltwin.tcpprotocol" level="DEBUG" additivity="false">
+    <logger name="daemon.agvmanager.tcpprotocol" level="DEBUG" additivity="false">
         <appender-ref ref="STDOUT" />
     </logger>
 
