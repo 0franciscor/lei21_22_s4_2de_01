@@ -18,7 +18,7 @@ public class CreateNewQuestionnaireController {
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
 
     public Questionnaire createQuestionnaire(final String file) throws IOException{
-        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.SALES_MANAGER, BaseRoles.POWER_USER, BaseRoles.ADMIN, BaseRoles.WAREHOUSE_EMPLOYEE);
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.SALES_MANAGER, BaseRoles.POWER_USER, BaseRoles.ADMIN);
 
         QuestionnaireMain qmain = new QuestionnaireMain();
         qmain.parseWithVisitor(file);

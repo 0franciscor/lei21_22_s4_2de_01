@@ -88,9 +88,7 @@ public class MainMenu extends AbstractUI {
     private static final int IMPORT_JSONFILE = 2;
     private static final int LIST_ORDERS = 3;
     private static final int FORCE_ORDERS_PREPARATION = 4;
-    private static final int CREATE_NEW_QUESTIONNAIRE = 5;
-
-    private static final int CALL_FIFO = 6;
+    private static final int CALL_FIFO = 5;
 
     // MAIN MENU
     private static final int MY_USER_OPTION = 1;
@@ -98,6 +96,9 @@ public class MainMenu extends AbstractUI {
     private static final int CONFIGURE_OPTION = 3;
     private static final int SETTINGS_OPTION = 4;
 
+    // SALES MANAGER
+    private static final int CREATE_NEW_QUESTIONNAIRE = 1;
+    private static final int QUEST_OPTION = 2;
 
     private static final String SEPARATOR_LABEL = "--------------";
 
@@ -164,6 +165,11 @@ public class MainMenu extends AbstractUI {
 
         }
 
+        if (authz.isAuthenticatedUserAuthorizedTo(BaseRoles.POWER_USER, BaseRoles.SALES_MANAGER)) {
+            final Menu usersMenu = buildSalesManagerMenu();
+            mainMenu.addSubMenu(USERS_OPTION, usersMenu);
+        }
+
         if (!Application.settings().isMenuLayoutHorizontal()) {
             mainMenu.addItem(MenuItem.separator(SEPARATOR_LABEL));
         }
@@ -216,8 +222,15 @@ public class MainMenu extends AbstractUI {
         menu.addItem(IMPORT_JSONFILE, "Import a Warehouse's Info", new ImportJsonUI()::show);
         menu.addItem(LIST_ORDERS, "List Orders being prepared by an AGV", new ListOrderBeingPreparedByAGVUI()::show);
         menu.addItem(FORCE_ORDERS_PREPARATION, "Force Order Preparation", new ForceOrderPrepUI()::show);
-        menu.addItem(CREATE_NEW_QUESTIONNAIRE, "Create New Questionnaire", new NewQuestionnaireUI()::show);
         menu.addItem(CALL_FIFO, "Call FIFO", new TaskManagementUI()::show);
+
+        return menu;
+    }
+
+    private Menu buildSalesManagerMenu() {
+        final Menu menu = new Menu("Sales Manager >");
+
+        menu.addItem(CREATE_NEW_QUESTIONNAIRE, "Create New Questionnaire", new NewQuestionnaireUI()::show);
 
         return menu;
     }
