@@ -17,10 +17,4 @@ public class AGVManagerControllerImplementation implements AGVManagerController 
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.WAREHOUSE_EMPLOYEE, BaseRoles.POWER_USER);
         return new TaskManagement().assignTasks();
     }
-
-    @Override
-    public Iterable<AGV> getAGVsInformationForDashboard() {
-        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.WAREHOUSE_EMPLOYEE, BaseRoles.POWER_USER);
-        return new DashBoardController().getAGVsInformationForDashBoard();
-    }
 }

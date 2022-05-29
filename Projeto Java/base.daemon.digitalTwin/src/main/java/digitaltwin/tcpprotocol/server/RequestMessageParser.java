@@ -20,7 +20,8 @@
  */
 package digitaltwin.tcpprotocol.server;
 
-import eapli.base.AGV.application.AGVManagerController;
+import eapli.base.AGV.application.CallAGVManagerController;
+import eapli.base.AGV.application.DashBoardController;
 import eapli.framework.csv.util.CsvLineMarshaler;
 import eapli.framework.util.Utility;
 import org.apache.logging.log4j.LogManager;
@@ -38,14 +39,10 @@ public class RequestMessageParser {
 
     private static final Logger LOGGER = LogManager.getLogger(RequestMessageParser.class);
 
-    private final AGVManagerController controller;
+    private final DashBoardController controller;
 
-    public RequestMessageParser(final AGVManagerController controller) {
+    public RequestMessageParser(final DashBoardController controller) {
         this.controller = controller;
-    }
-
-    private AGVManagerController getController() {
-        return controller;
     }
 
     /**
@@ -63,8 +60,8 @@ public class RequestMessageParser {
         String[] tokens;
         try {
             tokens = CsvLineMarshaler.tokenize(inputLine).toArray(new String[0]);
-            if ("AUTO_TASK_ASSIGNMENT".equals(tokens[0]))
-                request = callTaskAssignment(inputLine, tokens);
+            if (String.valueOf(CallAGVManagerController.DASHBOARD_REQUEST).equals(tokens[0]))
+                request = callAGVInfoRequest(inputLine, tokens);
         } catch (final ParseException e) {
             LOGGER.info("Unable to parse request: {}", inputLine);
             request = new BadRequest(inputLine, "Unable to parse request");
@@ -72,19 +69,12 @@ public class RequestMessageParser {
         return request;
     }
 
-
-    private boolean isStringParam(final String string) {
-        return string.length() >= 2 && string.charAt(0) == '"' && string.charAt(string.length() - 1) == '"';
-    }
-
-    private DigitalTwinProtocolRequest callTaskAssignment(final String inputLine, final String[] tokens) {
+    private DigitalTwinProtocolRequest callAGVInfoRequest(final String inputLine, final String[] tokens) {
         DigitalTwinProtocolRequest request;
-        if (tokens.length != 3) {
+        if (tokens.length != 4) {
             request = new BadRequest(inputLine, "Wrong number of parameters");
-        } else if (!isStringParam(tokens[1]) || !isStringParam(tokens[2])) {
-            request = new BadRequest(inputLine, "Both date and meal type must be inside quotes");
         } else {
-            request = new AssignTasksRequest(inputLine);
+            request = new GetAGVInfoRequest(inputLine, tokens[3]);
         }
         return request;
     }

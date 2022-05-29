@@ -1,11 +1,16 @@
 package eapli.base.AGV.application;
 
+import eapli.base.AGV.domain.AGV;
+import eapli.base.infrastructure.persistence.PersistenceContext;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CallAGVManagerController {
 
@@ -33,6 +38,17 @@ public class CallAGVManagerController {
     public void callFIFO(){
         String request = String.format("%d,%d,0", VERSION, CALL_FIFO);
         output.println(request);
+    }
+
+    public void getAGVInfo() throws IOException {
+        List<String> agvInfoList = new ArrayList<>();
+
+        for(AGV agv : PersistenceContext.repositories().agv().findAll()){
+            String agvId = agv.getAgvId().getAGVId();
+            String request = String.format("%d,%d,%d,%s", VERSION, DASHBOARD_REQUEST, agvId.length(), agvId);
+            output.println(request);
+            agvInfoList.add(input.readLine());
+        }
     }
 
     public void closeConnection() throws IOException {
