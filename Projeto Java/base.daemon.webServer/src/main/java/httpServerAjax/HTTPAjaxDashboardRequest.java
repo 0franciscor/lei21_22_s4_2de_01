@@ -30,9 +30,9 @@ public class HTTPAjaxDashboardRequest extends Thread {
             // System.out.println(request.getURI());
 
             System.out.println("Chego aqui 2");
-            if(request.getMethod().equals("GET")) {
-                if(request.getURI().equals("/data")) {
-                    //response.setContentFromString(HTTPServerAjaxDashboard.getData(), "text/html");
+            if(request.getMethod().equals("PUT")) {
+                if(request.getURI().equals("/agvData/")) {
+                    response.setContentFromString(HTTPServerAjaxDashboard.getData(request.getURI().substring(9)), "text/html");
                     response.setResponseStatus("200 Ok");
                 }
                 else {
@@ -52,10 +52,8 @@ public class HTTPAjaxDashboardRequest extends Thread {
                 response.send(outS);
             }
             else { // NOT GET
-                System.out.println(request.getURI());
-                if(request.getMethod().equals("PUT")
-                        && request.getURI().startsWith("/agvData/")) {
-                    HTTPServerAjaxDashboard.getData(request.getURI().substring(9));
+                if(request.getMethod().equals("PUT") && request.getURI().startsWith("/agvData/")) {
+                    response.setContentFromString(HTTPServerAjaxDashboard.getData(request.getURI().substring(9)), "text/html");
                     response.setResponseStatus("200 Ok");
                 }
                 else {

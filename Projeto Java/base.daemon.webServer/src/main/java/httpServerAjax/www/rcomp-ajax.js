@@ -21,7 +21,8 @@ function getData() {
         setTimeout(getData, 5000);
     };
 
-    request.open("PUT", "/getData/", true);
-    request.timeout = 1000;
+    request.open("GET", "/agvData/", true);
+    request.timeout = 5000;
     request.send();
 }
+

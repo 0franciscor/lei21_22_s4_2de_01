@@ -49,7 +49,7 @@ public class GetAGVInfoRequest extends DigitalTwinProtocolRequest {
     public String buildResponse() {
         AGV agv = controller.getAGVsInformationForDashBoard(agvId);
 
-        String info = agv.getAgvId().getAGVId() + "," + agv.getAgvPosition().getAgvPosition() + "," + agv.getAgvStatus().obtainStatus().name()+ "\n";
+        String info = agv.getAgvId().getAGVId() + "," + agv.getAgvPosition().getAgvPosition() + "," + agv.getAgvStatus().obtainStatus().name()+ ",";
 
         return info;
     }

@@ -3,7 +3,7 @@ package httpServerAjax;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-
+import java.util.Arrays;
 
 
 /**
@@ -12,9 +12,9 @@ import java.net.Socket;
  */
 public class HTTPServerAjaxDashboard {
 
-    static private final String BASE_FOLDER="www";
+    static private final String BASE_FOLDER="base.daemon.webServer/src/main/java/httpServerAjax/www";
     static private ServerSocket sock;
-    static private final int PORT = 100;
+    static private final int PORT = 81;
 
 
     public static void main(String[] args) throws IOException {
@@ -41,26 +41,21 @@ public class HTTPServerAjaxDashboard {
     private static synchronized void incAccessesCounter() { accessesCounter++; }
 
     public static synchronized String getData(String data) throws IOException {
-        String textHtml = "<p> Olá, meu nome é manuela </p>";
-        /*
-        List<String> listOfAgvs = controller.getAGVInfo();
 
-        System.out.println("CHEGUEI" + listOfAgvs);
-
-        String textHtml = "<hr><p>";
-        for(int i=0; i<listOfAgvs.size(); i++) {
-
-            String[] arrOfStr = listOfAgvs.get(i).split(",", 3);
-
-            textHtml += "AGV ID - " + arrOfStr[0] + "\nAGV Position - " + arrOfStr[1] + "\nAGV Status - " + arrOfStr[2] + "\n";
-
+        String textHtml = "<p>";
+        String data1[] = data.split(",");
+        int count = 0;
+        while ((data1.length - 3) > count){
+            textHtml += "AGV ID - " + data1[count] + "\nAGV Position - " + data1[count + 1] + "\nAGV Status - " + data1[count + 2] + "\n";
+            count += 3;
         }
 
-        textHtml += "</p></hr>";
+        textHtml += "</p>";
         textHtml = textHtml + "</ul><hr><p>HTTP server accesses counter: " + accessesCounter + "</p><hr>";
+
+        System.out.println(textHtml);
         return textHtml;
-        */
-        return textHtml;
+
     }
 
 }

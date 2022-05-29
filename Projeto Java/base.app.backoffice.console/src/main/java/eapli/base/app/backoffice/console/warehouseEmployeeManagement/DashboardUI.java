@@ -14,9 +14,9 @@ public class DashboardUI extends AbstractUI {
     protected boolean doShow() {
 
         try {
-            System.out.println("MANUUU");
+
             theController.runDashboard();
-            System.out.println("ELAAAA");
+
         } catch (IOException e) {
             e.printStackTrace();
         }

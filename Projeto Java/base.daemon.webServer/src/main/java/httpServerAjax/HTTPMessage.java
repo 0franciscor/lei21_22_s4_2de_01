@@ -163,7 +163,8 @@ public class HTTPMessage {
     public String getContentAsString() { return(new String(content)); }
     public byte[] getContent() { return(content); }
     public void setContentFromString(String c, String ct) {
-        content=c.getBytes(); contentType=ct;
+        content=c.getBytes();
+        contentType=ct;
     }
 
     public boolean setContentFromFile(String fname) {
