@@ -3,9 +3,13 @@ autonumber
 actor "Sales Manager" as SM
 participant "NewQuestionnaireUI" as SYS
 participant "CreateNewQuestionnaireController" as CTR
+participant "QuestionnaireMain" as MAIN
+
 participant "SurveyLexer" as SL
 participant "CommonTokenStream" as CMS
+participant ":ParseTree" as PT
 participant "SurveyParser" as SP
+participant "SurveyVisitor" as VISITOR
 
 
 activate SM
@@ -21,9 +25,12 @@ SM -> SYS : Types the file path
 activate SYS
 SYS -> CTR : createQuestionnaire(fileName)
 activate CTR
-CTR -> SL** : lexer = create(fileName)
-CTR -> CMS** : tokens = create(lexer)
-CTR -> SP** : parser = create(tokens)
+CTR -> MAIN : parseWithVisitor(file)
+activate MAIN
+MAIN -> VISITOR : eval = visit(tree)
+activate VISITOR
+deactivate VISITOR
+deactivate MAIN
 deactivate CTR
 SYS --> SM : Evaluates the fulfillment of specific criteria \nand shows the success of the operation
 deactivate SYS
