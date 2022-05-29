@@ -26,7 +26,8 @@ public class HTTPServerAjaxDashboard {
             candidateVotes[i] = 0;
         }
 
-        try { sock = new ServerSocket(Integer.parseInt(args[0])); }
+        try {
+            sock = new ServerSocket(Integer.parseInt(args[0])); }
         catch(IOException ex) {
             System.out.println("Server failed to open local port " + args[0]);
             System.exit(1);

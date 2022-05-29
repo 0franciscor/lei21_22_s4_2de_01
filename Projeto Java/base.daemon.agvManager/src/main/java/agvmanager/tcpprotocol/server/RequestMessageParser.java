@@ -88,7 +88,7 @@ public class RequestMessageParser {
     }
 
     private static AGVManagerProtocolRequest parseGetAGVInformations(final String inputLine, final String[] tokens) {
-        AGVManagerProtocolRequest request;
+        AGVManagerProtocolRequest request = null;
         if (tokens.length != 3) {
             request = new ErrorInRequest(inputLine, "Wrong number of parameters");
         } else if (!isStringParam(tokens[1]) || !isStringParam(tokens[2])) {
@@ -97,6 +97,8 @@ public class RequestMessageParser {
             request = new DashboardRequest(getController(), inputLine);
             return request;
         }
+        
+        return request;
     }
 
 }

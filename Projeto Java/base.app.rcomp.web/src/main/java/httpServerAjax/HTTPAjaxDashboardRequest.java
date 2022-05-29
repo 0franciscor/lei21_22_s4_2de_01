@@ -13,7 +13,9 @@ public class HTTPAjaxDashboardRequest extends Thread {
     DataOutputStream outS;
 
     public HTTPAjaxDashboardRequest(Socket s, String f) {
-        baseFolder=f; sock=s;
+        baseFolder=f;
+        sock=s;
+
     }
 
     public void run() {
@@ -28,7 +30,7 @@ public class HTTPAjaxDashboardRequest extends Thread {
             // System.out.println(request.getURI());
 
             if(request.getMethod().equals("GET")) {
-                if(request.getURI().equals("/votes")) {
+                if(request.getURI().equals("/data")) {
                     response.setContentFromString(HTTPServerAjaxDashboard.getVotesStandingInHTML(), "text/html");
                     response.setResponseStatus("200 Ok");
                 }
@@ -48,20 +50,7 @@ public class HTTPAjaxDashboardRequest extends Thread {
                 }
                 response.send(outS);
             }
-            else { // NOT GET
-                if(request.getMethod().equals("PUT")
-                        && request.getURI().startsWith("/votes/")) {
-                    HTTPServerAjaxDashboard.castVote(request.getURI().substring(7));
-                    response.setResponseStatus("200 Ok");
-                }
-                else {
-                    response.setContentFromString(
-                            "<html><body><h1>ERROR: 405 Method Not Allowed</h1></body></html>",
-                            "text/html");
-                    response.setResponseStatus("405 Method Not Allowed");
-                }
-                response.send(outS);
-            }
+
         }
         catch(IOException ex) { System.out.println("Thread error when reading request"); }
         try { sock.close();}
