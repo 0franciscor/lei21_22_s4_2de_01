@@ -12,7 +12,9 @@ package "<<aggregate>> ProductOrder"{
     class Status
 }
 
-
+entity ProductOrder <<entity>> <<root>> {
+- numericIdentifier
+}
 
 class Status <<(V,#FF8B40) value object>> {}
 
