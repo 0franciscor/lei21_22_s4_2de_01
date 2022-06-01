@@ -23,4 +23,9 @@ public class InMemoryOrderRepository extends InMemoryDomainRepository<ProductOrd
     public ProductOrder getOrderById(Long id){
         return null;
     }
+
+    @Override
+    public Iterable<ProductOrder> findOrdersDispatchedForCustomerDelivery() {
+        return match(e->e.getOrderStatus().equals(OrderStatus.Status.DISPATCHED_FOR_COSTUMER));
+    }
 }

@@ -2,11 +2,14 @@ package eapli.base.ordermanagement.domain;
 
 import eapli.base.AGV.domain.AGV;
 import eapli.base.clientmanagement.domain.Client;
+import eapli.base.ordermanagement.dto.OrderDTO;
 import eapli.base.productmanagement.domain.Product;
+import eapli.base.productmanagement.dto.ProductDTO;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.general.domain.model.Money;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
+import eapli.framework.representations.dto.DTOable;
 import eapli.framework.time.util.Calendars;
 
 import javax.persistence.*;
@@ -14,7 +17,7 @@ import java.io.Serializable;
 import java.util.*;
 
 @Entity
-public class ProductOrder implements AggregateRoot<Long>, Serializable {
+public class ProductOrder implements AggregateRoot<Long>, Serializable, DTOable<OrderDTO> {
     private static final long serialVersionUID = 1L;
 
     public enum SourceChannel {
@@ -288,6 +291,11 @@ public class ProductOrder implements AggregateRoot<Long>, Serializable {
 
     public OrderWeight getOrderWeight() {
         return orderWeight;
+    }
+
+    @Override
+    public OrderDTO toDTO() {
+        return new OrderDTO(orderId,createdOn.toString(),client.obtainName().toString(),status.toString());
     }
 
 
