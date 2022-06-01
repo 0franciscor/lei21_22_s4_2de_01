@@ -30,7 +30,7 @@ public class DashboardService {
         for (String s : strings){
             string.append(s);
         }
-        System.out.println(string);
+
         request.setRequestMethod("PUT");
         request.setURI(string.toString());
 
