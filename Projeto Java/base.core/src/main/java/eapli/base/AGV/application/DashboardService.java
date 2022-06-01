@@ -30,8 +30,11 @@ public class DashboardService {
         for (String s : strings){
             string.append(s);
         }
+        System.out.println(string);
         request.setRequestMethod("PUT");
         request.setURI(string.toString());
+
+
         try{
             request.send(sOut);
         } catch(Exception e){
@@ -48,7 +51,7 @@ public class DashboardService {
             System.exit(1);
         }
 
-        try { serverPort = 81; }
+        try { serverPort = 83; }
         catch(NumberFormatException ex) {
             System.out.println("Invalid SERVER-PORT.");
             System.exit(1);
@@ -69,6 +72,6 @@ public class DashboardService {
         sendAGVInformation();
 
 
-        java.awt.Desktop.getDesktop().browse(URI.create("http://localhost:81"));
+        java.awt.Desktop.getDesktop().browse(URI.create("http://localhost:83"));
     }
 }

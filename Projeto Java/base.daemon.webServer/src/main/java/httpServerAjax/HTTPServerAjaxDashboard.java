@@ -3,7 +3,6 @@ package httpServerAjax;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Arrays;
 
 
 /**
@@ -14,7 +13,7 @@ public class HTTPServerAjaxDashboard {
 
     static private final String BASE_FOLDER="base.daemon.webServer/src/main/java/httpServerAjax/www";
     static private ServerSocket sock;
-    static private final int PORT = 81;
+    static private final int PORT = 83;
 
 
     public static void main(String[] args) throws IOException {
@@ -37,25 +36,30 @@ public class HTTPServerAjaxDashboard {
     }
 
     private static int accessesCounter;
+    private static String data;
+
 
     private static synchronized void incAccessesCounter() { accessesCounter++; }
 
-    public static synchronized String getData(String data) throws IOException {
+    public static synchronized void getData(String dataAux) {
+        data = dataAux;
+    }
 
-        String textHtml = "<p>";
-        String data1[] = data.split(",");
-        int count = 0;
-        while ((data1.length - 3) > count){
-            textHtml += "AGV ID - " + data1[count] + "\nAGV Position - " + data1[count + 1] + "\nAGV Status - " + data1[count + 2] + "\n";
-            count += 3;
+    public static synchronized String updateData(){
+        String textHtml = "";
+
+        if (!data.isBlank()){
+            String[] data1 = data.split(",");
+            int count = 0;
+            while ((data1.length - 3) > count){
+                textHtml += "<div style=\"border:1px solid black\"> <center> AGV ID - " + data1[count] + "<br> AGV Position - " + data1[count + 1] + "<br>AGV Status - " + data1[count + 2] + "<br> </center> </div> <br>";
+                count += 3;
+            }
         }
+        textHtml += textHtml + "</ul><hr><p>HTTP server accesses counter: " + accessesCounter + "</p><hr>";
 
-        textHtml += "</p>";
-        textHtml = textHtml + "</ul><hr><p>HTTP server accesses counter: " + accessesCounter + "</p><hr>";
 
-        System.out.println(textHtml);
         return textHtml;
-
     }
 
 }
