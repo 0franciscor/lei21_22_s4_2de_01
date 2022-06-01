@@ -24,15 +24,13 @@ public class HTTPAjaxDashboardRequest extends Thread {
         }
         catch(IOException ex) { System.out.println("Thread error on data streams creation"); }
         try {
-            System.out.println("Chego aqui");
             HTTPMessage request = new HTTPMessage(inS);
             HTTPMessage response = new HTTPMessage();
             // System.out.println(request.getURI());
 
-            System.out.println("Chego aqui 2");
-            if(request.getMethod().equals("PUT")) {
-                if(request.getURI().equals("/agvData/")) {
-                    response.setContentFromString(HTTPServerAjaxDashboard.getData(request.getURI().substring(9)), "text/html");
+            if(request.getMethod().equals("GET")) {
+                if(request.getURI().equals("/agvData")) {
+                    response.setContentFromString(HTTPServerAjaxDashboard.updateData(), "text/html");
                     response.setResponseStatus("200 Ok");
                 }
                 else {
@@ -53,7 +51,7 @@ public class HTTPAjaxDashboardRequest extends Thread {
             }
             else { // NOT GET
                 if(request.getMethod().equals("PUT") && request.getURI().startsWith("/agvData/")) {
-                    response.setContentFromString(HTTPServerAjaxDashboard.getData(request.getURI().substring(9)), "text/html");
+                    HTTPServerAjaxDashboard.getData(request.getURI().substring(9));
                     response.setResponseStatus("200 Ok");
                 }
                 else {
