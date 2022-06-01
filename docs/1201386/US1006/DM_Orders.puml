@@ -14,6 +14,7 @@ package "<<aggregate>> ProductOrder"{
 
 entity ProductOrder <<entity>> <<root>> {
 - numericIdentifier
+- dateOfOrder
 }
 
 class Status <<(V,#FF8B40) value object>> {}
@@ -38,12 +39,24 @@ entity User <<entity>> <<root>> {
 
 class Role <<(V,#FF8B40) value object>> {}
 
+package "<<aggregate>> Client" {
+    entity Client
+    class Name
+}
+
+entity Client <<entity>> <<root>> {
+
+}
+class Name <<(V,#FF8B40) value object>> {}
+
+
 User ---> "1..*" Role : plays a
 
 Employee --> "1" User : is a
 
 Employee  ----> "0..1" ProductOrder : manage
 ProductOrder --> "1" Status : is in
-
+ProductOrder -----> "1" Client : associated
+Client ---> "1" Name: associated with a
 
 @enduml

@@ -12,7 +12,7 @@ participant RepositoryFactory as Factory <<factory>>
 database OrderRepository as repository <<repository>>
 
 activate SC
-SC -> UI : Inicia o processo de visualizar as encomendas\nque se encontram no status customer delivery
+SC -> UI : Inicia o processo de visualizar as encomendas\nque se encontram no status Dispatched for Client
 activate UI
 UI -> Controller: create
 UI -> Controller: getOrdersDispatchedForCustomerDelivery()
@@ -45,7 +45,7 @@ deactivate Controller
 UI --> SC : Mostra a lista de encomendas
 deactivate UI
 loop enquanto desejar alterar o status de encomendas
-SC -> UI : Pergunta se pretende alterar o status de alguma\nencomenda para delivered
+SC -> UI : Pergunta se pretende alterar o status de alguma\nencomenda para Being Delivered
 activate UI
 alt deseja alterar o status
 UI --> SC : Solicita o identificador numérico da encomenda
