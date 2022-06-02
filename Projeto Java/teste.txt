@@ -1,9 +1,9 @@
-01-COSM228
-Cosmetics Questionnaire
-Hello,
+01-COSM228 Cosmetics Questionnaire
+Hello!
 This questionnaire aims to...
 It takes approximately 10 minutes.
 Thank you very much for your time and support.
+
 
 1
 About You
@@ -92,7 +92,7 @@ Type: Multiple-Choice
 10
 Which categories are you the most fond of?
 (mandatory)
-Sort the following categories according to your taste
+Sort the following categories according to your taste.
 
 Type: Sorting Options
 1)Skin care

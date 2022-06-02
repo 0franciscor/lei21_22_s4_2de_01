@@ -5,10 +5,14 @@ import eapli.framework.domain.model.DomainEntities;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.HashMap;
 
+/**
+ *
+ *
+ * Created by Rita Ariana Sobral on 02/06/2022.
+ */
 @Entity
-public class Questionnaire implements AggregateRoot<String>, Serializable {
+public class Questionnaire implements AggregateRoot<Long>, Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -16,50 +20,21 @@ public class Questionnaire implements AggregateRoot<String>, Serializable {
     private Long version;
 
     @Id
-    @Column(name = "questionnaireCode")
-    private String code;
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private Long idBaseDeDados;
 
-    private String title;
+    private Identifier surveyId;
 
-    private String initialMessage;
+    private Titulo titulo;
 
-    private String finalMessage;
+    private Message initialMessage;
 
-    @ElementCollection
-    @CollectionTable(name = "sections", joinColumns = {@JoinColumn(name = "questionnaireCode", referencedColumnName = "code")})
-    @MapKeyColumn(name = "section")
-    @Column(name = "question")
-    private HashMap<String, String> sectionsAndQuestions = new HashMap<>();
+    private Message finalMessage;
 
-    public Questionnaire(final String code, final String title, final String initialMessage, final HashMap<String,String> sectionsAndQuestions, final String finalMessage){
-        this.code=code;
-        this.title=title;
-        this.initialMessage=initialMessage;
-        this.sectionsAndQuestions=sectionsAndQuestions;
-        this.finalMessage=finalMessage;
-    }
 
     public Questionnaire(){}
 
-    public String code() {
-        return code;
-    }
 
-    public String title() {
-        return title;
-    }
-
-    public String initialMessage() {
-        return initialMessage;
-    }
-
-    public String finalMessage() {
-        return finalMessage;
-    }
-
-    public HashMap<String, String> sectionsAndQuestions() {
-        return sectionsAndQuestions;
-    }
 
     @Override
     public boolean equals(final Object o){
@@ -85,10 +60,25 @@ public class Questionnaire implements AggregateRoot<String>, Serializable {
         return identity().equals(that.identity());
     }
 
+
     @Override
-    public String identity() {
-        return code;
+    public Long identity() {
+        return this.idBaseDeDados;
     }
 
+    public void modifyId(Identifier surveyIdentifier) {
+        this.surveyId = surveyIdentifier;
+    }
 
+    public void modifyTitle(Titulo titulo) {
+        this.titulo = titulo;
+    }
+
+    public void modifyInitialMessage(Message initialMessage) {
+        this.initialMessage = initialMessage;
+    }
+
+    public void modifyFinalMessage(Message finalMessage) {
+        this.finalMessage = finalMessage;
+    }
 }

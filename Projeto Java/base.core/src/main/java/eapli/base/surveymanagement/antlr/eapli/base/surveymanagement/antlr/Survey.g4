@@ -18,8 +18,8 @@ regraIdQuestionario: alfanumerico+ HIFEN alfanumerico+;
 
 regraTitulo: frase;
 
-regraMensagem: frase pontucao*
-             | (frase pontucao* NEWLINE)+ ;
+regraMensagem: (frase pontucao NEWLINE)+ ;
+
 
 regraId: NUMERO+;
 
@@ -47,7 +47,7 @@ pergunta: regraId NEWLINE regraPergunta PARENTESIS_ESQUERDO obrigatoriedade PARE
 
 seccao: regraId NEWLINE regraTitulo NEWLINE regraMensagem? 'Section Obligatoriness: ' obrigatoriedade (NEWLINE 'Repeatability: ' repetibilidade)? NEWLINE pergunta+;
 
-questionario: regraIdQuestionario NEWLINE regraTitulo NEWLINE regraMensagem? (NEWLINE seccao)+ NEWLINE NEWLINE regraMensagem;
+questionario: regraIdQuestionario ESPACO regraTitulo NEWLINE (regraMensagem NEWLINE)? (NEWLINE seccao)+ NEWLINE NEWLINE regraMensagem;
 
 //------------------- TOKENS -------------------
 
