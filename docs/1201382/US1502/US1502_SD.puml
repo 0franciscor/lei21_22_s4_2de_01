@@ -4,6 +4,7 @@
 actor "Client" as EMPLOYEE
 participant ListOpenOrdersUI as UI
 participant ListOpenOrdersController as CT <<aplication>>
+participant ListOpenOrdersService as SV <<aplication>>
 participant TcpOrderServer as SRV <<server>>
 participant TcpSrvOrderThread as RQ <<thread>>
 participant ServerSocket as SS <<domain>>
@@ -15,14 +16,17 @@ activate EMPLOYEE
 activate UI
 UI -> CT : getOpenOrdersOfTheClient()
 activate CT
+CT -> SV : runService()
+activate SV
 
 
 
-CT -> SRV : getOpenOrdersOfTheClient(clientId)
+SV -> SRV : getOpenOrdersOfTheClient(clientId)
+
 activate SRV
 
 
-CT -> SS** : create(port)
+SV -> SS** : create(port)
 
 loop every time the server receives a request
 
@@ -39,7 +43,7 @@ deactivate SRV
 
 
 deactivate RQ
-
+deactivate SV
 end
 deactivate CT
 
