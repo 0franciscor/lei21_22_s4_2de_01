@@ -1,10 +1,17 @@
 package eapli.base.surveymanagement.domain;
 
+import eapli.base.clientmanagement.domain.PostalAddress;
+import eapli.base.shoppingcarmanagement.domain.ShopCarItem;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 
 /**
  *
@@ -30,6 +37,10 @@ public class Questionnaire implements AggregateRoot<Long>, Serializable {
     private Message initialMessage;
 
     private Message finalMessage;
+
+    @ManyToMany()
+    @JoinColumn(name = "section_questionaire_id")
+    private List<Section> sections = new ArrayList<>();
 
 
     public Questionnaire(){}
@@ -80,5 +91,9 @@ public class Questionnaire implements AggregateRoot<Long>, Serializable {
 
     public void modifyFinalMessage(Message finalMessage) {
         this.finalMessage = finalMessage;
+    }
+
+    public boolean addSection(final Section section) {
+        return sections.add(section);
     }
 }

@@ -19,8 +19,15 @@ public class Question implements Serializable {
     @Id
     private Long questionId;
 
+    private Message Message;
+
     public void modifyId(Long identifier) {
         this.questionId = identifier;
     }
+    
+    public void modifyMessage(Message Message) {
+        this.Message = Message;
+    }
+
 
 }

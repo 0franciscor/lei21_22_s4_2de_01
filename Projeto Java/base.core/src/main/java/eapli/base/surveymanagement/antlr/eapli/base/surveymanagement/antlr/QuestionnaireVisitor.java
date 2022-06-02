@@ -14,7 +14,9 @@ public class QuestionnaireVisitor extends SurveyBaseVisitor<Questionnaire> {
 
     int aux;
 
-    Question question = new Question();
+    Question question;
+
+    Section section;
 
     Questionnaire questionnaire = new Questionnaire();
 
@@ -25,7 +27,7 @@ public class QuestionnaireVisitor extends SurveyBaseVisitor<Questionnaire> {
      * {@link #visitChildren} on {@code ctx}.</p>
      */
     @Override public Questionnaire visitStart(SurveyParser.StartContext ctx) {
-        return visit(ctx.questionario());
+        return visitChildren(ctx);
     }
 
     /**
@@ -36,6 +38,7 @@ public class QuestionnaireVisitor extends SurveyBaseVisitor<Questionnaire> {
      */
     @Override public Questionnaire visitQuestionario(SurveyParser.QuestionarioContext ctx) {
         visit(ctx.regraIdQuestionario());
+        aux=0;
         visit(ctx.regraTitulo());
         int size = ctx.regraMensagem().size();
         if (size == 2){
@@ -47,9 +50,14 @@ public class QuestionnaireVisitor extends SurveyBaseVisitor<Questionnaire> {
             aux=1;
             visit(ctx.regraMensagem(0));
         }
+        size = ctx.seccao().size();
 
+        for (int i=0; i<size; i++){
+            visit(ctx.seccao(i));
+            questionnaire.addSection(section);
+        }
 
-        return visitChildren(ctx);
+        return questionnaire;
     }
 
     /**
@@ -93,7 +101,11 @@ public class QuestionnaireVisitor extends SurveyBaseVisitor<Questionnaire> {
      */
     @Override public Questionnaire visitRegraTitulo(SurveyParser.RegraTituloContext ctx) {
         visit(ctx.frase());
-        questionnaire.modifyTitle(new Titulo(auxiliar));
+        if(aux==0){
+            questionnaire.modifyTitle(new Titulo(auxiliar));
+        } else if(aux==1){
+            section.modifyTitle(new Titulo(auxiliar));
+        }
         auxiliar = null;
         return null;
     }
@@ -129,6 +141,8 @@ public class QuestionnaireVisitor extends SurveyBaseVisitor<Questionnaire> {
             questionnaire.modifyInitialMessage(new Message(message.toString()));
         } else if (aux == 1){
             questionnaire.modifyFinalMessage(new Message(message.toString()));
+        } else if(aux == 2){
+            section.modifyMessage(new Message(message.toString()));
         }
         return visitChildren(ctx);
     }
@@ -143,5 +157,64 @@ public class QuestionnaireVisitor extends SurveyBaseVisitor<Questionnaire> {
         auxiliar = ctx.getText();
         return null;
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p>The default implementation returns the result of calling
+     * {@link #visitChildren} on {@code ctx}.</p>
+     */
+    @Override public Questionnaire visitSeccao(SurveyParser.SeccaoContext ctx) {
+        section = new Section();
+        visit(ctx.regraId());
+        section.modifyId(Long.parseLong(auxiliar));
+        aux=1;
+        visit(ctx.regraTitulo());
+
+        aux = 2;
+        try{
+            visit(ctx.regraMensagem());
+        } catch (NullPointerException e){
+            System.out.println("Section " + section.sectionId() + " with no section description.");
+        }
+
+        int size = ctx.pergunta().size();
+
+        for (int i=0; i<size; i++){
+            visit(ctx.pergunta(i));
+            section.addQuestion(question);
+        }
+
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p>The default implementation returns the result of calling
+     * {@link #visitChildren} on {@code ctx}.</p>
+     */
+    @Override public Questionnaire visitRegraId(SurveyParser.RegraIdContext ctx) {
+        auxiliar = ctx.getText();
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p>The default implementation returns the result of calling
+     * {@link #visitChildren} on {@code ctx}.</p>
+     */
+    @Override public Questionnaire visitPergunta(SurveyParser.PerguntaContext ctx) {
+        question = new Question();
+        visit(ctx.regraId());
+        question.modifyId(Long.parseLong(auxiliar));
+
+
+        return null;
+    }
+
+
+
 
 }
