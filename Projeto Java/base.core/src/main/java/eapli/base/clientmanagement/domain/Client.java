@@ -101,4 +101,6 @@ public class Client implements AggregateRoot<Long>, Serializable {
     public Name obtainName() {
         return name;
     }
+
+
 }

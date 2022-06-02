@@ -22,7 +22,6 @@ package daemon.agvmanager;
 
 import agvmanager.tcpprotocol.server.RequestMessageParser;
 import daemon.agvmanager.presentation.AgvManagerProtocolServer;
-import eapli.base.AGV.application.AGVManagerControllerImplementation;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.usermanagement.domain.BasePasswordPolicy;
 import org.apache.logging.log4j.LogManager;
