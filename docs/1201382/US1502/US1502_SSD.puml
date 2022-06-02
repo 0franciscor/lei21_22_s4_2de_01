@@ -1,15 +1,14 @@
 @startuml
 'https://plantuml.com/sequence-diagram
 
-actor "Client" as EMPLOYEE
+actor Client as CLIENT
 participant System as SYSTEM
 
-EMPLOYEE -> SYSTEM : Request to see his open orders
-activate EMPLOYEE
+CLIENT -> SYSTEM : Request to see his open orders
+activate CLIENT
 activate SYSTEM
 
-
-SYSTEM --> EMPLOYEE : Show the open orders and informs\nthe operation success
+SYSTEM --> CLIENT : Show the open orders and informs\nthe operation success
 deactivate SYSTEM
-deactivate EMPLOYEE
+deactivate CLIENT
 @enduml

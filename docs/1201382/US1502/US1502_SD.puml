@@ -1,0 +1,55 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+actor "Client" as EMPLOYEE
+participant ListOpenOrdersUI as UI
+participant ListOpenOrdersController as CT <<aplication>>
+participant TcpOrderServer as SRV <<server>>
+participant TcpSrvOrderThread as RQ <<thread>>
+participant ServerSocket as SS <<domain>>
+participant "ncliSock:\nSocket" as S <<domain>>
+
+EMPLOYEE -> UI : Request to see his open orders
+activate EMPLOYEE
+
+activate UI
+UI -> CT : getOpenOrdersOfTheClient()
+activate CT
+
+
+
+CT -> SRV : getOpenOrdersOfTheClient(clientId)
+activate SRV
+
+
+CT -> SS** : create(port)
+
+loop every time the server receives a request
+
+SRV -> SS : cliSock = accept()
+
+activate SS
+deactivate SS
+
+SRV -> RQ** : create(cliSock)
+
+SRV -> RQ : start()
+activate RQ
+deactivate SRV
+
+
+deactivate RQ
+
+end
+deactivate CT
+
+UI --> EMPLOYEE : Show the open orders and informs\nthe operation success
+deactivate UI
+deactivate EMPLOYEE
+
+
+
+
+
+deactivate SRV
+@enduml
