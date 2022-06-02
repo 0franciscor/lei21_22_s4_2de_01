@@ -293,6 +293,8 @@ public class ProductOrder implements AggregateRoot<Long>, Serializable, DTOable<
         return orderWeight;
     }
 
+    public Client getClient(){return client;}
+
     @Override
     public OrderDTO toDTO() {
         return new OrderDTO(orderId,createdOn.toString(),client.obtainName().toString(),status.toString());

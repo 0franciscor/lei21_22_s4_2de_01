@@ -5,6 +5,9 @@ import eapli.base.clientmanagement.domain.Client;
 import eapli.base.clientmanagement.domain.Email;
 import eapli.base.clientmanagement.repositories.ClientRepository;
 import eapli.base.infrastructure.persistence.PersistenceContext;
+import eapli.base.orderServer.tcp.utils.ConstantsServer;
+import eapli.base.ordermanagement.domain.ProductOrder;
+import eapli.base.ordermanagement.repository.OrderRepository;
 import eapli.base.productmanagement.application.ListProductDTOService;
 import eapli.base.productmanagement.domain.Product;
 import eapli.base.productmanagement.domain.UniqueInternalCode;
@@ -51,6 +54,7 @@ class TcpSrvOrderThread implements Runnable {
     private final ProductRepository productRepository = PersistenceContext.repositories().products();
     private final ClientRepository clientRepository = PersistenceContext.repositories().client();
     private final ShoppingCarRepository shoppingCarRepository = PersistenceContext.repositories().shoppingCar();
+    private final OrderRepository orderRepository = PersistenceContext.repositories().orders();
     private Product product;
     private Optional<Client> client;
     private Optional<ShoppingCar> shoppingCar;
@@ -72,7 +76,7 @@ class TcpSrvOrderThread implements Runnable {
 
             byte[] clientMessage = sIn.readNBytes(4);
 
-            if (clientMessage[1] == 0) {
+            if (clientMessage[1] == ConstantsServer.START_CODE) {
                 System.out.println("[SUCCESS] Código de Teste (0) do Cliente recebido.");
 
                 MessageUtils.writeMessage((byte) 2,sOut);
@@ -82,7 +86,7 @@ class TcpSrvOrderThread implements Runnable {
                 MessageUtils.readMessage(clientMessageUS, sIn);
 
                 /*============Enviar produtos ao cliente============*/
-                if(clientMessageUS[1] == 4) {
+                if(clientMessageUS[1] == ConstantsServer.SEND_PRODUCTS) {
                     ObjectOutputStream sOutputObject = new ObjectOutputStream(this.s.getOutputStream());
 
                     Iterable<ProductDTO> productCatalog = service.allProducts();
@@ -91,7 +95,7 @@ class TcpSrvOrderThread implements Runnable {
                 }
 
                 /*============Verificar se Produto Existe============*/
-                if(clientMessageUS[1] == 3) {
+                if(clientMessageUS[1] == ConstantsServer.PRODUCT_EXISTS) {
                     String productUniqueInternalCode = MessageUtils.getDataFromMessage(clientMessageUS,sIn);
                     product = productRepository.findByUniqueInternalCode(UniqueInternalCode.valueOf(productUniqueInternalCode));
                     if(product == null) {
@@ -102,7 +106,7 @@ class TcpSrvOrderThread implements Runnable {
                 }
 
                 /*============Adicionar Produto ao Carrinho de Compras============*/
-                if(clientMessageUS[1] == 5) {
+                if(clientMessageUS[1] == ConstantsServer.SHOPPINGCAR_ADD) {
                     String info = MessageUtils.getDataFromMessage(clientMessageUS,sIn);
                     String[] array = info.split(" ");
                     String quantidade = array[0];
@@ -124,10 +128,21 @@ class TcpSrvOrderThread implements Runnable {
                     }
 
                 }
+                /*============ Buscar encomendas associadas a um cliente ============*/
+                if (clientMessageUS[1] == ConstantsServer.OPEN_ORDERS){
+
+                    Long clientId = Long.parseLong(MessageUtils.getDataFromMessage(clientMessageUS,sIn));
+                    Iterable<ProductOrder> productOrderList = orderRepository.getOpenOrdersOfAClient(clientId);
+                    ObjectOutputStream sOutputObject = new ObjectOutputStream(this.s.getOutputStream());
+
+                    sOutputObject.writeObject(productOrderList);
+                    sOutputObject.flush();
+
+                }
 
                 byte[] clientMessageEnd = sIn.readNBytes(4);
 
-                if (clientMessageEnd[1] == 1) {
+                if (clientMessageEnd[1] == ConstantsServer.FINISH_CODE) {
                     System.out.println("[SUCCESS] Código de Fim (1) do Cliente recebido.");
                     writeMessage((byte) 2,sOut);
                     System.out.println("[INFO] A Mandar Código de Entendido (2) ao Cliente.");

@@ -51,4 +51,15 @@ public class JpaOrderRepository extends JpaAutoTxRepository<ProductOrder, Long, 
 
         return query.getResultList();
     }
+
+    @Override
+    public Iterable<ProductOrder> getOpenOrdersOfAClient(Long clientId) {
+        final TypedQuery<ProductOrder> query = entityManager().createQuery(
+                "SELECT d1 FROM ProductOrder d1 WHERE d1.id NOT IN (SELECT d.id FROM ProductOrder d JOIN d.client aind WHERE aind.id = :id AND d.status = :status)",
+                ProductOrder.class);
+        query.setParameter("id", clientId);
+        query.setParameter("status", OrderStatus.Status.RECEIVED_BY_COSTUMER);
+
+        return query.getResultList();
+    }
 }

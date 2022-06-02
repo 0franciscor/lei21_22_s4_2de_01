@@ -6,6 +6,9 @@ import eapli.base.ordermanagement.repository.OrderRepository;
 import eapli.base.productmanagement.domain.Product;
 import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class InMemoryOrderRepository extends InMemoryDomainRepository<ProductOrder, Long> implements OrderRepository {
 
     static {
@@ -27,5 +30,10 @@ public class InMemoryOrderRepository extends InMemoryDomainRepository<ProductOrd
     @Override
     public Iterable<ProductOrder> findOrdersDispatchedForCustomerDelivery() {
         return match(e->e.getOrderStatus().equals(OrderStatus.Status.DISPATCHED_FOR_COSTUMER));
+    }
+
+    @Override
+    public Iterable<ProductOrder> getOpenOrdersOfAClient(Long clientId) {
+        return null;
     }
 }
