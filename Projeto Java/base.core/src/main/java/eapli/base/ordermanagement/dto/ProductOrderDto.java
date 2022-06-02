@@ -20,12 +20,7 @@ public class ProductOrderDto implements DTO {
 
     public String status;
 
-    public ProductOrderDto(final long id, final String date, final String customerName, final String total){
-        this.orderId = id;
-        this.date = date;
-        this.customerName = customerName;
-        this.total = total;
-    }
+    public String client;
 
     public ProductOrderDto(String agvId, Long orderId, String taskDescription, String status) {
         this.orderId = orderId;
@@ -41,6 +36,14 @@ public class ProductOrderDto implements DTO {
 
         this.status = status;
     }
+
+    public ProductOrderDto(long id, String client, String total, String status){
+        this.orderId = id;
+        this.client = client;
+        this.total = total;
+        this.status = status;
+    }
+
 
     @Override
     public Class<? extends Annotation> annotationType() {
