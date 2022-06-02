@@ -1,7 +1,6 @@
-package eapli.base.app.backoffice.console.ordermanagement;
+package eapli.base.ordermanagement.application;
 
 import eapli.base.MessageUtils;
-import eapli.base.orderServer.tcp.utils.ConstantsServer;
 import eapli.base.ordermanagement.domain.ProductOrder;
 
 import java.io.DataInputStream;
@@ -57,7 +56,7 @@ public class ListOpenOrdersService {
             try {
                 if (MessageUtils.testCommunicationWithServer(socket.sOutData, socket.sInData)) {
 
-                    MessageUtils.writeMessage((byte) ConstantsServer.OPEN_ORDERS, socket.sOutData);
+                    MessageUtils.writeMessage((byte) 6, socket.sOutData);
 
                     // mostrar os produtos existentes
                     ObjectInputStream sInputObject = new ObjectInputStream(socket.sock.getInputStream());
