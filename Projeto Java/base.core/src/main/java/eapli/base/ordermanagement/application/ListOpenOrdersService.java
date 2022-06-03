@@ -47,7 +47,7 @@ public class ListOpenOrdersService {
             sock.close();
         }
     }
-    public Iterable<ProductOrder> getOpenOrdersOfTheClient() {
+    public Iterable<ProductOrder> getOpenOrdersOfTheClient(Long clientId) {
         Iterable<ProductOrder> productsOrders = null;
         try {
 
@@ -56,7 +56,7 @@ public class ListOpenOrdersService {
             try {
                 if (MessageUtils.testCommunicationWithServer(socket.sOutData, socket.sInData)) {
 
-                    MessageUtils.writeMessage((byte) 6, socket.sOutData);
+                    MessageUtils.writeMessageWithData((byte) 6, clientId.toString(), socket.sOutData);
 
                     // mostrar os produtos existentes
                     ObjectInputStream sInputObject = new ObjectInputStream(socket.sock.getInputStream());

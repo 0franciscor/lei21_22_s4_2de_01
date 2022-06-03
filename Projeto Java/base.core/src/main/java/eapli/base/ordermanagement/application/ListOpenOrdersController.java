@@ -18,14 +18,13 @@ public class ListOpenOrdersController {
     public List<ProductOrderDto> getOpenOrdersOfAClient(Long clientId){
 
         List<ProductOrderDto> list = new ArrayList<>();
-        Iterable<ProductOrder> po = service.getOpenOrdersOfTheClient();
+        Iterable<ProductOrder> po = service.getOpenOrdersOfTheClient(clientId);
 
         for (ProductOrder productOrder : po) {
             Long id = productOrder.getOrderId();
             String client = productOrder.obtainClient().toString();
-            String total = productOrder.obtainTotalAmountWithTaxes().toString();
             String status = productOrder.getOrderStatus().toString();
-            ProductOrderDto productOrderDto = new ProductOrderDto(id, client, total, status);
+            ProductOrderDto productOrderDto = new ProductOrderDto(id, client,status);
             list.add(productOrderDto);
         }
         return list;
