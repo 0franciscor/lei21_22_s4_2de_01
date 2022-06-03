@@ -27,6 +27,7 @@ import eapli.base.app.backoffice.console.categorymanagement.CreateCategoriaUI;
 import eapli.base.app.backoffice.console.clientmanagement.RegisterClientUI;
 import eapli.base.app.backoffice.console.ordermanagement.ForceOrderPrepUI;
 import eapli.base.app.backoffice.console.ordermanagement.RegisterClientOrderUI;
+import eapli.base.app.backoffice.console.ordermanagement.ViewOrdersSentToCustomerUI;
 import eapli.base.app.backoffice.console.presentation.authz.ImportJsonUI;
 import eapli.base.app.backoffice.console.productmanagement.ListProductUi;
 import eapli.base.app.backoffice.console.productmanagement.RegisterProductUI;
@@ -83,6 +84,7 @@ public class MainMenu extends AbstractUI {
     private static final int REGISTER_CLIENT_ORDER = 3;
     private static final int REGISTER_PRODUCT = 4;
     private static final int CREATE_CATALOG = 5;
+    private static final int ORDERS_DISPATCHED_FOR_COSTUMER = 6;
 
     //WAREHOUSE EMPLOYEE
     private static final int AGV_CONFIGURATION = 1;
@@ -213,7 +215,7 @@ public class MainMenu extends AbstractUI {
         menu.addItem(REGISTER_CLIENT_ORDER, "Register a Client Order", new RegisterClientOrderUI()::show);
         menu.addItem(REGISTER_PRODUCT, "Register a Product", new RegisterProductUI()::show);
         menu.addItem(CREATE_CATALOG, "Create a catalog:", new ListProductUi()::show);
-
+        menu.addItem(ORDERS_DISPATCHED_FOR_COSTUMER, "View Order Dispatched for Costumer:", new ViewOrdersSentToCustomerUI()::show);
         return menu;
     }
 
