@@ -23,7 +23,7 @@ public class AgvDto {
 
     public String getId() {
         return id;
-    }
+    } //rever classe
 
     public String getVolume() {
         return volume;

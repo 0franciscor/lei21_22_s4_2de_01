@@ -44,6 +44,12 @@ public class ProductOrderDto implements DTO {
         this.status = status;
     }
 
+    public ProductOrderDto(long id, String client,String status){
+        this.orderId = id;
+        this.client = client;
+        this.status = status;
+    }
+
 
     @Override
     public Class<? extends Annotation> annotationType() {
