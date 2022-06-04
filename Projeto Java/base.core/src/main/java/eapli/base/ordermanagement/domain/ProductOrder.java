@@ -14,6 +14,7 @@ import eapli.framework.time.util.Calendars;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Entity
@@ -297,7 +298,10 @@ public class ProductOrder implements AggregateRoot<Long>, Serializable, DTOable<
 
     @Override
     public OrderDTO toDTO() {
-        return new OrderDTO(orderId,createdOn.toString(),client.obtainName().toString(),status.toString());
+        String pattern = "yyyy/MM/dd";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        String date = simpleDateFormat.format(createdOn.getTime());
+        return new OrderDTO(orderId,date,client.obtainName().toString(),status.toString());
     }
 
 

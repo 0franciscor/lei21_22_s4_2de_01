@@ -38,4 +38,9 @@ public class OrderStatus implements ValueObject, Serializable {
     public void changeStatusForBeingDispatchedForCostumer(){
         this.status = Status.DISPATCHED_FOR_COSTUMER;
     }
+
+    @Override
+    public String toString() {
+        return status.toString();
+    }
 }
