@@ -27,7 +27,7 @@ package digitaltwin.tcpprotocol.server;
  */
 public class BadRequest extends BaseErrorRequest {
 
-    public BadRequest(final String request, final String errorDescription) {
+    public BadRequest(final byte[] request, final String errorDescription) {
         super(request, errorDescription);
     }
 
