@@ -30,18 +30,16 @@ public class GetAGVInfoRequest extends DigitalTwinProtocolRequest {
 
     private final String agvId;
 
-    public GetAGVInfoRequest(String inputRequest, String agvId) {
-        super(new GetAGVInformation(), inputRequest);
+    public GetAGVInfoRequest(final byte[] request, String agvId) {
+        super(new GetAGVInformation(), request);
         this.agvId = agvId;
     }
 
     @Override
     public String execute() {
-
         try {
             return buildResponse();
         } catch (final Exception e) {
-            // we should be careful about exposing the Exception to the outside!
             return buildServerError(e.getMessage());
         }
     }
