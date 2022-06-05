@@ -31,19 +31,18 @@ public abstract class BaseErrorRequest extends DigitalTwinProtocolRequest {
 
     private final String errorDescription;
 
-    protected BaseErrorRequest(final String request, final String errorDescription) {
+    protected BaseErrorRequest(final byte[] request, final String errorDescription) {
         super(null, request);
         this.errorDescription = errorDescription;
     }
 
-    protected BaseErrorRequest(final String request) {
+    protected BaseErrorRequest(final byte[] request) {
         super(null, request);
         this.errorDescription = null;
     }
 
     @Override
     public String execute() {
-        // nothing to do, just build the response
         return buildResponse();
     }
 
@@ -54,7 +53,7 @@ public abstract class BaseErrorRequest extends DigitalTwinProtocolRequest {
                 errorDescription
         };
         final boolean[] mask = { false, true, true };
-        return CsvRecord.valueOf(fields, mask).toString() + "\n";
+        return CsvRecord.valueOf(fields, mask) + "\n";
     }
 
     protected abstract String messageType();
