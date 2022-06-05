@@ -40,10 +40,12 @@ public class ProductOrderTest {
         new Address("Rua", "353", "4505-102", "Aveiro", null);
     }
 
-    /*@Test(expected = IllegalArgumentException.class)
-    public void ensureOrderItemHasCode() {
-        new OrderItem( 1, null);
-    }*/
+    @Test
+    public void ensureModifyStatus(){
+        ProductOrder order = new ProductOrder();
+        order.changeProductOrderStatus(new OrderStatus(OrderStatus.Status.DELIVERED_BY_CARRIER));
+        assertEquals(order.getOrderStatus().toString(),new OrderStatus(OrderStatus.Status.DELIVERED_BY_CARRIER).toString());
+    }
 
 
 }
