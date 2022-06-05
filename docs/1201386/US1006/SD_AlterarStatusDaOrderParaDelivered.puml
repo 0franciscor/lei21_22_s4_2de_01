@@ -51,6 +51,12 @@ UI --> SC : Solicita o identificador numérico da encomenda
 deactivate UI
 SC -> UI : Informa a identificador
 activate UI
+UI -> Controller: findDispacthedOrderById(orderId)
+activate Controller
+Controller -> repository: findDispatchedOrderById(orderId)
+activate repository
+deactivate repository
+deactivate Controller
 UI -> Controller: changeStatusToBeingDelivered(orderId)
 activate Controller
 Controller->repository:findByNumericIdentifier(orderId)
