@@ -1,7 +1,6 @@
 package eapli.base.ordermanagement.dto;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 
 /**
  * DTO for orders.
@@ -9,7 +8,7 @@ import java.text.SimpleDateFormat;
  * @author Rita Ariana Sobral
  *
  */
-public class OrderDTO implements Serializable {
+public class OrderDTO {
 
     private final long orderId;
 

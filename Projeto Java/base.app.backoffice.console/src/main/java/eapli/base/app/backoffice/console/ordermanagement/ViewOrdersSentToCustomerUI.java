@@ -13,25 +13,43 @@ public class ViewOrdersSentToCustomerUI extends AbstractUI {
 
     @Override
     protected boolean doShow() {
-        System.out.println("Encomendas no Estado DISPATCHED FOR COSTUMER");
 
         Iterator<OrderDTO> orders = viewOrdersSentToCustomerController.getOrdersDispatchedForCustomerDelivery().iterator();
 
-        while (orders.hasNext()) {
-            OrderDTO order = orders.next();
-            System.out.println(order);
+        if(!orders.hasNext()){
+            System.out.println("De momento não existem encomendas no estado DISPATCHED FOR COSTUMER");
+        } else {
+            System.out.println("--- Encomendas no estado DISPATCHED FOR COSTUMER ---");
+
+            while (orders.hasNext()) {
+                OrderDTO order = orders.next();
+                System.out.println(order);
+            }
+            System.out.println();
+
+            String option = Console.readLine("Deseja alterar o estado de alguma encomenda para DELIVERED BY CARRIER?\n(sim|não)\n");
+
+            boolean invalidOrder;
+
+            while (option.equalsIgnoreCase("sim")){
+
+                do {
+                    try {
+                        String orderId = Console.readLine("Order ID:");
+                        viewOrdersSentToCustomerController.findDispacthedOrderById(orderId);
+                        invalidOrder = false;
+                        viewOrdersSentToCustomerController.changeStatusToBeingDelivered(orderId);
+                    } catch (Exception e) {
+                        System.out.println("Invalid Id.");
+                        invalidOrder = true;
+                    }
+                } while (invalidOrder);
+
+                option = Console.readLine("Deseja alterar o estado de mais alguma encomenda?\n(sim|não)\n");
+            }
+
         }
-        System.out.println();
 
-        String option = Console.readLine("Deseja alterar o estado de alguma encomenda para DELIVERED BY CARRIER?\n(sim|não)\n");
-
-        while (option.equalsIgnoreCase("sim")){
-            String orderId = Console.readLine("Order ID:");
-
-            viewOrdersSentToCustomerController.changeStatusToBeingDelivered(orderId);
-
-            option = Console.readLine("Deseja alterar o estado de mais alguma encomenda?\n(sim|não)\n");
-        }
 
         return true;
     }

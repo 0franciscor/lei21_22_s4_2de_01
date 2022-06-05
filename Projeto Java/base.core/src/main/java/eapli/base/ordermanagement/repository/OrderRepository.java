@@ -13,4 +13,6 @@ public interface OrderRepository extends DomainRepository<Long, ProductOrder> {
     Iterable<ProductOrder> findOrdersDispatchedForCustomerDelivery();
 
     Iterable<ProductOrder> getOpenOrdersOfAClient(Long clientId);
+
+    ProductOrder findDispatchedOrderById(Long orderId);
 }
