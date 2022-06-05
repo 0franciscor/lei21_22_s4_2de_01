@@ -29,12 +29,12 @@ import eapli.base.AGV.application.GetAGVInformation;
  */
 public abstract class DigitalTwinProtocolRequest {
 
-    protected final String request;
+    protected final byte[] request;
 
     protected GetAGVInformation controller;
 
-    protected DigitalTwinProtocolRequest(final GetAGVInformation controller, final String inputRequest) {
-        this.request = inputRequest;
+    protected DigitalTwinProtocolRequest(final GetAGVInformation controller, final byte[] request) {
+        this.request = request;
         this.controller = controller;
     }
 
@@ -67,15 +67,4 @@ public abstract class DigitalTwinProtocolRequest {
         return r.buildResponse();
     }
 
-    protected String buildBadRequest(final String errorDescription) {
-        final BaseErrorRequest r = new BaseErrorRequest(request, errorDescription) {
-
-            @Override
-            protected String messageType() {
-                return "BAD_REQUEST";
-            }
-
-        };
-        return r.buildResponse();
-    }
 }
