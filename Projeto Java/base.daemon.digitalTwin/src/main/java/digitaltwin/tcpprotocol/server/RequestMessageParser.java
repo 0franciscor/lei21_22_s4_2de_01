@@ -21,13 +21,7 @@
 package digitaltwin.tcpprotocol.server;
 
 import eapli.base.AGV.application.CallAGVManagerController;
-import eapli.base.AGV.application.GetAGVInformation;
-import eapli.framework.csv.util.CsvLineMarshaler;
 import eapli.framework.util.Utility;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import java.text.ParseException;
 
 /**
  * The message parser for the Booking protocol.
@@ -37,45 +31,32 @@ import java.text.ParseException;
 @Utility
 public class RequestMessageParser {
 
-    private static final Logger LOGGER = LogManager.getLogger(RequestMessageParser.class);
-
-    private final GetAGVInformation controller;
-
-    public RequestMessageParser(final GetAGVInformation controller) {
-        this.controller = controller;
-    }
+    public RequestMessageParser(){}
 
     /**
      * Parse and build the request.
      *
-     * @param inputLine
+     * @param receivedArray
      *
      * @return
      */
-    public DigitalTwinProtocolRequest parse(final String inputLine) {
-        // as a fallback make sure we return unknown
-        DigitalTwinProtocolRequest request = new UnknownRequest(inputLine);
+    public DigitalTwinProtocolRequest parse(final byte[] receivedArray, final String extraInfo) {
+        DigitalTwinProtocolRequest request = new UnknownRequest(receivedArray);
 
-        // parse to determine which type of request and if it is sintactally valid
-        String[] tokens;
-        try {
-            tokens = CsvLineMarshaler.tokenize(inputLine).toArray(new String[0]);
-            if (String.valueOf(CallAGVManagerController.DASHBOARD_REQUEST).equals(tokens[1]))
-                request = callAGVInfoRequest(inputLine, tokens);
-        } catch (final ParseException e) {
-            LOGGER.info("Unable to parse request: {}", inputLine);
-            request = new BadRequest(inputLine, "Unable to parse request");
-        }
+        if (CallAGVManagerController.DASHBOARD_REQUEST == receivedArray[1])
+            request = callAGVInfoRequest(receivedArray, extraInfo);
+
         return request;
     }
 
-    private DigitalTwinProtocolRequest callAGVInfoRequest(final String inputLine, final String[] tokens) {
+    private DigitalTwinProtocolRequest callAGVInfoRequest(final byte[] receivedArray, String extraInfo) {
         DigitalTwinProtocolRequest request;
-        if (tokens.length != 4) {
-            request = new BadRequest(inputLine, "Wrong number of parameters");
-        } else {
-            request = new GetAGVInfoRequest(inputLine, tokens[3]);
-        }
+
+        if (receivedArray.length != 4)
+            request = new BadRequest(receivedArray, "Wrong number of parameters");
+        else
+            request = new GetAGVInfoRequest(receivedArray, extraInfo);
+
         return request;
     }
 
