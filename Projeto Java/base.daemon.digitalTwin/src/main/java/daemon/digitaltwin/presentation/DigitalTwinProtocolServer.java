@@ -22,14 +22,12 @@ package daemon.digitaltwin.presentation;
 
 import digitaltwin.tcpprotocol.server.DigitalTwinProtocolRequest;
 import digitaltwin.tcpprotocol.server.RequestMessageParser;
-import eapli.base.AGV.application.GetAGVInformation;
+import eapli.base.MessageUtils;
+import eapli.base.orderServer.tcp.utils.ConstantsServer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -54,27 +52,66 @@ public class DigitalTwinProtocolServer {
 
         public ClientHandler(final Socket socket) {
             this.clientSocket = socket;
-            parser = new RequestMessageParser(new GetAGVInformation());
+            parser = new RequestMessageParser();
         }
 
         @Override
         public void run() {
             final var clientIP = clientSocket.getInetAddress();
-            LOGGER.debug("Acepted connection from {}:{}", clientIP.getHostAddress(), clientSocket.getPort());
+            LOGGER.debug("Accepted connection from {}:{}", clientIP.getHostAddress(), clientSocket.getPort());
 
-            try (var out = new PrintWriter(clientSocket.getOutputStream(), true);
-                 var in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()))) {
-                String inputLine;
-                while ((inputLine = in.readLine()) != null) {
-                    LOGGER.debug("Received message:----\n{}\n----", inputLine);
-                    final DigitalTwinProtocolRequest request = parser.parse(inputLine);
-                    final String response = request.execute();
-                    out.println(response);
-                    LOGGER.debug("Sent message:----\n{}\n----", response);
-                    if (request.isGoodbye()) {
-                        break;
+            try {
+                var in = new DataInputStream(clientSocket.getInputStream());
+                var out = new DataOutputStream(clientSocket.getOutputStream());
+
+                boolean exit = false;
+
+                while(!exit) {
+
+                    var inputArray = in.readNBytes(4);
+
+                    if (inputArray[1] == ConstantsServer.START_CODE) {
+                        LOGGER.debug("[SUCCESS] TEST CODE RECEIVED");
+
+                        MessageUtils.writeMessage((byte) 2, out);
+                        LOGGER.debug("[ACKNOWLEDGMENT] SENDING ACKNOWLEDGMENT MESSAGE");
+                    }
+
+                    if (inputArray[1] == 3) {
+
+                        int length = inputArray[2] + (256 * inputArray[3]);
+
+                        String extraInfo = null;
+                        byte[] string;
+                        if (length > 0) {
+                            string = in.readNBytes(length);
+                            extraInfo = new String(string);
+                        }
+
+                        LOGGER.debug("Received message:----\n{}\n----", inputArray);
+                        final DigitalTwinProtocolRequest request = parser.parse(inputArray, extraInfo);
+                        String response = request.execute();
+                        byte[] array = calculateSize(response);
+
+                        inputArray[2] = array[0];
+                        inputArray[3] = array[1];
+
+                        out.flush();
+                        out.write(inputArray);
+                        out.write(response.getBytes());
+
+                        LOGGER.debug("Sent message:----\n{}\n----", response);
+                    }
+
+                    if (inputArray[1] == ConstantsServer.FINISH_CODE) {
+                        LOGGER.debug("[SUCCESS] DISCONNECT CODE RECEIVED");
+
+                        MessageUtils.writeMessage((byte) 2, out);
+                        LOGGER.debug("[ACKNOWLEDGMENT] SENDING ACKNOWLEDGMENT MESSAGE");
+                        exit = true;
                     }
                 }
+
             } catch (final IOException e) {
                 LOGGER.error(e);
             } finally {
@@ -82,30 +119,34 @@ public class DigitalTwinProtocolServer {
                     clientSocket.close();
                     LOGGER.debug("Closing client socket {}:{}", clientIP.getHostAddress(), clientSocket.getPort());
                 } catch (final IOException e) {
-                    LOGGER.error("While closing the client socket {}:{}", clientIP.getHostAddress(),
-                            clientSocket.getPort(), e);
+                    LOGGER.error("While closing the client socket {}:{}", clientIP.getHostAddress(), clientSocket.getPort(), e);
                 }
-                // null the reference to ensure it will be caught by the garbage collector
                 clientSocket = null;
-
-                // helper debug - SHOULD NOT BE USED IN PRODUCTION CODE!!!
-                if (LOGGER.isDebugEnabled()) {
-                    final int finalThreadCount = Thread.activeCount();
-                    LOGGER.debug("Ending client thread - final thread count: {}", finalThreadCount);
-                    final Thread[] t = new Thread[finalThreadCount];
-                    final int n = Thread.enumerate(t);
-                    for (var i = 0; i < n; i++) {
-                        LOGGER.debug("T {}: {}", t[i].getId(), t[i].getName());
-                    }
-                }
             }
         }
     }
 
-    private final RequestMessageParser parser;
 
-    public DigitalTwinProtocolServer(final RequestMessageParser requestMessageParser){
-        this.parser = requestMessageParser;
+    /**
+     * @param string created response string
+     *
+     * Method used to calculate the size of the response
+     *
+     * @return array containing the sizes
+     */
+    private static byte[] calculateSize(String string){
+        byte d1 = 0, d2 = 0, stringSize = Byte.parseByte(String.valueOf(string.length()));
+
+        while(stringSize > 0) {
+            if (stringSize > 255) {
+                d2 = (byte) (stringSize / 256);
+                stringSize %= 256;
+            } else {
+                d1 = stringSize;
+                break;
+            }
+        }
+        return new byte []{d1, d2};
     }
 
     /**
@@ -143,3 +184,4 @@ public class DigitalTwinProtocolServer {
         }
     }
 }
+
