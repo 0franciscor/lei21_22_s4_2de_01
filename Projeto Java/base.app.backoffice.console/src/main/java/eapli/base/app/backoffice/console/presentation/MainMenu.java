@@ -227,7 +227,6 @@ public class MainMenu extends AbstractUI {
         menu.addItem(FORCE_ORDERS_PREPARATION, "Force Order Preparation", new ForceOrderPrepUI()::show);
         menu.addItem(CALL_FIFO, "Call FIFO", new TaskManagementUI()::show);
         menu.addItem(DASHBOARD, "Dashboard", new DashboardUI()::show);
-        menu.addItem(99,"1902", new ListOpenOrdersUI()::show);
 
 
         return menu;

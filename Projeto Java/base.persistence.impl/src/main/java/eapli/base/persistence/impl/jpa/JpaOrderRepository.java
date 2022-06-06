@@ -55,8 +55,9 @@ public class JpaOrderRepository extends JpaAutoTxRepository<ProductOrder, Long, 
     @Override
     public Iterable<ProductOrder> getOpenOrdersOfAClient(Long clientId) {
         final TypedQuery<ProductOrder> query = entityManager().createQuery(
-                "SELECT d1 FROM ProductOrder d1 WHERE d1.status = :status OR d1.status = :status1 OR d1.status = :status2 OR d1.status = :status3 OR d1.status = :status4 OR d1.status = :status5 OR d1.status = :status6 OR d1.status = :status7",
+                "SELECT d1 FROM ProductOrder d1 WHERE d1.client.id = :client AND (d1.status = :status OR d1.status = :status1 OR d1.status = :status2 OR d1.status = :status3 OR d1.status = :status4 OR d1.status = :status5 OR d1.status = :status6 OR d1.status = :status7)",
                 ProductOrder.class);
+        query.setParameter("client", clientId);
         query.setParameter("status", new OrderStatus(OrderStatus.Status.REGISTERED));
         query.setParameter("status1", new OrderStatus(OrderStatus.Status.TO_BE_PREPARED));
         query.setParameter("status2", new OrderStatus(OrderStatus.Status.BEING_PREPARED_BY_AGV));
