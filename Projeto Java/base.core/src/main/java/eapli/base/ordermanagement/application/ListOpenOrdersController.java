@@ -15,6 +15,7 @@ public class ListOpenOrdersController {
 
     private final ListOpenOrdersService service = new ListOpenOrdersService();
 
+
     public List<ProductOrderDto> getOpenOrdersOfAClient(Long clientId){
 
         List<ProductOrderDto> list = new ArrayList<>();
@@ -28,6 +29,13 @@ public class ListOpenOrdersController {
             list.add(productOrderDto);
         }
         return list;
+    }
+
+    public Long getClientLogged(){
+
+        String email = authz.session().get().authenticatedUser().email().toString();
+
+        return service.getClientId(email);
     }
 
 

@@ -18,4 +18,5 @@ public class InMemoryClientRepository extends InMemoryDomainRepository<Client, L
         return matchOne(e -> e.getEmail().equals(email));
     }
 
+
 }

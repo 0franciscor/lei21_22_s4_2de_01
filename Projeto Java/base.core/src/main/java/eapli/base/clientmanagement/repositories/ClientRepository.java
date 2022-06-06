@@ -10,4 +10,7 @@ public interface ClientRepository extends DomainRepository<Long, Client> {
 
     Optional<Client> findByEmail(Email email);
 
+
+
+
 }

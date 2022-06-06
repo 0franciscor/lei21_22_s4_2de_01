@@ -1,8 +1,12 @@
 package eapli.base.app.user.console.presentation.productOrder;
 
+import eapli.base.clientusermanagement.domain.ClientUser;
 import eapli.base.ordermanagement.application.ListOpenOrdersController;
 import eapli.base.ordermanagement.dto.ProductOrderDto;
+import eapli.framework.infrastructure.authz.application.AuthzRegistry;
+import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.presentation.console.AbstractUI;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 
 import java.util.List;
 
@@ -14,13 +18,11 @@ public class ListOpenOrdersUI extends AbstractUI {
 
     @Override
     protected boolean doShow() {
-
-
-       Long clientId = 3L;
+        
 
        do{
            // get orders
-           List<ProductOrderDto> list = controller.getOpenOrdersOfAClient(clientId);
+           List<ProductOrderDto> list = controller.getOpenOrdersOfAClient(controller.getClientLogged());
 
            if(list.size()==0){
                System.out.println("Orders list is empty.");

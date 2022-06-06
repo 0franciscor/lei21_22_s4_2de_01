@@ -1,6 +1,10 @@
 package eapli.base.ordermanagement.application;
 
 import eapli.base.MessageUtils;
+import eapli.base.clientmanagement.domain.Email;
+import eapli.base.clientmanagement.repositories.ClientRepository;
+import eapli.base.clientusermanagement.repositories.ClientUserRepository;
+import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.ordermanagement.domain.ProductOrder;
 
 import java.io.DataInputStream;
@@ -14,6 +18,8 @@ import java.net.UnknownHostException;
 
 
 public class ListOpenOrdersService {
+
+    private final ClientRepository clientRepository = PersistenceContext.repositories().client();
 
     private static class ClientSocket {
         private Socket sock;
@@ -91,6 +97,11 @@ public class ListOpenOrdersService {
 
     }
 
+    public Long getClientId(String email){
+
+        return clientRepository.findByEmail(new Email(email)).get().identity();
+
+    }
     private int getPort() {
         return 10001;
     }
