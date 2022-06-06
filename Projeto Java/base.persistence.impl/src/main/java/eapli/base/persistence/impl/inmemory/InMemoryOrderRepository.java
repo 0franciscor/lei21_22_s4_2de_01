@@ -20,8 +20,6 @@ public class InMemoryOrderRepository extends InMemoryDomainRepository<ProductOrd
         return match(e->e.getOrderStatus().equals(OrderStatus.Status.TO_BE_PREPARED));
     }
 
-
-
     @Override
     public ProductOrder getOrderById(Long id){
         return null;
@@ -34,6 +32,11 @@ public class InMemoryOrderRepository extends InMemoryDomainRepository<ProductOrd
 
     @Override
     public Iterable<ProductOrder> getOpenOrdersOfAClient(Long clientId) {
+        return null;
+    }
+
+    @Override
+    public ProductOrder findDispatchedOrderById(Long orderId) {
         return null;
     }
 }

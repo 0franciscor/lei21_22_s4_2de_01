@@ -27,7 +27,7 @@ package digitaltwin.tcpprotocol.server;
  */
 public class UnknownRequest extends BaseErrorRequest {
 
-    public UnknownRequest(final String inputLine) {
+    public UnknownRequest(final byte inputLine[]) {
         super(inputLine);
     }
 

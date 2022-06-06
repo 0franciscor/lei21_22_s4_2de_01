@@ -67,4 +67,16 @@ public class JpaOrderRepository extends JpaAutoTxRepository<ProductOrder, Long, 
         query.setParameter("status7", new OrderStatus(OrderStatus.Status.READY_FOR_PACKAGING));
         return query.getResultList();
     }
+
+
+    @Override
+    public ProductOrder findDispatchedOrderById(Long orderID) {
+        final TypedQuery<ProductOrder> query = entityManager().createQuery(
+                "SELECT d FROM ProductOrder d  WHERE d.status = :status AND d.id= :id",
+                ProductOrder.class);
+        query.setParameter("status", new OrderStatus(OrderStatus.Status.DISPATCHED_FOR_COSTUMER));
+        query.setParameter("id", orderID);
+
+        return query.getSingleResult();
+    }
 }
