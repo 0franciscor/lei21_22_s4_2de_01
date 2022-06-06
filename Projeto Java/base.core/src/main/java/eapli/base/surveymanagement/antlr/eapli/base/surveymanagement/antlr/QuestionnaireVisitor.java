@@ -145,6 +145,10 @@ public class QuestionnaireVisitor extends SurveyBaseVisitor<Questionnaire> {
             questionnaire.modifyFinalMessage(new Message(message.toString()));
         } else if(aux == 2){
             section.modifyMessage(new Message(message.toString()));
+        } else if (aux == 3){
+            question.modifyInstruction(new Message(message.toString()));
+        } else if(aux == 4){
+            question.modifyExtraInfo(new Message(message.toString()));
         }
         return visitChildren(ctx);
     }
@@ -211,10 +215,47 @@ public class QuestionnaireVisitor extends SurveyBaseVisitor<Questionnaire> {
         question = new Question();
         visit(ctx.regraId());
         question.modifyId(Long.parseLong(auxiliar));
-
-
+        visit(ctx.regraPergunta());
+        question.modifyPergunta(new Message(auxiliar.toString()));
+        visit(ctx.type());
+        question.modifyType(auxiliar);
+        int size = ctx.regraMensagem().size();
+        if (size == 2){
+            aux=3;
+            visit(ctx.regraMensagem(0));
+            aux=4;
+            visit(ctx.regraMensagem(1));
+        }
         return null;
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p>The default implementation returns the result of calling
+     * {@link #visitChildren} on {@code ctx}.</p>
+     */
+    @Override public Questionnaire visitRegraPergunta(SurveyParser.RegraPerguntaContext ctx) {
+        StringBuilder pergunta = new StringBuilder();
+        visit(ctx.frase());
+        pergunta.append(auxiliar);
+        pergunta.append("?");
+        auxiliar = pergunta.toString();
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p>The default implementation returns the result of calling
+     * {@link #visitChildren} on {@code ctx}.</p>
+     */
+    @Override public Questionnaire visitType(SurveyParser.TypeContext ctx) {
+        auxiliar = ctx.getChild(0).getText();
+        return null;
+    }
+
+
 
 
 
