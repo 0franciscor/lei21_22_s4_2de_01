@@ -19,14 +19,18 @@ public class Section implements Serializable {
     private Long version;
 
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private Long idBaseDeDados;
+
     private Long sectionId;
 
     private Titulo titulo;
 
     private Message Message;
 
-    @OneToMany()
-    @JoinColumn(name = "question_section_id")
+    @OneToMany(cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    @JoinColumn(name = "section_id")
     private List<Question> questions = new ArrayList<>();
 
 
