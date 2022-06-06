@@ -48,6 +48,8 @@ class MainMenu extends ClientUserBaseUI {
 
     private static final int EXIT_OPTION = 0;
 
+    private static final int LIST_ORDERS = 3;
+
     // MAIN MENU
     private static final int MY_USER_OPTION = 1;
     private static final int ADICIONAR_PRODUTO_CARRINHO_COMPRAS = 2;
@@ -78,7 +80,7 @@ class MainMenu extends ClientUserBaseUI {
         final Menu myUserMenu = new MyUserMenu();
         mainMenu.addSubMenu(MY_USER_OPTION, myUserMenu);
         mainMenu.addItem(ADICIONAR_PRODUTO_CARRINHO_COMPRAS, "Adicionar produto ao carrinho de compras", new AddProductToShoppingCarUi()::show);
-        mainMenu.addItem(99,"Testar Listagem dos produtos de um cliente", new ListOpenOrdersUI()::show);
+        mainMenu.addItem(LIST_ORDERS,"Ver/Verificar o estado das minhas encomendas em aberto", new ListOpenOrdersUI()::show);
         mainMenu.addItem(MenuItem.separator(SEPARATOR_LABEL));
         mainMenu.addItem(EXIT_OPTION, "Exit", new ExitWithMessageAction("Bye, Bye"));
 

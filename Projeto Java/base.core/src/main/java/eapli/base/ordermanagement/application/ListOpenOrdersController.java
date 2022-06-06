@@ -22,7 +22,7 @@ public class ListOpenOrdersController {
 
         for (ProductOrder productOrder : po) {
             Long id = productOrder.getOrderId();
-            String client = productOrder.obtainClient().toString();
+            String client = productOrder.obtainClient().obtainName().toString();
             String status = productOrder.getOrderStatus().toString();
             ProductOrderDto productOrderDto = new ProductOrderDto(id, client,status);
             list.add(productOrderDto);

@@ -20,7 +20,7 @@ public class ProductOrderDto implements DTO {
 
     public String status;
 
-    public String client;
+    public String clientName;
 
     public ProductOrderDto(String agvId, Long orderId, String taskDescription, String status) {
         this.orderId = orderId;
@@ -39,14 +39,14 @@ public class ProductOrderDto implements DTO {
 
     public ProductOrderDto(long id, String client, String total, String status){
         this.orderId = id;
-        this.client = client;
+        this.clientName = client;
         this.total = total;
         this.status = status;
     }
 
     public ProductOrderDto(long id, String client,String status){
         this.orderId = id;
-        this.client = client;
+        this.clientName = client;
         this.status = status;
     }
 

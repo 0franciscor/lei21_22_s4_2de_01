@@ -9,6 +9,7 @@ import java.util.List;
 public class ListOpenOrdersUI extends AbstractUI {
 
     private final ListOpenOrdersController controller = new ListOpenOrdersController();
+    private boolean endOp = false;
 
 
     @Override
@@ -16,10 +17,26 @@ public class ListOpenOrdersUI extends AbstractUI {
 
 
        Long clientId = 3L;
-       // get orders
-       List<ProductOrderDto> list = controller.getOpenOrdersOfAClient(clientId);
-       return true;
 
+       do{
+           // get orders
+           List<ProductOrderDto> list = controller.getOpenOrdersOfAClient(clientId);
+
+           if(list.size()==0){
+               System.out.println("Orders list is empty.");
+               endOp = true;
+           }
+
+           for(ProductOrderDto po: list){
+               System.out.println("==========================================");
+               System.out.println("Order ID: " + po.orderId);
+               System.out.println(po.clientName);
+               System.out.println("Order Status: " + po.status);
+           }
+           endOp=true;
+       } while(!endOp);
+
+       return true;
 
     }
 
