@@ -22,12 +22,12 @@ package digitaltwin.tcpprotocol.server;
 
 /**
  *
- * @author Paulo Gandra Sousa 01/06/2020
+ * @author Francisco Redol
  *
  */
 public class UnknownRequest extends BaseErrorRequest {
 
-    public UnknownRequest(final byte inputLine[]) {
+    public UnknownRequest(final byte[] inputLine) {
         super(inputLine);
     }
 
