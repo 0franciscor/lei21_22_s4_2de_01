@@ -24,7 +24,7 @@ import eapli.base.AGV.application.GetAGVInformation;
 
 /**
  *
- * @author Paulo Gandra Sousa 01/06/2020
+ * @author Francisco Redol
  *
  */
 public abstract class DigitalTwinProtocolRequest {
@@ -44,16 +44,6 @@ public abstract class DigitalTwinProtocolRequest {
      * @return the response to send back to the client
      */
     public abstract String execute();
-
-    /**
-     * Indicates the object is a goodbye message, that is, a message that will close the
-     * connection to the client.
-     *
-     * @return {@code true} if the object is a a goodbye message.
-     */
-    public boolean isGoodbye() {
-        return false;
-    }
 
     protected String buildServerError(final String errorDescription) {
         final BaseErrorRequest r = new BaseErrorRequest(request, errorDescription) {
