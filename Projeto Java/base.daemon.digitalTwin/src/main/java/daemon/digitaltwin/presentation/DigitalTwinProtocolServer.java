@@ -98,12 +98,12 @@ public class DigitalTwinProtocolServer {
                     LOGGER.debug("Received message:----{}----", inputArray);
                     final DigitalTwinProtocolRequest request = parser.parse(inputArray, extraInfo);
                     String response = request.execute();
-                    byte[] array = calculateSize(response);
 
+                    var array = calculateSize(response);
                     inputArray[2] = array[0];
                     inputArray[3] = array[1];
-
                     out.write(inputArray);
+
                     if(response != null)
                         out.write(response.getBytes());
 
