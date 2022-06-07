@@ -30,13 +30,15 @@ public class MessageUtils {
         }
     }
 
-    public static void writeMessageWithData(byte code, String dataToSend, DataOutputStream sOut) throws IOException {
+    public static byte[] writeMessageWithData(byte code, String dataToSend, DataOutputStream sOut) throws IOException {
         byte[] data = new byte[300];
         data = dataToSend.getBytes();
         byte[] message = {(byte) 0, code, (byte) dataToSend.length(), (byte) 0};
         sOut.write(message, 0, 4);
         sOut.write(data,0,dataToSend.length());
         sOut.flush();
+
+        return data;
     }
 
     public static boolean testCommunicationWithServer(DataOutputStream sOut, DataInputStream sIn) throws IOException {
