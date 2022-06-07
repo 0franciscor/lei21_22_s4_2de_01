@@ -1,17 +1,12 @@
 package eapli.base.surveymanagement.domain;
 
-import eapli.base.clientmanagement.domain.PostalAddress;
-import eapli.base.shoppingcarmanagement.domain.ShopCarItem;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
 
 /**
  *
@@ -34,12 +29,21 @@ public class Questionnaire implements AggregateRoot<Long>, Serializable {
 
     private Titulo titulo;
 
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "message", column = @Column(name = "initial_message"))
+    })
     private Message initialMessage;
 
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "message", column = @Column(name = "final_message"))
+    })
     private Message finalMessage;
 
-    @ManyToMany()
-    @JoinColumn(name = "section_questionaire_id")
+    @OneToMany(cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    @JoinColumn(name = "survey_id")
     private List<Section> sections = new ArrayList<>();
 
 

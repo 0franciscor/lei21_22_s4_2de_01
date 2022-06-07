@@ -1,23 +1,3 @@
-/*
- * Copyright (c) 2013-2022 the original author or authors.
- *
- * MIT License
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
- * associated documentation files (the "Software"), to deal in the Software without restriction,
- * including without limitation the rights to use, copy, modify, merge, publish, distribute,
- * sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all copies or
- * substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
- * NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
- * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- */
 package daemon.digitaltwin.presentation;
 
 import digitaltwin.tcpprotocol.server.DigitalTwinProtocolRequest;
@@ -64,53 +44,48 @@ public class DigitalTwinProtocolServer {
                 var in = new DataInputStream(clientSocket.getInputStream());
                 var out = new DataOutputStream(clientSocket.getOutputStream());
 
-                boolean exit = false;
+                var inputArray = in.readNBytes(4);
 
-                while(!exit) {
+                if (inputArray[1] == ConstantsServer.START_CODE) {
+                    LOGGER.debug("[SUCCESS] TEST CODE RECEIVED");
 
-                    var inputArray = in.readNBytes(4);
+                    MessageUtils.writeMessage((byte) 2, out);
+                    LOGGER.debug("[ACKNOWLEDGMENT] SENDING ACKNOWLEDGMENT MESSAGE");
+                }
 
-                    if (inputArray[1] == ConstantsServer.START_CODE) {
-                        LOGGER.debug("[SUCCESS] TEST CODE RECEIVED");
+                if (inputArray[1] == 3) {
 
-                        MessageUtils.writeMessage((byte) 2, out);
-                        LOGGER.debug("[ACKNOWLEDGMENT] SENDING ACKNOWLEDGMENT MESSAGE");
+                    int length = inputArray[2] + (256 * inputArray[3]);
+
+                    String extraInfo = null;
+                    byte[] string;
+                    if (length > 0) {
+                        string = in.readNBytes(length);
+                        extraInfo = new String(string);
                     }
 
-                    if (inputArray[1] == 3) {
+                    LOGGER.debug("Received message:----{}----", inputArray);
+                    final DigitalTwinProtocolRequest request = parser.parse(inputArray, extraInfo);
+                    String response = request.execute();
+                    byte[] array = calculateSize(response);
 
-                        int length = inputArray[2] + (256 * inputArray[3]);
+                    inputArray[2] = array[0];
+                    inputArray[3] = array[1];
 
-                        String extraInfo = null;
-                        byte[] string;
-                        if (length > 0) {
-                            string = in.readNBytes(length);
-                            extraInfo = new String(string);
-                        }
-
-                        LOGGER.debug("Received message:----\n{}\n----", inputArray);
-                        final DigitalTwinProtocolRequest request = parser.parse(inputArray, extraInfo);
-                        String response = request.execute();
-                        byte[] array = calculateSize(response);
-
-                        inputArray[2] = array[0];
-                        inputArray[3] = array[1];
-
-                        out.flush();
-                        out.write(inputArray);
+                    out.write(inputArray);
+                    if(response != null)
                         out.write(response.getBytes());
 
-                        LOGGER.debug("Sent message:----\n{}\n----", response);
-                    }
-
-                    if (inputArray[1] == ConstantsServer.FINISH_CODE) {
-                        LOGGER.debug("[SUCCESS] DISCONNECT CODE RECEIVED");
-
-                        MessageUtils.writeMessage((byte) 2, out);
-                        LOGGER.debug("[ACKNOWLEDGMENT] SENDING ACKNOWLEDGMENT MESSAGE");
-                        exit = true;
-                    }
+                    LOGGER.debug("Sent message:----\n{}\n----", response);
                 }
+
+                if (inputArray[1] == ConstantsServer.FINISH_CODE) {
+                    LOGGER.debug("[SUCCESS] DISCONNECT CODE RECEIVED");
+
+                    MessageUtils.writeMessage((byte) 2, out);
+                    LOGGER.debug("[ACKNOWLEDGMENT] SENDING ACKNOWLEDGMENT MESSAGE");
+                }
+
 
             } catch (final IOException e) {
                 LOGGER.error(e);
@@ -134,11 +109,11 @@ public class DigitalTwinProtocolServer {
      *
      * @return array containing the sizes
      */
-    private static byte[] calculateSize(String string){
+    private static byte[] calculateSize(final String string){
         byte d1 = 0, d2 = 0, stringSize = Byte.parseByte(String.valueOf(string.length()));
 
         while(stringSize > 0) {
-            if (stringSize > 255) {
+            if (stringSize > 256) {
                 d2 = (byte) (stringSize / 256);
                 stringSize %= 256;
             } else {

@@ -31,6 +31,7 @@ import eapli.base.ordermanagement.repository.OrderRepository;
 import eapli.base.productmanagement.repository.ProductRepository;
 import eapli.base.shoppingcarmanagement.repository.ShopCarItemRepository;
 import eapli.base.shoppingcarmanagement.repository.ShoppingCarRepository;
+import eapli.base.surveymanagement.repository.SurveyRepository;
 import eapli.base.warehouse.repositories.*;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
@@ -95,6 +96,8 @@ public interface RepositoryFactory {
      * @return
      */
     ProductRepository products();
+
+    SurveyRepository surveys();
 
     /**
      * repository will be created in auto transaction mode

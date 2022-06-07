@@ -20,6 +20,9 @@
     <class>eapli.base.shoppingcarmanagement.domain.ShoppingCar</class>
     <class>eapli.base.shoppingcarmanagement.domain.ShopCarItem</class>
     <class>eapli.base.warehouse.domain.Bin</class>
+    <class>eapli.base.surveymanagement.domain.Questionnaire</class>
+    <class>eapli.base.surveymanagement.domain.Section</class>
+    <class>eapli.base.surveymanagement.domain.Question</class>
     <class>eapli.base.warehouse.domain.Shelf</class>
     <class>eapli.base.warehouse.domain.Line</class>
     <class>eapli.base.warehouse.domain.Aisle</class>
