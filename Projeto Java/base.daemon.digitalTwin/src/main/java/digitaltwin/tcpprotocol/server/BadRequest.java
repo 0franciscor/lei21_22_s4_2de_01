@@ -22,7 +22,7 @@
 package digitaltwin.tcpprotocol.server;
 /**
  *
- * @author Paulo Gandra Sousa 03/06/2020
+ * @author Francisco Redol
  *
  */
 public class BadRequest extends BaseErrorRequest {
