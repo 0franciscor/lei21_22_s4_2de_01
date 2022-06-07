@@ -22,7 +22,7 @@ package agvmanager.tcpprotocol.server;
 
 
 import eapli.base.AGV.application.AGVManagerController;
-import eapli.base.AGV.application.GetAGVInformation;
+import eapli.base.AGV.application.CallDigitalTwinController;
 
 /**
  *
@@ -34,16 +34,16 @@ public abstract class AGVManagerProtocolRequest {
     protected final String request;
     protected AGVManagerController managerController;
 
-    protected GetAGVInformation getAGVInformation;
+    protected CallDigitalTwinController callTwinController;
 
     protected AGVManagerProtocolRequest(final AGVManagerController managerController, final String inputRequest) {
         this.request = inputRequest;
         this.managerController = managerController;
     }
 
-    protected AGVManagerProtocolRequest(final GetAGVInformation getAGVInformation, final String inputRequest) {
+    protected AGVManagerProtocolRequest(final CallDigitalTwinController callTwinController, final String inputRequest) {
         this.request = inputRequest;
-        this.getAGVInformation = getAGVInformation;
+        this.callTwinController = callTwinController;
     }
 
     /**
