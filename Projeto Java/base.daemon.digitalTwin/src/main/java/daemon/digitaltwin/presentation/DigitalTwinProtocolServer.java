@@ -141,18 +141,41 @@ public class DigitalTwinProtocolServer {
      * @return array containing the sizes
      */
     private static byte[] calculateSize(final String string){
-        byte d1 = 0, d2 = 0, stringSize = Byte.parseByte(String.valueOf(string.length()));
+        byte d1 = 0, d2 = 0;
+        int stringSize = string.length();
 
         while(stringSize > 0) {
             if (stringSize > 256) {
                 d2 = (byte) (stringSize / 256);
                 stringSize %= 256;
             } else {
-                d1 = stringSize;
+                d1 = (byte) stringSize;
                 break;
             }
         }
         return new byte []{d1, d2};
+    }
+
+    private SSLServerSocket getServerSocket(final int port){
+        final var fileName = new File(STORE_PATH).getAbsolutePath();
+
+        System.setProperty("javax.net.ssl.trustStore", fileName);
+        System.setProperty("javax.net.ssl.trustStorePassword",KEYSTORE_PASS);
+
+        System.setProperty("javax.net.ssl.keyStore", fileName);
+        System.setProperty("javax.net.ssl.keyStorePassword",KEYSTORE_PASS);
+
+        var sslF = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
+        SSLServerSocket sock = null;
+
+        try {
+            sock = (SSLServerSocket) sslF.createServerSocket(port);
+            sock.setNeedClientAuth(true);
+        } catch(IOException ex) {
+            System.out.println("Server failed to open local port " + port);
+            System.exit(1);
+        }
+        return sock;
     }
 
     /**
@@ -160,15 +183,13 @@ public class DigitalTwinProtocolServer {
      * <p>
      * Suppress warning java:S2189 - Loops should not be infinite
      *
-     * @param port
+     * @param port of the socket
      */
     @SuppressWarnings("java:S2189")
-    private void listen(final int port) {
-        try (var serverSocket = new ServerSocket(port)) {
-            while (true) {
-                final var clientSocket = serverSocket.accept();
+    private void listen(final int port)  {
+        try (var clientSocket = getServerSocket(port).accept()) {
+            while (true)
                 new ClientHandler(clientSocket).start();
-            }
         } catch (final IOException e) {
             LOGGER.error(e);
         }
