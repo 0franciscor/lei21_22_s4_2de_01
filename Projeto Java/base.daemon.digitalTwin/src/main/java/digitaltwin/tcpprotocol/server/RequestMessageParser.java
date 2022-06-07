@@ -24,9 +24,9 @@ import eapli.base.AGV.application.CallAGVManagerController;
 import eapli.framework.util.Utility;
 
 /**
- * The message parser for the Booking protocol.
+ * The message parser for the Digital Twin.
  *
- * @author Paulo Gandra Sousa 01/06/2020
+ * @author Francisco Redol
  */
 @Utility
 public class RequestMessageParser {
@@ -36,9 +36,9 @@ public class RequestMessageParser {
     /**
      * Parse and build the request.
      *
-     * @param receivedArray
+     * @param receivedArray from the Protocol Server
      *
-     * @return
+     * @return the processed request
      */
     public DigitalTwinProtocolRequest parse(final byte[] receivedArray, final String extraInfo) {
         DigitalTwinProtocolRequest request = new UnknownRequest(receivedArray);
