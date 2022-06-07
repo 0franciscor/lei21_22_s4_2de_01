@@ -5,17 +5,13 @@ import eapli.base.AGV.repositories.AGVRepository;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 
 
-public class GetAGVInformation {
+public class GetAGVInformation implements AGVDigitalTwinController{
 
-    private AGVRepository agvRepository = PersistenceContext.repositories().agv();
+    private final AGVRepository agvRepository = PersistenceContext.repositories().agv();
 
-    public Iterable<AGV> getAGVsInformationForDashBoard() {
-        return agvRepository.findAll();
+    public String getAGVsInformationForDashBoard(String agvID){
+        AGV agv = agvRepository.getAGVByIdSt(agvID);
+
+        return String.format("%s,%s,%s", agv.getAgvId().getAGVId(), agv.getAgvPosition().getAgvPosition(), agv.getAgvStatus().obtainStatus().name());
     }
-
-    public AGV getAGVsInformationForDashBoard(String agvID){
-        return agvRepository.getAGVByIdSt(agvID);
-
-    }
-
 }
