@@ -146,7 +146,7 @@ public class DigitalTwinProtocolServer {
     /**
      * Wait for connections.
      *
-     * @param port
+     * @param port of the socket
      * @param blocking
      *            if {@code false} the socket runs in its own thread and does not block calling
      *            thread.
