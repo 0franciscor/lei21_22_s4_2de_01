@@ -35,7 +35,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.Socket;
 
-
 /**
  * Server socket for Digital Twin Using byte arrays as the way of communication
  *
@@ -61,9 +60,9 @@ public class DigitalTwinProtocolServer {
 
         private final RequestMessageParser parser;
 
-        public ClientHandler(final Socket socket) {
+        public ClientHandler(final Socket socket, final RequestMessageParser parser) {
             this.clientSocket = socket;
-            parser = new RequestMessageParser();
+            this.parser = parser;
         }
 
         @Override
@@ -116,7 +115,7 @@ public class DigitalTwinProtocolServer {
                     MessageUtils.writeMessage((byte) 2, out);
                     LOGGER.debug("[ACKNOWLEDGMENT] SENDING ACKNOWLEDGMENT MESSAGE");
                 }
-
+                out.flush();
 
             } catch (final IOException e) {
                 LOGGER.error(e);
@@ -178,6 +177,12 @@ public class DigitalTwinProtocolServer {
         return sock;
     }
 
+    private final RequestMessageParser parser;
+
+    public DigitalTwinProtocolServer(final RequestMessageParser requestMessageParser){
+        this.parser = requestMessageParser;
+    }
+
     /**
      * Wait for connections.
      * <p>
@@ -187,9 +192,11 @@ public class DigitalTwinProtocolServer {
      */
     @SuppressWarnings("java:S2189")
     private void listen(final int port)  {
-        try (var clientSocket = getServerSocket(port).accept()) {
-            while (true)
-                new ClientHandler(clientSocket).start();
+        try (var serverSocket = getServerSocket(port)) {
+            while (true) {
+                final var clientSocket = serverSocket.accept();
+                new ClientHandler(clientSocket, parser).start();
+            }
         } catch (final IOException e) {
             LOGGER.error(e);
         }

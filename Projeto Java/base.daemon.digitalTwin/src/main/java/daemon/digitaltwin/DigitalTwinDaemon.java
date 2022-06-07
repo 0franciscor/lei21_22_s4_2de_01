@@ -21,6 +21,7 @@
 package daemon.digitaltwin;
 
 import daemon.digitaltwin.presentation.DigitalTwinProtocolServer;
+import digitaltwin.tcpprotocol.server.RequestMessageParser;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.usermanagement.domain.BasePasswordPolicy;
 import org.apache.logging.log4j.LogManager;
@@ -48,10 +49,14 @@ public final class DigitalTwinDaemon {
                 new BasePasswordPolicy(), new PlainTextEncoder());
 
         LOGGER.info("Starting the server socket");
-        final var server = new DigitalTwinProtocolServer();
+        final var server = new DigitalTwinProtocolServer(buildServerDependencies());
         server.start(TWIN_PORT, true);
 
         LOGGER.info("Exiting the daemon");
         System.exit(0);
+    }
+
+    private static RequestMessageParser buildServerDependencies() {
+        return new RequestMessageParser();
     }
 }
