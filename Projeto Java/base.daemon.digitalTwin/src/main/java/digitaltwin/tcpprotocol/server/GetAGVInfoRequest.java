@@ -21,10 +21,9 @@
 package digitaltwin.tcpprotocol.server;
 
 import eapli.base.AGV.application.GetAGVInformation;
-import eapli.base.AGV.domain.AGV;
 
 /**
- * @author Paulo Gandra Sousa 01/06/2020
+ * @author Francisco Redol
  */
 public class GetAGVInfoRequest extends DigitalTwinProtocolRequest {
 
@@ -40,15 +39,11 @@ public class GetAGVInfoRequest extends DigitalTwinProtocolRequest {
         try {
             return buildResponse();
         } catch (final Exception e) {
-            return buildServerError(e.getMessage());
+            return null;
         }
     }
 
     public String buildResponse() {
-        AGV agv = controller.getAGVsInformationForDashBoard(agvId);
-
-        String info = agv.getAgvId().getAGVId() + "," + agv.getAgvPosition().getAgvPosition() + "," + agv.getAgvStatus().obtainStatus().name()+ ",";
-
-        return info;
+        return controller.getAGVsInformationForDashBoard(agvId);
     }
 }
