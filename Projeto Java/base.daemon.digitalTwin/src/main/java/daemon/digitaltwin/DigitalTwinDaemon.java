@@ -49,7 +49,7 @@ public final class DigitalTwinDaemon {
 
         LOGGER.info("Starting the server socket");
         final var server = new DigitalTwinProtocolServer();
-        server.start(MANAGER_PORT, true);
+        server.start(TWIN_PORT, true);
 
         LOGGER.info("Exiting the daemon");
         System.exit(0);
