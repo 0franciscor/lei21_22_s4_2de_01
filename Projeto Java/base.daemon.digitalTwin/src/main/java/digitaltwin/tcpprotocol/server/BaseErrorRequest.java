@@ -24,7 +24,7 @@ import eapli.framework.csv.CsvRecord;
 
 /**
  *
- * @author Paulo Gandra Sousa 03/06/2020
+ * @author Francisco Redol
  *
  */
 public abstract class BaseErrorRequest extends DigitalTwinProtocolRequest {
