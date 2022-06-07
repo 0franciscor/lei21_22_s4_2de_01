@@ -32,7 +32,7 @@ import eapli.framework.infrastructure.authz.domain.model.PlainTextEncoder;
 
 public final class DigitalTwinDaemon {
 
-    private static final int MANAGER_PORT = 8891;
+    private static final int TWIN_PORT = 8891;
     private static final Logger LOGGER = LogManager.getLogger(DigitalTwinDaemon.class);
 
     /**
