@@ -1,14 +1,12 @@
 package eapli.base.AGV.application;
 
-import eapli.base.MessageUtils;
-
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 
 import java.io.*;
 
 import java.net.InetAddress;
-import java.net.Socket;
+
 import java.net.UnknownHostException;
 
 
