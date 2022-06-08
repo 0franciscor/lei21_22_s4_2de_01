@@ -26,25 +26,28 @@ public class CallDigitalTwinController {
 
     private DataInputStream input;
 
-    public static void main(String[] args) throws IOException {
-        CallDigitalTwinController controller = new CallDigitalTwinController();
-        System.out.println(controller.connectDaemon(8891));
-
-        String agv = controller.getAGVInfo("12345678");
-
-        controller.closeConnection();
-    }
-
     public boolean connectDaemon(final int port) throws IOException {
         try {
             sock = getClientSocket(port);
-            //sock.startHandshake();
+            sock.startHandshake();
         } catch (final IOException ignored) {}
 
         output = new DataOutputStream(sock.getOutputStream());
         input = new DataInputStream(sock.getInputStream());
 
-        return MessageUtils.testCommunicationWithServer(output, input);
+        return testConnection();
+    }
+
+    public String getAGVInfo(String agvId) throws IOException {
+        byte[] message = {(byte) 0, (byte) CallAGVManagerController.DASHBOARD_REQUEST, (byte) agvId.length(), (byte) 0};
+        output.write(message);
+        output.write(agvId.getBytes());
+
+        var array= input.readNBytes(4);
+        int length = array[2] + 256*array[3];
+        var info = new String(input.readNBytes(length));
+
+        return info;
     }
 
     private SSLSocket getClientSocket(final int port) throws UnknownHostException {
@@ -70,16 +73,24 @@ public class CallDigitalTwinController {
         return sock;
     }
 
-    public String getAGVInfo(String agvId) throws IOException {
-        MessageUtils.writeMessageWithData((byte) CallAGVManagerController.DASHBOARD_REQUEST, agvId, output);
-        var response = input.readNBytes(4);
-        var message = MessageUtils.getDataFromMessage(response, input);
+    public boolean testConnection() throws IOException {
+        byte code = 0;
+        byte[] testArray = new byte[]{code, code, code, code};
+        output.write(testArray);
 
-        return message;
+        var ackArray = input.readNBytes(4);
+
+        return 2 == ackArray[1];
     }
 
-
     public void closeConnection() throws IOException {
-        sock.close();
+        byte code = 0;
+        byte[] testArray = new byte[]{code, (byte) 1, code, code};
+        output.write(testArray);
+
+        var ackArray = input.readNBytes(4);
+
+        if(ackArray[1] == 2)
+            sock.close();
     }
 }

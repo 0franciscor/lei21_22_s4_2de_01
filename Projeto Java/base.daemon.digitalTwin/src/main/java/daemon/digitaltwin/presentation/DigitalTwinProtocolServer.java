@@ -22,7 +22,6 @@ package daemon.digitaltwin.presentation;
 
 import digitaltwin.tcpprotocol.server.DigitalTwinProtocolRequest;
 import digitaltwin.tcpprotocol.server.RequestMessageParser;
-import eapli.base.MessageUtils;
 import eapli.base.orderServer.tcp.utils.ConstantsServer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -79,7 +78,9 @@ public class DigitalTwinProtocolServer {
                 if (inputArray[1] == ConstantsServer.START_CODE) {
                     LOGGER.debug("[SUCCESS] TEST CODE RECEIVED");
 
-                    MessageUtils.writeMessage((byte) 2, out);
+                    byte code = 0;
+                    byte[] message = {code, (byte) 2, code, code};
+                    out.write(message);
                     LOGGER.debug("[ACKNOWLEDGMENT] SENDING ACKNOWLEDGMENT MESSAGE");
                 }
 
@@ -112,20 +113,23 @@ public class DigitalTwinProtocolServer {
                 if (inputArray[1] == ConstantsServer.FINISH_CODE) {
                     LOGGER.debug("[SUCCESS] DISCONNECT CODE RECEIVED");
 
-                    MessageUtils.writeMessage((byte) 2, out);
+                    byte code = 0;
+                    byte[] message = {code, (byte) 2, code, code};
+                    out.write(message);
                     LOGGER.debug("[ACKNOWLEDGMENT] SENDING ACKNOWLEDGMENT MESSAGE");
-                }
-                out.flush();
 
+                }
             } catch (final IOException e) {
                 LOGGER.error(e);
             } finally {
+
                 try {
                     clientSocket.close();
                     LOGGER.debug("Closing client socket {}:{}", clientIP.getHostAddress(), clientSocket.getPort());
                 } catch (final IOException e) {
                     LOGGER.error("While closing the client socket {}:{}", clientIP.getHostAddress(), clientSocket.getPort(), e);
                 }
+
                 clientSocket = null;
             }
         }
