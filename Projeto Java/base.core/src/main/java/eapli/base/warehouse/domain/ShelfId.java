@@ -24,4 +24,20 @@ public class ShelfId implements ValueObject, Comparable<ShelfId> {
         if(Id == o.Id && line.sameAs(o.line)) return 0;
         return -1;
     }
+
+    @Override
+    public boolean equals(Object obj){
+        if(this == obj)
+            return true;
+        if(obj == null)
+            return false;
+        ShelfId other = (ShelfId) obj;
+
+        return line.sameAs(other.line);
+    }
+
+    @Override
+    public int hashCode(){
+        return Id.hashCode();
+    }
 }

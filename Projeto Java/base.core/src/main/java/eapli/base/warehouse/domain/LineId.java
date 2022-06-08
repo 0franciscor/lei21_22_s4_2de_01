@@ -26,4 +26,20 @@ public class LineId implements ValueObject, Comparable<LineId> {
         if(Id == o.Id && aisle.sameAs(o.aisle)) return 0;
         return -1;
     }
+
+    @Override
+    public boolean equals(Object obj){
+        if(this == obj)
+            return true;
+        if(obj == null)
+            return false;
+        LineId other = (LineId) obj;
+
+        return aisle.sameAs(other.aisle);
+    }
+
+    @Override
+    public int hashCode(){
+        return Id.hashCode();
+    }
 }
