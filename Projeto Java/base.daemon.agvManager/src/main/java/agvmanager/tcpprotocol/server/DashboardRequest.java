@@ -24,9 +24,9 @@ public class DashboardRequest extends AGVManagerProtocolRequest{
     }
 
     public String buildResponse(final String agvId) throws IOException {
-        callTwinController.connectDaemon(8891);
         String info = null;
         try{
+            callTwinController.connectDaemon(8891);
             info = callTwinController.getAGVInfo(agvId);
         } catch (Exception e){
             e.printStackTrace();
