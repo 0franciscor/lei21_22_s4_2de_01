@@ -43,11 +43,11 @@ public class DigitalTwinProtocolServer {
 
     private static final Logger LOGGER = LogManager.getLogger(DigitalTwinProtocolServer.class);
 
-    private static final String TRUSTED_STORE = "keystore.jks";
+    private static final String TRUSTED_STORE = "server_J.jks";
 
     private static final String STORE_PATH = "base.daemon.digitalTwin/src/main/resources/" + TRUSTED_STORE;
 
-    private static final String KEYSTORE_PASS="password";
+    private static final String KEYSTORE_PASS="forgotten";
 
     /**
      * Client socket.
@@ -107,7 +107,7 @@ public class DigitalTwinProtocolServer {
                     if(response != null)
                         out.write(response.getBytes());
 
-                    LOGGER.debug("Sent message:----\n{}\n----", response);
+                    LOGGER.debug("Sent message:----{}----", response);
                 }
                 inputArray = in.readNBytes(4);
                 if (inputArray[1] == ConstantsServer.FINISH_CODE) {
