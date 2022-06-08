@@ -3,16 +3,14 @@ grammar Survey;
 start: questionario;
 
 alfanumerico: PALAVRA
-            | NUMERO;
+             | NUMERO;
 
 pontucao: PONTO_FINAL
-        | PONTO_INTERROGACAO
-        | RETICENCIAS
-        | PONTO_EXCLAMACAO;
+         | PONTO_INTERROGACAO
+         | RETICENCIAS
+         | PONTO_EXCLAMACAO;
 
-frase : PALAVRA (VIRGULA? ESPACO (PALAVRA|NUMERO)+)*
-       | NUMERO+ (VIRGULA? ESPACO (PALAVRA|NUMERO)+)*
-       | PALAVRA VIRGULA;
+frase : ( PALAVRA | NUMERO )+ (VIRGULA? ESPACO (PALAVRA| NUMERO )+)*;
 
 regraIdQuestionario: alfanumerico+ HIFEN alfanumerico+;
 
@@ -20,34 +18,33 @@ regraTitulo: frase;
 
 regraMensagem: (frase pontucao NEWLINE)+ ;
 
-
 regraId: NUMERO+;
 
 obrigatoriedade: MANDATORY
-               | OPTIONAL
-               | CONDITION_DEPENDENT DOIS_PONTOS ESPACO frase;
+            | OPTIONAL
+            | CONDITION_DEPENDENT DOIS_PONTOS ESPACO frase;
 
 repetibilidade : NUMERO+ ;
 
 opcao: regraId PARENTESIS_DIREITO frase (DOIS_PONTOS)? NEWLINE;
 
 type: FREE_TEXT NEWLINE
-    | NUMERIC (ESPACO PARENTESIS_ESQUERDO DECIMALS_ALLOWED PARENTESIS_DIREITO)? NEWLINE
-    | SINGLE_CHOICE NEWLINE (opcao)+
-    | MULTIPLE_CHOICE NEWLINE (opcao)+
-    | SINGLE_CHOICE1 NEWLINE (opcao)+
-    | MULTIPLE_CHOICE1 NEWLINE (opcao)+
-    | SORTING_OPTIONS NEWLINE (opcao)+
-    | SCALING_OPTIONS NEWLINE 'Scale: ' frase NEWLINE (opcao)+
-    ;
+ | NUMERIC (ESPACO PARENTESIS_ESQUERDO DECIMALS_ALLOWED PARENTESIS_DIREITO)? NEWLINE
+ | SINGLE_CHOICE NEWLINE (opcao)+
+ | MULTIPLE_CHOICE NEWLINE (opcao)+
+ | SINGLE_CHOICE1 NEWLINE (opcao)+
+ | MULTIPLE_CHOICE1 NEWLINE (opcao)+
+ | SORTING_OPTIONS NEWLINE (opcao)+
+ | SCALING_OPTIONS NEWLINE 'Scale: ' frase NEWLINE (opcao)+
+ ;
 
 regraPergunta: frase PONTO_INTERROGACAO NEWLINE;
 
-pergunta: regraId NEWLINE regraPergunta PARENTESIS_ESQUERDO obrigatoriedade PARENTESIS_DIREITO  (NEWLINE regraMensagem)? NEWLINE 'Type: ' type NEWLINE regraMensagem?;
+pergunta: regraId NEWLINE regraPergunta PARENTESIS_ESQUERDO obrigatoriedade PARENTESIS_DIREITO  (NEWLINE regraMensagem)? NEWLINE 'Type: ' type NEWLINE regraMensagem;
 
 seccao: regraId NEWLINE regraTitulo NEWLINE regraMensagem? 'Section Obligatoriness: ' obrigatoriedade (NEWLINE 'Repeatability: ' repetibilidade)? NEWLINE pergunta+;
 
-questionario: regraIdQuestionario ESPACO regraTitulo NEWLINE (regraMensagem NEWLINE)? (NEWLINE seccao)+ NEWLINE NEWLINE regraMensagem;
+questionario: regraIdQuestionario ESPACO regraTitulo NEWLINE (regraMensagem)? (NEWLINE seccao)+ NEWLINE NEWLINE regraMensagem;
 
 //------------------- TOKENS -------------------
 

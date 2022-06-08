@@ -43,6 +43,7 @@ public class QuestionnaireVisitor extends SurveyBaseVisitor<Questionnaire> {
         aux=0;
         visit(ctx.regraTitulo());
         int size = ctx.regraMensagem().size();
+
         if (size == 2){
             aux=0;
             visit(ctx.regraMensagem(0));
@@ -52,6 +53,8 @@ public class QuestionnaireVisitor extends SurveyBaseVisitor<Questionnaire> {
             aux=1;
             visit(ctx.regraMensagem(0));
         }
+
+
         size = ctx.seccao().size();
 
         for (int i=0; i<size; i++){

@@ -18,6 +18,8 @@ import eapli.base.shoppingcarmanagement.domain.ShoppingCar;
 
 import eapli.base.shoppingcarmanagement.repository.ShoppingCarRepository;
 
+import javax.net.ssl.SSLServerSocket;
+import javax.net.ssl.SSLServerSocketFactory;
 import java.io.*;
 import java.net.*;
 import java.util.Optional;
@@ -27,12 +29,34 @@ import static eapli.base.MessageUtils.writeMessage;
 
 
 public class TcpOrderSrv {
+
+    static final int SERVER_PORT=10000;
+    static final String TRUSTED_STORE= "C:\\Users\\arian\\OneDrive - Instituto Superior de Engenharia do Porto\\Desktop\\lei21_22_s4_2de_01\\Projeto Java\\certificates\\serverOrder_J.jks";
+    static final String KEYSTORE_PASS="forgotten";
+
+    /*
     static ServerSocket sock;
+     */
 
     public static void main(String args[]) throws Exception {
+        SSLServerSocket sock=null;
         Socket cliSock;
 
-        try { sock = new ServerSocket(10001); }
+        // Trust these certificates provided by authorized clients
+        System.setProperty("javax.net.ssl.trustStore", TRUSTED_STORE);
+        System.setProperty("javax.net.ssl.trustStorePassword",KEYSTORE_PASS);
+
+        // Use this certificate and private key as server certificate
+        System.setProperty("javax.net.ssl.keyStore",TRUSTED_STORE);
+        System.setProperty("javax.net.ssl.keyStorePassword",KEYSTORE_PASS);
+
+        SSLServerSocketFactory sslF = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
+
+
+        try {
+            sock = (SSLServerSocket) sslF.createServerSocket(SERVER_PORT);
+            sock.setNeedClientAuth(true);
+        }
         catch(IOException ex) {
             System.out.println("Failed to open server socket");
             System.exit(1);

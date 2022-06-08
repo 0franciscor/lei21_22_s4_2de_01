@@ -130,9 +130,12 @@ public class ProductOrder implements AggregateRoot<Long>, Serializable, DTOable<
         this.orderWeight = obtainTotalOrderWeight();
         this.orderVolume = obtainTotalOrderVolume();
         this.status = new OrderStatus(OrderStatus.Status.TO_BE_PREPARED);
+        /*
         if(this.client != null) {
             new Notification(this.client.getEmail().toString(),"Encomenda Efetuada!","A sua encomenda já foi registada no sistema e encontra-se a ser preparada!\n Obrigada pela preferência!");
         }
+
+         */
     }
 
     public ProductOrder(final Client client, final Address billingAddress, final Address shippingAddress, final Shipment shipment, final Payment payment, final SourceChannel sourceChannel, final Calendar interactionDate, final SystemUser salesClerk, final List<OrderItem> newOrderItems) {
@@ -151,9 +154,12 @@ public class ProductOrder implements AggregateRoot<Long>, Serializable, DTOable<
         this.orderWeight = obtainTotalOrderWeight();
         this.orderVolume = obtainTotalOrderVolume();
         this.status = new OrderStatus(OrderStatus.Status.TO_BE_PREPARED);
+        /*
         if(this.client != null) {
             new Notification(this.client.getEmail().toString(),"Encomenda Efetuada!","A sua encomenda já foi registada no sistema e encontra-se a ser preparada!\n Obrigada pela preferência!");
         }
+
+         */
     }
     public ProductOrder(final Client client, final Address billingAddress, final Address shippingAddress, final Shipment shipment, final Payment payment, final SourceChannel sourceChannel, final Calendar interactionDate, final List<OrderItem> newOrderItems) {
         this.createdOn = Calendars.now();
@@ -170,9 +176,12 @@ public class ProductOrder implements AggregateRoot<Long>, Serializable, DTOable<
         this.orderWeight = obtainTotalOrderWeight();
         this.orderVolume = obtainTotalOrderVolume();
         this.status = new OrderStatus(OrderStatus.Status.TO_BE_PREPARED);
+        /*
         if(this.client != null) {
             new Notification(this.client.getEmail().toString(),"Encomenda Efetuada!","A sua encomenda já foi registada no sistema e encontra-se a ser preparada!\n Obrigada pela preferência!");
         }
+
+         */
     }
 
     protected ProductOrder() {

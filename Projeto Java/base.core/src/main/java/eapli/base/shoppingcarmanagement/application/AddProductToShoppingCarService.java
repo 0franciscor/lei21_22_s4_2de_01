@@ -3,6 +3,8 @@ package eapli.base.shoppingcarmanagement.application;
 import eapli.base.MessageUtils;
 import eapli.base.productmanagement.dto.ProductDTO;
 
+import javax.net.ssl.SSLSocket;
+import javax.net.ssl.SSLSocketFactory;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
@@ -14,12 +16,26 @@ import java.util.Iterator;
 public class AddProductToShoppingCarService {
 
     private static class ClientSocket {
-        private Socket sock;
+        static final int SERVER_PORT=10000;
+        static final String KEYSTORE_PASS="forgotten";
+        private static final String TRUSTED_STORE = "C:\\Users\\arian\\OneDrive - Instituto Superior de Engenharia do Porto\\Desktop\\lei21_22_s4_2de_01\\Projeto Java\\certificates\\clientOrder_J.jks";
+
+        private SSLSocket sock;
         private InetAddress serverIP;
         private DataOutputStream sOutData;
         private DataInputStream sInData;
 
         public void connect(final String address, final int port) throws IOException {
+
+            // Trust these certificates provided by servers
+            System.setProperty("javax.net.ssl.trustStore", TRUSTED_STORE);
+            System.setProperty("javax.net.ssl.trustStorePassword",KEYSTORE_PASS);
+
+            // Use this certificate and private key for client certificate when requested by the server
+            System.setProperty("javax.net.ssl.keyStore",TRUSTED_STORE);
+            System.setProperty("javax.net.ssl.keyStorePassword",KEYSTORE_PASS);
+
+            SSLSocketFactory sf = (SSLSocketFactory) SSLSocketFactory.getDefault();
 
             try {
                 serverIP = InetAddress.getByName(address);
@@ -29,13 +45,15 @@ public class AddProductToShoppingCarService {
             }
 
             try {
-                sock = new Socket(serverIP, port);
-            } catch (IOException ex) {
+                sock = (SSLSocket) sf.createSocket(serverIP,SERVER_PORT); }
+            catch(IOException ex) {
                 System.out.println("Failed to establish TCP connection");
                 System.exit(1);
             }
 
             System.out.println("Connected to: " + serverIP + ":" + 10001);
+
+            sock.startHandshake();
 
             sOutData = new DataOutputStream(sock.getOutputStream());
             sInData = new DataInputStream(sock.getInputStream());

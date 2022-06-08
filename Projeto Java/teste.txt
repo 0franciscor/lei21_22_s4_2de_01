@@ -1,9 +1,4 @@
 01-COSM228 Cosmetics Questionnaire
-Hello!
-This questionnaire aims to...
-It takes approximately 10 minutes.
-Thank you very much for your time and support.
-
 
 1
 About You
@@ -101,7 +96,6 @@ Type: Sorting Options
 4)Cleaning
 5)Outdoors
 
-Be as sincere as possible.
 
 
 Thank you for answering the questionnaire!
