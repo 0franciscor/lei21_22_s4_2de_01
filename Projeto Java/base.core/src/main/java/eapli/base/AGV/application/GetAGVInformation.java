@@ -12,6 +12,6 @@ public class GetAGVInformation implements AGVDigitalTwinController{
     public String getAGVsInformationForDashBoard(String agvID){
         AGV agv = agvRepository.getAGVByIdSt(agvID);
 
-        return String.format("%s,%s,%s", agv.getAgvId().getAGVId(), agv.getAgvPosition().getAgvPosition(), agv.getAgvStatus().obtainStatus().name());
+        return String.format("%s,%s,%s,", agv.getAgvId().getAGVId(), agv.getAgvPosition().getAgvPosition(), agv.getAgvStatus().obtainStatus().name());
     }
 }
