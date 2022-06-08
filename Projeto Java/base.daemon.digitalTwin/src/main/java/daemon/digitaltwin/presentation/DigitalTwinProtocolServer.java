@@ -83,7 +83,7 @@ public class DigitalTwinProtocolServer {
                     out.write(message);
                     LOGGER.debug("[ACKNOWLEDGMENT] SENDING ACKNOWLEDGMENT MESSAGE");
                 }
-
+                inputArray = in.readNBytes(4);
                 if (inputArray[1] == 3) {
 
                     int length = inputArray[2] + (256 * inputArray[3]);
@@ -109,7 +109,7 @@ public class DigitalTwinProtocolServer {
 
                     LOGGER.debug("Sent message:----\n{}\n----", response);
                 }
-
+                inputArray = in.readNBytes(4);
                 if (inputArray[1] == ConstantsServer.FINISH_CODE) {
                     LOGGER.debug("[SUCCESS] DISCONNECT CODE RECEIVED");
 
