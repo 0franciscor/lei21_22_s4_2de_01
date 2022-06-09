@@ -42,4 +42,8 @@ public class Warehouse implements AggregateRoot<Long> {
     public Long identity() {
         return Id;
     }
+
+    public WarehousePlant getWarehousePlant() {
+        return warehousePlant;
+    }
 }

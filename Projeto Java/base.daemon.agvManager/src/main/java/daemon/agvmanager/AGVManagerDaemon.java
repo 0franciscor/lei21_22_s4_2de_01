@@ -45,8 +45,8 @@ public final class AGVManagerDaemon {
     public static void main(final String[] args) {
         LOGGER.info("Configuring the daemon");
 
-        AuthzRegistry.configure(PersistenceContext.repositories().users(),
-                new BasePasswordPolicy(), new PlainTextEncoder());
+        //AuthzRegistry.configure(PersistenceContext.repositories().users(),
+          //      new BasePasswordPolicy(), new PlainTextEncoder());
 
         LOGGER.info("Starting the server socket");
         final var server = new AgvManagerProtocolServer(buildServerDependencies());

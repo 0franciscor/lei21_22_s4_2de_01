@@ -51,7 +51,8 @@ public class BaseDemoBootstrapper implements Action {
     public boolean execute() {
         // declare bootstrap actions
         final Action[] actions = { new BackofficeUsersBootstrapper(),
-                new ClientUserBootstrapper(), new ImportWarehouseBootstrapper(), new AGVBootstrapper(), new CategoryBootstrapper(), new ProductBootstrapper(), new ProductOrdersBootstraper()};
+                new ClientUserBootstrapper(), new ImportWarehouseBootstrapper(), new AGVBootstrapper(),
+                new CategoryBootstrapper(), new ProductBootstrapper(), new ProductOrdersBootstraper()};
 
         authenticateForBootstrapping();
 
