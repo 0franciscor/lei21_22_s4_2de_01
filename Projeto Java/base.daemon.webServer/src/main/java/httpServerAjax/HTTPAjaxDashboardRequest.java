@@ -1,9 +1,7 @@
 package httpServerAjax;
-import ch.qos.logback.core.net.ssl.SSL;
 
 import javax.net.ssl.SSLSocket;
 import java.io.*;
-import java.net.Socket;
 
 /**
  *
@@ -33,7 +31,7 @@ public class HTTPAjaxDashboardRequest extends Thread {
 
             if(request.getMethod().equals("GET")) {
                 if(request.getURI().equals("/dashboardData")) {
-                    response.setContentFromString(HTTPServerAjaxDashboard.updateData(), "text/html");
+                    response.setContentFromString(HTTPSServerAjaxDashboard.updateData(), "text/html");
                     response.setResponseStatus("200 Ok");
                 }
                 else {
@@ -54,7 +52,7 @@ public class HTTPAjaxDashboardRequest extends Thread {
             }
             else { // NOT GET
                 if(request.getMethod().equals("PUT") && request.getURI().startsWith("/dashboardData/")) {
-                    HTTPServerAjaxDashboard.getData(request.getURI().substring(9));
+                    HTTPSServerAjaxDashboard.getData(request.getURI().substring(9));
                     response.setResponseStatus("200 Ok");
                 }
                 else {

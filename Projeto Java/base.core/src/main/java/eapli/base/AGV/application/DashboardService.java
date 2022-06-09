@@ -54,7 +54,7 @@ public class DashboardService {
     }
 
 
-    public void AgvDockInformation(){
+/*    public void AgvDockInformation(){
         for (AGVDock agvDock: agvDockRepository.findAll()){
             string.append(";");
             string.append(agvDock.getBegin().getBeginLSquare());
@@ -66,7 +66,7 @@ public class DashboardService {
         }
     }
 
-    /*public void sendAisle(){
+    public void sendAisle(){
         for (Aisle aisle: aisleRepository.findAll()){
             string.append("/");
             string.append(aisle.AisleBeginLSquare().BeginLSquare());

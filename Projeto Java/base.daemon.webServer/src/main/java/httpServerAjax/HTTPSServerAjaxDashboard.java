@@ -4,13 +4,14 @@ import javax.net.ssl.SSLServerSocket;
 import javax.net.ssl.SSLServerSocketFactory;
 import javax.net.ssl.SSLSocket;
 import java.io.IOException;
+import java.net.InetAddress;
 
 
 /**
  *
  * @author ANDRE MOREIRA (asc@isep.ipp.pt)
  */
-public class HTTPServerAjaxDashboard {
+public class HTTPSServerAjaxDashboard {
 
     static private final String BASE_FOLDER="base.daemon.webServer/src/main/java/httpServerAjax/www";
     static private SSLServerSocket sock;
@@ -21,6 +22,7 @@ public class HTTPServerAjaxDashboard {
     private static final String KEYSTORE_PASS="forgotten";
 
     public static void main(String[] args) throws IOException {
+
         SSLSocket cliSock;
 
         System.setProperty("javax.net.ssl.trustStore", STORE_PATH);
