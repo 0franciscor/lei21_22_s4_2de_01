@@ -49,4 +49,16 @@ public class WarehousePlant implements AggregateRoot<Long> {
     public Long identity() {
         return Id;
     }
+
+    public int getLength() {
+        return length;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getSquare() {
+        return square;
+    }
 }

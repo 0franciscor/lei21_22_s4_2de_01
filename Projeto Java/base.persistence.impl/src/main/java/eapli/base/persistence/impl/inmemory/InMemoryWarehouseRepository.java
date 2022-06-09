@@ -9,4 +9,9 @@ public class InMemoryWarehouseRepository extends InMemoryDomainRepository<Wareho
     static {
         InMemoryInitializer.init();
     }
+
+    @Override
+    public Warehouse findById(String id) {
+        return matchOne(e->e.identity() == Long.parseLong(id)).get();
+    }
 }

@@ -25,10 +25,9 @@ import agvmanager.tcpprotocol.server.RequestMessageParser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import javax.net.ssl.SSLServerSocket;
+import javax.net.ssl.SSLServerSocketFactory;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -40,6 +39,7 @@ import java.net.Socket;
 public class AgvManagerProtocolServer {
 
     private static final Logger LOGGER = LogManager.getLogger(AgvManagerProtocolServer.class);
+
 
     /**
      * Client socket.
@@ -106,6 +106,7 @@ public class AgvManagerProtocolServer {
     public AgvManagerProtocolServer(final RequestMessageParser requestMessageParser){
         this.parser = requestMessageParser;
     }
+
 
     /**
      * Wait for connections.

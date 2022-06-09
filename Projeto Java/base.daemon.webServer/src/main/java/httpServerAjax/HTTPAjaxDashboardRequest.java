@@ -1,6 +1,7 @@
 package httpServerAjax;
+
+import javax.net.ssl.SSLSocket;
 import java.io.*;
-import java.net.Socket;
 
 /**
  *
@@ -8,11 +9,11 @@ import java.net.Socket;
  */
 public class HTTPAjaxDashboardRequest extends Thread {
     String baseFolder;
-    Socket sock;
+    SSLSocket sock;
     DataInputStream inS;
     DataOutputStream outS;
 
-    public HTTPAjaxDashboardRequest(Socket s, String f) {
+    public HTTPAjaxDashboardRequest(SSLSocket s, String f) {
         baseFolder=f;
         sock=s;
     }
@@ -29,8 +30,8 @@ public class HTTPAjaxDashboardRequest extends Thread {
             // System.out.println(request.getURI());
 
             if(request.getMethod().equals("GET")) {
-                if(request.getURI().equals("/agvData")) {
-                    response.setContentFromString(HTTPServerAjaxDashboard.updateData(), "text/html");
+                if(request.getURI().equals("/dashboardData")) {
+                    response.setContentFromString(HTTPSServerAjaxDashboard.updateData(), "text/html");
                     response.setResponseStatus("200 Ok");
                 }
                 else {
@@ -50,8 +51,8 @@ public class HTTPAjaxDashboardRequest extends Thread {
                 response.send(outS);
             }
             else { // NOT GET
-                if(request.getMethod().equals("PUT") && request.getURI().startsWith("/agvData/")) {
-                    HTTPServerAjaxDashboard.getData(request.getURI().substring(9));
+                if(request.getMethod().equals("PUT") && request.getURI().startsWith("/dashboardData/")) {
+                    HTTPSServerAjaxDashboard.getData(request.getURI().substring(9));
                     response.setResponseStatus("200 Ok");
                 }
                 else {
