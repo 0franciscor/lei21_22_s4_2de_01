@@ -28,6 +28,8 @@ public class Section implements Serializable {
 
     private Message Message;
 
+    private Obligatoriness obligatoriness;
+
     @OneToMany(cascade = CascadeType.ALL,
             orphanRemoval = true)
     @JoinColumn(name = "section_id")
@@ -48,6 +50,10 @@ public class Section implements Serializable {
 
     public void modifyMessage(Message Message) {
         this.Message = Message;
+    }
+
+    public void modifyObligatoriness(String obligatoriness){
+        this.obligatoriness = Obligatoriness.getObligatoriness(obligatoriness);
     }
 
     public boolean addQuestion(final Question question) {

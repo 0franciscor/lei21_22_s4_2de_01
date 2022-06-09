@@ -26,7 +26,10 @@ public class QuestionnaireMain {
     }
 
     public static void main(String[] args) {
+
         parseWithVisitor("C:\\Users\\manua\\OneDrive\\Desktop\\lei21_22_s4_2de_01\\Projeto Java\\teste.txt");
+
+        parseWithVisitor("C:\\Users\\arian\\OneDrive - Instituto Superior de Engenharia do Porto\\Desktop\\lei21_22_s4_2de_01\\Projeto Java\\teste.txt");
     }
 
 }

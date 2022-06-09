@@ -1,24 +1,19 @@
 package eapli.base.AGV.application;
 
-import eapli.base.MessageUtils;
-
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 
 import java.io.*;
 
 import java.net.InetAddress;
-import java.net.Socket;
-import java.net.UnknownHostException;
-
 
 public class CallDigitalTwinController {
 
-    private static final String TRUSTED_STORE = "keystore.jks";
+    private static final String TRUSTED_STORE = "client1_J.jks";
 
     private static final String STORE_PATH = "base.daemon.digitalTwin/src/main/resources/" + TRUSTED_STORE;
 
-    private static final String KEYSTORE_PASS="password";
+    private static final String KEYSTORE_PASS = "forgotten";
 
     private SSLSocket sock;
 
@@ -50,7 +45,7 @@ public class CallDigitalTwinController {
         return info;
     }
 
-    private SSLSocket getClientSocket(final int port) throws UnknownHostException {
+    private SSLSocket getClientSocket(final int port) throws IOException {
         final var fileName = new File(STORE_PATH).getAbsolutePath();
 
         System.setProperty("javax.net.ssl.trustStore", fileName);
@@ -70,6 +65,7 @@ public class CallDigitalTwinController {
             System.out.println("Client failed to connect to local port " + port);
             System.exit(1);
         }
+        sock.startHandshake();
         return sock;
     }
 
