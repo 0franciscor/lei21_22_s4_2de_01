@@ -22,6 +22,7 @@ package agvmanager.tcpprotocol.server;
 
 
 import eapli.base.AGV.application.AGVManagerController;
+import eapli.base.AGV.application.CallAGVManagerController;
 import eapli.base.AGV.application.CallDigitalTwinController;
 
 /**
@@ -31,20 +32,22 @@ import eapli.base.AGV.application.CallDigitalTwinController;
  */
 public abstract class AGVManagerProtocolRequest {
 
-    protected final String request;
-    protected AGVManagerController managerController;
+    protected final byte[] request;
+    protected AGVManagerController agvManagerController;
 
     protected CallDigitalTwinController callTwinController;
 
-    protected AGVManagerProtocolRequest(final AGVManagerController managerController, final String inputRequest) {
+
+    protected AGVManagerProtocolRequest(final AGVManagerController managerController, final byte[] inputRequest) {
         this.request = inputRequest;
-        this.managerController = managerController;
+        this.agvManagerController = managerController;
     }
 
-    protected AGVManagerProtocolRequest(final CallDigitalTwinController callTwinController, final String inputRequest) {
+    protected AGVManagerProtocolRequest(final CallDigitalTwinController digitalTwinController, final byte[] inputRequest) {
         this.request = inputRequest;
-        this.callTwinController = callTwinController;
+        this.callTwinController = digitalTwinController;
     }
+
 
     /**
      * Executes the requested action and builds the response to the client.
