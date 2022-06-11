@@ -27,8 +27,8 @@ package agvmanager.tcpprotocol.server;
  */
 public class UnknownRequest extends BaseErrorRequest {
 
-    public UnknownRequest(final String inputLine) {
-        super(inputLine, null);
+    public UnknownRequest(final byte[] inputLine) {
+        super(inputLine);
     }
 
     @Override
