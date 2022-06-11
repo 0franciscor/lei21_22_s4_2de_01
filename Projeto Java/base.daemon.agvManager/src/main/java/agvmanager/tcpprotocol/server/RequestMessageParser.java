@@ -41,53 +41,61 @@ public class RequestMessageParser {
     public RequestMessageParser() {}
 
     /**
-     * Parse and build the request.
-     *
-     * @param inputLine
-     *
+     * Parse and build the request
+     * @param receivedArray
+     * @param extraInfo
      * @return
      */
-    public AGVManagerProtocolRequest parse(final String inputLine) {
-        // as a fallback make sure we return unknown
-        AGVManagerProtocolRequest request = null;
+    public AGVManagerProtocolRequest parse(final byte[] receivedArray, final String extraInfo) {
 
-        // parse to determine which type of request and if it is sintactally valid
-        String[] tokens;
-        try {
-            tokens = CsvLineMarshaler.tokenize(inputLine).toArray(new String[0]);
-            if (String.valueOf(CallAGVManagerController.CALL_FIFO).equals(tokens[1]))
-                request = callTaskAssignment(inputLine, tokens);
-            if (String.valueOf(CallAGVManagerController.DASHBOARD_REQUEST).equals(tokens[1]))
-                request = parseGetAGVInformations(inputLine, tokens);
-        } catch (final ParseException e) {
-            LOGGER.info("Unable to parse request: {}", inputLine);
-            request = new BadRequest(inputLine, "Unable to parse request");
-        }
-        return request;
-    }
-
-    private AGVManagerProtocolRequest callTaskAssignment(final String inputLine, final String[] tokens) {
         AGVManagerProtocolRequest request;
-        if (tokens.length != 3) {
-            request = new BadRequest(inputLine, "Wrong number of parameters");
-        } else{
-            request = new AssignTasksRequest(inputLine);
-        }
-        return request;
-    }
+        if (receivedArray.length != 4) {
+            request = new ErrorInRequest(receivedArray, "Wrong number of parameters");
 
-    private AGVManagerProtocolRequest parseGetAGVInformations(final String inputLine, final String[] tokens) {
-        AGVManagerProtocolRequest request;
-        if (tokens.length != 4) {
-            request = new ErrorInRequest(inputLine, "Wrong number of parameters");
-
-        } else if (tokens[3].isBlank()) {
-            request = new ErrorInRequest(inputLine, "File name must be Pointed");
+        } else if (receivedArray[3]==0) {
+            request = new ErrorInRequest(receivedArray, "File name must be Pointed");
 
         } else {
-            request = new DashboardRequest(inputLine, tokens[3]);
+            request = new DashboardRequest(receivedArray,extraInfo);
         }
+
+
+        // as a fallback make sure we return unknown
+        request = null;
+
+        if (CallAGVManagerController.CALL_FIFO == receivedArray[1])
+            request = callTaskAssignment(receivedArray, extraInfo);
+
+        if (CallAGVManagerController.DASHBOARD_REQUEST == receivedArray[1])
+            request = callTaskAssignment(receivedArray, extraInfo);
 
         return request;
     }
+
+    private AGVManagerProtocolRequest callTaskAssignment(final byte[] receivedArray, String extraInfo) {
+        AGVManagerProtocolRequest request;
+
+        if (receivedArray.length != 4) {
+            request = new BadRequest(receivedArray, "Wrong number of parameters");
+        } else{
+            request = new AssignTasksRequest(receivedArray,extraInfo);
+        }
+        return request;
+    }
+
+    /*
+    private AGVManagerProtocolRequest parseGetAGVInformations(final byte[] receivedArray, final String[] tokens) {
+        AGVManagerProtocolRequest request;
+        if (tokens.length != 4) {
+            request = new ErrorInRequest(receivedArray, "Wrong number of parameters");
+
+        } else if (tokens[3].isBlank()) {
+            request = new ErrorInRequest(receivedArray, "File name must be Pointed");
+
+        } else {
+            request = new DashboardRequest(tokens[3], receivedArray);
+        }
+
+        return request;
+    }*/
 }
