@@ -22,13 +22,13 @@ package daemon.agvmanager.presentation;
 
 import agvmanager.tcpprotocol.server.AGVManagerProtocolRequest;
 import agvmanager.tcpprotocol.server.RequestMessageParser;
+import eapli.base.orderServer.tcp.utils.ConstantsServer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import javax.net.ssl.SSLServerSocket;
+import javax.net.ssl.SSLServerSocketFactory;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -40,6 +40,12 @@ import java.net.Socket;
 public class AgvManagerProtocolServer {
 
     private static final Logger LOGGER = LogManager.getLogger(AgvManagerProtocolServer.class);
+
+    private static final String TRUSTED_STORE = "server_J.jks";
+
+    private static final String STORE_PATH = "base.daemon.digitalTwin/src/main/resources/" + TRUSTED_STORE;
+
+    private static final String KEYSTORE_PASS="forgotten";
 
     /**
      * Client socket.
@@ -61,19 +67,60 @@ public class AgvManagerProtocolServer {
             final var clientIP = clientSocket.getInetAddress();
             LOGGER.debug("Acepted connection from {}:{}", clientIP.getHostAddress(), clientSocket.getPort());
 
-            try (var out = new PrintWriter(clientSocket.getOutputStream(), true);
-                 var in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()))) {
-                String inputLine;
-                while ((inputLine = in.readLine()) != null) {
-                    LOGGER.debug("Received message:----\n{}\n----", inputLine);
-                    final AGVManagerProtocolRequest request = parser.parse(inputLine);
-                    final String response = request.execute();
-                    out.println(response);
-                    LOGGER.debug("Sent message:----\n{}\n----", response);
-                    if (request.isGoodbye()) {
-                        break;
-                    }
+            try {
+
+                var in = new DataInputStream(clientSocket.getInputStream());
+                var out = new DataOutputStream(clientSocket.getOutputStream());
+
+                var inputArray = in.readNBytes(4);
+
+                if (inputArray[1] == ConstantsServer.START_CODE) {
+                    LOGGER.debug("[SUCCESS] TEST CODE RECEIVED");
+
+                    byte code = 0;
+                    byte[] message = {code, (byte) 2, code, code};
+                    out.write(message);
+                    LOGGER.debug("[ACKNOWLEDGMENT] SENDING ACKNOWLEDGMENT MESSAGE");
                 }
+
+                inputArray = in.readNBytes(4);
+                if (inputArray[1] == 3) {
+
+                    int length = inputArray[2] + (256 * inputArray[3]);
+
+                    String extraInfo = null;
+                    byte[] string;
+                    if (length > 0) {
+                        string = in.readNBytes(length);
+                        extraInfo = new String(string);
+                    }
+
+                    LOGGER.debug("Received message:----{}----", inputArray);
+                    final AGVManagerProtocolRequest request = parser.parse(inputArray, extraInfo);
+                    String response = request.execute();
+
+                    var array = calculateSize(response);
+                    inputArray[2] = array[0];
+                    inputArray[3] = array[1];
+                    out.write(inputArray);
+
+                    if(response != null)
+                        out.write(response.getBytes());
+
+                    LOGGER.debug("Sent message:----{}----", response);
+                }
+
+                inputArray = in.readNBytes(4);
+                if (inputArray[1] == ConstantsServer.FINISH_CODE) {
+                    LOGGER.debug("[SUCCESS] DISCONNECT CODE RECEIVED");
+
+                    byte code = 0;
+                    byte[] message = {code, (byte) 2, code, code};
+                    out.write(message);
+                    LOGGER.debug("[ACKNOWLEDGMENT] SENDING ACKNOWLEDGMENT MESSAGE");
+
+                }
+
             } catch (final IOException e) {
                 LOGGER.error(e);
             } finally {
@@ -87,18 +134,55 @@ public class AgvManagerProtocolServer {
                 // null the reference to ensure it will be caught by the garbage collector
                 clientSocket = null;
 
-                // helper debug - SHOULD NOT BE USED IN PRODUCTION CODE!!!
-                if (LOGGER.isDebugEnabled()) {
-                    final int finalThreadCount = Thread.activeCount();
-                    LOGGER.debug("Ending client thread - final thread count: {}", finalThreadCount);
-                    final Thread[] t = new Thread[finalThreadCount];
-                    final int n = Thread.enumerate(t);
-                    for (var i = 0; i < n; i++) {
-                        LOGGER.debug("T {}: {}", t[i].getId(), t[i].getName());
-                    }
-                }
             }
         }
+    }
+
+    /**
+     * @param string created response string
+     *
+     * Method used to calculate the size of the response
+     *
+     * @return array containing the sizes
+     */
+    private static byte[] calculateSize(final String string){
+        byte d1 = 0, d2 = 0;
+        int stringSize = string.length();
+
+        while(stringSize > 0) {
+            if (stringSize > 256) {
+                d2 = (byte) (stringSize / 256);
+                stringSize %= 256;
+            } else {
+                d1 = (byte) stringSize;
+                break;
+            }
+        }
+        return new byte []{d1, d2};
+    }
+
+    // adicionar o método do getServerSocket
+
+    private SSLServerSocket getServerSocket(final int port){
+        final var fileName = new File(STORE_PATH).getAbsolutePath();
+
+        System.setProperty("javax.net.ssl.trustStore", fileName);
+        System.setProperty("javax.net.ssl.trustStorePassword",KEYSTORE_PASS);
+
+        System.setProperty("javax.net.ssl.keyStore", fileName);
+        System.setProperty("javax.net.ssl.keyStorePassword",KEYSTORE_PASS);
+
+        var sslF = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
+        SSLServerSocket sock = null;
+
+        try {
+            sock = (SSLServerSocket) sslF.createServerSocket(port);
+            sock.setNeedClientAuth(true);
+        } catch(IOException ex) {
+            System.out.println("Server failed to open local port " + port);
+            System.exit(1);
+        }
+        return sock;
     }
 
     private final RequestMessageParser parser;
@@ -114,7 +198,7 @@ public class AgvManagerProtocolServer {
      *
      * @param port
      */
-    @SuppressWarnings("java:S2189")
+    // @SuppressWarnings("java:S2189")
     private void listen(final int port) {
         try (var serverSocket = new ServerSocket(port)) {
             while (true) {
