@@ -27,7 +27,7 @@ import eapli.base.AGV.application.AGVManagerControllerImplementation;
  */
 public class AssignTasksRequest extends AGVManagerProtocolRequest {
 
-    public AssignTasksRequest(final String request) {
+    public AssignTasksRequest(final byte[] request, String agvId) {
         super(new AGVManagerControllerImplementation(), request);
     }
 
@@ -36,7 +36,7 @@ public class AssignTasksRequest extends AGVManagerProtocolRequest {
         String output = null;
 
         try{
-            if(managerController.assignTasks())
+            if(agvManagerController.assignTasks())
             output = buildResponse();
         }catch (Exception e){
             output = "There was a problem when executing the automatic task assignment";
