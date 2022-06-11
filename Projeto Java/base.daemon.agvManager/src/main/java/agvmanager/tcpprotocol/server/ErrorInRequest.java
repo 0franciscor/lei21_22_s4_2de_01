@@ -27,7 +27,7 @@ package agvmanager.tcpprotocol.server;
  */
 public class ErrorInRequest extends BaseErrorRequest {
 
-    public ErrorInRequest(final String request, final String errorDescription) {
+    public ErrorInRequest(final byte[] request, final String errorDescription) {
         super(request, errorDescription);
     }
 
