@@ -7,9 +7,15 @@ import java.io.IOException;
 public class DashboardRequest extends AGVManagerProtocolRequest{
 
     private final String agvId;
-    public DashboardRequest(String inputRequest, String agvId) {
-        super(new CallDigitalTwinController(), inputRequest);
+
+    /*public DashboardRequest(String agvId, byte[] array) {
+        super(new CallDigitalTwinController(), array);
         this.agvId = agvId;
+    }*/
+
+    public DashboardRequest(final byte[] receivedArray, final String extraInfo){
+        super(new CallDigitalTwinController(),receivedArray);
+        this.agvId = extraInfo;
     }
 
     @Override
