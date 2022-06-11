@@ -32,10 +32,14 @@ public abstract class BaseErrorRequest extends AGVManagerProtocolRequest {
 
     private final String errorDescription;
 
-    protected BaseErrorRequest(final String request, final String errorDescription) {
+    protected BaseErrorRequest(final byte[] request, final String errorDescription) {
         super((AGVManagerController) null, request);
-        this.buildBadRequest(request);
         this.errorDescription = errorDescription;
+    }
+
+    protected BaseErrorRequest(final byte[] request) {
+        super((AGVManagerController) null, request);
+        this.errorDescription = null;
     }
 
     @Override
@@ -51,7 +55,7 @@ public abstract class BaseErrorRequest extends AGVManagerProtocolRequest {
                 errorDescription
         };
         final boolean[] mask = { false, true, true };
-        return CsvRecord.valueOf(fields, mask).toString() + "\n";
+        return CsvRecord.valueOf(fields, mask) + "\n";
     }
 
     protected abstract String messageType();
