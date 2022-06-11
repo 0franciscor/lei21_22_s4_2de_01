@@ -26,6 +26,14 @@ public class Begin implements ValueObject {
         this.beginWSquare = wSquare;
     }
 
+    public int getBeginLSquare() {
+        return beginLSquare;
+    }
+
+    public int getBeginWSquare() {
+        return beginWSquare;
+    }
+
     public boolean equals(Object obj){
         if(obj == null) return false;
 

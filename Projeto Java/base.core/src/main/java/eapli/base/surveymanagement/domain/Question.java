@@ -2,6 +2,8 @@ package eapli.base.surveymanagement.domain;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -10,11 +12,6 @@ import java.io.Serializable;
  */
 @Entity
 public class Question implements Serializable {
-
-    public enum Type {
-        FREE_TEXT, NUMERIC, SINGLE_CHOICE, SINGLE_CHOICE1,
-        MULTIPLE_CHOICE, MULTIPLE_CHOICE1, SORTING_OPTIONS, SCALING_OPTIONS,
-    }
 
     private static final long serialVersionUID = 1L;
 
@@ -32,6 +29,8 @@ public class Question implements Serializable {
     })
     private Message pergunta;
 
+    private Obligatoriness obligatoriness;
+
     @AttributeOverrides({
             @AttributeOverride(name = "message", column = @Column(name = "instruction"))
     })
@@ -43,6 +42,11 @@ public class Question implements Serializable {
     private Message extraInfo;
 
     private Type type;
+
+    @ElementCollection
+    @MapKeyColumn(name = "id")
+    @Column(name = "option")
+    private Map<Long,String> options =new HashMap<>();
 
     public void modifyId(Long identifier) {
         this.questionId = identifier;
@@ -61,23 +65,15 @@ public class Question implements Serializable {
     }
 
     public void modifyType(String type){
-        if (type.equals("Free-Text")){
-            this.type=Type.FREE_TEXT;
-        } else if (type.equals("Numeric")){
-            this.type=Type.NUMERIC;
-        } else if (type.equals("Single-Choice")){
-            this.type=Type.SINGLE_CHOICE;
-        } else if (type.equals("Single-Choice with input value")){
-            this.type=Type.SINGLE_CHOICE1;
-        } else if (type.equals("Multiple-Choice")){
-            this.type=Type.MULTIPLE_CHOICE;
-        } else if (type.equals("Multiple-Choice with input value")){
-            this.type=Type.MULTIPLE_CHOICE1;
-        } else if (type.equals("Sorting Options")){
-            this.type=Type.SORTING_OPTIONS;
-        } else if (type.equals("Scaling Options")){
-            this.type=Type.SCALING_OPTIONS;
-        }
+        this.type = Type.getType(type);
+    }
+
+    public void modifyObligatoriness(String obligatoriness){
+        this.obligatoriness = Obligatoriness.getObligatoriness(obligatoriness);
+    }
+
+    public void addOption(Long id, String opcao){
+        options.put(id,opcao);
     }
 
 }

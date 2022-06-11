@@ -3,6 +3,9 @@ package eapli.base.AGV.application;
 import eapli.base.AGV.domain.AGV;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 
+import javax.net.ssl.SSLServerSocketFactory;
+import javax.net.ssl.SSLSocket;
+import javax.net.ssl.SSLSocketFactory;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -26,10 +29,13 @@ public class CallAGVManagerController {
 
     private BufferedReader input;
 
+
+
     public void connectDaemon(final String address, final int port) throws IOException {
         InetAddress serverIP = InetAddress.getByName(address);
 
         sock = new Socket(serverIP, port);
+
         output = new PrintWriter(sock.getOutputStream(), true);
         input = new BufferedReader(new InputStreamReader(sock.getInputStream()));
         System.out.printf("Connected to {%s}\n", address);

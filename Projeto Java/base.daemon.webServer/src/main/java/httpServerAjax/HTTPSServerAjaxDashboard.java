@@ -1,25 +1,39 @@
 package httpServerAjax;
 
+import javax.net.ssl.SSLServerSocket;
+import javax.net.ssl.SSLServerSocketFactory;
+import javax.net.ssl.SSLSocket;
 import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.net.InetAddress;
 
 
 /**
  *
  * @author ANDRE MOREIRA (asc@isep.ipp.pt)
  */
-public class HTTPServerAjaxDashboard {
+public class HTTPSServerAjaxDashboard {
 
     static private final String BASE_FOLDER="base.daemon.webServer/src/main/java/httpServerAjax/www";
-    static private ServerSocket sock;
+    static private SSLServerSocket sock;
     static private final int PORT = 83;
 
+    private static final String TRUSTED_STORE = "server_J.jks";
+    private static final String STORE_PATH = "base.daemon.webServer/src/main/resources/" + TRUSTED_STORE;
+    private static final String KEYSTORE_PASS="forgotten";
 
     public static void main(String[] args) throws IOException {
-        Socket cliSock;
+
+        SSLSocket cliSock;
+
+        System.setProperty("javax.net.ssl.trustStore", STORE_PATH);
+        System.setProperty("javax.net.ssl.trustStorePassword", KEYSTORE_PASS);
+
+        System.setProperty("javax.net.ssl.keyStore", STORE_PATH);
+        System.setProperty("javax.net.ssl.keyStorePassword", KEYSTORE_PASS);
+
         try {
-            sock = new ServerSocket(PORT);
+            SSLServerSocketFactory sslF = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
+            sock = (SSLServerSocket) sslF.createServerSocket(PORT);
         }
         catch(IOException ex) {
             System.out.println("Server failed to open local port " + PORT);
@@ -27,7 +41,7 @@ public class HTTPServerAjaxDashboard {
         }
 
         while(true) {
-            cliSock=sock.accept();
+            cliSock = (SSLSocket) sock.accept();
             HTTPAjaxDashboardRequest req = new HTTPAjaxDashboardRequest(cliSock, BASE_FOLDER);
             req.start();
             incAccessesCounter();

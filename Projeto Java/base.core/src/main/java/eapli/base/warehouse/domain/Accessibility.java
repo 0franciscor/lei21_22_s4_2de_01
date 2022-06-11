@@ -4,6 +4,7 @@ import eapli.framework.domain.model.ValueObject;
 import javax.persistence.Embeddable;
 @Embeddable
 public class Accessibility implements ValueObject {
+
     private String rating;
 
     public Accessibility(){}

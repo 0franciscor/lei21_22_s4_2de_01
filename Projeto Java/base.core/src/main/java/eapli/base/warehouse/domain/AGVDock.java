@@ -9,8 +9,10 @@ public class AGVDock implements AggregateRoot<String> {
 
     @Id
     private String Id;
+
     @ManyToOne(optional = false, cascade = CascadeType.MERGE)
     private Warehouse warehouse;
+
     @Embedded
     private Depth depth;
 
@@ -52,5 +54,21 @@ public class AGVDock implements AggregateRoot<String> {
 
     public String getId() {
         return Id;
+    }
+
+    public Depth getDepth() {
+        return depth;
+    }
+
+    public Accessibility getAccessibility() {
+        return accessibility;
+    }
+
+    public Begin getBegin() {
+        return begin;
+    }
+
+    public End getEnd() {
+        return end;
     }
 }

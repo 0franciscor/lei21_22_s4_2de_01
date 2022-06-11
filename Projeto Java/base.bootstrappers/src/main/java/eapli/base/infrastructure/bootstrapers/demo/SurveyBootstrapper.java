@@ -30,6 +30,15 @@ public class SurveyBootstrapper extends BaseDemoBootstrapper implements Action {
 
         Question question = new Question();
         question.modifyId(1L);
+        question.modifyPergunta(new Message("Como é a qualidade dos nossos serviços em comparação com as outras empresas?"));
+        question.modifyObligatoriness("mandatory");
+        question.modifyType("Single-Choice");
+        question.addOption(1L,"Muito melhor");
+        question.addOption(2L,"Um bocado melhor");
+        question.addOption(3L,"Igual");
+        question.addOption(4L,"Um bocado pior");
+        question.addOption(5L,"Muito pior");
+        question.modifyExtraInfo(new Message("Escolha uma das seguintes frases."));
         section.addQuestion(question);
 
         questionnaire.addSection(section);

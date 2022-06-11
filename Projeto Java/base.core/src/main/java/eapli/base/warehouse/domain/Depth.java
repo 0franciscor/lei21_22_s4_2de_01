@@ -36,6 +36,14 @@ public class Depth implements ValueObject {
         return lSquare == newObj.lSquare && wSquare == newObj.wSquare;
     }
 
+    public int getlSquare() {
+        return lSquare;
+    }
+
+    public int getwSquare() {
+        return wSquare;
+    }
+
     public String toString(){
         return String.format("Depth at Length: %d and Width: %d", lSquare, wSquare);
     }
