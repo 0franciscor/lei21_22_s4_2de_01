@@ -6,10 +6,7 @@ import eapli.base.infrastructure.persistence.PersistenceContext;
 import javax.net.ssl.SSLServerSocketFactory;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -19,46 +16,106 @@ public class CallAGVManagerController {
 
     public static final int VERSION = 1;
 
-    public static final int CALL_FIFO = 1;
+    public static final int CALL_FIFO = 4;
 
     public static final int DASHBOARD_REQUEST = 3;
 
-    private Socket sock;
+    private static final String TRUSTED_STORE = "client2_J.jks";
 
-    private PrintWriter output;
+    private static final String SERVER = "server_J.jks";
 
-    private BufferedReader input;
+    private static final String STORE_PATH = "base.daemon.digitalTwin/src/main/resources/";
+
+    private static final String KEYSTORE_PASS = "forgotten";
+
+    private SSLSocket sock;
+
+    private DataOutputStream output;
+
+    private DataInputStream input;
 
 
 
     public void connectDaemon(final String address, final int port) throws IOException {
-        InetAddress serverIP = InetAddress.getByName(address);
+        try {
+            sock = getClientSocket(port);
+            sock.startHandshake();
+        } catch (final IOException ignored) {}
 
-        sock = new Socket(serverIP, port);
+        output = new DataOutputStream(sock.getOutputStream());
+        input = new DataInputStream(sock.getInputStream());
 
-        output = new PrintWriter(sock.getOutputStream(), true);
-        input = new BufferedReader(new InputStreamReader(sock.getInputStream()));
-        System.out.printf("Connected to {%s}\n", address);
+        testConnection();
     }
 
-    public void callFIFO(){
-        String request = String.format("%d,%d,0", VERSION, CALL_FIFO);
-        output.println(request);
+    public void callFIFO() throws IOException {
+        byte [] array = new byte[]{VERSION,CALL_FIFO,0,0};
+        output.write(array);
     }
 
-    public List<String> getAGVInfo() throws IOException {
+    /*public List<String> getAGVInfo() throws IOException {
         List<String> agvInfoList = new ArrayList<>();
 
         for(AGV agv : PersistenceContext.repositories().agv().findAll()){
             String agvId = agv.getAgvId().getAGVId();
-            String request = String.format("%d,%d,%d,%s", VERSION, DASHBOARD_REQUEST, agvId.length(), agvId);
-            output.println(request);
-            agvInfoList.add(input.readLine());
+            byte [] array = new byte[]{VERSION,DASHBOARD_REQUEST,(byte)agvId.length(),0};
+            output.write(array);
+
+
+            agvInfoList.add(input.readLine()); // fazer verif do array verificar o tamanho
+
+            int length = array[2] + 256*array[3];
+            var info = new String(input.readNBytes(length));
+
+
         }
         return agvInfoList;
+    } */
+
+    private SSLSocket getClientSocket(final int port) throws IOException {
+        final var fileName = new File(STORE_PATH).getAbsolutePath();
+
+        System.setProperty("javax.net.ssl.trustStore", STORE_PATH + SERVER);
+        System.setProperty("javax.net.ssl.trustStorePassword", KEYSTORE_PASS);
+
+        System.setProperty("javax.net.ssl.keyStore", STORE_PATH + TRUSTED_STORE);
+        System.setProperty("javax.net.ssl.keyStorePassword",KEYSTORE_PASS);
+
+        var sslF = (SSLSocketFactory) SSLSocketFactory.getDefault();
+        SSLSocket sock = null;
+
+        var serverIP = InetAddress.getByName("localhost");
+
+        try {
+            sock = (SSLSocket) sslF.createSocket(serverIP, port);
+        } catch(IOException ex) {
+            System.out.println("Client failed to connect to local port " + port);
+            System.exit(1);
+        }
+        sock.startHandshake();
+        return sock;
+    }
+
+    public boolean testConnection() throws IOException {
+        byte code = 0;
+        byte[] testArray = new byte[]{code, code, code, code};
+        output.write(testArray);
+
+        var ackArray = input.readNBytes(4);
+
+        return 2 == ackArray[1];
     }
 
     public void closeConnection() throws IOException {
-        sock.close();
+
+        byte code = 0;
+        byte[] testArray = new byte[]{code, (byte) 1, code, code};
+        output.write(testArray);
+
+        var ackArray = input.readNBytes(4);
+
+        if(ackArray[1] == 2)
+            sock.close();
     }
+
 }
