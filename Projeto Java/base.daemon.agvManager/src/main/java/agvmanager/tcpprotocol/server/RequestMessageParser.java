@@ -52,7 +52,7 @@ public class RequestMessageParser {
         if (receivedArray.length != 4) {
             request = new ErrorInRequest(receivedArray, "Wrong number of parameters");
 
-        } else if (receivedArray[3]==0) {
+        } else if (receivedArray[2]==0 && receivedArray[3]==0) {
             request = new ErrorInRequest(receivedArray, "File name must be Pointed");
 
         } else {
@@ -67,7 +67,7 @@ public class RequestMessageParser {
             request = callTaskAssignment(receivedArray, extraInfo);
 
         if (CallAGVManagerController.DASHBOARD_REQUEST == receivedArray[1])
-            request = callTaskAssignment(receivedArray, extraInfo);
+            request = callAGVInfo(receivedArray, extraInfo);
 
         return request;
     }
@@ -83,19 +83,15 @@ public class RequestMessageParser {
         return request;
     }
 
-    /*
-    private AGVManagerProtocolRequest parseGetAGVInformations(final byte[] receivedArray, final String[] tokens) {
+
+    private AGVManagerProtocolRequest callAGVInfo(final byte[] receivedArray, String extraInfo) {
         AGVManagerProtocolRequest request;
-        if (tokens.length != 4) {
+        if (receivedArray.length != 4) {
             request = new ErrorInRequest(receivedArray, "Wrong number of parameters");
-
-        } else if (tokens[3].isBlank()) {
-            request = new ErrorInRequest(receivedArray, "File name must be Pointed");
-
         } else {
-            request = new DashboardRequest(tokens[3], receivedArray);
+            request = new DashboardRequest(receivedArray, extraInfo);
         }
 
         return request;
-    }*/
+    }
 }
