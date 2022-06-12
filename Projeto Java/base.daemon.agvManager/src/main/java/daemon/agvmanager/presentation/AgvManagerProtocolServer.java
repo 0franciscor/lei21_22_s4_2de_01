@@ -41,9 +41,11 @@ public class AgvManagerProtocolServer {
 
     private static final Logger LOGGER = LogManager.getLogger(AgvManagerProtocolServer.class);
 
-    private static final String TRUSTED_STORE = "server_J.jks";
+    private static final String SERVER = "server_J.jks";
 
-    private static final String STORE_PATH = "base.daemon.digitalTwin/src/main/resources/" + TRUSTED_STORE;
+    private static final String TRUSTED_STORE = "client2_J.jks";
+
+    private static final String STORE_PATH = "base.daemon.agvManager/src/main/resources/";
 
     private static final String KEYSTORE_PASS="forgotten";
 
@@ -84,7 +86,7 @@ public class AgvManagerProtocolServer {
                 }
 
                 inputArray = in.readNBytes(4);
-                if (inputArray[1] == 3) {
+                if (inputArray[1] == 3 || inputArray[1] == 4) {
 
                     int length = inputArray[2] + (256 * inputArray[3]);
 
@@ -161,15 +163,13 @@ public class AgvManagerProtocolServer {
         return new byte []{d1, d2};
     }
 
-    // adicionar o método do getServerSocket
-
     private SSLServerSocket getServerSocket(final int port){
         final var fileName = new File(STORE_PATH).getAbsolutePath();
 
-        System.setProperty("javax.net.ssl.trustStore", fileName);
+        System.setProperty("javax.net.ssl.trustStore", STORE_PATH + TRUSTED_STORE);
         System.setProperty("javax.net.ssl.trustStorePassword",KEYSTORE_PASS);
 
-        System.setProperty("javax.net.ssl.keyStore", fileName);
+        System.setProperty("javax.net.ssl.keyStore", STORE_PATH + SERVER);
         System.setProperty("javax.net.ssl.keyStorePassword",KEYSTORE_PASS);
 
         var sslF = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
@@ -178,8 +178,10 @@ public class AgvManagerProtocolServer {
         try {
             sock = (SSLServerSocket) sslF.createServerSocket(port);
             sock.setNeedClientAuth(true);
+            System.out.println(" Sock: " + sock);
         } catch(IOException ex) {
             System.out.println("Server failed to open local port " + port);
+            System.out.println(ex.getMessage());
             System.exit(1);
         }
         return sock;
@@ -201,7 +203,7 @@ public class AgvManagerProtocolServer {
      */
     // @SuppressWarnings("java:S2189")
     private void listen(final int port) {
-        try (var serverSocket = new ServerSocket(port)) {
+        try (var serverSocket = getServerSocket(port)) {
             while (true) {
                 final var clientSocket = serverSocket.accept();
                 new ClientHandler(clientSocket, parser).start();
