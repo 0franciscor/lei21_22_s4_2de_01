@@ -22,9 +22,7 @@ public class CallAGVManagerController {
 
     private static final String TRUSTED_STORE = "client2_J.jks";
 
-    private static final String SERVER = "server_J.jks";
-
-    private static final String STORE_PATH = "base.daemon.digitalTwin/src/main/resources/";
+    private static final String STORE_PATH = "base.daemon.agvManager/src/main/resources/";
 
     private static final String KEYSTORE_PASS = "forgotten";
 
@@ -73,12 +71,12 @@ public class CallAGVManagerController {
     }
 
     private SSLSocket getClientSocket(final int port) throws IOException {
-        final var fileName = new File(STORE_PATH).getAbsolutePath();
+        final var fileName = new File(STORE_PATH + TRUSTED_STORE).getAbsolutePath();
 
-        System.setProperty("javax.net.ssl.trustStore", STORE_PATH + SERVER);
+        System.setProperty("javax.net.ssl.trustStore", fileName);
         System.setProperty("javax.net.ssl.trustStorePassword", KEYSTORE_PASS);
 
-        System.setProperty("javax.net.ssl.keyStore", STORE_PATH + TRUSTED_STORE);
+        System.setProperty("javax.net.ssl.keyStore", fileName);
         System.setProperty("javax.net.ssl.keyStorePassword",KEYSTORE_PASS);
 
         var sslF = (SSLSocketFactory) SSLSocketFactory.getDefault();
