@@ -5,7 +5,9 @@ import eapli.base.surveymanagement.domain.*;
 import eapli.base.surveymanagement.repository.SurveyRepository;
 import eapli.framework.actions.Action;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class SurveyBootstrapper extends BaseDemoBootstrapper implements Action {
 
@@ -54,6 +56,8 @@ public class SurveyBootstrapper extends BaseDemoBootstrapper implements Action {
         Period period = new Period(initialDate,finalDate);
 
         questionnaire.modifyPeriod(period);
+
+        questionnaire.modifyRestricao(new Restricao(Criterio.NONE));
 
         surveyRepository.save(questionnaire);
 

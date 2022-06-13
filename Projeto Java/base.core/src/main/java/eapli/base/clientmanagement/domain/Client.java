@@ -1,12 +1,15 @@
 package eapli.base.clientmanagement.domain;
 
+import eapli.base.surveymanagement.domain.Questionnaire;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.validations.Preconditions;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -46,6 +49,11 @@ public class Client implements AggregateRoot<Long>, Serializable {
 
     @ElementCollection
     private Set<PostalAddress> postalAddresses;
+
+    @OneToMany(cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    @JoinColumn(name = "client_id")
+    private List<Questionnaire> unansweredQuestionnaires = new ArrayList<>();
 
 
     /**
