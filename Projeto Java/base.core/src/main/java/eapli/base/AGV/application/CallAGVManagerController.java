@@ -36,7 +36,7 @@ public class CallAGVManagerController {
 
 
 
-    public void connectDaemon(final String address, final int port) throws IOException {
+    public void connectDaemon(final int port) throws IOException {
         try {
             sock = getClientSocket(port);
             sock.startHandshake();
@@ -53,7 +53,7 @@ public class CallAGVManagerController {
         output.write(array);
     }
 
-    /*public List<String> getAGVInfo() throws IOException {
+    public List<String> getAGVInfo() throws IOException {
         List<String> agvInfoList = new ArrayList<>();
 
         for(AGV agv : PersistenceContext.repositories().agv().findAll()){
@@ -70,7 +70,7 @@ public class CallAGVManagerController {
 
         }
         return agvInfoList;
-    } */
+    }
 
     private SSLSocket getClientSocket(final int port) throws IOException {
         final var fileName = new File(STORE_PATH).getAbsolutePath();
@@ -92,7 +92,7 @@ public class CallAGVManagerController {
             System.out.println("Client failed to connect to local port " + port);
             System.exit(1);
         }
-        sock.startHandshake();
+        //sock.startHandshake();
         return sock;
     }
 

@@ -13,7 +13,7 @@ public class TaskManagementUI extends AbstractUI {
     @Override
     protected boolean doShow() {
         try {
-            controller.connectDaemon("localhost", 8890);
+            controller.connectDaemon(8890);
             controller.callFIFO();
             System.out.println("The automatic task assignment service has been called");
         } catch (IOException e) {
