@@ -41,6 +41,8 @@ public class Questionnaire implements AggregateRoot<Long>, Serializable {
     })
     private Message finalMessage;
 
+    private Period period;
+
     @OneToMany(cascade = CascadeType.ALL,
             orphanRemoval = true)
     @JoinColumn(name = "survey_id")
@@ -99,5 +101,9 @@ public class Questionnaire implements AggregateRoot<Long>, Serializable {
 
     public boolean addSection(final Section section) {
         return sections.add(section);
+    }
+
+    public void modifyPeriod(final Period period){
+        this.period = period;
     }
 }
