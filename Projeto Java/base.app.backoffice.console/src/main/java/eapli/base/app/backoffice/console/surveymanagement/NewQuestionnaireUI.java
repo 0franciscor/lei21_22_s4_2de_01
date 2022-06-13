@@ -4,6 +4,8 @@ import eapli.base.surveymanagement.application.CreateNewQuestionnaireController;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 
+import java.util.Calendar;
+
 
 /**
  * UI for register a client order to the application.
@@ -23,7 +25,8 @@ public class NewQuestionnaireUI extends AbstractUI {
         do{
             try {
                 String fileName = Console.readLine("Please insert the file path:");
-                createNewQuestionnaireController.createQuestionnaire(fileName);
+                Calendar finalDate = Console.readCalendar("Please enter until what date it is possible to answer the questionnaire (yyyy/MM/dd):","yyyy/MM/dd");
+                createNewQuestionnaireController.createQuestionnaire(fileName,finalDate);
 
             } catch(Exception e){
                 System.out.println(e.getMessage());

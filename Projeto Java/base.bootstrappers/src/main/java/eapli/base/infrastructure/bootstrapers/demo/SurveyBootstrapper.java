@@ -5,6 +5,8 @@ import eapli.base.surveymanagement.domain.*;
 import eapli.base.surveymanagement.repository.SurveyRepository;
 import eapli.framework.actions.Action;
 
+import java.util.Calendar;
+
 public class SurveyBootstrapper extends BaseDemoBootstrapper implements Action {
 
     private final SurveyRepository surveyRepository = PersistenceContext.repositories().surveys();
@@ -44,6 +46,14 @@ public class SurveyBootstrapper extends BaseDemoBootstrapper implements Action {
         questionnaire.addSection(section);
 
         questionnaire.modifyFinalMessage(new Message("Obrigado por responder ao questionário!"));
+
+        Calendar initialDate = Calendar.getInstance();
+        initialDate.set(2022, 5, 12);
+        Calendar finalDate = Calendar.getInstance();
+        finalDate.set(2022, 7, 1);
+        Period period = new Period(initialDate,finalDate);
+
+        questionnaire.modifyPeriod(period);
 
         surveyRepository.save(questionnaire);
 
