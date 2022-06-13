@@ -54,7 +54,7 @@ public class SurveyBootstrapper extends BaseDemoBootstrapper implements Action {
         Period period = new Period(initialDate,finalDate);
 
         questionnaire.modifyPeriod(period);
-        
+
         surveyRepository.save(questionnaire);
 
     }
