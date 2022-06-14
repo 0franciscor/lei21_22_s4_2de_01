@@ -22,7 +22,6 @@ package daemon.digitaltwin.presentation;
 
 import digitaltwin.tcpprotocol.server.DigitalTwinProtocolRequest;
 import digitaltwin.tcpprotocol.server.RequestMessageParser;
-import eapli.base.orderServer.tcp.utils.ConstantsServer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -75,7 +74,7 @@ public class DigitalTwinProtocolServer {
 
                 var inputArray = in.readNBytes(4);
 
-                if (inputArray[1] == ConstantsServer.START_CODE) {
+                if (inputArray[1] == 0) {
                     LOGGER.debug("[SUCCESS] TEST CODE RECEIVED");
 
                     byte code = 0;
@@ -110,7 +109,7 @@ public class DigitalTwinProtocolServer {
                     LOGGER.debug("Sent message:----{}----", response);
                 }
                 inputArray = in.readNBytes(4);
-                if (inputArray[1] == ConstantsServer.FINISH_CODE) {
+                if (inputArray[1] == 1) {
                     LOGGER.debug("[SUCCESS] DISCONNECT CODE RECEIVED");
 
                     byte code = 0;
