@@ -29,6 +29,11 @@ public class Questionnaire implements AggregateRoot<Long>, Serializable {
 
     private Titulo titulo;
 
+    private int quantityInquiredCustomers;
+
+    private int amountAnswered;
+
+
     @Embedded
     @AttributeOverrides({
             @AttributeOverride(name = "message", column = @Column(name = "initial_message"))
@@ -48,6 +53,9 @@ public class Questionnaire implements AggregateRoot<Long>, Serializable {
     @JoinColumn(name = "survey_id")
     private List<Section> sections = new ArrayList<>();
 
+    @Column(length = 2000)
+    @ElementCollection
+    private List<Restricao> restricao = new ArrayList<>();
 
     public Questionnaire(){}
 
@@ -106,4 +114,9 @@ public class Questionnaire implements AggregateRoot<Long>, Serializable {
     public void modifyPeriod(final Period period){
         this.period = period;
     }
+
+    public void modifyRestricao(Restricao restricao){
+        this.restricao.add(restricao);
+    }
+
 }

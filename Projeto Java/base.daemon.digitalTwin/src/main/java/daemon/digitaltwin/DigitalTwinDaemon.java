@@ -23,6 +23,7 @@ package daemon.digitaltwin;
 import daemon.digitaltwin.presentation.DigitalTwinProtocolServer;
 import digitaltwin.tcpprotocol.server.RequestMessageParser;
 import eapli.base.infrastructure.persistence.PersistenceContext;
+import eapli.base.persistence.impl.jpa.JpaRepositoryFactory;
 import eapli.base.usermanagement.domain.BasePasswordPolicy;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
