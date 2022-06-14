@@ -12,7 +12,6 @@ import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -33,9 +32,8 @@ public class CreateNewQuestionnaireController {
             questionnaire.modifyRestricao(new Restricao(criterio));
         }
 
-        atribuirQuestionarioAosClientesService.assignQuestionnaireToCustomers(questionnaire);
-
         surveyRepository.save(questionnaire);
+
         return null;
 
     }

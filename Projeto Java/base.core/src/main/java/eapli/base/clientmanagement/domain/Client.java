@@ -1,9 +1,13 @@
 package eapli.base.clientmanagement.domain;
 
+import eapli.base.surveymanagement.domain.Identifier;
 import eapli.base.surveymanagement.domain.Questionnaire;
+import eapli.base.surveymanagement.domain.Survey;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.validations.Preconditions;
+import org.hibernate.annotations.Cascade;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -50,10 +54,9 @@ public class Client implements AggregateRoot<Long>, Serializable {
     @ElementCollection
     private Set<PostalAddress> postalAddresses;
 
-    @OneToMany(cascade = CascadeType.ALL,
-            orphanRemoval = true)
-    @JoinColumn(name = "client_id")
-    private List<Questionnaire> unansweredQuestionnaires = new ArrayList<>();
+
+    @ElementCollection
+    private List<Survey> unansweredQuestionnaires = new ArrayList<>();
 
 
     /**
@@ -110,5 +113,8 @@ public class Client implements AggregateRoot<Long>, Serializable {
         return name;
     }
 
+    public void addUnansweredQuestionnaire(Questionnaire questionnaire){
+        this.unansweredQuestionnaires.add(new Survey(questionnaire));
+    }
 
 }

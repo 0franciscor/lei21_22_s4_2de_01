@@ -119,4 +119,16 @@ public class Questionnaire implements AggregateRoot<Long>, Serializable {
         this.restricao.add(restricao);
     }
 
+    public List<Restricao> restricoes(){
+        return this.restricao;
+    }
+
+    public void addQuantityInquiredCustomers(int aux){
+        this.quantityInquiredCustomers = this.quantityInquiredCustomers + aux;
+    }
+
+    public Identifier getSurveyId(){
+        return this.surveyId;
+    }
+
 }
