@@ -39,4 +39,7 @@ public class Restricao implements ValueObject, Serializable {
         this.maximumAge = maximumAge;
     }
 
+    public Criterio criterio(){
+        return this.criterio;
+    }
 }

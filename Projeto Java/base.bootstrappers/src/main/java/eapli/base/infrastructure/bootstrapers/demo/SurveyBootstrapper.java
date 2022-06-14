@@ -1,6 +1,8 @@
 package eapli.base.infrastructure.bootstrapers.demo;
 
+import eapli.base.clientmanagement.repositories.ClientRepository;
 import eapli.base.infrastructure.persistence.PersistenceContext;
+import eapli.base.surveymanagement.application.AtribuirQuestionarioAosClientesService;
 import eapli.base.surveymanagement.domain.*;
 import eapli.base.surveymanagement.repository.SurveyRepository;
 import eapli.framework.actions.Action;
@@ -20,6 +22,8 @@ public class SurveyBootstrapper extends BaseDemoBootstrapper implements Action {
     }
 
     private void createSurveys(){
+
+        AtribuirQuestionarioAosClientesService service = new AtribuirQuestionarioAosClientesService();
 
         Questionnaire questionnaire = new Questionnaire();
 

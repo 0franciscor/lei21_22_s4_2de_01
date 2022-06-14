@@ -50,7 +50,7 @@ public class BaseDemoBootstrapper implements Action {
     @Override
     public boolean execute() {
         // declare bootstrap actions
-        final Action[] actions = { new BackofficeUsersBootstrapper(), new ClientUserBootstrapper(), new ImportWarehouseBootstrapper(), new AGVBootstrapper(), new CategoryBootstrapper(), new ProductBootstrapper(),new SurveyBootstrapper(), new ProductOrdersBootstraper()};
+        final Action[] actions = { new BackofficeUsersBootstrapper(), new ClientUserBootstrapper(), new ClientBootstrapper(),new ImportWarehouseBootstrapper(), new AGVBootstrapper(), new CategoryBootstrapper(), new ProductBootstrapper(),new SurveyBootstrapper(), new ProductOrdersBootstraper()};
 
         authenticateForBootstrapping();
 
