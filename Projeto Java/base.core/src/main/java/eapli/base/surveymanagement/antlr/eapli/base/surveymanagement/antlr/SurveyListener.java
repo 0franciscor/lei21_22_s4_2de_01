@@ -1,4 +1,4 @@
-// Generated from C:/Users/arian/OneDrive - Instituto Superior de Engenharia do Porto/Desktop/lei21_22_s4_2de_01/Projeto Java/base.core/src/main/java/eapli/base/surveymanagement/antlr/eapli/base/surveymanagement/antlr\Survey.g4 by ANTLR 4.10.1
+// Generated from C:/Users/arian/lei21_22_s4_2de_01 (base app)/Projeto Java/base.core/src/main/java/eapli/base/surveymanagement/antlr/eapli/base/surveymanagement/antlr\Survey.g4 by ANTLR 4.10.1
 package eapli.base.surveymanagement.antlr.eapli.base.surveymanagement.antlr;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -18,35 +18,15 @@ public interface SurveyListener extends ParseTreeListener {
 	 */
 	void exitStart(SurveyParser.StartContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link SurveyParser#alfanumerico}.
+	 * Enter a parse tree produced by {@link SurveyParser#questionario}.
 	 * @param ctx the parse tree
 	 */
-	void enterAlfanumerico(SurveyParser.AlfanumericoContext ctx);
+	void enterQuestionario(SurveyParser.QuestionarioContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link SurveyParser#alfanumerico}.
+	 * Exit a parse tree produced by {@link SurveyParser#questionario}.
 	 * @param ctx the parse tree
 	 */
-	void exitAlfanumerico(SurveyParser.AlfanumericoContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link SurveyParser#pontucao}.
-	 * @param ctx the parse tree
-	 */
-	void enterPontucao(SurveyParser.PontucaoContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link SurveyParser#pontucao}.
-	 * @param ctx the parse tree
-	 */
-	void exitPontucao(SurveyParser.PontucaoContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link SurveyParser#frase}.
-	 * @param ctx the parse tree
-	 */
-	void enterFrase(SurveyParser.FraseContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link SurveyParser#frase}.
-	 * @param ctx the parse tree
-	 */
-	void exitFrase(SurveyParser.FraseContext ctx);
+	void exitQuestionario(SurveyParser.QuestionarioContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link SurveyParser#regraIdQuestionario}.
 	 * @param ctx the parse tree
@@ -78,6 +58,46 @@ public interface SurveyListener extends ParseTreeListener {
 	 */
 	void exitRegraMensagem(SurveyParser.RegraMensagemContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link SurveyParser#seccao}.
+	 * @param ctx the parse tree
+	 */
+	void enterSeccao(SurveyParser.SeccaoContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SurveyParser#seccao}.
+	 * @param ctx the parse tree
+	 */
+	void exitSeccao(SurveyParser.SeccaoContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link SurveyParser#alfanumerico}.
+	 * @param ctx the parse tree
+	 */
+	void enterAlfanumerico(SurveyParser.AlfanumericoContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SurveyParser#alfanumerico}.
+	 * @param ctx the parse tree
+	 */
+	void exitAlfanumerico(SurveyParser.AlfanumericoContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link SurveyParser#frase}.
+	 * @param ctx the parse tree
+	 */
+	void enterFrase(SurveyParser.FraseContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SurveyParser#frase}.
+	 * @param ctx the parse tree
+	 */
+	void exitFrase(SurveyParser.FraseContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link SurveyParser#pontucao}.
+	 * @param ctx the parse tree
+	 */
+	void enterPontucao(SurveyParser.PontucaoContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SurveyParser#pontucao}.
+	 * @param ctx the parse tree
+	 */
+	void exitPontucao(SurveyParser.PontucaoContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link SurveyParser#regraId}.
 	 * @param ctx the parse tree
 	 */
@@ -108,25 +128,15 @@ public interface SurveyListener extends ParseTreeListener {
 	 */
 	void exitRepetibilidade(SurveyParser.RepetibilidadeContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link SurveyParser#opcao}.
+	 * Enter a parse tree produced by {@link SurveyParser#pergunta}.
 	 * @param ctx the parse tree
 	 */
-	void enterOpcao(SurveyParser.OpcaoContext ctx);
+	void enterPergunta(SurveyParser.PerguntaContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link SurveyParser#opcao}.
+	 * Exit a parse tree produced by {@link SurveyParser#pergunta}.
 	 * @param ctx the parse tree
 	 */
-	void exitOpcao(SurveyParser.OpcaoContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link SurveyParser#type}.
-	 * @param ctx the parse tree
-	 */
-	void enterType(SurveyParser.TypeContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link SurveyParser#type}.
-	 * @param ctx the parse tree
-	 */
-	void exitType(SurveyParser.TypeContext ctx);
+	void exitPergunta(SurveyParser.PerguntaContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link SurveyParser#regraPergunta}.
 	 * @param ctx the parse tree
@@ -138,33 +148,23 @@ public interface SurveyListener extends ParseTreeListener {
 	 */
 	void exitRegraPergunta(SurveyParser.RegraPerguntaContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link SurveyParser#pergunta}.
+	 * Enter a parse tree produced by {@link SurveyParser#type}.
 	 * @param ctx the parse tree
 	 */
-	void enterPergunta(SurveyParser.PerguntaContext ctx);
+	void enterType(SurveyParser.TypeContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link SurveyParser#pergunta}.
+	 * Exit a parse tree produced by {@link SurveyParser#type}.
 	 * @param ctx the parse tree
 	 */
-	void exitPergunta(SurveyParser.PerguntaContext ctx);
+	void exitType(SurveyParser.TypeContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link SurveyParser#seccao}.
+	 * Enter a parse tree produced by {@link SurveyParser#opcao}.
 	 * @param ctx the parse tree
 	 */
-	void enterSeccao(SurveyParser.SeccaoContext ctx);
+	void enterOpcao(SurveyParser.OpcaoContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link SurveyParser#seccao}.
+	 * Exit a parse tree produced by {@link SurveyParser#opcao}.
 	 * @param ctx the parse tree
 	 */
-	void exitSeccao(SurveyParser.SeccaoContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link SurveyParser#questionario}.
-	 * @param ctx the parse tree
-	 */
-	void enterQuestionario(SurveyParser.QuestionarioContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link SurveyParser#questionario}.
-	 * @param ctx the parse tree
-	 */
-	void exitQuestionario(SurveyParser.QuestionarioContext ctx);
+	void exitOpcao(SurveyParser.OpcaoContext ctx);
 }

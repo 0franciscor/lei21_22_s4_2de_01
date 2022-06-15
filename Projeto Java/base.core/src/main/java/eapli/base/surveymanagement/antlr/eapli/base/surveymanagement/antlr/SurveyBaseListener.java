@@ -1,4 +1,4 @@
-// Generated from C:/Users/arian/OneDrive - Instituto Superior de Engenharia do Porto/Desktop/lei21_22_s4_2de_01/Projeto Java/base.core/src/main/java/eapli/base/surveymanagement/antlr/eapli/base/surveymanagement/antlr\Survey.g4 by ANTLR 4.10.1
+// Generated from C:/Users/arian/lei21_22_s4_2de_01 (base app)/Projeto Java/base.core/src/main/java/eapli/base/surveymanagement/antlr/eapli/base/surveymanagement/antlr\Survey.g4 by ANTLR 4.10.1
 package eapli.base.surveymanagement.antlr.eapli.base.surveymanagement.antlr;
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -28,37 +28,13 @@ public class SurveyBaseListener implements SurveyListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterAlfanumerico(SurveyParser.AlfanumericoContext ctx) { }
+	@Override public void enterQuestionario(SurveyParser.QuestionarioContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitAlfanumerico(SurveyParser.AlfanumericoContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterPontucao(SurveyParser.PontucaoContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitPontucao(SurveyParser.PontucaoContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterFrase(SurveyParser.FraseContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitFrase(SurveyParser.FraseContext ctx) { }
+	@Override public void exitQuestionario(SurveyParser.QuestionarioContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -100,6 +76,54 @@ public class SurveyBaseListener implements SurveyListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterSeccao(SurveyParser.SeccaoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSeccao(SurveyParser.SeccaoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterAlfanumerico(SurveyParser.AlfanumericoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAlfanumerico(SurveyParser.AlfanumericoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterFrase(SurveyParser.FraseContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFrase(SurveyParser.FraseContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterPontucao(SurveyParser.PontucaoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPontucao(SurveyParser.PontucaoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterRegraId(SurveyParser.RegraIdContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -136,25 +160,13 @@ public class SurveyBaseListener implements SurveyListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterOpcao(SurveyParser.OpcaoContext ctx) { }
+	@Override public void enterPergunta(SurveyParser.PerguntaContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitOpcao(SurveyParser.OpcaoContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterType(SurveyParser.TypeContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitType(SurveyParser.TypeContext ctx) { }
+	@Override public void exitPergunta(SurveyParser.PerguntaContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -172,37 +184,25 @@ public class SurveyBaseListener implements SurveyListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterPergunta(SurveyParser.PerguntaContext ctx) { }
+	@Override public void enterType(SurveyParser.TypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitPergunta(SurveyParser.PerguntaContext ctx) { }
+	@Override public void exitType(SurveyParser.TypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterSeccao(SurveyParser.SeccaoContext ctx) { }
+	@Override public void enterOpcao(SurveyParser.OpcaoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitSeccao(SurveyParser.SeccaoContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterQuestionario(SurveyParser.QuestionarioContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitQuestionario(SurveyParser.QuestionarioContext ctx) { }
+	@Override public void exitOpcao(SurveyParser.OpcaoContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

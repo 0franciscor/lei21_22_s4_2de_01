@@ -1,9 +1,7 @@
 package eapli.base.surveymanagement.antlr.eapli.base.surveymanagement.antlr;
 
 
-import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.surveymanagement.domain.*;
-import eapli.base.surveymanagement.repository.SurveyRepository;
 
 /**
  *
@@ -222,13 +220,7 @@ public class QuestionnaireVisitor extends SurveyBaseVisitor<Questionnaire> {
         question.modifyPergunta(new Message(auxiliar.toString()));
         visit(ctx.type());
         question.modifyType(auxiliar);
-        int size = ctx.regraMensagem().size();
-        if (size == 2){
-            aux=3;
-            visit(ctx.regraMensagem(0));
-            aux=4;
-            visit(ctx.regraMensagem(1));
-        }
+        
         return null;
     }
 
