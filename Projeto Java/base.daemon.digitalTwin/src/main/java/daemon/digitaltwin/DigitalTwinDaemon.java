@@ -23,13 +23,11 @@ package daemon.digitaltwin;
 import daemon.digitaltwin.presentation.DigitalTwinProtocolServer;
 import digitaltwin.tcpprotocol.server.RequestMessageParser;
 import eapli.base.infrastructure.persistence.PersistenceContext;
-import eapli.base.persistence.impl.jpa.JpaRepositoryFactory;
 import eapli.base.usermanagement.domain.BasePasswordPolicy;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.domain.model.PlainTextEncoder;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 
 public final class DigitalTwinDaemon {
