@@ -10,6 +10,7 @@ import java.net.Socket;
  */
 public class HTTPAjaxDashboardRequest extends Thread {
     String baseFolder;
+    //SSLSocket sock;
     Socket sock;
     DataInputStream inS;
     DataOutputStream outS;

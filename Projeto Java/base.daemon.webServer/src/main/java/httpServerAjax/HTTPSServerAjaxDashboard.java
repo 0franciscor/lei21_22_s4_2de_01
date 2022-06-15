@@ -1,5 +1,8 @@
 package httpServerAjax;
 
+import javax.net.ssl.SSLServerSocket;
+import javax.net.ssl.SSLServerSocketFactory;
+import javax.net.ssl.SSLSocket;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -15,22 +18,30 @@ import java.util.List;
 public class HTTPSServerAjaxDashboard {
 
     static private final String BASE_FOLDER="base.daemon.webServer/src/main/java/httpServerAjax/www";
+    //static private SSLServerSocket sock;
     static private ServerSocket sock;
     static private final int PORT = 80;
 
     private static final String TRUSTED_STORE = "server_J.jks";
-    private static final String STORE_PATH = "base.daemon.webServer\\src\\main\\resources\\" + TRUSTED_STORE;
+    private static final String STORE_PATH = "base.daemon.webServer/src/main/resources/" + TRUSTED_STORE;
     private static final String KEYSTORE_PASS="forgotten";
 
     public static void main(String[] args) throws IOException {
 
+        //SSLSocket cliSock;
         Socket cliSock;
 
-        //System.setProperty("javax.net.ssl.trustStore", STORE_PATH);
-        //System.setProperty("javax.net.ssl.trustStorePassword",KEYSTORE_PASS);
+        /*System.setProperty("https.protocols", "TLSv1,TLSv1.1,TLSv1.2");
+
+        System.setProperty("javax.net.ssl.keyStore", STORE_PATH);
+        System.setProperty("javax.net.ssl.keyStorePassword", KEYSTORE_PASS);
+
+        System.setProperty("javax.net.ssl.trustStore", STORE_PATH);
+        System.setProperty("javax.net.ssl.trustStorePassword",KEYSTORE_PASS);*/
 
         try {
             //SSLServerSocketFactory sslF = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
+            //sock = (SSLServerSocket) sslF.createServerSocket(PORT);
             sock = new ServerSocket(PORT);
         }
         catch(IOException ex) {

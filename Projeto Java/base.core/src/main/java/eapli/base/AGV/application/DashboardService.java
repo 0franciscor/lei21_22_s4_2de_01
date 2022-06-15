@@ -27,6 +27,7 @@ public class DashboardService {
     private final AisleRepository aisleRepository = PersistenceContext.repositories().aisle();
     private final AGVRepository agvRepository = PersistenceContext.repositories().agv();
 
+    //static private SSLSocket sock;
     static private Socket sock;
     static private InetAddress serverIP;
     static private int serverPort;
@@ -36,13 +37,13 @@ public class DashboardService {
     static private String WAREHOUSE_ID = "1";
 
     private static final String TRUSTED_STORE = "client3_J.jks";
-    private static final String STORE_PATH = "base.daemon.webServer\\src\\main\\resources\\" + TRUSTED_STORE;
+    private static final String STORE_PATH = "base.daemon.webServer/src/main/resources/" + TRUSTED_STORE;
     private static final String KEYSTORE_PASS="forgotten";
 
     HTTPMessage request = new HTTPMessage();
     private StringBuilder string = new StringBuilder("/dashboardData/");
 
-    public void sendInformationToDashboard() throws IOException {
+    public void sendInformationToDashboard(){
 
         warehouseInformation(WAREHOUSE_ID);
         agvDockInformation();
@@ -158,7 +159,8 @@ public class DashboardService {
         //SSLSocketFactory factory = (SSLSocketFactory) SSLSocketFactory.getDefault();
 
         try {
-            sock =  new Socket(serverIP, serverPort);
+            //sock =  (SSLSocket) factory.createSocket(serverIP, serverPort);
+            sock = new Socket(serverIP, serverPort);
 
         }
         catch(IOException ex) {
@@ -168,10 +170,12 @@ public class DashboardService {
             System.exit(1);
         }
 
+        //sock.startHandshake();
 
         sOut = new DataOutputStream(sock.getOutputStream());
-
         sIn = new DataInputStream(sock.getInputStream());
+
+
 
         sendInformationToDashboard();
 
