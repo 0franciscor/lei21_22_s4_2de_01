@@ -53,4 +53,20 @@ public class Aisle implements AggregateRoot<Long> {
     public Long identity() {
         return Id;
     }
+
+    public Accessibility getAccessibility() {
+        return accessibility;
+    }
+
+    public Depth getDepth() {
+        return depth;
+    }
+
+    public Begin getBegin() {
+        return begin;
+    }
+
+    public End getEnd() {
+        return end;
+    }
 }

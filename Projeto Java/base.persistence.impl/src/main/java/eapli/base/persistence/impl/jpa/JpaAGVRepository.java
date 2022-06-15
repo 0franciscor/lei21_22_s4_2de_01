@@ -48,4 +48,13 @@ public class JpaAGVRepository extends JpaAutoTxRepository<AGV, AGVId, AGVId> imp
 
         return query.getSingleResult();
     }
+
+    @Override
+    public int totalAGVs() {
+        int count = 0;
+        for (AGV agv : findAll()){
+            count++;
+        }
+        return count;
+    }
 }

@@ -9,4 +9,13 @@ public class InMemoryAGVDockRepository extends InMemoryDomainRepository<AGVDock,
     static {
         InMemoryInitializer.init();
     }
+
+    @Override
+    public int totalAGVDocks() {
+        int count = 0;
+        for (AGVDock agvDock : findAll()){
+            count++;
+        }
+        return count;
+    }
 }

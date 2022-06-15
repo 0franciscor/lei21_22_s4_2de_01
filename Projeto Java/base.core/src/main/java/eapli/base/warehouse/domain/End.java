@@ -39,4 +39,12 @@ public class End implements ValueObject {
     public String toString(){
         return String.format("Ends at Length: %d and Width: %d", endLSquare, endWSquare);
     }
+
+    public int getEndLSquare() {
+        return endLSquare;
+    }
+
+    public int getEndWSquare() {
+        return endWSquare;
+    }
 }

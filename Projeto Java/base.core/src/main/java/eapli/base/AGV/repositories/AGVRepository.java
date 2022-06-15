@@ -6,10 +6,14 @@ import eapli.framework.domain.repositories.DomainRepository;
 
 public interface AGVRepository extends DomainRepository<AGVId, AGV> {
 
-    public Iterable<AGV> getAGVsAvaiable();
+    int totalAGVs();
 
-    public AGV getAGVById(AGVId agvId);
+    Iterable<AGV> getAGVsAvaiable();
 
-    public AGV getAGVByIdSt(String agvId);
+    AGV getAGVById(AGVId agvId);
+
+    AGV getAGVByIdSt(String agvId);
+
+
 
 }

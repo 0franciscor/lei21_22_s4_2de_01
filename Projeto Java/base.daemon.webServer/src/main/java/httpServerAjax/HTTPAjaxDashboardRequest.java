@@ -2,6 +2,7 @@ package httpServerAjax;
 
 import javax.net.ssl.SSLSocket;
 import java.io.*;
+import java.net.Socket;
 
 /**
  *
@@ -9,11 +10,11 @@ import java.io.*;
  */
 public class HTTPAjaxDashboardRequest extends Thread {
     String baseFolder;
-    SSLSocket sock;
+    Socket sock;
     DataInputStream inS;
     DataOutputStream outS;
 
-    public HTTPAjaxDashboardRequest(SSLSocket s, String f) {
+    public HTTPAjaxDashboardRequest(Socket s, String f) {
         baseFolder=f;
         sock=s;
     }
@@ -27,12 +28,12 @@ public class HTTPAjaxDashboardRequest extends Thread {
         try {
             HTTPMessage request = new HTTPMessage(inS);
             HTTPMessage response = new HTTPMessage();
-            // System.out.println(request.getURI());
 
             if(request.getMethod().equals("GET")) {
                 if(request.getURI().equals("/dashboardData")) {
                     response.setContentFromString(HTTPSServerAjaxDashboard.updateData(), "text/html");
                     response.setResponseStatus("200 Ok");
+
                 }
                 else {
                     String fullname=baseFolder + "/";
@@ -51,8 +52,9 @@ public class HTTPAjaxDashboardRequest extends Thread {
                 response.send(outS);
             }
             else { // NOT GET
+
                 if(request.getMethod().equals("PUT") && request.getURI().startsWith("/dashboardData/")) {
-                    HTTPSServerAjaxDashboard.getData(request.getURI().substring(9));
+                    HTTPSServerAjaxDashboard.getData(request.getURI().substring(15));
                     response.setResponseStatus("200 Ok");
                 }
                 else {
@@ -64,7 +66,10 @@ public class HTTPAjaxDashboardRequest extends Thread {
             }
 
         }
-        catch(IOException ex) { System.out.println("Thread error when reading request"); }
+        catch(IOException ex) {
+            ex.printStackTrace();
+            System.out.println("Thread error when reading request");
+        }
         try { sock.close();}
         catch(IOException ex) { System.out.println("CLOSE IOException"); }
     }

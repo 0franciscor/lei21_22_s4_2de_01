@@ -9,4 +9,13 @@ public class InMemoryAisleRepository extends InMemoryDomainRepository<Aisle, Lon
     static {
         InMemoryInitializer.init();
     }
+
+    @Override
+    public int totalAisle() {
+        int count = 0;
+        for (Aisle aisle : findAll()){
+            count++;
+        }
+        return count;
+    }
 }

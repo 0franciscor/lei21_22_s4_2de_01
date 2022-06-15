@@ -7,4 +7,13 @@ public class JpaAisleRepository extends BasepaRepositoryBase<Aisle, Long, Long>
         implements AisleRepository {
 
     public JpaAisleRepository(){super("Id");}
+
+    @Override
+    public int totalAisle() {
+        int count = 0;
+        for (Aisle aisle : findAll()){
+            count++;
+        }
+        return count;
+    }
 }

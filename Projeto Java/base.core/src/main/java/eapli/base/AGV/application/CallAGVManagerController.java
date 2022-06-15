@@ -3,12 +3,10 @@ package eapli.base.AGV.application;
 import eapli.base.AGV.domain.AGV;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 
-import javax.net.ssl.SSLServerSocketFactory;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 import java.io.*;
 import java.net.InetAddress;
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 

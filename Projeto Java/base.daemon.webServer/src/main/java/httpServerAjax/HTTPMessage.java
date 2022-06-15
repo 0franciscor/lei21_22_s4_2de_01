@@ -2,7 +2,6 @@ package httpServerAjax;
 
 import java.io.*;
 
-
 /**
  *
  * @author ANDRE MOREIRA (asc@isep.ipp.pt)
@@ -19,13 +18,6 @@ public class HTTPMessage {
     private static final String CONTENT_LENGTH="Content-length:";
     private static final String CONNECTION="Connection:";
 
-    private static final String[][] knownFileExt = {
-            { ".pdf" , "application/pdf" } ,
-            { ".js" , "application/javascript" } ,
-            { ".txt" , "text/plain" } ,
-            { ".gif" , "image/gif" } ,
-            { ".png" , "image/png" }
-    };
 
 
     static private String readHeaderLine(DataInputStream in) throws IOException {
@@ -54,7 +46,7 @@ public class HTTPMessage {
     private String method;
     private String uri;
     private String status;
-
+    private final String GET_METHOD="GET";
     private String contentType;
     private byte[] content;
 
@@ -163,8 +155,7 @@ public class HTTPMessage {
     public String getContentAsString() { return(new String(content)); }
     public byte[] getContent() { return(content); }
     public void setContentFromString(String c, String ct) {
-        content=c.getBytes();
-        contentType=ct;
+        content=c.getBytes(); contentType=ct;
     }
 
     public boolean setContentFromFile(String fname) {
@@ -173,10 +164,6 @@ public class HTTPMessage {
         if(!f.exists()) {
             content=null;
             return false;
-        }
-        for (String[] k : knownFileExt) {
-            if (fname.endsWith(k[0]))
-                contentType = k[1];
         }
         if(contentType==null) contentType="text/html";
 
@@ -209,6 +196,8 @@ public class HTTPMessage {
         return true;
     }
 
-}
+    public boolean eMetodoGet(){
+        return method.equals(GET_METHOD);
+    }
 
-
+} // CLASS END

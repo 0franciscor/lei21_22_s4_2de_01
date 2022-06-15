@@ -13,6 +13,15 @@ public class InMemoryAGVRepository extends InMemoryDomainRepository<AGV, AGVId> 
     }
 
     @Override
+    public int totalAGVs() {
+        int count = 0;
+        for (AGV agv : findAll()){
+            count++;
+        }
+        return count;
+    }
+
+    @Override
     public Iterable<AGV> getAGVsAvaiable() {
         return match(e->e.getAgvStatus().obtainStatus().equals(AGVStatus.Status.FREE));
     }
@@ -26,6 +35,7 @@ public class InMemoryAGVRepository extends InMemoryDomainRepository<AGV, AGVId> 
     public AGV getAGVByIdSt(String agvId) {
         return null;
     }
+
 
 
 }
