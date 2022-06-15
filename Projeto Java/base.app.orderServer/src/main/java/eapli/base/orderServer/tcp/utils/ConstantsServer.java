@@ -20,6 +20,8 @@ public class ConstantsServer {
     //Find open orders
     public static int OPEN_ORDERS = 6;
 
+    public static int QUESTIONNAIRES = 7;
+
 
 
 }

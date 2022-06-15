@@ -1,5 +1,7 @@
 package eapli.base.infrastructure.bootstrapers.demo;
 
+import eapli.base.clientmanagement.domain.Client;
+import eapli.base.clientmanagement.domain.Email;
 import eapli.base.clientmanagement.repositories.ClientRepository;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.surveymanagement.application.AtribuirQuestionarioAosClientesService;
@@ -10,10 +12,13 @@ import eapli.framework.actions.Action;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Optional;
 
 public class SurveyBootstrapper extends BaseDemoBootstrapper implements Action {
 
     private final SurveyRepository surveyRepository = PersistenceContext.repositories().surveys();
+
+    private final ClientRepository clientRepository = PersistenceContext.repositories().client();
 
     @Override
     public boolean execute() {
@@ -64,6 +69,12 @@ public class SurveyBootstrapper extends BaseDemoBootstrapper implements Action {
         questionnaire.modifyRestricao(new Restricao(Criterio.NONE));
 
         surveyRepository.save(questionnaire);
+
+        Optional<Client> client = clientRepository.findByEmail(Email.valueOf("arianasobral26@outlook.pt"));
+
+        client.get().addUnansweredQuestionnaire(surveyRepository.findByIdentifier(questionnaire.getSurveyId()).get());
+
+        clientRepository.save(client.get());
 
     }
 }

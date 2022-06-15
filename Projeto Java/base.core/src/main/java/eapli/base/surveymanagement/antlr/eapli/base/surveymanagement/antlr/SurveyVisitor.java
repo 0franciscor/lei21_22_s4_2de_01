@@ -1,4 +1,4 @@
-// Generated from C:/Users/arian/OneDrive - Instituto Superior de Engenharia do Porto/Desktop/lei21_22_s4_2de_01/Projeto Java/base.core/src/main/java/eapli/base/surveymanagement/antlr/eapli/base/surveymanagement/antlr\Survey.g4 by ANTLR 4.10.1
+// Generated from C:/Users/arian/lei21_22_s4_2de_01 (base app)/Projeto Java/base.core/src/main/java/eapli/base/surveymanagement/antlr/eapli/base/surveymanagement/antlr\Survey.g4 by ANTLR 4.10.1
 package eapli.base.surveymanagement.antlr.eapli.base.surveymanagement.antlr;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
@@ -17,23 +17,11 @@ public interface SurveyVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStart(SurveyParser.StartContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link SurveyParser#alfanumerico}.
+	 * Visit a parse tree produced by {@link SurveyParser#questionario}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitAlfanumerico(SurveyParser.AlfanumericoContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link SurveyParser#pontucao}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitPontucao(SurveyParser.PontucaoContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link SurveyParser#frase}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitFrase(SurveyParser.FraseContext ctx);
+	T visitQuestionario(SurveyParser.QuestionarioContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link SurveyParser#regraIdQuestionario}.
 	 * @param ctx the parse tree
@@ -53,6 +41,30 @@ public interface SurveyVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitRegraMensagem(SurveyParser.RegraMensagemContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link SurveyParser#seccao}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSeccao(SurveyParser.SeccaoContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link SurveyParser#alfanumerico}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAlfanumerico(SurveyParser.AlfanumericoContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link SurveyParser#frase}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFrase(SurveyParser.FraseContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link SurveyParser#pontucao}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPontucao(SurveyParser.PontucaoContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link SurveyParser#regraId}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -71,17 +83,11 @@ public interface SurveyVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitRepetibilidade(SurveyParser.RepetibilidadeContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link SurveyParser#opcao}.
+	 * Visit a parse tree produced by {@link SurveyParser#pergunta}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitOpcao(SurveyParser.OpcaoContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link SurveyParser#type}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitType(SurveyParser.TypeContext ctx);
+	T visitPergunta(SurveyParser.PerguntaContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link SurveyParser#regraPergunta}.
 	 * @param ctx the parse tree
@@ -89,21 +95,15 @@ public interface SurveyVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitRegraPergunta(SurveyParser.RegraPerguntaContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link SurveyParser#pergunta}.
+	 * Visit a parse tree produced by {@link SurveyParser#type}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitPergunta(SurveyParser.PerguntaContext ctx);
+	T visitType(SurveyParser.TypeContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link SurveyParser#seccao}.
+	 * Visit a parse tree produced by {@link SurveyParser#opcao}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitSeccao(SurveyParser.SeccaoContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link SurveyParser#questionario}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitQuestionario(SurveyParser.QuestionarioContext ctx);
+	T visitOpcao(SurveyParser.OpcaoContext ctx);
 }

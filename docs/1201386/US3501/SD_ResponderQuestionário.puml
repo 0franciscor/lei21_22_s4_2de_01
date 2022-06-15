@@ -3,10 +3,61 @@
 autonumber
 actor "Client" as C
 participant ResponderQuestionarioUI as UI <<presentation>>
+participant ResponderQuestionarioController as Controller <<application>>
+participant ResponderQuestionarioService as Service <<application>>
+participant TcpOrderSrv as OrderServer
+participant ListQuestionnaireDTOService as serv <<application>>
+participant "Questionnaire" as Domain <<domain>>
+participant "QuestionnaireDTO" as DTO <<dto>>
+participant "Client" as client <<domain>>
+participant PersistenceContext as Persistence <<persistence>>
+participant RepositoryFactory as Factory <<factory>>
+database ClientRepository as repository <<repository>>
+
+
 
 activate C
 C -> UI : Inicia o processo de responder a um questionário
 activate UI
+UI -> Controller: getUnansweredCustomerSurveys(clientEmail)
+activate Controller
+Controller -> Service : getUnansweredCustomerSurveys(clientEmail))
+activate Service
+Service -> OrderServer : unansweredCustomerSurveys(clientEmail)
+activate OrderServer
+OrderServer -> Persistence: repositories()
+activate Persistence
+Persistence -> Factory: create
+Persistence -> OrderServer: factory
+deactivate Persistence
+OrderServer -> Factory: client()
+activate Factory
+Factory -> repository: create
+Factory -> OrderServer: clientRepository
+deactivate Factory
+OrderServer->repository:findClientByEmail
+activate repository
+repository -->OrderServer: client
+deactivate repository
+OrderServer -> serv: getUnansweredSurveys(client)
+activate serv
+serv -> client: getUnansweredSurveys()
+activate client
+client --> serv: unansweredCustomerSurveysList
+deactivate client
+loop
+serv -> Domain: toDTO()
+activate Domain
+end
+deactivate Domain
+serv --> OrderServer: unansweredCustomerSurveysDTOList
+deactivate serv
+OrderServer --> Service: unansweredCustomerSurveysDTOList
+deactivate OrderServer
+Service --> Controller: unansweredCustomerSurveysDTOList
+deactivate Service
+Controller --> UI: unansweredCustomerSurveysDTOList
+deactivate Controller
 UI --> C : Mostra os questionários que existem por responder
 deactivate UI
 C -> UI : Seleciona o questionário que pretende responder

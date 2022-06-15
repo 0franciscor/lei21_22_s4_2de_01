@@ -34,8 +34,8 @@ public class Notification  {
         properties.put("mail.smtp.starttls.enable", "true");
         properties.put("mail.smtp.host", "smtp.gmail.com");
         properties.put("mail.smtp.port", "587");
-        String ownEmail = "baseapp.mj@gmail.com";
-        String ownPass = "macchiato123";
+        String ownEmail = "baseapp.mj@outlook.com";
+        String ownPass = "MacchiatoJS@";
         Session session = Session.getInstance(properties, new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {

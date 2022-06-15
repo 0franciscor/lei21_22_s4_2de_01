@@ -1,5 +1,6 @@
 package eapli.base.clientmanagement.domain;
 
+import eapli.base.ordermanagement.domain.Notification;
 import eapli.base.surveymanagement.domain.Identifier;
 import eapli.base.surveymanagement.domain.Questionnaire;
 import eapli.base.surveymanagement.domain.Survey;
@@ -115,6 +116,11 @@ public class Client implements AggregateRoot<Long>, Serializable {
 
     public void addUnansweredQuestionnaire(Questionnaire questionnaire){
         this.unansweredQuestionnaires.add(new Survey(questionnaire));
+        // new Notification(this.email.toString(),"Questionário por Responder","Gostaríamos que disponibiliza-se 15 minutos do seu tempo para responder ao inquérito que lhe enviamos!\n O inquérito encontra-se na sua página pessoal da aplicação!\nCom os melhores cumprimentos!");
+    }
+
+    public List<Survey> getUnansweredQuestionnaires(){
+        return this.unansweredQuestionnaires;
     }
 
 }

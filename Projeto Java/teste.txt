@@ -11,6 +11,7 @@ Type: Single-Choice with input value
 2)Female
 3)Other:
 
+The last option, if selected, implies that you write a numeric value or free text.
 2
 What age group do?
 (mandatory)
@@ -23,11 +24,13 @@ Type: Single-Choice
 6)65 to 74
 7)Over 75
 
+Answer the question by selecting one (and only one) of the options provided.
 3
 What country do you live in?
 (mandatory)
 Type: Free-Text
 
+Answer the question by typing some text.
 
 2
 Product Feedback
@@ -38,6 +41,7 @@ How often do you use our products?
 (mandatory)
 Type: Numeric
 
+Answer the question by entering a numeric value.
 5
 Which features are most valuable to you in a product?
 (mandatory)
@@ -49,6 +53,7 @@ Type: Multiple-Choice with input value
 5)Brand
 6)Other:
 
+The last option, if selected, implies that you write a numeric value or free text.
 6
 How would you compare our products to our competitors?
 (mandatory)
@@ -59,11 +64,13 @@ Scale: Strongly Agree, Agree, Neutral, Disagree, Strongly disagree
 3)Our products have more availability than the ones from our competitors
 4)You prefer to buy products from us
 
+Select a scale value for each of the specified options.
 7
 What important features are we missing?
 (mandatory)
 Type: Free-Text
 
+Answer the question by typing some text.
 8
 How would you rate the value for money?
 (mandatory)
@@ -75,6 +82,7 @@ Type: Single-Choice
 5)1 star
 6)0 stars
 
+Answer the question by selecting one (and only one) of the options provided.
 9
 When do you feel the need to buy our products?
 (mandatory)
@@ -84,6 +92,7 @@ Type: Multiple-Choice
 3)When they are cheaper than our competitors
 4)When I feel like it
 
+Select more than one.
 10
 Which categories are you the most fond of?
 (mandatory)
@@ -96,6 +105,7 @@ Type: Sorting Options
 4)Cleaning
 5)Outdoors
 
+Sorting the options as desired and according to the instructions provided.
 
 
 Thank you for answering the questionnaire!
