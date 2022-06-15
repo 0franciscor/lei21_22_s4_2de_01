@@ -34,6 +34,7 @@ public class AGV implements AggregateRoot<AGVId> {
     private BriefDescription briefDescription;
 
     @Embedded
+    private AGVPosition position;
 
     @Embedded
     private AGVStatus agvStatus;

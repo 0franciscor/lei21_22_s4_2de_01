@@ -26,6 +26,7 @@ package eapli.base.app.user.console.presentation;
 import eapli.base.app.common.console.presentation.authz.MyUserMenu;
 import eapli.base.app.user.console.presentation.productOrder.ListOpenOrdersUI;
 import eapli.base.app.user.console.presentation.shopingCarManagement.AddProductToShoppingCarUi;
+import eapli.base.app.user.console.presentation.surveymanagement.ResponderQuestionarioUI;
 import eapli.framework.actions.menu.Menu;
 import eapli.framework.actions.menu.MenuItem;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
@@ -53,6 +54,7 @@ class MainMenu extends ClientUserBaseUI {
     // MAIN MENU
     private static final int MY_USER_OPTION = 1;
     private static final int ADICIONAR_PRODUTO_CARRINHO_COMPRAS = 2;
+    private static final int RESPONDER_QUESTIONARIO = 4;
 
     private final AuthorizationService authz =
             AuthzRegistry.authorizationService();
@@ -81,6 +83,7 @@ class MainMenu extends ClientUserBaseUI {
         mainMenu.addSubMenu(MY_USER_OPTION, myUserMenu);
         mainMenu.addItem(ADICIONAR_PRODUTO_CARRINHO_COMPRAS, "Adicionar produto ao carrinho de compras", new AddProductToShoppingCarUi()::show);
         mainMenu.addItem(LIST_ORDERS,"Ver/Verificar o estado das minhas encomendas em aberto", new ListOpenOrdersUI()::show);
+        mainMenu.addItem(RESPONDER_QUESTIONARIO, "Responder a um Questionário", new ResponderQuestionarioUI()::show);
         mainMenu.addItem(MenuItem.separator(SEPARATOR_LABEL));
         mainMenu.addItem(EXIT_OPTION, "Exit", new ExitWithMessageAction("Bye, Bye"));
 

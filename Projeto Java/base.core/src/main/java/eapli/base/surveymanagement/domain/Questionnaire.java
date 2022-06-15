@@ -1,7 +1,10 @@
 package eapli.base.surveymanagement.domain;
 
+import eapli.base.productmanagement.dto.ProductDTO;
+import eapli.base.surveymanagement.dto.QuestionnaireDTO;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
+import eapli.framework.representations.dto.DTOable;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -14,7 +17,7 @@ import java.util.List;
  * Created by Rita Ariana Sobral on 02/06/2022.
  */
 @Entity
-public class Questionnaire implements AggregateRoot<Long>, Serializable {
+public class Questionnaire implements AggregateRoot<Long>, Serializable, DTOable {
 
     private static final long serialVersionUID = 1L;
 
@@ -24,6 +27,7 @@ public class Questionnaire implements AggregateRoot<Long>, Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long idBaseDeDados;
+
 
     private Identifier surveyId;
 
@@ -129,6 +133,11 @@ public class Questionnaire implements AggregateRoot<Long>, Serializable {
 
     public Identifier getSurveyId(){
         return this.surveyId;
+    }
+
+    @Override
+    public QuestionnaireDTO toDTO() {
+        return new QuestionnaireDTO(surveyId.toString(),titulo.toString());
     }
 
 }

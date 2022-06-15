@@ -17,6 +17,9 @@ import eapli.base.shoppingcarmanagement.domain.ShopCarItem;
 import eapli.base.shoppingcarmanagement.domain.ShoppingCar;
 
 import eapli.base.shoppingcarmanagement.repository.ShoppingCarRepository;
+import eapli.base.surveymanagement.application.ListQuestionnaireDTOService;
+import eapli.base.surveymanagement.domain.Questionnaire;
+import eapli.base.surveymanagement.dto.QuestionnaireDTO;
 
 import javax.net.ssl.SSLServerSocket;
 import javax.net.ssl.SSLServerSocketFactory;
@@ -79,6 +82,7 @@ class TcpSrvOrderThread implements Runnable {
     private final ClientRepository clientRepository = PersistenceContext.repositories().client();
     private final ShoppingCarRepository shoppingCarRepository = PersistenceContext.repositories().shoppingCar();
     private final OrderRepository orderRepository = PersistenceContext.repositories().orders();
+    private final ListQuestionnaireDTOService listQuestionnaireDTOService = new ListQuestionnaireDTOService();
     private Product product;
     private Optional<Client> client;
     private Optional<ShoppingCar> shoppingCar;
@@ -162,6 +166,16 @@ class TcpSrvOrderThread implements Runnable {
                     sOutputObject.writeObject(productOrderList);
                     sOutputObject.flush();
 
+                }
+
+                /*============Enviar Questionários por responder============*/
+                if(clientMessageUS[1] == ConstantsServer.QUESTIONNAIRES) {
+                    String clientEmail = MessageUtils.getDataFromMessage(clientMessageUS,sIn);
+                    Optional<Client> client = clientRepository.findByEmail(new Email(clientEmail));
+                    Iterable<QuestionnaireDTO> questionnaireDTOS = listQuestionnaireDTOService.getUnansweredSurveys(client.get());
+                    ObjectOutputStream sOutputObject = new ObjectOutputStream(this.s.getOutputStream());
+                    sOutputObject.writeObject(questionnaireDTOS);
+                    sOutputObject.flush();
                 }
 
                 byte[] clientMessageEnd = sIn.readNBytes(4);
