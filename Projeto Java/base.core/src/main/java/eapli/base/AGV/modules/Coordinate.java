@@ -1,6 +1,7 @@
 package eapli.base.AGV.modules;
 
 public class Coordinate implements Comparable<Coordinate>{
+
     private final int row;
     private final int col;
     private final int dist;

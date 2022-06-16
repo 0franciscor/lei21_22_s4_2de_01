@@ -7,6 +7,7 @@ import java.util.Objects;
 
 @Embeddable
 public class AGVPosition implements ValueObject{
+
     private String agvPosition;
 
     public AGVPosition(String position) {
