@@ -1,5 +1,6 @@
 package eapli.base.AGV.domain;
 
+import eapli.base.AGV.modules.BMS;
 import eapli.base.AGV.modules.ControlSystem;
 import eapli.base.ordermanagement.domain.ProductOrder;
 import eapli.base.warehouse.domain.AGVDock;
@@ -39,6 +40,9 @@ public class AGV implements AggregateRoot<AGVId> {
     @Embedded
     private AGVStatus agvStatus;
 
+    @Embedded
+    private AGVBattery battery;
+
     @OneToMany(cascade = CascadeType.ALL,
             orphanRemoval = true)
     @JoinColumn(name = "agv_id")
@@ -49,6 +53,7 @@ public class AGV implements AggregateRoot<AGVId> {
 
     @Transient
     private ControlSystem controlSystem;
+
 
     public AGV(){}
 
@@ -63,6 +68,7 @@ public class AGV implements AggregateRoot<AGVId> {
         this.agvDock = agvDock;
         this.agvStatus = agvStatus;
         this.agvTask = new ArrayList<>();
+        this.battery = new AGVBattery(100);
     }
 
     @Override
@@ -199,6 +205,12 @@ public class AGV implements AggregateRoot<AGVId> {
         Thread csThread = controlSystem.getControlSystemThread();
         csThread.start();
     }
+
+
+    public AGVBattery getBattery() {
+        return battery;
+    }
+
 
     public void updateAGVPosition(String agvPosition){
         this.position.setAgvPosition(agvPosition);

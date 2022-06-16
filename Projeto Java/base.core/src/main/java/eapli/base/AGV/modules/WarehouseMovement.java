@@ -1,14 +1,28 @@
 package eapli.base.AGV.modules;
 
+import eapli.base.infrastructure.persistence.PersistenceContext;
+import eapli.base.warehouse.domain.AGVDock;
+import eapli.base.warehouse.domain.Warehouse;
+import eapli.base.warehouse.domain.WarehousePlant;
+import eapli.base.warehouse.repositories.AGVDockRepository;
+import eapli.base.warehouse.repositories.WarehousePlantRepository;
+import eapli.base.warehouse.repositories.WarehouseRepository;
+
 import java.util.*;
 
 public class WarehouseMovement{
 
+    private final WarehousePlantRepository warehousePlantRepository = PersistenceContext.repositories().plant();
     private static WarehouseMovement warehouseMovement;
     private int[][] grid;
 
+
+    public WarehousePlant findById(String id) {
+        return warehousePlantRepository.findById(id);
+    }
     private WarehouseMovement(){
-        buildGrid();
+        WarehousePlant plant = findById("1");
+        buildGrid(plant.getLength()/ plant.getSquare(), plant.getWidth()/ plant.getSquare());
     }
 
     public synchronized static WarehouseMovement getWarehouseMovement(){
@@ -21,8 +35,7 @@ public class WarehouseMovement{
         return grid;
     }
 
-    private synchronized void buildGrid(){
-        final int comprimento = 18, largura = 20;
+    private synchronized void buildGrid(final int comprimento, final int largura){
         this.grid = new int[comprimento][largura];
         for(int i = 0; i < comprimento; i++)
             for(int j = 0; j < largura; j++)
