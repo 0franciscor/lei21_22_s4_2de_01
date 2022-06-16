@@ -1,0 +1,23 @@
+01-SAT2022 Customer Satisfaction
+Hello!
+Please take a few minutes of your time to complete the following questionnaire.
+
+1
+Service feedback
+Section Obligatoriness: mandatory
+1
+How is the quality of our services compared to other companies?
+(mandatory)
+Type: Single-Choice
+1)Much better
+2)A bit better
+3)Equal
+4)A bit worse
+5)Much worse
+
+Answer the question by selecting one (and only one) of the options provided.
+
+
+Thank you for answering the questionnaire!
+
+FIM

@@ -28,6 +28,8 @@ public class Section implements Serializable {
 
     private Message Message;
 
+    private int repetibilidade;
+
     private Obligatoriness obligatoriness;
 
     @OneToMany(cascade = CascadeType.ALL,
@@ -60,4 +62,7 @@ public class Section implements Serializable {
         return questions.add(question);
     }
 
+    public void modifyRepetibilidade(final int repetibilidade){
+        this.repetibilidade=repetibilidade;
+    }
 }

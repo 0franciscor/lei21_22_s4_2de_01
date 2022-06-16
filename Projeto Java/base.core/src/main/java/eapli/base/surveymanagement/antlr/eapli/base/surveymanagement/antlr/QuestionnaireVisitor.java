@@ -185,6 +185,15 @@ public class QuestionnaireVisitor extends SurveyBaseVisitor<Questionnaire> {
             System.out.println("Section " + section.sectionId() + " with no section description.");
         }
 
+        aux = 10;
+        visit(ctx.obrigatoriedade());
+
+        try{
+            visitRepetibilidade(ctx.repetibilidade());
+        } catch (NullPointerException e){
+            System.out.println("Section " + section.sectionId()+ " with no repeatability.");
+        }
+
         int size = ctx.pergunta().size();
 
         for (int i=0; i<size; i++){
@@ -217,7 +226,9 @@ public class QuestionnaireVisitor extends SurveyBaseVisitor<Questionnaire> {
         visit(ctx.regraId());
         question.modifyId(Long.parseLong(auxiliar));
         visit(ctx.regraPergunta());
-        question.modifyPergunta(new Message(auxiliar.toString()));
+        question.modifyPergunta(new Message(auxiliar));
+        aux = 20;
+        visit(ctx.obrigatoriedade());
         visit(ctx.type());
         question.modifyType(auxiliar);
         
@@ -249,6 +260,51 @@ public class QuestionnaireVisitor extends SurveyBaseVisitor<Questionnaire> {
         auxiliar = ctx.getChild(0).getText();
         return null;
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p>The default implementation returns the result of calling
+     * {@link #visitChildren} on {@code ctx}.</p>
+     */
+    @Override public Questionnaire visitObrigatoriedade(SurveyParser.ObrigatoriedadeContext ctx) {
+        if (aux == 10){
+            if (ctx.OPTIONAL() != null) {
+                section.modifyObligatoriness("optional");
+            } else if ( ctx.MANDATORY() != null){
+                section.modifyObligatoriness("optional");
+            } else {
+                section.modifyObligatoriness("condition dependent");
+            }
+        } else if (aux == 20){
+            if (ctx.OPTIONAL() != null) {
+                question.modifyObligatoriness("optional");
+            } else if ( ctx.MANDATORY() != null){
+                question.modifyObligatoriness("optional");
+            } else {
+                question.modifyObligatoriness("condition dependent");
+                visit(ctx.regraId(0));
+                Long sectionId = Long.parseLong(auxiliar);
+                visit(ctx.regraId(1));
+                Long questionId = Long.parseLong(auxiliar);
+                question.modifyDespendencias(sectionId,questionId);
+            }
+        }
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p>The default implementation returns the result of calling
+     * {@link #visitChildren} on {@code ctx}.</p>
+     */
+    @Override public Questionnaire visitRepetibilidade(SurveyParser.RepetibilidadeContext ctx) {
+        section.modifyRepetibilidade(Integer.parseInt(ctx.getText()));
+        return null;
+    }
+
+
 
 
 
