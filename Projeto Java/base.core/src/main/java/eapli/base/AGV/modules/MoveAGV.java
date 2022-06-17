@@ -76,13 +76,17 @@ public class MoveAGV extends Thread {
                     updateAGV(path);
 
                     control = getAction();
+                    changeSpeed(control);
                     whMovement.printMatrix();
                 }
                 changeAGVStatus();
+                chargeAGV();
+
                 break;
 
             }
             control = getAction();
+            changeSpeed(control);
 
             whMovement.printMatrix();
 
@@ -150,5 +154,10 @@ public class MoveAGV extends Thread {
 
     private boolean checkBaterry(){
         return agv.getBattery().getBatteryLevel() > ACCEPTED_LEVEL;
+    }
+
+    private void changeSpeed(int speed){
+        agv.setSpeed(speed);
+        updateDatabase();
     }
 }

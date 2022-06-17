@@ -16,6 +16,8 @@ public class AGV implements AggregateRoot<AGVId> {
     @EmbeddedId
     private AGVId agvId;
 
+    private int speed;
+
     @OneToOne
     private AGVDock agvDock;
 
@@ -69,6 +71,7 @@ public class AGV implements AggregateRoot<AGVId> {
         this.agvStatus = agvStatus;
         this.agvTask = new ArrayList<>();
         this.battery = new AGVBattery(100);
+        this.speed = 0;
     }
 
     @Override
@@ -185,6 +188,10 @@ public class AGV implements AggregateRoot<AGVId> {
 
     public void assignATaskForAGV(AGVTask task){
         this.agvTask.add(task);
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
     }
 
     public void changeAGVId(AGVId id){this.agvId=id;}
