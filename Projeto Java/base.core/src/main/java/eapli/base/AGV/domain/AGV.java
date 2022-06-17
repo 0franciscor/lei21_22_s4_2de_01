@@ -1,6 +1,5 @@
 package eapli.base.AGV.domain;
 
-import eapli.base.AGV.modules.BMS;
 import eapli.base.AGV.modules.ControlSystem;
 import eapli.base.ordermanagement.domain.ProductOrder;
 import eapli.base.warehouse.domain.AGVDock;
@@ -213,6 +212,10 @@ public class AGV implements AggregateRoot<AGVId> {
         csThread.start();
     }
 
+    public void deactivateSensors(){
+        for(var sensor : sensorList)
+            sensor.deactivate();
+    }
 
     public AGVBattery getBattery() {
         return battery;
