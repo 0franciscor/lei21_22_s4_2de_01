@@ -30,11 +30,7 @@ public class AGVBattery implements ValueObject {
         this.battery = 0;
     }
 
-    public void chargeBattery(int charge){
-
-        if ((this.battery + charge) <= 100){
-            this.battery += charge;
-        }
+    public void chargeBattery(){
 
         this.battery = 100;
 

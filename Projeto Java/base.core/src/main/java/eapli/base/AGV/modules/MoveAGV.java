@@ -11,6 +11,8 @@ public class MoveAGV extends Thread {
 
     private final WarehouseMovement whMovement;
 
+    private static final int ACCEPTED_LEVEL = 10;
+
     private int x;
 
     private int y;
@@ -36,6 +38,11 @@ public class MoveAGV extends Thread {
             return;
         }
 
+        if (!checkBaterry()){
+            System.out.println("There is no sufficient battery to perform the trip");
+            return;
+        }
+
         if (x == desiredX && y == desiredY) {
             System.out.println("The AGV is already placed at the desired Location");
             return;
@@ -48,8 +55,33 @@ public class MoveAGV extends Thread {
             x = Integer.parseInt(array[0]);
             y = Integer.parseInt(array[1]);
             updateGrid(path, x, y);
-            updateAGV(path);
 
+            if (checkBaterry()){
+                updateAGV(path);
+            }
+            else {
+                int coordinateX = agv.getAgvDock().getBegin().getBeginLSquare();
+                int coordinateY = agv.getAgvDock().getBegin().getBeginWSquare();
+
+                coordinate = WarehouseMovement.minDistance(whMovement.getGrid(), x, y, coordinateX, coordinateY);
+                pathList = WarehouseMovement.backTrackPath(coordinate);
+
+                for (var path1 : pathList){
+                    array = agv.getPosition().getAgvPosition().split(",");
+                    x = Integer.parseInt(array[0]);
+                    y = Integer.parseInt(array[1]);
+
+                    updateGrid(path, x, y);
+
+                    updateAGV(path);
+
+                    control = getAction();
+                    whMovement.printMatrix();
+                }
+                changeAGVStatus();
+                break;
+
+            }
             control = getAction();
 
             whMovement.printMatrix();
@@ -74,6 +106,7 @@ public class MoveAGV extends Thread {
 
     private void updateAGV(final Coordinate path) {
         agv.updateAGVPosition(path.getRow() + "," + path.getCol());
+        agv.getBattery().decresyBatteryLevel(1);
         updateDatabase();
     }
 
@@ -86,6 +119,17 @@ public class MoveAGV extends Thread {
         repo.beginTransaction();
         PersistenceContext.repositories().agv().save(agv);
         repo.commit();
+    }
+
+    private void changeAGVStatus(){
+        agv.changeStatusOfAGVForCharging();
+        updateDatabase();
+    }
+
+    private void chargeAGV(){
+        agv.getBattery().chargeBattery();
+        updateDatabase();
+
     }
 
     private int getAction(){
@@ -102,5 +146,9 @@ public class MoveAGV extends Thread {
             return 2000;
         else
             return -1;
+    }
+
+    private boolean checkBaterry(){
+        return agv.getBattery().getBatteryLevel() > ACCEPTED_LEVEL;
     }
 }
