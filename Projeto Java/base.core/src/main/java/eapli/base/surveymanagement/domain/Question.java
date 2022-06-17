@@ -1,5 +1,7 @@
 package eapli.base.surveymanagement.domain;
 
+import com.ibm.icu.impl.Pair;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashMap;
@@ -43,6 +45,10 @@ public class Question implements Serializable {
 
     private Type type;
 
+    private Long questaoDependente;
+
+    private Long seccaoDependente;
+
     @ElementCollection
     @MapKeyColumn(name = "id")
     @Column(name = "option")
@@ -74,6 +80,11 @@ public class Question implements Serializable {
 
     public void addOption(Long id, String opcao){
         options.put(id,opcao);
+    }
+
+    public void modifyDespendencias(Long sectionId, Long questionId){
+        this.seccaoDependente=sectionId;
+        this.questaoDependente=questionId;
     }
 
 }

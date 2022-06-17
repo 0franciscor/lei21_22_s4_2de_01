@@ -32,31 +32,31 @@ public class SurveyBootstrapper extends BaseDemoBootstrapper implements Action {
 
         Questionnaire questionnaire = new Questionnaire();
 
-        questionnaire.modifyId(new Identifier("01-SAT2022"));
-        questionnaire.modifyTitle(new Titulo("Satisfação do cliente"));
-        questionnaire.modifyInitialMessage(new Message("Bom dia!\nDedique, por favor, alguns minutos do seu tempo para preencher o questionário seguinte."));
+        questionnaire.modifyId(new Identifier("01-SAT2"));
+        questionnaire.modifyTitle(new Titulo("Customer Satisfaction"));
+        questionnaire.modifyInitialMessage(new Message("Hello!\nPlease take a few minutes of your time to complete the following questionnaire."));
 
         Section section = new Section();
         section.modifyId(1L);
-        section.modifyTitle(new Titulo("Feedback do atendimento"));
+        section.modifyTitle(new Titulo("Service feedback"));
         section.modifyObligatoriness("mandatory");
 
         Question question = new Question();
         question.modifyId(1L);
-        question.modifyPergunta(new Message("Como é a qualidade dos nossos serviços em comparação com as outras empresas?"));
+        question.modifyPergunta(new Message("How is the quality of our services compared to other companies?"));
         question.modifyObligatoriness("mandatory");
         question.modifyType("Single-Choice");
-        question.addOption(1L,"Muito melhor");
-        question.addOption(2L,"Um bocado melhor");
-        question.addOption(3L,"Igual");
-        question.addOption(4L,"Um bocado pior");
-        question.addOption(5L,"Muito pior");
-        question.modifyExtraInfo(new Message("Escolha uma das seguintes frases."));
+        question.addOption(1L,"Much better");
+        question.addOption(2L,"A bit better");
+        question.addOption(3L,"Equal");
+        question.addOption(4L,"A bit worse");
+        question.addOption(5L,"Much worse");
+        question.modifyExtraInfo(new Message("Answer the question by selecting one (and only one) of the options provided."));
         section.addQuestion(question);
 
         questionnaire.addSection(section);
 
-        questionnaire.modifyFinalMessage(new Message("Obrigado por responder ao questionário!"));
+        questionnaire.modifyFinalMessage(new Message("Thank you for answering the questionnaire!"));
 
         Calendar initialDate = Calendar.getInstance();
         initialDate.set(2022, 5, 12);
