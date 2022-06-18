@@ -18,8 +18,8 @@ public class WarehouseMovement{
     private final AGVDockRepository agvDockRepository = PersistenceContext.repositories().dock();
     private static WarehouseMovement warehouseMovement;
     private int[][] grid;
-    private int plant_lenght_sq;
-    private int plant_width_sq;
+    private final int plant_lenght_sq;
+    private final int plant_width_sq;
 
     private static final int FREE = 0;
     private static final int RESERVED = 1;
@@ -177,12 +177,12 @@ public class WarehouseMovement{
         String WHITE_BRIGHT = "\033[0;97m";  // WHITE
         String RED_BRIGHT = "\033[0;91m";    // RED
 
-        for(int i = 0; i < grid.length; i++){
-            for(int j = 0; j < grid[0].length; j++){
-                int num = grid[i][j];
-                if(num == 2)
+        for (int[] ints : grid) {
+            for (int j = 0; j < grid[0].length; j++) {
+                int num = ints[j];
+                if (num == 2)
                     System.out.printf(GREEN_BRIGHT + "%d ", num);
-                else if(num == 1)
+                else if (num == 1)
                     System.out.printf(WHITE_BRIGHT + "%d ", num);
                 else
                     System.out.printf(RED_BRIGHT + "%d ", num);
