@@ -17,14 +17,19 @@ public class MoveAGV extends Thread {
 
     private int y;
 
+    private int speed;
+
     public MoveAGV(final AGV agv, final WarehouseMovement whMovement) {
         this.agv = agv;
         this.whMovement = whMovement;
+        this.speed = -2;
     }
 
     public void run() {
         agv.activateSensors(this);
-        moveAGV(x, y);
+        while(speed == -2)
+            moveAGV(x, y);
+        agv.deactivateSensors();
     }
 
     private void moveAGV(final int desiredX, final int desiredY) {
@@ -48,7 +53,6 @@ public class MoveAGV extends Thread {
             return;
         }
 
-        int control;
         List<Coordinate> pathList = WarehouseMovement.backTrackPath(coordinate);
         for (var path : pathList) {
             array = agv.getPosition().getAgvPosition().split(",");
@@ -66,17 +70,17 @@ public class MoveAGV extends Thread {
                 coordinate = WarehouseMovement.minDistance(whMovement.getGrid(), x, y, coordinateX, coordinateY);
                 pathList = WarehouseMovement.backTrackPath(coordinate);
 
-                for (var path1 : pathList){
+                for (var pathAux : pathList){
                     array = agv.getPosition().getAgvPosition().split(",");
                     x = Integer.parseInt(array[0]);
                     y = Integer.parseInt(array[1]);
 
-                    updateGrid(path, x, y);
+                    updateGrid(pathAux, x, y);
 
-                    updateAGV(path);
+                    updateAGV(pathAux);
 
-                    control = getAction();
-                    changeSpeed(control);
+                    speed = getAction();
+                    changeSpeed(speed);
                     whMovement.printMatrix();
                 }
                 changeAGVStatus();
@@ -85,19 +89,18 @@ public class MoveAGV extends Thread {
                 break;
 
             }
-            control = getAction();
-            changeSpeed(control);
+            speed = getAction();
+            changeSpeed(speed);
 
             whMovement.printMatrix();
 
-            if(control != -1) {
+            if(speed != -1) {
                 try {
-                    sleep(control);
+                    sleep(speed);
                 } catch (InterruptedException e) {
                     System.out.println("There was a problem regulating the AGV speed.");
                 }
             } else{
-                moveAGV(desiredX, desiredY);
                 break;
             }
         }
@@ -138,11 +141,16 @@ public class MoveAGV extends Thread {
 
     private int getAction(){
         int best = -1, control = 0;
-        for (var sensor : agv.getSensors()){
+
+        var sensorList = agv.getSensors();
+
+        for (var sensor : sensorList){
             control = sensor.getControl();
             if(best < control)
                 best = control;
         }
+
+        sensorList.get(0).disableLock();
 
         if(control == 0)
             return 1000;
