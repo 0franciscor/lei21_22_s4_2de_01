@@ -20,9 +20,6 @@ public class ControlSystem extends Thread{
 
     @Override
     public synchronized void run(){
-
-        moveAGV.setCoordinates(17,19);
-
         moveAGV.setCoordinates(4,0);
 
         moveAGV.start();
