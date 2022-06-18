@@ -1,6 +1,7 @@
 package eapli.base.surveymanagement.application;
 
 import eapli.base.surveymanagement.dto.QuestionnaireDTO;
+import eapli.base.surveymanagement.dto.SurveyDTO;
 
 public class ResponderQuestionarioController {
 
@@ -10,7 +11,7 @@ public class ResponderQuestionarioController {
         return service.getUnansweredCustomerSurveys(clientEmail);
     }
 
-    public QuestionnaireDTO findQuestionnaire(String id, String toString) {
-        return null;
+    public SurveyDTO getSurvey(String surveyId){
+        return service.getSurvey(surveyId);
     }
 }

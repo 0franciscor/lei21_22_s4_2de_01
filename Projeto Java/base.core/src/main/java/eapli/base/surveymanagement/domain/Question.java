@@ -87,4 +87,36 @@ public class Question implements Serializable {
         this.questaoDependente=questionId;
     }
 
+    public Long getQuestionId(){
+        return questionId;
+    }
+
+    public Message getPergunta(){
+        return pergunta;
+    }
+
+    public Obligatoriness getObligatoriness(){
+        return obligatoriness;
+    }
+
+    public Message getExtraInfo(){
+        return extraInfo;
+    }
+
+    public Type getType(){
+        return type;
+    }
+
+    public Map<Long,String> getOptions(){
+        return options;
+    }
+
+    public Long getQuestaoDependente(){
+        return questaoDependente;
+    }
+
+    public Long getSeccaoDependente(){
+        return seccaoDependente;
+    }
+
 }

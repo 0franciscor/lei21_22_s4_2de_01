@@ -18,8 +18,11 @@ import eapli.base.shoppingcarmanagement.domain.ShoppingCar;
 
 import eapli.base.shoppingcarmanagement.repository.ShoppingCarRepository;
 import eapli.base.surveymanagement.application.ListQuestionnaireDTOService;
+import eapli.base.surveymanagement.domain.Identifier;
 import eapli.base.surveymanagement.domain.Questionnaire;
 import eapli.base.surveymanagement.dto.QuestionnaireDTO;
+import eapli.base.surveymanagement.dto.SurveyDTO;
+import eapli.base.surveymanagement.repository.SurveyRepository;
 
 import javax.net.ssl.SSLServerSocket;
 import javax.net.ssl.SSLServerSocketFactory;
@@ -82,6 +85,7 @@ class TcpSrvOrderThread implements Runnable {
     private final ClientRepository clientRepository = PersistenceContext.repositories().client();
     private final ShoppingCarRepository shoppingCarRepository = PersistenceContext.repositories().shoppingCar();
     private final OrderRepository orderRepository = PersistenceContext.repositories().orders();
+    private final SurveyRepository surveyRepository = PersistenceContext.repositories().surveys();
     private final ListQuestionnaireDTOService listQuestionnaireDTOService = new ListQuestionnaireDTOService();
     private Product product;
     private Optional<Client> client;
@@ -175,6 +179,14 @@ class TcpSrvOrderThread implements Runnable {
                     Iterable<QuestionnaireDTO> questionnaireDTOS = listQuestionnaireDTOService.getUnansweredSurveys(client.get());
                     ObjectOutputStream sOutputObject = new ObjectOutputStream(this.s.getOutputStream());
                     sOutputObject.writeObject(questionnaireDTOS);
+                    sOutputObject.flush();
+                }
+
+                if(clientMessageUS[1] == ConstantsServer.SHOW_SURVEY) {
+                    String surveyId = MessageUtils.getDataFromMessage(clientMessageUS,sIn);
+                    SurveyDTO surveyDTO = listQuestionnaireDTOService.getSurvey(surveyId);
+                    ObjectOutputStream sOutputObject = new ObjectOutputStream(this.s.getOutputStream());
+                    sOutputObject.writeObject(surveyDTO);
                     sOutputObject.flush();
                 }
 
