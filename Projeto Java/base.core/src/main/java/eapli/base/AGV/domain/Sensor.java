@@ -26,7 +26,7 @@ public class Sensor extends Thread{
         this.orientation = orientation;
         this.deactivate = false;
     }
-    public static List<Sensor> getSensors(final AGV agv, final Thread moveAGV){
+    public static List<Sensor> getSensors(final AGV agv){
         var sensorList = new ArrayList<Sensor>();
         for(int i = 0; i < 4; i++){
             sensorList.add(new Sensor(agv, i));
@@ -49,42 +49,40 @@ public class Sensor extends Thread{
                 switch (orientation) {
                     case 0:
                         if (isValid(x - 1, y, warehouseMatrix) && warehouseMatrix[x - 1][y] == 2)
-                            control = 1;
-                        else if (isValid(x - 2, y, warehouseMatrix) && warehouseMatrix[x - 2][y] == 2)
                             control = 2;
+                        else if (isValid(x - 2, y, warehouseMatrix) && warehouseMatrix[x - 2][y] == 2)
+                            control = 1;
                         else
                             control = 0;
                         break;
                     case 1:
                         if (isValid(x, y + 1, warehouseMatrix) && warehouseMatrix[x][y + 1] == 2)
-                            control = 1;
-                        else if (isValid(x, y + 2, warehouseMatrix) && warehouseMatrix[x][y + 2] == 2)
                             control = 2;
+                        else if (isValid(x, y + 2, warehouseMatrix) && warehouseMatrix[x][y + 2] == 2)
+                            control = 1;
                         else
                             control = 0;
                         break;
                     case 2:
                         if (isValid(x + 1, y, warehouseMatrix) && warehouseMatrix[x + 1][y] == 2)
-                            control = 1;
-                        else if (isValid(x + 2, y, warehouseMatrix) && warehouseMatrix[x + 2][y] == 2)
                             control = 2;
+                        else if (isValid(x + 2, y, warehouseMatrix) && warehouseMatrix[x + 2][y] == 2)
+                            control = 1;
                         else
                             control = 0;
                         break;
                     case 3:
                         if (isValid(x, y - 1, warehouseMatrix) && warehouseMatrix[x][y - 1] == 2)
-                            control = 1;
-                        else if (isValid(x, y - 2, warehouseMatrix) && warehouseMatrix[x][y - 2] == 2)
                             control = 2;
+                        else if (isValid(x, y - 2, warehouseMatrix) && warehouseMatrix[x][y - 2] == 2)
+                            control = 1;
                         else
                             control = 0;
                         break;
                 }
 
-
                 try {
                     wait();
-                    sleep(100);
                 } catch (InterruptedException e) {
                     System.out.println("There was a problem related to the sensors");
                 }
@@ -103,7 +101,7 @@ public class Sensor extends Thread{
 
     public void disableLock(){
         synchronized (this) {
-            this.notifyAll();
+            this.notify();
         }
     }
 
