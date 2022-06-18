@@ -101,15 +101,13 @@ public class MoveAGV extends Thread {
             }*/
 
             updateAGV(path);
-
             speed = getAction();
-            changeSpeed(speed/1000);
+            changeSpeed();
 
             whMovement.printMatrix();
 
             if(path.getRow() == desiredX && path.getCol() == desiredY) {
                 speed = 0;
-                changeSpeed(speed);
                 return;
             }
 
@@ -187,8 +185,8 @@ public class MoveAGV extends Thread {
         return agv.getBattery().getBatteryLevel() > ACCEPTED_LEVEL_BATTERY;
     }
 
-    private void changeSpeed(int speed){
-        agv.setSpeed(speed);
+    private void changeSpeed(){
+        agv.setSpeed(speed/1000);
         updateDatabase();
     }
 }
