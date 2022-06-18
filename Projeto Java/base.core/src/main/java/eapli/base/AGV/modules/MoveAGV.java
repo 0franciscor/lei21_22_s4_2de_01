@@ -13,9 +13,9 @@ public class MoveAGV extends Thread {
 
     private static final int ACCEPTED_LEVEL_BATTERY = 25;
 
-    private int x;
+    private int desiredX;
 
-    private int y;
+    private int desiredY;
 
     private int speed;
 
@@ -26,13 +26,14 @@ public class MoveAGV extends Thread {
     }
 
     public void run() {
-        agv.activateSensors(this);
+        agv.activateSensors();
         while(speed == -1)
-            moveAGV(x, y);
+            moveAGV();
         agv.deactivateSensors();
     }
 
-    private void moveAGV(final int desiredX, final int desiredY) {
+    private void moveAGV() {
+
         var array = agv.getPosition().getAgvPosition().split(",");
         var x = Integer.parseInt(array[0]);
         var y = Integer.parseInt(array[1]);
@@ -40,6 +41,7 @@ public class MoveAGV extends Thread {
 
         if(coordinate == null) {
             System.out.println("There is no available Path");
+            speed = 0;
             return;
         }
 
@@ -50,6 +52,7 @@ public class MoveAGV extends Thread {
 
         if (x == desiredX && y == desiredY) {
             System.out.println("The AGV is already placed at the desired Location");
+            speed = 0;
             return;
         }
 
@@ -88,7 +91,7 @@ public class MoveAGV extends Thread {
                             System.out.println("There was a problem regulating the AGV speed.");
                         }
                     } else{
-                        moveAGV(coordinateX, coordinateY);
+                        moveAGV();
                         break;
                     }
                 }
@@ -106,6 +109,12 @@ public class MoveAGV extends Thread {
 
             whMovement.printMatrix();
 
+            if(path.getRow() == desiredX && path.getCol() == desiredY) {
+                speed = 0;
+                changeSpeed(speed);
+                return;
+            }
+
             if(speed != -1) {
                 try {
                     sleep(speed);
@@ -113,14 +122,19 @@ public class MoveAGV extends Thread {
                     System.out.println("There was a problem regulating the AGV speed.");
                 }
             } else{
-                break;
+                try {
+                    sleep(3000);
+                } catch (InterruptedException e) {
+                    System.out.println("There was a problem regulating the AGV speed.");
+                }
+                break; // joga com return e valor do speed para indicar o fim e fica praticamente feito
             }
         }
     }
 
-    protected void setCoordinates(final int x, final int y) {
-        this.x = x;
-        this.y = y;
+    protected void setCoordinates(final int desiredX, final int desiredY) {
+        this.desiredX = desiredX;
+        this.desiredY = desiredY;
     }
 
     private void updateAGV(final Coordinate path) {
@@ -152,7 +166,7 @@ public class MoveAGV extends Thread {
     }
 
     private int getAction(){
-        int best = -1, control = 0;
+        int best = -1, control;
 
         var sensorList = agv.getSensors();
 
@@ -160,13 +174,12 @@ public class MoveAGV extends Thread {
             control = sensor.getControl();
             if(best < control)
                 best = control;
+            sensor.disableLock();
         }
 
-        //sensorList.get(0).disableLock();
-
-        if(control == 0)
+        if(best == 0)
             return 1000;
-        else if(control == 2)
+        else if(best == 1)
             return 2000;
         else
             return -1;
