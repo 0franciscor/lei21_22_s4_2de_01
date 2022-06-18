@@ -65,4 +65,18 @@ public class Section implements Serializable {
     public void modifyRepetibilidade(final int repetibilidade){
         this.repetibilidade=repetibilidade;
     }
+
+    public Titulo getTitulo(){
+        return titulo;
+    }
+
+    public List<Question> getQuestions(){
+        return questions;
+    }
+
+    public Obligatoriness getObligatoriness(){
+        return obligatoriness;
+    }
+
+
 }

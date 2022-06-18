@@ -2,8 +2,12 @@ package eapli.base.app.user.console.presentation.surveymanagement;
 
 import eapli.base.ordermanagement.dto.OrderDTO;
 import eapli.base.surveymanagement.application.ResponderQuestionarioController;
+import eapli.base.surveymanagement.domain.Obligatoriness;
 import eapli.base.surveymanagement.domain.Questionnaire;
+import eapli.base.surveymanagement.dto.QuestionDTO;
 import eapli.base.surveymanagement.dto.QuestionnaireDTO;
+import eapli.base.surveymanagement.dto.SectionDTO;
+import eapli.base.surveymanagement.dto.SurveyDTO;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.io.util.Console;
@@ -33,18 +37,23 @@ public class ResponderQuestionarioUI extends AbstractUI {
 
             System.out.println("Deseja responder a que questionário?\n");
 
-            boolean invalidOrder;
-            do {
-                try {
-                    String id = Console.readLine("Identifier:");
-                    responderQuestionarioController.findQuestionnaire(id,authz.session().get().authenticatedUser().email().toString());
-                    invalidOrder = false;
-                } catch (Exception e) {
-                    System.out.println("Invalid Id.");
-                    invalidOrder = true;
-                }
-            } while (invalidOrder);
+            String id = Console.readLine("Identifier:");
 
+            SurveyDTO surveyDTO = responderQuestionarioController.getSurvey(id);
+
+            System.out.println("--- Questionário ---\n");
+            System.out.printf("Id: %s Título: %s\n\n",surveyDTO.id,surveyDTO.titulo);
+
+            for (SectionDTO sectionDTO: surveyDTO.sections){
+                System.out.println("--- Secção ---");
+                System.out.printf("Id: %s\n",sectionDTO.sectionId);
+                System.out.printf("Título: %s\n",sectionDTO.titulo);
+
+                for (QuestionDTO questionDTO: sectionDTO.questions){
+                    System.out.println("--- Pergunta ---");
+                }
+
+            }
         }
         return false;
     }

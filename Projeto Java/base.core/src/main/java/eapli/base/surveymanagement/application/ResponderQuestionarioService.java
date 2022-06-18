@@ -4,6 +4,7 @@ import eapli.base.MessageUtils;
 import eapli.base.productmanagement.dto.ProductDTO;
 import eapli.base.shoppingcarmanagement.application.AddProductToShoppingCarService;
 import eapli.base.surveymanagement.dto.QuestionnaireDTO;
+import eapli.base.surveymanagement.dto.SurveyDTO;
 
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
@@ -13,7 +14,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.Iterator;
 
 public class ResponderQuestionarioService {
 
@@ -106,6 +106,47 @@ public class ResponderQuestionarioService {
             System.out.println(e.getMessage());
         }
         return questionnaireDTOS;
+    }
+
+    public SurveyDTO getSurvey(String surveyId) {
+        SurveyDTO surveyDTO = null;
+
+        try {
+            final var socket = new ClienteSocket();
+            socket.connect(getAddress(), getPort());
+
+            try {
+                if (MessageUtils.testCommunicationWithServer(socket.sOutData,socket.sInData)) {
+                    MessageUtils.writeMessageWithData((byte) 8, surveyId, socket.sOutData);
+
+                    ObjectInputStream sInputObject = new ObjectInputStream(socket.sock.getInputStream());
+                    surveyDTO = (SurveyDTO) sInputObject.readObject();
+
+                    if (MessageUtils.wantsToExit(socket.sOutData,socket.sInData)) {
+                        socket.stop();
+
+                    } else {
+                        System.out.println("==> ERROR: Erro no pacote do Servidor");
+
+                    }
+                } else {
+                    System.out.println("==> ERROR: Erro no pacote do Servidor");
+                }
+            } catch (IOException e) {
+                System.out.println("==> ERROR: Falha durante a troca de informação com o server");
+            } finally {
+                try {
+                    socket.stop();
+                } catch (IOException e) {
+                    System.out.println("==> ERROR: Falha a fechar o socket");
+                }
+            }
+            return surveyDTO;
+        } catch (Exception e) {
+            System.out.println("Server down");
+            System.out.println(e.getMessage());
+        }
+        return surveyDTO;
     }
 
 

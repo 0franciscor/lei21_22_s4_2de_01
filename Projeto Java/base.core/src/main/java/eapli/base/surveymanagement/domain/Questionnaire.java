@@ -1,7 +1,10 @@
 package eapli.base.surveymanagement.domain;
 
 import eapli.base.productmanagement.dto.ProductDTO;
+import eapli.base.surveymanagement.dto.QuestionDTO;
 import eapli.base.surveymanagement.dto.QuestionnaireDTO;
+import eapli.base.surveymanagement.dto.SectionDTO;
+import eapli.base.surveymanagement.dto.SurveyDTO;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.representations.dto.DTOable;
@@ -138,6 +141,20 @@ public class Questionnaire implements AggregateRoot<Long>, Serializable, DTOable
     @Override
     public QuestionnaireDTO toDTO() {
         return new QuestionnaireDTO(surveyId.toString(),titulo.toString());
+    }
+
+    public SurveyDTO toDto(){
+        List<SectionDTO> sectionDTOS = new ArrayList<>();
+        for (Section section: sections){
+            List<QuestionDTO> questionDTOS = new ArrayList<>();
+            for (Question question: section.getQuestions()){
+                QuestionDTO questionDTO = new QuestionDTO(question.getQuestionId(),question.getPergunta().toString(),question.getObligatoriness(),question.getExtraInfo().toString(),question.getType(),question.getOptions(),question.getSeccaoDependente(),question.getQuestaoDependente());
+                questionDTOS.add(questionDTO);
+            }
+            SectionDTO sectionDTO = new SectionDTO(section.sectionId(),section.getTitulo().toString(),section.getObligatoriness(),questionDTOS);
+            sectionDTOS.add(sectionDTO);
+        }
+        return new SurveyDTO(surveyId.toString(),titulo.toString(),sectionDTOS);
     }
 
 }
