@@ -6,7 +6,7 @@ public class Coordinate implements Comparable<Coordinate>{
     private final int col;
     private final int dist;
 
-    private Coordinate parent;
+    private final Coordinate parent;
 
     public Coordinate(final int row, final int col, final int dist, final Coordinate parent) {
         this.row = row;
@@ -32,19 +32,15 @@ public class Coordinate implements Comparable<Coordinate>{
     }
 
     public int compareTo(Coordinate c2){
-        if(dist < c2.dist)
-            return -1;
-        else if(dist > c2.dist)
-            return 1;
-        else
-            return 0;
+        return Integer.compare(dist, c2.dist);
     }
 
     public boolean equals(Object obj){
         if(this == obj)
             return true;
-        if(obj == null)
+        if(obj == null || obj.getClass() != Coordinate.class)
             return false;
+
         return row == ((Coordinate) obj).row && col == ((Coordinate) obj).col && dist == ((Coordinate) obj).dist;
     }
 

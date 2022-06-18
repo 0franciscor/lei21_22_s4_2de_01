@@ -195,9 +195,9 @@ public class AGV implements AggregateRoot<AGVId> {
 
     public void changeAGVId(AGVId id){this.agvId=id;}
 
-    public void activateSensors(final Thread thread){
+    public void activateSensors(){
         if(sensorList == null)
-            this.sensorList = Sensor.getSensors(this, thread);
+            this.sensorList = Sensor.getSensors(this);
         for(Sensor sensor : sensorList)
             sensor.start();
     }
