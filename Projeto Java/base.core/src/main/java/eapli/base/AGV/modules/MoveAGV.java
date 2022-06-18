@@ -22,12 +22,12 @@ public class MoveAGV extends Thread {
     public MoveAGV(final AGV agv, final WarehouseMovement whMovement) {
         this.agv = agv;
         this.whMovement = whMovement;
-        this.speed = -2;
+        this.speed = -1;
     }
 
     public void run() {
         agv.activateSensors(this);
-        while(speed == -2)
+        while(speed == -1)
             moveAGV(x, y);
         agv.deactivateSensors();
     }
