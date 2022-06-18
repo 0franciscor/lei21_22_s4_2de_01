@@ -30,7 +30,7 @@ public class WarehouseMovement{
         return warehousePlantRepository.findById(id);
     }
 
-    public WarehouseMovement(){
+    private WarehouseMovement(){
         WarehousePlant plant = findById("1");
         this.plant_lenght_sq = plant.getLength()/ plant.getSquare();
         this.plant_width_sq = plant.getWidth()/ plant.getSquare();
