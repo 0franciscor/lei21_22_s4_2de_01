@@ -53,6 +53,7 @@ public class MoveAGV extends Thread {
 
         if (x == desiredX && y == desiredY) {
             System.out.println("The AGV is already placed at the desired Location");
+            speed = 0;
             return;
         }
 
