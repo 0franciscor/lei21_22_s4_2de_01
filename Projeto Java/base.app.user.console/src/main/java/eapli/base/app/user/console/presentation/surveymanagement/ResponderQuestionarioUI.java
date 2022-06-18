@@ -53,32 +53,47 @@ public class ResponderQuestionarioUI extends AbstractUI {
                     System.out.printf("--- Pergunta %s ---\n",questionDTO.questionId);
                     System.out.println(questionDTO.pergunta);
                     System.out.printf("\nObrigatoriedade: %s\n",questionDTO.obligatoriness);
-                    System.out.printf("Tipo: %s\n\n",questionDTO.type);
-                    if (questionDTO.options != null){
-                        int size = questionDTO.options.size();
-                        for (int i=0; i<size;i++){
-                            System.out.printf("%s) %s;\n",i+1,questionDTO.options.get(i));
+                    System.out.printf("Tipo: %s\n",questionDTO.type);
+                    boolean responder = true;
+                    if (questionDTO.obligatoriness.equals(Obligatoriness.OPTIONAL)){
+                        String temp = Console.readLine("Deseja responder? (s|n)");
+                        if (temp.equals("n")){
+                            responder=false;
                         }
                     }
-                    System.out.println();
-                    System.out.println(questionDTO.extraInfo);
-                    System.out.println();
-                    if (questionDTO.type.equals(Type.SINGLE_CHOICE)){
-                        boolean valido;
-                        do{
-                            int option = Console.readInteger("Resposta:");
-                            if (option<1 || option>questionDTO.options.size()){
-                                valido=false;
-                                System.out.println("O valor introduzido não corresponde a nenhuma opção válida!");
-                            } else {
-                                valido = true;
-                                StringBuilder stringBuilder = new StringBuilder("Single-Choice "+option+"\n\nFIM");
-                                responderQuestionarioController.writeFile(surveyDTO.id,stringBuilder.toString());
-                                responderQuestionarioController.validateAnswer(authz.session().get().authenticatedUser().email().toString(),surveyDTO.id,sectionDTO.sectionId,questionDTO.questionId);
+                    if (responder){
+                        if (questionDTO.options != null){
+                            int size = questionDTO.options.size();
+                            System.out.println();
+                            for (int i=0; i<size;i++){
+                                System.out.printf("%s) %s;\n",i+1,questionDTO.options.get(i));
                             }
-                        }while (!valido);
-
+                        }
+                        System.out.println();
+                        System.out.println(questionDTO.extraInfo);
+                        System.out.println();
+                        if (questionDTO.type.equals(Type.SINGLE_CHOICE)){
+                            boolean valido;
+                            do{
+                                int option = Console.readInteger("Resposta:");
+                                if (option<1 || option>questionDTO.options.size()){
+                                    valido=false;
+                                    System.out.println("O valor introduzido não corresponde a nenhuma opção válida!");
+                                } else {
+                                    valido = true;
+                                    StringBuilder stringBuilder = new StringBuilder("Single-Choice "+option+"\n\nFIM");
+                                    responderQuestionarioController.writeFile(surveyDTO.id,stringBuilder.toString());
+                                    responderQuestionarioController.validateAnswer(authz.session().get().authenticatedUser().email().toString(),surveyDTO.id,sectionDTO.sectionId,questionDTO.questionId);
+                                }
+                            }while (!valido);
+                        } else if(questionDTO.type.equals(Type.FREE_TEXT)){
+                            String resposta = Console.readLine("Resposta:");
+                            StringBuilder stringBuilder = new StringBuilder("Free-Text "+resposta+"\n\nFIM");
+                            responderQuestionarioController.writeFile(surveyDTO.id,stringBuilder.toString());
+                            responderQuestionarioController.validateAnswer(authz.session().get().authenticatedUser().email().toString(),surveyDTO.id,sectionDTO.sectionId,questionDTO.questionId);
+                        }
                     }
+
                 }
 
             }

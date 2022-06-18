@@ -13,6 +13,8 @@ participant "SurveyDTO" as dto <<dto>>
 participant "SectionDTO" as sDTO <<dto>>
 participant "QuestionDTO" as qDTO <<dto>>
 participant "Client" as client <<domain>>
+participant "AnswerMain" as answerMain <<antlr>>
+participant "Answer" as answer <<domain>>
 participant PersistenceContext as Persistence <<persistence>>
 participant RepositoryFactory as Factory <<factory>>
 database ClientRepository as repository <<repository>>
@@ -106,6 +108,48 @@ UI --> C : Mostra a pergunta do questionário
 deactivate UI
 C -> UI : Responde à pergunta apresentada
 activate UI
+UI -> Controller: writeFile(surveyId,answer)
+activate Controller
+deactivate Controller
+UI -> Controller: validateAnswer(clientEmail,surveyId,sectionId,questionId);
+activate Controller
+Controller -> answerMain: create
+Controller -> answerMain: parseWithVisitor(fileName)
+activate answerMain
+answerMain --> Controller: answer
+deactivate answerMain
+Controller -> answer:modifyClientEmail(clientEmail)
+activate answer
+deactivate answer
+Controller -> answer:modifyIdSurvey(surveyId)
+activate answer
+deactivate answer
+Controller -> answer:modifyIdSection(idSection)
+activate answer
+deactivate answer
+Controller -> answer:modifyIdQuestion(idQuestion)
+activate answer
+deactivate answer
+Controller->Service:saveAnswer(answer)
+activate Service
+Service ->OrderServer:saveAnswer(answer)
+activate OrderServer
+OrderServer -> Persistence: repositories()
+activate Persistence
+Persistence -> Factory: create
+Persistence -> OrderServer: factory
+deactivate Persistence
+OrderServer -> Factory: answers()
+activate Factory
+Factory -> r: create
+Factory -> OrderServer: answerRepository
+deactivate Factory
+OrderServer->r:save(answer)
+activate r
+deactivate r
+deactivate OrderServer
+deactivate Service
+deactivate Controller
 end
 UI --> C : Mostra a informação final do questionário
 UI --> C : Informa o sucesso da operação

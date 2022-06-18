@@ -138,10 +138,7 @@ public class AnswerParser extends Parser {
 
 	public static class TypeContext extends ParserRuleContext {
 		public TerminalNode FREE_TEXT() { return getToken(AnswerParser.FREE_TEXT, 0); }
-		public List<TerminalNode> NEWLINE() { return getTokens(AnswerParser.NEWLINE); }
-		public TerminalNode NEWLINE(int i) {
-			return getToken(AnswerParser.NEWLINE, i);
-		}
+		public TerminalNode ESPACO() { return getToken(AnswerParser.ESPACO, 0); }
 		public FraseContext frase() {
 			return getRuleContext(FraseContext.class,0);
 		}
@@ -151,7 +148,6 @@ public class AnswerParser extends Parser {
 			return getToken(AnswerParser.NUMERO, i);
 		}
 		public TerminalNode SINGLE_CHOICE() { return getToken(AnswerParser.SINGLE_CHOICE, 0); }
-		public TerminalNode ESPACO() { return getToken(AnswerParser.ESPACO, 0); }
 		public List<OpcaoContext> opcao() {
 			return getRuleContexts(OpcaoContext.class);
 		}
@@ -160,6 +156,7 @@ public class AnswerParser extends Parser {
 		}
 		public TerminalNode MULTIPLE_CHOICE() { return getToken(AnswerParser.MULTIPLE_CHOICE, 0); }
 		public TerminalNode SINGLE_CHOICE1() { return getToken(AnswerParser.SINGLE_CHOICE1, 0); }
+		public TerminalNode NEWLINE() { return getToken(AnswerParser.NEWLINE, 0); }
 		public TerminalNode MULTIPLE_CHOICE1() { return getToken(AnswerParser.MULTIPLE_CHOICE1, 0); }
 		public TerminalNode SORTING_OPTIONS() { return getToken(AnswerParser.SORTING_OPTIONS, 0); }
 		public TerminalNode SCALING_OPTIONS() { return getToken(AnswerParser.SCALING_OPTIONS, 0); }
@@ -197,7 +194,7 @@ public class AnswerParser extends Parser {
 				setState(12);
 				match(FREE_TEXT);
 				setState(13);
-				match(NEWLINE);
+				match(ESPACO);
 				setState(14);
 				frase();
 				}
@@ -208,7 +205,7 @@ public class AnswerParser extends Parser {
 				setState(15);
 				match(NUMERIC);
 				setState(16);
-				match(NEWLINE);
+				match(ESPACO);
 				setState(18); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
@@ -242,7 +239,7 @@ public class AnswerParser extends Parser {
 				setState(25);
 				match(MULTIPLE_CHOICE);
 				setState(26);
-				match(NEWLINE);
+				match(ESPACO);
 				setState(28); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
@@ -265,7 +262,7 @@ public class AnswerParser extends Parser {
 				setState(32);
 				match(SINGLE_CHOICE1);
 				setState(33);
-				match(NEWLINE);
+				match(ESPACO);
 				setState(38);
 				_errHandler.sync(this);
 				switch ( getInterpreter().adaptivePredict(_input,2,_ctx) ) {
@@ -294,7 +291,7 @@ public class AnswerParser extends Parser {
 				setState(40);
 				match(MULTIPLE_CHOICE1);
 				setState(41);
-				match(NEWLINE);
+				match(ESPACO);
 				setState(43); 
 				_errHandler.sync(this);
 				_alt = 1;
@@ -335,7 +332,7 @@ public class AnswerParser extends Parser {
 				setState(52);
 				match(SORTING_OPTIONS);
 				setState(53);
-				match(NEWLINE);
+				match(ESPACO);
 				setState(55); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
@@ -358,7 +355,7 @@ public class AnswerParser extends Parser {
 				setState(59);
 				match(SCALING_OPTIONS);
 				setState(60);
-				match(NEWLINE);
+				match(ESPACO);
 				setState(62); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
@@ -633,29 +630,29 @@ public class AnswerParser extends Parser {
 		"\u0001\u0001\u0000\t\ni\u0000\n\u0001\u0000\u0000\u0000\u0002B\u0001\u0000"+
 		"\u0000\u0000\u0004E\u0001\u0000\u0000\u0000\u0006W\u0001\u0000\u0000\u0000"+
 		"\bZ\u0001\u0000\u0000\u0000\n\u000b\u0003\u0002\u0001\u0000\u000b\u0001"+
-		"\u0001\u0000\u0000\u0000\f\r\u0005\u0001\u0000\u0000\r\u000e\u0005\r\u0000"+
+		"\u0001\u0000\u0000\u0000\f\r\u0005\u0001\u0000\u0000\r\u000e\u0005\f\u0000"+
 		"\u0000\u000eC\u0003\u0004\u0002\u0000\u000f\u0010\u0005\u0002\u0000\u0000"+
-		"\u0010\u0012\u0005\r\u0000\u0000\u0011\u0013\u0005\t\u0000\u0000\u0012"+
+		"\u0010\u0012\u0005\f\u0000\u0000\u0011\u0013\u0005\t\u0000\u0000\u0012"+
 		"\u0011\u0001\u0000\u0000\u0000\u0013\u0014\u0001\u0000\u0000\u0000\u0014"+
 		"\u0012\u0001\u0000\u0000\u0000\u0014\u0015\u0001\u0000\u0000\u0000\u0015"+
 		"C\u0001\u0000\u0000\u0000\u0016\u0017\u0005\u0003\u0000\u0000\u0017\u0018"+
 		"\u0005\f\u0000\u0000\u0018C\u0003\u0006\u0003\u0000\u0019\u001a\u0005"+
-		"\u0005\u0000\u0000\u001a\u001c\u0005\r\u0000\u0000\u001b\u001d\u0003\u0006"+
+		"\u0005\u0000\u0000\u001a\u001c\u0005\f\u0000\u0000\u001b\u001d\u0003\u0006"+
 		"\u0003\u0000\u001c\u001b\u0001\u0000\u0000\u0000\u001d\u001e\u0001\u0000"+
 		"\u0000\u0000\u001e\u001c\u0001\u0000\u0000\u0000\u001e\u001f\u0001\u0000"+
 		"\u0000\u0000\u001fC\u0001\u0000\u0000\u0000 !\u0005\u0004\u0000\u0000"+
-		"!&\u0005\r\u0000\u0000\"\'\u0003\u0006\u0003\u0000#$\u0003\u0004\u0002"+
+		"!&\u0005\f\u0000\u0000\"\'\u0003\u0006\u0003\u0000#$\u0003\u0004\u0002"+
 		"\u0000$%\u0005\r\u0000\u0000%\'\u0001\u0000\u0000\u0000&\"\u0001\u0000"+
 		"\u0000\u0000&#\u0001\u0000\u0000\u0000\'C\u0001\u0000\u0000\u0000()\u0005"+
-		"\u0006\u0000\u0000)+\u0005\r\u0000\u0000*,\u0003\u0006\u0003\u0000+*\u0001"+
+		"\u0006\u0000\u0000)+\u0005\f\u0000\u0000*,\u0003\u0006\u0003\u0000+*\u0001"+
 		"\u0000\u0000\u0000,-\u0001\u0000\u0000\u0000-+\u0001\u0000\u0000\u0000"+
 		"-.\u0001\u0000\u0000\u0000.2\u0001\u0000\u0000\u0000/0\u0003\u0004\u0002"+
 		"\u000001\u0005\r\u0000\u000013\u0001\u0000\u0000\u00002/\u0001\u0000\u0000"+
 		"\u000023\u0001\u0000\u0000\u00003C\u0001\u0000\u0000\u000045\u0005\u0007"+
-		"\u0000\u000057\u0005\r\u0000\u000068\u0003\u0006\u0003\u000076\u0001\u0000"+
+		"\u0000\u000057\u0005\f\u0000\u000068\u0003\u0006\u0003\u000076\u0001\u0000"+
 		"\u0000\u000089\u0001\u0000\u0000\u000097\u0001\u0000\u0000\u00009:\u0001"+
 		"\u0000\u0000\u0000:C\u0001\u0000\u0000\u0000;<\u0005\b\u0000\u0000<>\u0005"+
-		"\r\u0000\u0000=?\u0003\u0006\u0003\u0000>=\u0001\u0000\u0000\u0000?@\u0001"+
+		"\f\u0000\u0000=?\u0003\u0006\u0003\u0000>=\u0001\u0000\u0000\u0000?@\u0001"+
 		"\u0000\u0000\u0000@>\u0001\u0000\u0000\u0000@A\u0001\u0000\u0000\u0000"+
 		"AC\u0001\u0000\u0000\u0000B\f\u0001\u0000\u0000\u0000B\u000f\u0001\u0000"+
 		"\u0000\u0000B\u0016\u0001\u0000\u0000\u0000B\u0019\u0001\u0000\u0000\u0000"+

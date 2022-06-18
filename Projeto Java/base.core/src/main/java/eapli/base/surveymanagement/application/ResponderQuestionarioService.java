@@ -7,10 +7,7 @@ import eapli.base.surveymanagement.dto.SurveyDTO;
 
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
+import java.io.*;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
@@ -151,7 +148,41 @@ public class ResponderQuestionarioService {
     }
 
     public void saveAnswer(Answer answer) {
+        try {
+            final var socket = new ClienteSocket();
+            socket.connect(getAddress(), getPort());
 
+            try {
+                if (MessageUtils.testCommunicationWithServer(socket.sOutData,socket.sInData)) {
+                    MessageUtils.writeMessage((byte) 9, socket.sOutData);
+
+                    ObjectOutputStream sOutputObject = new ObjectOutputStream(socket.sock.getOutputStream());
+                    sOutputObject.writeObject(answer);
+                    sOutputObject.flush();
+
+                    if (MessageUtils.wantsToExit(socket.sOutData,socket.sInData)) {
+                        socket.stop();
+
+                    } else {
+                        System.out.println("==> ERROR: Erro no pacote do Servidor");
+
+                    }
+                } else {
+                    System.out.println("==> ERROR: Erro no pacote do Servidor");
+                }
+            } catch (IOException e) {
+                System.out.println("==> ERROR: Falha durante a troca de informação com o server");
+            } finally {
+                try {
+                    socket.stop();
+                } catch (IOException e) {
+                    System.out.println("==> ERROR: Falha a fechar o socket");
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Server down");
+            System.out.println(e.getMessage());
+        }
 
     }
 

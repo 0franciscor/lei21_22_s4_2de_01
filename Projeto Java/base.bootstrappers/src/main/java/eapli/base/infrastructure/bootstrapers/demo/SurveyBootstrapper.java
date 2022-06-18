@@ -54,6 +54,14 @@ public class SurveyBootstrapper extends BaseDemoBootstrapper implements Action {
         question.modifyExtraInfo(new Message("Answer the question by selecting one (and only one) of the options provided."));
         section.addQuestion(question);
 
+        Question question1 = new Question();
+        question1.modifyId(2L);
+        question1.modifyPergunta(new Message("What changes can the company make to improve the quality of its services?"));
+        question1.modifyObligatoriness("optional");
+        question1.modifyType("Free-Text");
+        question1.modifyExtraInfo(new Message("Answer the question by typing some text."));
+        section.addQuestion(question1);
+
         questionnaire.addSection(section);
 
         questionnaire.modifyFinalMessage(new Message("Thank you for answering the questionnaire!"));

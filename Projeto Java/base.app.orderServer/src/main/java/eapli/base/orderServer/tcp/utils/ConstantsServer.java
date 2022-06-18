@@ -24,5 +24,7 @@ public class ConstantsServer {
 
     public static int SHOW_SURVEY = 8;
 
+    public static int ANSWER = 9;
+
 
 }

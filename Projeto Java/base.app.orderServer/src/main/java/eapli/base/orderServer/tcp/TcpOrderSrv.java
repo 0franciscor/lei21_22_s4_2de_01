@@ -18,10 +18,12 @@ import eapli.base.shoppingcarmanagement.domain.ShoppingCar;
 
 import eapli.base.shoppingcarmanagement.repository.ShoppingCarRepository;
 import eapli.base.surveymanagement.application.ListQuestionnaireDTOService;
+import eapli.base.surveymanagement.domain.Answer;
 import eapli.base.surveymanagement.domain.Identifier;
 import eapli.base.surveymanagement.domain.Questionnaire;
 import eapli.base.surveymanagement.dto.QuestionnaireDTO;
 import eapli.base.surveymanagement.dto.SurveyDTO;
+import eapli.base.surveymanagement.repository.AnswerRepository;
 import eapli.base.surveymanagement.repository.SurveyRepository;
 
 import javax.net.ssl.SSLServerSocket;
@@ -89,6 +91,7 @@ class TcpSrvOrderThread implements Runnable {
     private Product product;
     private Optional<Client> client;
     private Optional<ShoppingCar> shoppingCar;
+    private final AnswerRepository answerRepository = PersistenceContext.repositories().answers();
 
     public TcpSrvOrderThread(Socket cli_s) {
         s = cli_s;
@@ -189,6 +192,13 @@ class TcpSrvOrderThread implements Runnable {
                     sOutputObject.flush();
                 }
 
+                if(clientMessageUS[1] == ConstantsServer.ANSWER) {
+                    ObjectInputStream sInputObject = new ObjectInputStream(this.s.getInputStream());
+                    Answer answer = (Answer) sInputObject.readObject();
+                    answerRepository.save(answer);
+
+                }
+
                 byte[] clientMessageEnd = sIn.readNBytes(4);
 
                 if (clientMessageEnd[1] == ConstantsServer.FINISH_CODE) {
@@ -204,7 +214,7 @@ class TcpSrvOrderThread implements Runnable {
                 System.out.println("[ERROR] Pacote do Cliente invalido.");
             }
 
-        } catch (IOException e) {
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         } finally {
             try {

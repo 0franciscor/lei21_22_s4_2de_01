@@ -20,7 +20,9 @@ public class AnswersVisitor extends AnswerBaseVisitor<Answer> {
 
     @Override public Answer visitType(AnswerParser.TypeContext ctx) {
         if (ctx.FREE_TEXT() != null){
-
+            answer.modifyType("Free-Text");
+            visit(ctx.frase());
+            answer.addAnswer(aux);
         }
         else if (ctx.NUMERIC() != null){
 
@@ -43,7 +45,8 @@ public class AnswersVisitor extends AnswerBaseVisitor<Answer> {
     }
 
     @Override public Answer visitFrase(AnswerParser.FraseContext ctx) {
-        return null;
+        aux = ctx.getText();
+        return answer;
     }
 
     @Override public Answer visitOpcao(AnswerParser.OpcaoContext ctx) {

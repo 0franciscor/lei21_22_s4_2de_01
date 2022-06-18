@@ -59,7 +59,7 @@ public class ResponderQuestionarioController {
         answer.modifyIdSurvey(new Identifier(surveyId));
         answer.modifyIdSection(idSection);
         answer.modifyIdQuestion(idQuestion);
-        repository.save(answer);
+        service.saveAnswer(answer);
     }
 
 
