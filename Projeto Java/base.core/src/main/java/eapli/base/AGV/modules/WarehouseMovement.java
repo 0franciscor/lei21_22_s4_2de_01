@@ -18,8 +18,6 @@ public class WarehouseMovement{
     private final AGVDockRepository agvDockRepository = PersistenceContext.repositories().dock();
     private static WarehouseMovement warehouseMovement;
     private int[][] grid;
-    private final int plant_lenght_sq;
-    private final int plant_width_sq;
 
     private static final int FREE = 1;
     private static final int RESERVED = 0;
@@ -32,9 +30,9 @@ public class WarehouseMovement{
 
     private WarehouseMovement(){
         WarehousePlant plant = findById("1");
-        this.plant_lenght_sq = plant.getLength()/ plant.getSquare();
-        this.plant_width_sq = plant.getWidth()/ plant.getSquare();
-        buildGrid(plant_lenght_sq,plant_width_sq);
+        int plant_lenght_sq = plant.getLength() / plant.getSquare();
+        int plant_width_sq = plant.getWidth() / plant.getSquare();
+        buildGrid(plant_lenght_sq, plant_width_sq);
     }
 
     public synchronized static WarehouseMovement getWarehouseMovement(){
