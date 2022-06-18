@@ -1,6 +1,5 @@
 package eapli.base.surveymanagement.domain;
 
-import eapli.base.clientmanagement.domain.Client;
 import eapli.base.clientmanagement.domain.Email;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
@@ -36,6 +35,7 @@ public class Answer implements AggregateRoot<Long>{
 
     private Long idSection;
 
+    @Enumerated(EnumType.STRING)
     private Type questionType;
 
     @ElementCollection
