@@ -21,8 +21,8 @@ public class WarehouseMovement{
     private final int plant_lenght_sq;
     private final int plant_width_sq;
 
-    private static final int FREE = 0;
-    private static final int RESERVED = 1;
+    private static final int FREE = 1;
+    private static final int RESERVED = 0;
     private static final int DOCK = 5;
 
 
@@ -82,15 +82,6 @@ public class WarehouseMovement{
                 grid[beginL-1][beginW-1]=DOCK;
             }
         }
-
-        // print matrix
-        for(int line=0; line< plant_lenght_sq; line++){
-            for(int row=0; row<plant_width_sq-1; row++){
-                System.out.print("["+line+"]["+row+"] = "+ grid[line][row] + " ");
-            }
-            System.out.println();
-        }
-
     }
 
     protected synchronized static Coordinate minDistance(int[][] grid, final int x, final int y, final int desiredX, final int desiredY) {

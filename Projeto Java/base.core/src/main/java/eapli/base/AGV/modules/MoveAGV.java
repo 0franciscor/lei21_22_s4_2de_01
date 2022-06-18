@@ -22,13 +22,14 @@ public class MoveAGV extends Thread {
     public MoveAGV(final AGV agv, final WarehouseMovement whMovement) {
         this.agv = agv;
         this.whMovement = whMovement;
-        this.speed = -1;
+        this.speed = 0;
     }
 
     public void run() {
         agv.activateSensors();
-        while(speed == -1)
+        do {
             moveAGV();
+        } while(speed == -1);
         agv.deactivateSensors();
     }
 
@@ -41,21 +42,18 @@ public class MoveAGV extends Thread {
 
         if(coordinate == null) {
             System.out.println("There is no available Path");
-            speed = 0;
             return;
         }
 
-        if (!checkBaterry()){
+        /*if (!checkBaterry()){
             System.out.println("There is no sufficient battery to perform the trip");
             return;
-        }
+        }*/
 
         if (x == desiredX && y == desiredY) {
             System.out.println("The AGV is already placed at the desired Location");
-            speed = 0;
             return;
         }
-
 
         List<Coordinate> pathList = WarehouseMovement.backTrackPath(coordinate);
         for (var path : pathList) {
@@ -64,7 +62,7 @@ public class MoveAGV extends Thread {
             y = Integer.parseInt(array[1]);
             updateGrid(path, x, y);
 
-            if (!checkBaterry()){
+            /*if (!checkBaterry()){
                 int coordinateX = agv.getAgvDock().getBegin().getBeginLSquare();
                 int coordinateY = agv.getAgvDock().getBegin().getBeginWSquare();
 
@@ -100,7 +98,7 @@ public class MoveAGV extends Thread {
 
                 break;
 
-            }
+            }*/
 
             updateAGV(path);
 
@@ -127,7 +125,7 @@ public class MoveAGV extends Thread {
                 } catch (InterruptedException e) {
                     System.out.println("There was a problem regulating the AGV speed.");
                 }
-                break; // joga com return e valor do speed para indicar o fim e fica praticamente feito
+                break;
             }
         }
     }

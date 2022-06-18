@@ -8,7 +8,6 @@ public class ControlSystem extends Thread{
 
     private final MoveAGV moveAGV;
 
-
     public ControlSystem(final AGV agv){
         csThread = new Thread(this);
         this.moveAGV = new MoveAGV(agv, WarehouseMovement.getWarehouseMovement());
