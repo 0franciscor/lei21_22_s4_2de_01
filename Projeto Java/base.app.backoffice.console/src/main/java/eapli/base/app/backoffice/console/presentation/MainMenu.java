@@ -37,6 +37,7 @@ import eapli.base.app.backoffice.console.presentation.clientuser.AcceptRefuseSig
 import eapli.base.app.backoffice.console.productmanagement.ListProductUi;
 import eapli.base.app.backoffice.console.productmanagement.RegisterProductUI;
 import eapli.base.app.backoffice.console.surveymanagement.NewQuestionnaireUI;
+import eapli.base.app.backoffice.console.surveymanagement.ObterRelatorioEstatisticoUI;
 import eapli.base.app.backoffice.console.taskManagement.TaskManagementUI;
 import eapli.base.app.backoffice.console.warehouseEmployeeManagement.ConfigureAGVUI;
 import eapli.base.app.backoffice.console.warehouseEmployeeManagement.DashboardUI;
@@ -101,7 +102,7 @@ public class MainMenu extends AbstractUI {
 
     // SALES MANAGER
     private static final int CREATE_NEW_QUESTIONNAIRE = 1;
-    private static final int QUEST_OPTION = 2;
+    private static final int REPORT = 2;
 
     private static final String SEPARATOR_LABEL = "--------------";
 
@@ -236,6 +237,7 @@ public class MainMenu extends AbstractUI {
         final Menu menu = new Menu("Sales Manager >");
 
         menu.addItem(CREATE_NEW_QUESTIONNAIRE, "Create New Questionnaire", new NewQuestionnaireUI()::show);
+        menu.addItem(REPORT, "Get a statistical report", new ObterRelatorioEstatisticoUI()::show);
 
         return menu;
     }
