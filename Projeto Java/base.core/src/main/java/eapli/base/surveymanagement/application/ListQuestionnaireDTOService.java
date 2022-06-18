@@ -14,6 +14,7 @@ import eapli.base.surveymanagement.dto.SurveyDTO;
 import eapli.base.surveymanagement.repository.SurveyRepository;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,5 +50,14 @@ public class ListQuestionnaireDTOService {
 
         return questionnaire.get().toDto();
 
+    }
+
+    public Iterable<QuestionnaireDTO> getSurveys() {
+        final Iterable<Questionnaire> questionnaires = surveyRepository.findAll();
+
+        // transform for the presentation layer
+        final List<QuestionnaireDTO> ret = new ArrayList<>();
+        questionnaires.forEach(e -> ret.add(e.toDTO()));
+        return ret;
     }
 }
