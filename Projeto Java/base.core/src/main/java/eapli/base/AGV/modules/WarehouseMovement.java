@@ -1,12 +1,8 @@
 package eapli.base.AGV.modules;
 
 import eapli.base.infrastructure.persistence.PersistenceContext;
-import eapli.base.warehouse.domain.AGVDock;
-import eapli.base.warehouse.domain.Warehouse;
 import eapli.base.warehouse.domain.WarehousePlant;
-import eapli.base.warehouse.repositories.AGVDockRepository;
 import eapli.base.warehouse.repositories.WarehousePlantRepository;
-import eapli.base.warehouse.repositories.WarehouseRepository;
 
 import java.util.*;
 
@@ -126,8 +122,8 @@ public class WarehouseMovement{
         String WHITE_BRIGHT = "\033[0;97m";  // WHITE
         String RED_BRIGHT = "\033[0;91m";    // RED
 
-        for(int i = 0; i < 18; i++){
-            for(int j = 0; j < 20; j++){
+        for(int i = 0; i < grid.length; i++){
+            for(int j = 0; j < grid[0].length; j++){
                 int num = grid[i][j];
                 if(num == 2)
                     System.out.printf(GREEN_BRIGHT + "%d ", num);

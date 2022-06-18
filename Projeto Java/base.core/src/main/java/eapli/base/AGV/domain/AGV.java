@@ -1,6 +1,5 @@
 package eapli.base.AGV.domain;
 
-import eapli.base.AGV.modules.BMS;
 import eapli.base.AGV.modules.ControlSystem;
 import eapli.base.ordermanagement.domain.ProductOrder;
 import eapli.base.warehouse.domain.AGVDock;
@@ -15,6 +14,8 @@ public class AGV implements AggregateRoot<AGVId> {
 
     @EmbeddedId
     private AGVId agvId;
+
+    private int speed;
 
     @OneToOne
     private AGVDock agvDock;
@@ -69,6 +70,7 @@ public class AGV implements AggregateRoot<AGVId> {
         this.agvStatus = agvStatus;
         this.agvTask = new ArrayList<>();
         this.battery = new AGVBattery(100);
+        this.speed = 0;
     }
 
     @Override
@@ -187,6 +189,10 @@ public class AGV implements AggregateRoot<AGVId> {
         this.agvTask.add(task);
     }
 
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
     public void changeAGVId(AGVId id){this.agvId=id;}
 
     public void activateSensors(final Thread thread){
@@ -206,6 +212,10 @@ public class AGV implements AggregateRoot<AGVId> {
         csThread.start();
     }
 
+    public void deactivateSensors(){
+        for(var sensor : sensorList)
+            sensor.deactivate();
+    }
 
     public AGVBattery getBattery() {
         return battery;

@@ -21,8 +21,5 @@ public class BMS extends Thread{
         }
 
         notifyAll();
-        //quando sair do loop significa que o nível de bateria está abaixo do indicado, ou seja preciso avisar ao Control System
-
-
     }
 }
