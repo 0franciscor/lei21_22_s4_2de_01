@@ -105,4 +105,7 @@ public class Sensor extends Thread{
     public Object getObject(){
         return object;
     }
+
+    public void deactivate() {
+    }
 }
