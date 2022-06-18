@@ -1,0 +1,54 @@
+@startuml
+
+autonumber
+actor "Sales Manager" as SM
+participant ObterRelatorioEstatisticoUI as UI <<presentation>>
+participant ObterRelatorioEstatisticoController as Controller <<application>>
+participant ListQuestionnaireDTOService as serv <<application>>
+participant "Questionnaire" as Domain <<domain>>
+participant "QuestionnaireDTO" as DTO <<dto>>
+participant PersistenceContext as Persistence <<persistence>>
+participant RepositoryFactory as Factory <<factory>>
+database SurveyRepository as repository <<repository>>
+
+activate SM
+SM -> UI : Inicia o processo de obter o relatório\n estatístico de um determinado questionário
+activate UI
+UI->Controller: findAllQuestionnaires()
+activate Controller
+
+Controller -> serv: getSurveys()
+activate serv
+serv-> Persistence: repositories()
+activate Persistence
+Persistence -> Factory: create
+Persistence -> serv: factory
+deactivate Persistence
+serv -> Factory: surveys()
+activate Factory
+Factory -> repository: create
+Factory -> serv: surveyRepository
+deactivate Factory
+serv->repository:findAll()
+activate repository
+repository -->serv: surveys
+deactivate repository
+loop
+serv -> Domain: toDTO()
+activate Domain
+end
+deactivate Domain
+serv --> Controller : surveysDTOList
+deactivate serv
+Controller --> UI : surveysDTOList
+deactivate Controller
+UI --> SM : Mostra os questionários que existem
+deactivate UI
+SM -> UI : Seleciona o questionário que\n pretende obter o relatório
+activate UI
+UI --> SM : Mostra a informação pedida\n informando o sucesso da operação
+deactivate UI
+
+deactivate SM
+
+@enduml
