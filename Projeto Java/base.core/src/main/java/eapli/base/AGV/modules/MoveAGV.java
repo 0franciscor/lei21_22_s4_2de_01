@@ -11,7 +11,7 @@ public class MoveAGV extends Thread {
 
     private final WarehouseMovement whMovement;
 
-    private static final int ACCEPTED_LEVEL = 10;
+    private static final int ACCEPTED_LEVEL_BATTERY = 25;
 
     private int x;
 
@@ -48,7 +48,7 @@ public class MoveAGV extends Thread {
             return;
         }
 
-        int control;
+        int speed;
         List<Coordinate> pathList = WarehouseMovement.backTrackPath(coordinate);
         for (var path : pathList) {
             array = agv.getPosition().getAgvPosition().split(",");
@@ -56,10 +56,7 @@ public class MoveAGV extends Thread {
             y = Integer.parseInt(array[1]);
             updateGrid(path, x, y);
 
-            if (checkBaterry()){
-                updateAGV(path);
-            }
-            else {
+            if (!checkBaterry()){
                 int coordinateX = agv.getAgvDock().getBegin().getBeginLSquare();
                 int coordinateY = agv.getAgvDock().getBegin().getBeginWSquare();
 
@@ -71,13 +68,24 @@ public class MoveAGV extends Thread {
                     x = Integer.parseInt(array[0]);
                     y = Integer.parseInt(array[1]);
 
-                    updateGrid(path, x, y);
+                    updateGrid(path1, x, y);
 
-                    updateAGV(path);
+                    updateAGV(path1);
 
-                    control = getAction();
-                    changeSpeed(control);
+                    speed = getAction();
+                    changeSpeed(speed/1000);
                     whMovement.printMatrix();
+
+                    if(speed != -1) {
+                        try {
+                            sleep(speed);
+                        } catch (InterruptedException e) {
+                            System.out.println("There was a problem regulating the AGV speed.");
+                        }
+                    } else{
+                        moveAGV(coordinateX, coordinateY);
+                        break;
+                    }
                 }
                 changeAGVStatus();
                 chargeAGV();
@@ -85,14 +93,17 @@ public class MoveAGV extends Thread {
                 break;
 
             }
-            control = getAction();
-            changeSpeed(control);
+
+            updateAGV(path);
+
+            speed = getAction();
+            changeSpeed(speed/1000);
 
             whMovement.printMatrix();
 
-            if(control != -1) {
+            if(speed != -1) {
                 try {
-                    sleep(control);
+                    sleep(speed);
                 } catch (InterruptedException e) {
                     System.out.println("There was a problem regulating the AGV speed.");
                 }
@@ -153,7 +164,7 @@ public class MoveAGV extends Thread {
     }
 
     private boolean checkBaterry(){
-        return agv.getBattery().getBatteryLevel() > ACCEPTED_LEVEL;
+        return agv.getBattery().getBatteryLevel() > ACCEPTED_LEVEL_BATTERY;
     }
 
     private void changeSpeed(int speed){
