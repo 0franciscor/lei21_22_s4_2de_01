@@ -4,7 +4,9 @@ import eapli.base.surveymanagement.domain.Obligatoriness;
 import eapli.base.surveymanagement.domain.Type;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class QuestionDTO implements Serializable {
@@ -23,7 +25,7 @@ public class QuestionDTO implements Serializable {
 
     public Long seccaoDependente;
 
-    public Map<Long,String> options = new HashMap<>();
+    public List<String> options= new ArrayList<>();
 
     public QuestionDTO(final Long questionId,final String pergunta,final Obligatoriness obligatoriness,final String extraInfo,final Type type,Map<Long,String> options,Long seccaoDependente,Long questaoDependente){
         this.questionId=questionId;
@@ -31,7 +33,9 @@ public class QuestionDTO implements Serializable {
         this.obligatoriness=obligatoriness;
         this.extraInfo=extraInfo;
         this.type=type;
-        this.options=options;
+        for (Map.Entry<Long, String> entry : options.entrySet()){
+            this.options.add(entry.getValue());
+        }
         this.questaoDependente=questaoDependente;
         this.seccaoDependente=seccaoDependente;
     }

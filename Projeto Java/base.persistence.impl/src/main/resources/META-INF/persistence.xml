@@ -23,6 +23,7 @@
     <class>eapli.base.surveymanagement.domain.Questionnaire</class>
     <class>eapli.base.surveymanagement.domain.Section</class>
     <class>eapli.base.surveymanagement.domain.Question</class>
+    <class>eapli.base.surveymanagement.domain.Answer</class>
     <class>eapli.base.warehouse.domain.Shelf</class>
     <class>eapli.base.warehouse.domain.Line</class>
     <class>eapli.base.warehouse.domain.Aisle</class>

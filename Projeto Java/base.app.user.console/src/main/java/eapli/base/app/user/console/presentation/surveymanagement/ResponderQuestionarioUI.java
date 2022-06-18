@@ -4,6 +4,7 @@ import eapli.base.ordermanagement.dto.OrderDTO;
 import eapli.base.surveymanagement.application.ResponderQuestionarioController;
 import eapli.base.surveymanagement.domain.Obligatoriness;
 import eapli.base.surveymanagement.domain.Questionnaire;
+import eapli.base.surveymanagement.domain.Type;
 import eapli.base.surveymanagement.dto.QuestionDTO;
 import eapli.base.surveymanagement.dto.QuestionnaireDTO;
 import eapli.base.surveymanagement.dto.SectionDTO;
@@ -41,16 +42,43 @@ public class ResponderQuestionarioUI extends AbstractUI {
 
             SurveyDTO surveyDTO = responderQuestionarioController.getSurvey(id);
 
-            System.out.println("--- Questionário ---\n");
-            System.out.printf("Id: %s Título: %s\n\n",surveyDTO.id,surveyDTO.titulo);
+            System.out.println("\n--- Questionário ---\n");
+            System.out.printf("Id: %s Título: %s\n",surveyDTO.id,surveyDTO.titulo);
 
             for (SectionDTO sectionDTO: surveyDTO.sections){
-                System.out.println("--- Secção ---");
-                System.out.printf("Id: %s\n",sectionDTO.sectionId);
+                System.out.printf("--- Secção %s ---\n",sectionDTO.sectionId);
                 System.out.printf("Título: %s\n",sectionDTO.titulo);
 
                 for (QuestionDTO questionDTO: sectionDTO.questions){
-                    System.out.println("--- Pergunta ---");
+                    System.out.printf("--- Pergunta %s ---\n",questionDTO.questionId);
+                    System.out.println(questionDTO.pergunta);
+                    System.out.printf("\nObrigatoriedade: %s\n",questionDTO.obligatoriness);
+                    System.out.printf("Tipo: %s\n\n",questionDTO.type);
+                    if (questionDTO.options != null){
+                        int size = questionDTO.options.size();
+                        for (int i=0; i<size;i++){
+                            System.out.printf("%s) %s;\n",i+1,questionDTO.options.get(i));
+                        }
+                    }
+                    System.out.println();
+                    System.out.println(questionDTO.extraInfo);
+                    System.out.println();
+                    if (questionDTO.type.equals(Type.SINGLE_CHOICE)){
+                        boolean valido;
+                        do{
+                            int option = Console.readInteger("Resposta:");
+                            if (option<1 || option>questionDTO.options.size()){
+                                valido=false;
+                                System.out.println("O valor introduzido não corresponde a nenhuma opção válida!");
+                            } else {
+                                valido = true;
+                                StringBuilder stringBuilder = new StringBuilder("Single-Choice "+option+"\n\nFIM");
+                                responderQuestionarioController.writeFile(surveyDTO.id,stringBuilder.toString());
+                                responderQuestionarioController.validateAnswer(authz.session().get().authenticatedUser().email().toString(),surveyDTO.id,sectionDTO.sectionId,questionDTO.questionId);
+                            }
+                        }while (!valido);
+
+                    }
                 }
 
             }

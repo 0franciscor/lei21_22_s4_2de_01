@@ -9,10 +9,15 @@ participant TcpOrderSrv as OrderServer
 participant ListQuestionnaireDTOService as serv <<application>>
 participant "Questionnaire" as Domain <<domain>>
 participant "QuestionnaireDTO" as DTO <<dto>>
+participant "SurveyDTO" as dto <<dto>>
+participant "SectionDTO" as sDTO <<dto>>
+participant "QuestionDTO" as qDTO <<dto>>
 participant "Client" as client <<domain>>
 participant PersistenceContext as Persistence <<persistence>>
 participant RepositoryFactory as Factory <<factory>>
 database ClientRepository as repository <<repository>>
+database SurveyRepository as rep <<repository>>
+database AnswerRepository as r <<repository>>
 
 
 
@@ -62,6 +67,39 @@ UI --> C : Mostra os questionários que existem por responder
 deactivate UI
 C -> UI : Seleciona o questionário que pretende responder
 activate UI
+UI -> Controller: getSurvey(id)
+activate Controller
+Controller -> Service: getSurvey(id)
+activate Service
+Service -> OrderServer: getSurvey(id)
+activate OrderServer
+OrderServer -> serv: getSurvey(surveyId)
+activate serv
+serv -> Persistence: repositories()
+activate Persistence
+Persistence -> Factory: create
+Persistence -> serv: factory
+deactivate Persistence
+serv -> Factory: surveys()
+activate Factory
+Factory -> rep: create
+Factory -> serv: surveyRepository
+deactivate Factory
+serv->rep:findByIdentifier()
+activate rep
+rep -->serv: survey
+deactivate rep
+serv -> Domain: toDto()
+activate Domain
+deactivate Domain
+serv --> OrderServer: surveyDto
+deactivate serv
+OrderServer --> Service: surveyDto
+deactivate OrderServer
+Service --> Controller: surveyDto
+deactivate Service
+Controller --> UI: surveyDto
+deactivate Controller
 UI --> C : Mostra a informação inicial do questionário
 loop enquanto existirem perguntas a serem feitas
 UI --> C : Mostra a pergunta do questionário

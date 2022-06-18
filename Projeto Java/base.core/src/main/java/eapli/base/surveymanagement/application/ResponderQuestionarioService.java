@@ -1,8 +1,7 @@
 package eapli.base.surveymanagement.application;
 
 import eapli.base.MessageUtils;
-import eapli.base.productmanagement.dto.ProductDTO;
-import eapli.base.shoppingcarmanagement.application.AddProductToShoppingCarService;
+import eapli.base.surveymanagement.domain.Answer;
 import eapli.base.surveymanagement.dto.QuestionnaireDTO;
 import eapli.base.surveymanagement.dto.SurveyDTO;
 
@@ -16,6 +15,8 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 public class ResponderQuestionarioService {
+
+
 
     private static class ClienteSocket {
         static final int SERVER_PORT=10000;
@@ -147,6 +148,11 @@ public class ResponderQuestionarioService {
             System.out.println(e.getMessage());
         }
         return surveyDTO;
+    }
+
+    public void saveAnswer(Answer answer) {
+
+
     }
 
 
