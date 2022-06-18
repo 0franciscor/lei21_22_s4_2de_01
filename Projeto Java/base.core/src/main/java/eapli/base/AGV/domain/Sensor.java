@@ -19,21 +19,18 @@ public class Sensor extends Thread{
 
     private int control; //0-ok, 1-para, 2-abranda
 
-    private final Thread moveAGV;
+    private boolean deactivate;
 
-    private Object object;
-
-    private Sensor(final AGV agv, final int orientation, final Thread moveAGV){
+    private Sensor(final AGV agv, final int orientation){
         this.agv = agv;
         this.orientation = orientation;
-        this.moveAGV = moveAGV;
-        this.object = new Object();
+        this.deactivate = false;
     }
-    public static List<Sensor> getSensors(final AGV agv, final Thread moveAGV){
+    public static List<Sensor> getSensors(final AGV agv){
         var sensorList = new ArrayList<Sensor>();
         for(int i = 0; i < 4; i++){
-            sensorList.add(new Sensor(agv, i, moveAGV));
-            sensorList.add(new Sensor(agv, i, moveAGV));
+            sensorList.add(new Sensor(agv, i));
+            sensorList.add(new Sensor(agv, i));
         }
         return sensorList;
     }
@@ -46,48 +43,48 @@ public class Sensor extends Thread{
     }
 
     public void run(){
-        synchronized (object) {
-            while (moveAGV.isAlive()) {
+        while (!deactivate) {
+            synchronized (this) {
                 updatePosicao(agv.getAgvPosition().getAgvPosition());
                 switch (orientation) {
                     case 0:
                         if (isValid(x - 1, y, warehouseMatrix) && warehouseMatrix[x - 1][y] == 2)
-                            control = 1;
-                        else if (isValid(x - 2, y, warehouseMatrix) && warehouseMatrix[x - 2][y] == 2)
                             control = 2;
+                        else if (isValid(x - 2, y, warehouseMatrix) && warehouseMatrix[x - 2][y] == 2)
+                            control = 1;
                         else
                             control = 0;
                         break;
                     case 1:
                         if (isValid(x, y + 1, warehouseMatrix) && warehouseMatrix[x][y + 1] == 2)
-                            control = 1;
-                        else if (isValid(x, y + 2, warehouseMatrix) && warehouseMatrix[x][y + 2] == 2)
                             control = 2;
+                        else if (isValid(x, y + 2, warehouseMatrix) && warehouseMatrix[x][y + 2] == 2)
+                            control = 1;
                         else
                             control = 0;
                         break;
                     case 2:
                         if (isValid(x + 1, y, warehouseMatrix) && warehouseMatrix[x + 1][y] == 2)
-                            control = 1;
-                        else if (isValid(x + 2, y, warehouseMatrix) && warehouseMatrix[x + 2][y] == 2)
                             control = 2;
+                        else if (isValid(x + 2, y, warehouseMatrix) && warehouseMatrix[x + 2][y] == 2)
+                            control = 1;
                         else
                             control = 0;
                         break;
                     case 3:
                         if (isValid(x, y - 1, warehouseMatrix) && warehouseMatrix[x][y - 1] == 2)
-                            control = 1;
-                        else if (isValid(x, y - 2, warehouseMatrix) && warehouseMatrix[x][y - 2] == 2)
                             control = 2;
+                        else if (isValid(x, y - 2, warehouseMatrix) && warehouseMatrix[x][y - 2] == 2)
+                            control = 1;
                         else
                             control = 0;
                         break;
                 }
 
                 try {
-                    object.wait();
+                    wait();
                 } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
+                    System.out.println("There was a problem related to the sensors");
                 }
                 control = 0;
             }
@@ -102,10 +99,13 @@ public class Sensor extends Thread{
         return control;
     }
 
-    public Object getObject(){
-        return object;
+    public void disableLock(){
+        synchronized (this) {
+            this.notify();
+        }
     }
 
-    public void deactivate() {
+    public void deactivate(){
+        deactivate = true;
     }
 }
