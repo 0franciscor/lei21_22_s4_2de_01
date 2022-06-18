@@ -1,24 +1,40 @@
 package eapli.base.AGV.modules;
 
 import eapli.base.infrastructure.persistence.PersistenceContext;
+import eapli.base.warehouse.domain.AGVDock;
+import eapli.base.warehouse.domain.Aisle;
 import eapli.base.warehouse.domain.WarehousePlant;
+import eapli.base.warehouse.repositories.AGVDockRepository;
+import eapli.base.warehouse.repositories.AisleRepository;
 import eapli.base.warehouse.repositories.WarehousePlantRepository;
 
 import java.util.*;
 
+
 public class WarehouseMovement{
 
     private final WarehousePlantRepository warehousePlantRepository = PersistenceContext.repositories().plant();
+    private final AisleRepository aisleRepository = PersistenceContext.repositories().aisle();
+    private final AGVDockRepository agvDockRepository = PersistenceContext.repositories().dock();
     private static WarehouseMovement warehouseMovement;
     private int[][] grid;
+    private int plant_lenght_sq;
+    private int plant_width_sq;
+
+    private static final int FREE = 0;
+    private static final int RESERVED = 1;
+    private static final int DOCK = 5;
 
 
     public WarehousePlant findById(String id) {
         return warehousePlantRepository.findById(id);
     }
-    private WarehouseMovement(){
+
+    public WarehouseMovement(){
         WarehousePlant plant = findById("1");
-        buildGrid(plant.getLength()/ plant.getSquare(), plant.getWidth()/ plant.getSquare());
+        this.plant_lenght_sq = plant.getLength()/ plant.getSquare();
+        this.plant_width_sq = plant.getWidth()/ plant.getSquare();
+        buildGrid(plant_lenght_sq,plant_width_sq);
     }
 
     public synchronized static WarehouseMovement getWarehouseMovement(){
@@ -35,7 +51,46 @@ public class WarehouseMovement{
         this.grid = new int[comprimento][largura];
         for(int i = 0; i < comprimento; i++)
             for(int j = 0; j < largura; j++)
-                this.grid[i][j] = 1;
+                this.grid[i][j] = FREE;
+        markObstacles();
+    }
+
+    private synchronized void markObstacles(){
+
+        // mark aisles
+        Iterable<Aisle> aisleList = aisleRepository.findAll();
+        ArrayList<Aisle> aisleArrayList = (ArrayList<Aisle>) aisleList;
+        for(Aisle a : aisleArrayList){
+            int beginL = a.getBegin().getBeginLSquare(), endL = a.getEnd().getEndLSquare(),
+                    beginW = a.getBegin().getBeginWSquare(), endW = a.getEnd().getEndWSquare();
+
+            if(beginW==endW){
+                for(int aux1 = beginL; aux1<=endL; aux1++){
+                    grid[aux1][beginW-1]=RESERVED;
+                }
+            }
+        }
+
+        // mark docks
+        Iterable<AGVDock> agvDockList = agvDockRepository.findAll();
+        ArrayList<AGVDock> agvDockArrayList = (ArrayList<AGVDock>) agvDockList;
+        for(AGVDock ad : agvDockArrayList){
+            int beginL = ad.getBegin().getBeginLSquare(), endL = ad.getEnd().getEndLSquare(),
+                    beginW = ad.getBegin().getBeginWSquare(), endW = ad.getEnd().getEndWSquare();
+
+            if(beginW==endW && beginL==endL){
+                grid[beginL-1][beginW-1]=DOCK;
+            }
+        }
+
+        // print matrix
+        for(int line=0; line< plant_lenght_sq; line++){
+            for(int row=0; row<plant_width_sq-1; row++){
+                System.out.print("["+line+"]["+row+"] = "+ grid[line][row] + " ");
+            }
+            System.out.println();
+        }
+
     }
 
     protected synchronized static Coordinate minDistance(int[][] grid, final int x, final int y, final int desiredX, final int desiredY) {
