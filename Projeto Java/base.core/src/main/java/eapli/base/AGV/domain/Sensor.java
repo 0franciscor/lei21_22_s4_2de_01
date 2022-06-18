@@ -106,6 +106,7 @@ public class Sensor extends Thread{
     }
 
     public void deactivate(){
+        disableLock();
         deactivate = true;
     }
 }
