@@ -42,6 +42,7 @@ public class MoveAGV extends Thread {
 
         if(coordinate == null) {
             System.out.println("There is no available Path");
+            speed = 0;
             return;
         }
 
@@ -52,6 +53,7 @@ public class MoveAGV extends Thread {
 
         if (x == desiredX && y == desiredY) {
             System.out.println("The AGV is already placed at the desired Location");
+            speed = 0;
             return;
         }
 
@@ -110,20 +112,15 @@ public class MoveAGV extends Thread {
                 speed = 0;
                 return;
             }
-
-            if(speed != -1) {
-                try {
+            try {
+                if(speed != -1)
                     sleep(speed);
-                } catch (InterruptedException e) {
-                    System.out.println("There was a problem regulating the AGV speed.");
-                }
-            } else{
-                try {
+                else {
                     sleep(3000);
-                } catch (InterruptedException e) {
-                    System.out.println("There was a problem regulating the AGV speed.");
+                    break;
                 }
-                break;
+            } catch (InterruptedException e) {
+                System.out.println("There was a problem regulating the AGV speed.");
             }
         }
     }
