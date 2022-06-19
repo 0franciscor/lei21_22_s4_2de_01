@@ -3,9 +3,6 @@
 autonumber
 
 participant WarehouseMovement as wm <<application>>
-participant agvManager as agvManager
-participant digitalTwin as digitalTwin
-participant GetAGVInfoRequest as infoRequest <<application>>
 participant RepositoryFactory as factory <<factory>>
 
 database WarehousePlantRepository as repository <<repository>>
@@ -17,6 +14,8 @@ database AGVDockRepository as agvrepository <<repository>>
 activate wm
 wm -> factory : repositories()
 activate factory
+factory -> repository : create
+factory -> repository : create
 factory -> repository : create
 deactivate factory
 wm -> repository : findById(id)
@@ -34,28 +33,7 @@ activate agvrepository
 deactivate agvrepository
 deactivate wm
 deactivate wm
-loop for each agv retrieved
-wm -> factory : findAll()
-activate factory
-deactivate factory
 
-wm -> agvManager : println(request)
-activate agvManager
-
-agvManager -> digitalTwin : callAGVInfoRequest(inputLine, tokens)
-activate digitalTwin
-
-digitalTwin -> infoRequest : getAGVsInformationForDashboard(agvId)
-activate infoRequest
-deactivate infoRequest
-
-deactivate digitalTwin
-
-deactivate agvManager
-
-
-
-end loop
 
  <-- wm : info about agv
  deactivate wm
