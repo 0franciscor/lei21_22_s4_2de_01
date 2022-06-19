@@ -24,7 +24,7 @@ public class ControlSystem extends Thread{
         moveAGV.start();
 
         try {
-            this.wait(1000); // regula a frequência de atualização do Control System
+            this.wait(100); // regula a frequência de atualização do Control System
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
