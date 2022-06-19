@@ -189,7 +189,7 @@ public class DigitalTwinProtocolServer {
     public DigitalTwinProtocolServer(final RequestMessageParser requestMessageParser, final AGV agv){
         this.parser = requestMessageParser;
         this.agv = agv;
-        agv.activateControlSystem();
+        this.agv.activateControlSystem();
     }
 
     /**

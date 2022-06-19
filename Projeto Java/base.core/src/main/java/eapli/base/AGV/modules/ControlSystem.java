@@ -23,7 +23,7 @@ public class ControlSystem extends Thread{
     @Override
     public void run(){
         var taskList = agv.getAgvTask();
-
+        
         synchronized (this) {
             for (var task : taskList) {
                 if (task.getStatus() == 1) {
