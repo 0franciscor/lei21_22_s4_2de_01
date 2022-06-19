@@ -144,7 +144,8 @@ public class WarehouseMovement{
     }
 
     protected synchronized void updateGrid(final int oldX, final int oldY, final int x, final int y){
-        grid[oldX][oldY] = 1;
+        if(grid[oldX][oldY] != DOCK)
+            grid[oldX][oldY] = 1;
         grid[x][y] = 2;
     }
 

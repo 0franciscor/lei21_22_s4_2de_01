@@ -29,6 +29,8 @@ public class AGVTask implements DomainEntity<Long>, AggregateRoot<Long> { //IMPL
 
     private int status;
 
+    private String taskLocation;
+
     public AGVTask(String description) {
         this.status = 0;
         this.description = description;
@@ -65,6 +67,10 @@ public class AGVTask implements DomainEntity<Long>, AggregateRoot<Long> { //IMPL
         return status;
     }
 
+    public String getLocation(){
+        return taskLocation;
+    }
+
     public void incrementVolume(Long volume){
         this.totalVolume += volume;
     }
@@ -75,6 +81,10 @@ public class AGVTask implements DomainEntity<Long>, AggregateRoot<Long> { //IMPL
 
     public void updateStatus(int status){
         this.status = status;
+    }
+
+    public void updateLocation(final String location){
+        this.taskLocation = location;
     }
 
     @Override

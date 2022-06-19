@@ -22,6 +22,7 @@ package daemon.digitaltwin.presentation;
 
 import digitaltwin.tcpprotocol.server.DigitalTwinProtocolRequest;
 import digitaltwin.tcpprotocol.server.RequestMessageParser;
+import eapli.base.AGV.domain.AGV;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -121,7 +122,6 @@ public class DigitalTwinProtocolServer {
             } catch (final IOException e) {
                 LOGGER.error(e);
             } finally {
-
                 try {
                     clientSocket.close();
                     LOGGER.debug("Closing client socket {}:{}", clientIP.getHostAddress(), clientSocket.getPort());
@@ -133,6 +133,8 @@ public class DigitalTwinProtocolServer {
             }
         }
     }
+
+
 
 
     /**
@@ -182,8 +184,12 @@ public class DigitalTwinProtocolServer {
 
     private final RequestMessageParser parser;
 
-    public DigitalTwinProtocolServer(final RequestMessageParser requestMessageParser){
+    private final AGV agv;
+
+    public DigitalTwinProtocolServer(final RequestMessageParser requestMessageParser, final AGV agv){
         this.parser = requestMessageParser;
+        this.agv = agv;
+        this.agv.activateControlSystem();
     }
 
     /**
