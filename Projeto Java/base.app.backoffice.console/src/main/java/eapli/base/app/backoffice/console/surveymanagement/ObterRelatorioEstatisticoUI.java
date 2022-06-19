@@ -66,18 +66,34 @@ public class ObterRelatorioEstatisticoUI extends AbstractUI {
                                 System.out.printf("Percentagem: %.2f\n",percentagemRespostas);
                             }
                         }
-                        if (question.getType().equals(Type.MULTIPLE_CHOICE)){
-                            System.out.println();
-                            System.out.println("Combinações:");
-                            System.out.println();
-                            List<Long> combinacao;
-                            for (int i = 1; i < ops.size(); i++){
-                                combinacao = new ArrayList<>();
+                        if (question.getType().equals(Type.SINGLE_CHOICE1)|| question.getType().equals(Type.MULTIPLE_CHOICE1)){
+                            if (question.getType().equals(Type.MULTIPLE_CHOICE1)){
+                                System.out.println("Para cada alternativa:");
+                                System.out.println();
+                            }
+                            int aux = 1;
+                            int num;
+                            for (Long op : ops.keySet()){
+                                if (aux==ops.keySet().size()){
+                                    num = obterRelatorioEstatisticoController.obterQuantidadeRespostasOutra(question.getQuestionId(), op,id);
 
-
+                                } else {
+                                    num = obterRelatorioEstatisticoController.obterQuantidadeRespostasOpcao(question.getQuestionId(), op,id);
+                                    aux++;
+                                }
+                                percentagemRespostas = ((double) num/(double) numRespostas) * 100;
+                                System.out.println("Opção " + op);
+                                System.out.printf("Percentagem: %.2f\n",percentagemRespostas);
                             }
                         }
-                    }
+                        if (question.getType().equals(Type.FREE_TEXT)){
+                            int quantiRespostas = obterRelatorioEstatisticoController.obterQuantClientesRespondeuPergunta(question.getQuestionId(),id);
+                            System.out.println("Quantidade de clientes que respondeu: " + quantiRespostas);
+                        } else if (question.getType().equals(Type.NUMERIC)){
+                            double media = obterRelatorioEstatisticoController.obterRespostaMedia(question.getQuestionId(),id);
+                            System.out.printf("Média: %.2f\n",media);
+                        }
+
                 }
 
 
