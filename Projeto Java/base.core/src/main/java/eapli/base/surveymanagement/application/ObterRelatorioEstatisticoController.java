@@ -62,7 +62,7 @@ public class ObterRelatorioEstatisticoController {
     }
 
 
-    public int getNumberAnswerClientQuestion(Long questionId, String surveyId){
+    public int obterQuantClientesRespondeuPergunta(Long questionId, String surveyId){
         int num = 0;
         for (Answer answer : answerRepository.findAll()){
             if (answer.getIdSurvey().toString().equals(surveyId)){
