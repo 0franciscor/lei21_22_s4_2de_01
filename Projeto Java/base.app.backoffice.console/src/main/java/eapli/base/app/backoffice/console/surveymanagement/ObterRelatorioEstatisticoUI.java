@@ -103,6 +103,16 @@ public class ObterRelatorioEstatisticoUI extends AbstractUI {
                                     System.out.printf("Percentagem: %.2f\n",perc);
                                 }
                             }
+                        }else if (question.getType().equals(Type.SCALING_OPTIONS)){
+                            int index = 0;
+                            for (Long op : question.getOptions().keySet()){
+                                System.out.println("--- " + op + " ---");
+                                for (String scale : question.getEscala()){
+                                    int num =  obterRelatorioEstatisticoController.obterNumeroEscalaOpcao(question.getQuestionId(), scale, index,id);
+                                    System.out.println("Escala " + scale + ": " + num);
+                                }
+                                index++;
+                            }
                         }
 
                 }
