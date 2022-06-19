@@ -17,7 +17,7 @@ public class ResponderQuestionarioService {
     private static class ClienteSocket {
         static final int SERVER_PORT = 10000;
         static final String KEYSTORE_PASS = "forgotten";
-        private static final String TRUSTED_STORE = "C:\\Users\\arian\\OneDrive - Instituto Superior de Engenharia do Porto\\Desktop\\lei21_22_s4_2de_01\\Projeto Java\\certificates\\clientOrder_J.jks";
+        private static final String TRUSTED_STORE = "Projeto Java/base.app.orderServer/src/main/resources/certificates/clientOrder_J.jks";
 
         private SSLSocket sock;
         private InetAddress serverIP;

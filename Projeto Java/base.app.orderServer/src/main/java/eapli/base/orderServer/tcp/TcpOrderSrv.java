@@ -41,7 +41,7 @@ import static eapli.base.MessageUtils.writeMessage;
 public class TcpOrderSrv {
 
     static final int SERVER_PORT=10000;
-    static final String TRUSTED_STORE= "C:\\Users\\arian\\OneDrive - Instituto Superior de Engenharia do Porto\\Desktop\\lei21_22_s4_2de_01\\Projeto Java\\certificates\\serverOrder_J.jks";
+    static final String TRUSTED_STORE= "Projeto Java/base.app.orderServer/src/main/resources/certificates/serverOrder_J.jks";
     static final String KEYSTORE_PASS="forgotten";
 
     /*
