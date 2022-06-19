@@ -20,7 +20,6 @@
  */
 package eapli.base.infrastructure.persistence;
 
-import eapli.framework.domain.repositories.TransactionalContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
