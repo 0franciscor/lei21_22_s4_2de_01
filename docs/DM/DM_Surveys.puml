@@ -5,6 +5,10 @@ hide empty attributes
 skinparam classBackgroundColor beige
 skinparam ArrowColor #222222
 
+package "<<aggregate>> Answer" {
+    entity Answer
+}
+
 package "<<aggregate>> Questionnaire" {
     entity Questionnaire
     class Identifier
@@ -17,7 +21,6 @@ package "<<aggregate>> Questionnaire" {
     class Obligatoriness
     class MandatoryCondition
     class Type
-    entity Answer
 }
 
 entity Questionnaire <<entity>> <<root>> {
@@ -63,8 +66,7 @@ Question ---> "1" MandatoryCondition: dependent
 Question --> "1" Type: associated
 Question --> "2..3" Message: associated
 Question ---> "1" Obligatoriness: characterized by
-
-Question --> "1" Answer : has
+Question--> "*" Answer : has
 package "<<aggregate>> Notification" {
     entity Notification
 }
@@ -86,6 +88,6 @@ entity Client <<entity>> <<root>> {
 
 Client --> "1..*" Notification : receive
 Client --> "1..*" Questionnaire : answers
-
+Client --> "*" Answer: provides
 
 @enduml

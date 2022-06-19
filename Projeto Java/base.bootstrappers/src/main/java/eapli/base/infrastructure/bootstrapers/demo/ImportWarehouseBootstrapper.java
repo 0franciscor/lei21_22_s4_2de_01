@@ -13,6 +13,6 @@ public class ImportWarehouseBootstrapper extends BaseDemoBootstrapper implements
 
     private boolean importPlant(){
         JsonImport jsonImport = new JsonImport();
-        return jsonImport.importJson("warehouse1.json");
+        return jsonImport.importJson("Projeto Java/warehouse1.json");
     }
 }

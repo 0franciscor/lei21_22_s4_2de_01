@@ -4,7 +4,9 @@ import com.ibm.icu.impl.Pair;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -50,6 +52,9 @@ public class Question implements Serializable {
     private Long seccaoDependente;
 
     @ElementCollection
+    private List<String> escala = new ArrayList<>();
+
+    @ElementCollection
     @MapKeyColumn(name = "id")
     @Column(name = "option")
     private Map<Long,String> options =new HashMap<>();
@@ -82,9 +87,46 @@ public class Question implements Serializable {
         options.put(id,opcao);
     }
 
+    public void addEscala(String escala){
+        this.escala.add(escala);
+    }
+
     public void modifyDespendencias(Long sectionId, Long questionId){
         this.seccaoDependente=sectionId;
         this.questaoDependente=questionId;
     }
+
+    public Long getQuestionId(){
+        return questionId;
+    }
+
+    public Message getPergunta(){
+        return pergunta;
+    }
+
+    public Obligatoriness getObligatoriness(){
+        return obligatoriness;
+    }
+
+    public Message getExtraInfo(){
+        return extraInfo;
+    }
+
+    public Type getType(){
+        return type;
+    }
+
+    public Map<Long,String> getOptions(){
+        return options;
+    }
+
+    public Long getQuestaoDependente(){
+        return questaoDependente;
+    }
+
+    public Long getSeccaoDependente(){
+        return seccaoDependente;
+    }
+
 
 }

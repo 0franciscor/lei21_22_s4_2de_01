@@ -33,6 +33,7 @@ import eapli.base.ordermanagement.repository.OrderRepository;
 import eapli.base.productmanagement.repository.ProductRepository;
 import eapli.base.shoppingcarmanagement.repository.ShopCarItemRepository;
 import eapli.base.shoppingcarmanagement.repository.ShoppingCarRepository;
+import eapli.base.surveymanagement.repository.AnswerRepository;
 import eapli.base.surveymanagement.repository.SurveyRepository;
 import eapli.base.warehouse.repositories.*;
 import eapli.framework.domain.repositories.TransactionalContext;
@@ -74,6 +75,11 @@ public class InMemoryRepositoryFactory implements RepositoryFactory{
     @Override
     public ClientRepository client() {
         return new InMemoryClientRepository();
+    }
+
+    @Override
+    public AnswerRepository answers() {
+        return new InMemoryAnswerRepository();
     }
 
     @Override

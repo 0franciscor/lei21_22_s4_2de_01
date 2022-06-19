@@ -119,6 +119,9 @@ public class Client implements AggregateRoot<Long>, Serializable {
         // new Notification(this.email.toString(),"Questionário por Responder","Gostaríamos que disponibiliza-se 15 minutos do seu tempo para responder ao inquérito que lhe enviamos!\n O inquérito encontra-se na sua página pessoal da aplicação!\nCom os melhores cumprimentos!");
     }
 
+    public void removeUnansweredQuestionnaire(Identifier questionnaire){
+
+    }
     public List<Survey> getUnansweredQuestionnaires(){
         return this.unansweredQuestionnaires;
     }

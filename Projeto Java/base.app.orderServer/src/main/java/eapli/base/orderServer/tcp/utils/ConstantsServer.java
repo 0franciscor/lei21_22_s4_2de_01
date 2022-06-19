@@ -22,6 +22,11 @@ public class ConstantsServer {
 
     public static int QUESTIONNAIRES = 7;
 
+    public static int SHOW_SURVEY = 8;
+
+    public static int ANSWER = 9;
+
+    public static int ATUALIZAR_CLIENTE = 11;
 
 
 }

@@ -49,7 +49,18 @@ public class ClientUserBootstrapper implements Action {
     public boolean execute() {
         signupAndApprove(TestDataConstants.USER_TEST1, "Password1", "John", "Smith",
                 "john@smith.com", TestDataConstants.USER_TEST1);
-        signupAndApprove("isep959", "Password1", "Rita", "Smith", "arianasobral26@outlook.pt", "isep959");
+        signupAndApprove("isep959", "Password1", "Carlota", "Smith", "arianasobral26@outlook.pt", "isep959");
+        signupAndApprove("isep9", "Password1", "Manuela", "Smith", "manuela@isep.ipp.pt", "isep9");
+        signupAndApprove("isep95", "Password1", "Francisco", "Smith", "francisco@isep.ipp.pt", "isep95");
+        signupAndApprove("isep99", "Password1", "Pedro", "Smith", "pedro@isep.ipp.pt", "isep99");
+        signupAndApprove("isep59", "Password1", "Rita", "Smith", "rita@isep.ipp.pt", "isep59");
+        signupAndApprove("isep5", "Password1", "Diogo", "Smith", "locenzo@isep.ipp.pt", "isep5");
+        signupAndApprove("isep", "Password1", "Ines", "Smith", "ines@isep.ipp.pt", "isep");
+        signupAndApprove("isep0", "Password1", "Luis", "Smith", "busto@isep.ipp.pt", "isep0");
+        signupAndApprove("isep1", "Password1", "Daniel", "Smith", "leitao@isep.ipp.pt", "isep1");
+        signupAndApprove("isep2", "Password1", "Diogo", "Smith", "diogo@isep.ipp.pt", "isep2");
+        signupAndApprove("isep22", "Password1", "Joao Pedro", "Smith", "joaoPedro@gmail.com", "isep22");
+        signupAndApprove("isep3", "Password1", "Tiago", "Smith", "tiago@isep.ipp.pt", "isep3");
         return true;
     }
 

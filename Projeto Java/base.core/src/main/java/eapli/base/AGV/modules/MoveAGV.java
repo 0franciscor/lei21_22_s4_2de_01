@@ -13,26 +13,35 @@ public class MoveAGV extends Thread {
 
     private static final int ACCEPTED_LEVEL_BATTERY = 25;
 
-    private int x;
+    private int desiredX;
 
-    private int y;
+    private int desiredY;
 
     private int speed;
 
-    public MoveAGV(final AGV agv, final WarehouseMovement whMovement) {
+    private final ControlSystem controlSystem;
+
+    public MoveAGV(final AGV agv, final WarehouseMovement whMovement, final ControlSystem controlSystem) {
         this.agv = agv;
         this.whMovement = whMovement;
-        this.speed = -1;
+        this.speed = 0;
+        this.controlSystem = controlSystem;
     }
 
     public void run() {
-        agv.activateSensors(this);
-        while(speed == -1)
-            moveAGV(x, y);
+        agv.activateSensors();
+        do {
+            moveAGV();
+        } while(speed == -1);
+        var dock = agv.getAgvDock();
+        setCoordinates(dock.getBegin().getBeginLSquare()-1, dock.getBegin().getBeginWSquare()-1);
+        moveAGV();
         agv.deactivateSensors();
+        controlSystem.disableLock();
     }
 
-    private void moveAGV(final int desiredX, final int desiredY) {
+    private void moveAGV() {
+
         var array = agv.getPosition().getAgvPosition().split(",");
         var x = Integer.parseInt(array[0]);
         var y = Integer.parseInt(array[1]);
@@ -40,19 +49,20 @@ public class MoveAGV extends Thread {
 
         if(coordinate == null) {
             System.out.println("There is no available Path");
+            speed = 0;
             return;
         }
 
-        if (!checkBaterry()){
+        /*if (!checkBaterry()){
             System.out.println("There is no sufficient battery to perform the trip");
             return;
-        }
+        }*/
 
         if (x == desiredX && y == desiredY) {
             System.out.println("The AGV is already placed at the desired Location");
+            speed = 0;
             return;
         }
-
 
         List<Coordinate> pathList = WarehouseMovement.backTrackPath(coordinate);
         for (var path : pathList) {
@@ -61,7 +71,7 @@ public class MoveAGV extends Thread {
             y = Integer.parseInt(array[1]);
             updateGrid(path, x, y);
 
-            if (!checkBaterry()){
+            /*if (!checkBaterry()){
                 int coordinateX = agv.getAgvDock().getBegin().getBeginLSquare();
                 int coordinateY = agv.getAgvDock().getBegin().getBeginWSquare();
 
@@ -88,7 +98,7 @@ public class MoveAGV extends Thread {
                             System.out.println("There was a problem regulating the AGV speed.");
                         }
                     } else{
-                        moveAGV(coordinateX, coordinateY);
+                        moveAGV();
                         break;
                     }
                 }
@@ -97,30 +107,34 @@ public class MoveAGV extends Thread {
 
                 break;
 
-            }
+            }*/
 
             updateAGV(path);
-
             speed = getAction();
-            changeSpeed(speed/1000);
+            changeSpeed();
 
             whMovement.printMatrix();
 
-            if(speed != -1) {
-                try {
+            if(path.getRow() == desiredX && path.getCol() == desiredY) {
+                speed = 0;
+                return;
+            }
+            try {
+                if(speed != -1)
                     sleep(speed);
-                } catch (InterruptedException e) {
-                    System.out.println("There was a problem regulating the AGV speed.");
+                else {
+                    sleep(3000);
+                    break;
                 }
-            } else{
-                break;
+            } catch (InterruptedException e) {
+                System.out.println("There was a problem regulating the AGV speed.");
             }
         }
     }
 
-    protected void setCoordinates(final int x, final int y) {
-        this.x = x;
-        this.y = y;
+    protected void setCoordinates(final int desiredX, final int desiredY) {
+        this.desiredX = desiredX;
+        this.desiredY = desiredY;
     }
 
     private void updateAGV(final Coordinate path) {
@@ -152,7 +166,7 @@ public class MoveAGV extends Thread {
     }
 
     private int getAction(){
-        int best = -1, control = 0;
+        int best = -1, control;
 
         var sensorList = agv.getSensors();
 
@@ -160,13 +174,12 @@ public class MoveAGV extends Thread {
             control = sensor.getControl();
             if(best < control)
                 best = control;
+            sensor.disableLock();
         }
 
-        //sensorList.get(0).disableLock();
-
-        if(control == 0)
+        if(best == 0)
             return 1000;
-        else if(control == 2)
+        else if(best == 1)
             return 2000;
         else
             return -1;
@@ -176,8 +189,8 @@ public class MoveAGV extends Thread {
         return agv.getBattery().getBatteryLevel() > ACCEPTED_LEVEL_BATTERY;
     }
 
-    private void changeSpeed(int speed){
-        agv.setSpeed(speed);
+    private void changeSpeed(){
+        agv.setSpeed(speed/1000);
         updateDatabase();
     }
 }
