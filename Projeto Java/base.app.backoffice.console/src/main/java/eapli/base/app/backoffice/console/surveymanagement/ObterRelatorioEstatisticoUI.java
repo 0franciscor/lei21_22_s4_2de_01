@@ -73,7 +73,7 @@ public class ObterRelatorioEstatisticoUI extends AbstractUI {
                             List<Long> combinacao;
                             for (int i = 1; i < ops.size(); i++){
                                 combinacao = new ArrayList<>();
-                                
+
 
                             }
                         }

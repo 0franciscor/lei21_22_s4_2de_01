@@ -152,7 +152,7 @@ public class Questionnaire implements AggregateRoot<Long>, Serializable, DTOable
         for (Section section: sections){
             List<QuestionDTO> questionDTOS = new ArrayList<>();
             for (Question question: section.getQuestions()){
-                QuestionDTO questionDTO = new QuestionDTO(question.getQuestionId(),question.getPergunta().toString(),question.getObligatoriness(),question.getExtraInfo().toString(),question.getType(),question.getOptions(),question.getSeccaoDependente(),question.getQuestaoDependente());
+                QuestionDTO questionDTO = new QuestionDTO(question.getQuestionId(),question.getPergunta().toString(),question.getObligatoriness(),question.getExtraInfo().toString(),question.getType(),question.getOptions(),question.getSeccaoDependente(),question.getQuestaoDependente(),question.getEscala());
                 questionDTOS.add(questionDTO);
             }
             SectionDTO sectionDTO = new SectionDTO(section.sectionId(),section.getTitulo().toString(),section.getObligatoriness(),questionDTOS);

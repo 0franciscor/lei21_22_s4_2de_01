@@ -23,21 +23,56 @@ public class AnswersVisitor extends AnswerBaseVisitor<Answer> {
             answer.modifyType("Free-Text");
             visit(ctx.frase());
             answer.addAnswer(aux);
-        }
-        else if (ctx.NUMERIC() != null){
+        } else if (ctx.NUMERIC() != null){
             answer.modifyType("Numeric");
             answer.addAnswer(ctx.NUMERO().toString());
-        }
-        else{
-            if (ctx.SINGLE_CHOICE() != null){
-                answer.modifyType("Single-Choice");
+        } else if (ctx.SINGLE_CHOICE1() != null){
+            answer.modifyType("Single-Choice with input value");
+            if (ctx.frase() != null){
+                visit(ctx.frase());
+                answer.addAnswer(aux);
+            } else {
+                for (int i = 0; i < ctx.opcao().size(); i++){
+                    visit(ctx.opcao(i));
+                    answer.addAnswer(aux);
+                }
             }
+        } else if (ctx.MULTIPLE_CHOICE() != null){
+            answer.modifyType("Multiple-Choice");
+
             for (int i = 0; i < ctx.opcao().size(); i++){
                 visit(ctx.opcao(i));
                 answer.addAnswer(aux);
             }
-            if (ctx.frase() != null){
+
+
+        } else if (ctx.SINGLE_CHOICE() != null) {
+
+                answer.modifyType("Single-Choice");
+
+                for (int i = 0; i < ctx.opcao().size(); i++) {
+                    visit(ctx.opcao(i));
+                    answer.addAnswer(aux);
+                }
+
+
+        } else if (ctx.MULTIPLE_CHOICE1() != null){
+            answer.modifyType("Multiple-Choice with input value");
+
+            for (int i = 0; i < ctx.opcao().size(); i++) {
+                visit(ctx.opcao(i));
+                answer.addAnswer(aux);
+            }
+            if (ctx.frase() != null) {
                 visit(ctx.frase());
+                answer.addAnswer(aux);
+            }
+        } else if (ctx.SCALING_OPTIONS() != null){
+
+            answer.modifyType("Scaling Options");
+
+            for (int i = 0; i < ctx.opcao().size(); i++) {
+                visit(ctx.opcao(i));
                 answer.addAnswer(aux);
             }
         }

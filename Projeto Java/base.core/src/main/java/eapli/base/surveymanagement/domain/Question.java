@@ -91,6 +91,10 @@ public class Question implements Serializable {
         this.escala.add(escala);
     }
 
+    public List<String> getEscala() {
+        return this.escala;
+    }
+
     public void modifyDespendencias(Long sectionId, Long questionId){
         this.seccaoDependente=sectionId;
         this.questaoDependente=questionId;

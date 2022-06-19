@@ -128,6 +128,91 @@ public class ResponderQuestionarioUI extends AbstractUI {
                             stringBuilder.append("\nFIM");
                             responderQuestionarioController.writeFile(surveyDTO.id,stringBuilder.toString());
                             responderQuestionarioController.validateAnswer(authz.session().get().authenticatedUser().email().toString(),surveyDTO.id,sectionDTO.sectionId,questionDTO.questionId);
+                        } else if (questionDTO.type.equals(Type.SINGLE_CHOICE1)){
+                            boolean valido;
+                            do{
+                                int option = Console.readInteger("Resposta:");
+                                if (option<1 || option>questionDTO.options.size()){
+                                    valido=false;
+                                    System.out.println("O valor introduzido não corresponde a nenhuma opção válida!");
+                                } else {
+                                    if (option==questionDTO.options.size()){
+                                        String resp = Console.readLine("Other:");
+                                        valido = true;
+                                        StringBuilder stringBuilder = new StringBuilder("Single-Choice with input value "+resp+"\n\nFIM");
+                                        responderQuestionarioController.writeFile(surveyDTO.id,stringBuilder.toString());
+                                        responderQuestionarioController.validateAnswer(authz.session().get().authenticatedUser().email().toString(),surveyDTO.id,sectionDTO.sectionId,questionDTO.questionId);
+                                    } else {
+                                        valido = true;
+                                        StringBuilder stringBuilder = new StringBuilder("Single-Choice with input value "+option+"\n\nFIM");
+                                        responderQuestionarioController.writeFile(surveyDTO.id,stringBuilder.toString());
+                                        responderQuestionarioController.validateAnswer(authz.session().get().authenticatedUser().email().toString(),surveyDTO.id,sectionDTO.sectionId,questionDTO.questionId);
+                                    }
+
+                                }
+                            }while (!valido);
+                        } else if (questionDTO.type.equals(Type.MULTIPLE_CHOICE1)) {
+                            List<Integer> respostas = new ArrayList<>();
+                            String resp=null;
+                            boolean valido;
+                            boolean mais = true;
+                            do {
+                                do {
+                                    int option = Console.readInteger("Resposta:");
+                                    if (option < 1 || option > questionDTO.options.size()) {
+                                        valido = false;
+                                        System.out.println("O valor introduzido não corresponde a nenhuma opção válida!");
+                                    } else {
+                                        valido = true;
+                                        if (option==questionDTO.options.size()){
+                                            resp = Console.readLine("Other:");
+                                        }else {
+                                            respostas.add(option);
+                                        }
+                                        if (respostas.size() < questionDTO.options.size() - 1) {
+                                            String opt = Console.readLine("Deseja adicionar mais alguma resposta? (s|n)");
+                                            if (opt.equals("n")) {
+                                                mais = false;
+                                            }
+                                        }
+                                    }
+                                } while (!valido);
+                            } while (mais);
+
+                            StringBuilder stringBuilder = new StringBuilder("Multiple-Choice with input value ");
+                            for (Integer integer : respostas) {
+                                stringBuilder.append(integer + "\n");
+                            }
+                            if(resp!=null){
+                                stringBuilder.append(resp + "\n");
+                            }
+                            stringBuilder.append("\nFIM");
+                            responderQuestionarioController.writeFile(surveyDTO.id, stringBuilder.toString());
+                            responderQuestionarioController.validateAnswer(authz.session().get().authenticatedUser().email().toString(), surveyDTO.id, sectionDTO.sectionId, questionDTO.questionId);
+                        } else if (questionDTO.type.equals(Type.SCALING_OPTIONS)){
+                            System.out.println("Escala:");
+                            System.out.println("Strongly Agree");
+                            System.out.println("Agree");
+                            System.out.println("Neutral");
+                            System.out.println("Disagree");
+                            System.out.println("Strongly disagree");
+                            /*
+                            for (String escala: questionDTO.escala){
+                                System.out.println(escala);
+                            }
+                             */
+                            List<String> respostas = new ArrayList<>();
+                            for (int i=1;i<=questionDTO.options.size();i++){
+                                String resp = Console.readLine(i+":");
+                                respostas.add(resp);
+                            }
+                            StringBuilder stringBuilder = new StringBuilder("Scaling Options ");
+                            for (String s : respostas) {
+                                stringBuilder.append(s + "\n");
+                            }
+                            stringBuilder.append("\nFIM");
+                            responderQuestionarioController.writeFile(surveyDTO.id, stringBuilder.toString());
+                            responderQuestionarioController.validateAnswer(authz.session().get().authenticatedUser().email().toString(), surveyDTO.id, sectionDTO.sectionId, questionDTO.questionId);
                         }
                     }
                 }

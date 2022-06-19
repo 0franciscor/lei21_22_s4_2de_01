@@ -27,7 +27,9 @@ public class QuestionDTO implements Serializable {
 
     public List<String> options= new ArrayList<>();
 
-    public QuestionDTO(final Long questionId,final String pergunta,final Obligatoriness obligatoriness,final String extraInfo,final Type type,Map<Long,String> options,Long seccaoDependente,Long questaoDependente){
+    public List<String> escala = new ArrayList<>();
+
+    public QuestionDTO(final Long questionId,final String pergunta,final Obligatoriness obligatoriness,final String extraInfo,final Type type,Map<Long,String> options,Long seccaoDependente,Long questaoDependente,List<String> escala){
         this.questionId=questionId;
         this.pergunta=pergunta;
         this.obligatoriness=obligatoriness;
@@ -38,6 +40,9 @@ public class QuestionDTO implements Serializable {
         }
         this.questaoDependente=questaoDependente;
         this.seccaoDependente=seccaoDependente;
+        for (String esc: escala){
+            this.escala.add(esc);
+        }
     }
 
 
