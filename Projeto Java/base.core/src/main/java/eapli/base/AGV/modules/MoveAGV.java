@@ -11,7 +11,7 @@ public class MoveAGV extends Thread {
 
     private final WarehouseMovement whMovement;
 
-    private static final int ACCEPTED_LEVEL_BATTERY = 25;
+    private static final int ACCEPTED_LEVEL_BATTERY = 38;
 
     private int desiredX;
 
@@ -36,6 +36,8 @@ public class MoveAGV extends Thread {
         var dock = agv.getAgvDock();
         setCoordinates(dock.getBegin().getBeginLSquare()-1, dock.getBegin().getBeginWSquare()-1);
         moveAGV();
+        changeAGVStatus();
+        chargeAGV();
         agv.deactivateSensors();
         controlSystem.disableLock();
     }
@@ -53,10 +55,11 @@ public class MoveAGV extends Thread {
             return;
         }
 
-        /*if (!checkBaterry()){
+        if (!checkBattery()){
             System.out.println("There is no sufficient battery to perform the trip");
+            speed = 0;
             return;
-        }*/
+        }
 
         if (x == desiredX && y == desiredY) {
             System.out.println("The AGV is already placed at the desired Location");
@@ -71,43 +74,11 @@ public class MoveAGV extends Thread {
             y = Integer.parseInt(array[1]);
             updateGrid(path, x, y);
 
-            /*if (!checkBaterry()){
-                int coordinateX = agv.getAgvDock().getBegin().getBeginLSquare();
-                int coordinateY = agv.getAgvDock().getBegin().getBeginWSquare();
-
-                coordinate = WarehouseMovement.minDistance(whMovement.getGrid(), x, y, coordinateX, coordinateY);
-                pathList = WarehouseMovement.backTrackPath(coordinate);
-
-                for (var pathAux : pathList){
-                    array = agv.getPosition().getAgvPosition().split(",");
-                    x = Integer.parseInt(array[0]);
-                    y = Integer.parseInt(array[1]);
-
-                    updateGrid(pathAux, x, y);
-
-                    updateAGV(pathAux);
-                    speed = getAction();
-                    changeSpeed(speed/1000);
-
-                    whMovement.printMatrix();
-
-                    if(speed != -1) {
-                        try {
-                            sleep(speed);
-                        } catch (InterruptedException e) {
-                            System.out.println("There was a problem regulating the AGV speed.");
-                        }
-                    } else{
-                        moveAGV();
-                        break;
-                    }
-                }
-                changeAGVStatus();
-                chargeAGV();
-
-                break;
-
-            }*/
+            if (!checkBattery()){
+                System.out.println("There is no sufficient battery to perform the trip");
+                speed = 0;
+                return;
+            }
 
             updateAGV(path);
             speed = getAction();
@@ -160,9 +131,9 @@ public class MoveAGV extends Thread {
     }
 
     private void chargeAGV(){
+        agv.setSpeed(speed);
         agv.getBattery().chargeBattery();
         updateDatabase();
-
     }
 
     private int getAction(){
@@ -185,7 +156,7 @@ public class MoveAGV extends Thread {
             return -1;
     }
 
-    private boolean checkBaterry(){
+    private boolean checkBattery(){
         return agv.getBattery().getBatteryLevel() > ACCEPTED_LEVEL_BATTERY;
     }
 

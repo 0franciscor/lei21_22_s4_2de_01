@@ -24,14 +24,11 @@ public class AGVBattery implements ValueObject {
 
     public void decresyBatteryLevel(int decrements){
         if (this.battery >= decrements){
-            this.battery -= decrements;
+            battery -= decrements;
         }
-
-        this.battery = 0;
     }
 
     public void chargeBattery(){
-
         this.battery = 100;
 
     }
