@@ -75,6 +75,13 @@ public class AnswersVisitor extends AnswerBaseVisitor<Answer> {
                 visit(ctx.opcao(i));
                 answer.addAnswer(aux);
             }
+        } else {
+            answer.modifyType("Sorting Options");
+
+            for (int i = 0; i < ctx.opcao().size(); i++) {
+                visit(ctx.opcao(i));
+                answer.addAnswer(aux);
+            }
         }
 
         return answer;

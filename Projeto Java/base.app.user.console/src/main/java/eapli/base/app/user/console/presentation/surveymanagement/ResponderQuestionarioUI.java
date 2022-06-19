@@ -213,6 +213,19 @@ public class ResponderQuestionarioUI extends AbstractUI {
                             stringBuilder.append("\nFIM");
                             responderQuestionarioController.writeFile(surveyDTO.id, stringBuilder.toString());
                             responderQuestionarioController.validateAnswer(authz.session().get().authenticatedUser().email().toString(), surveyDTO.id, sectionDTO.sectionId, questionDTO.questionId);
+                        } else {
+                            List<String> respostas = new ArrayList<>();
+                            for (int i=1;i<=questionDTO.options.size();i++){
+                                String resp = Console.readLine("Preferência "+i+":");
+                                respostas.add(resp);
+                            }
+                            StringBuilder stringBuilder = new StringBuilder("Sorting Options ");
+                            for (String s : respostas) {
+                                stringBuilder.append(s + "\n");
+                            }
+                            stringBuilder.append("\nFIM");
+                            responderQuestionarioController.writeFile(surveyDTO.id, stringBuilder.toString());
+                            responderQuestionarioController.validateAnswer(authz.session().get().authenticatedUser().email().toString(), surveyDTO.id, sectionDTO.sectionId, questionDTO.questionId);
                         }
                     }
                 }
