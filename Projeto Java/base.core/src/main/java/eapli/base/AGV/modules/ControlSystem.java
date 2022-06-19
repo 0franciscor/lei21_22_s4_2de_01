@@ -6,7 +6,7 @@ import eapli.base.AGV.domain.AGVTask;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ControlSystem extends Thread{
+public class ControlSystem extends Thread {
 
     private final Thread csThread;
 
@@ -14,37 +14,38 @@ public class ControlSystem extends Thread{
 
     private final AGV agv;
 
-    public ControlSystem(final AGV agv){
+    public ControlSystem(final AGV agv) {
         csThread = new Thread(this);
         this.agv = agv;
         this.moveAGV = new MoveAGV(agv, WarehouseMovement.getWarehouseMovement(), this);
     }
 
-    public Thread getControlSystemThread(){
+    public Thread getControlSystemThread() {
         return csThread;
     }
 
     @Override
-    public void run(){
+    public void run() {
         var taskList = agv.getAgvTask();
         List<AGVTask> oldList = new ArrayList<>();
 
-        while(true){
+        while (true) {
             taskList = agv.getAgvTask();
-            if(oldList != taskList)
+            if (oldList != taskList)
                 taskService(taskList);
             oldList = taskList;
-            try{
+            try {
                 sleep(100);
-            } catch (Exception e){
+            } catch (Exception e) {
                 System.out.println("There was an error when refreshing the Control System.");
             }
 
-        }
+            //moveAGV.setCoordinates(4,0);
 
+        }
     }
 
-    private void taskService(List<AGVTask> taskList){
+    private void taskService(List<AGVTask> taskList) {
         for (var task : taskList) {
             synchronized (this) {
                 if (task.getStatus() == 1) {
@@ -61,7 +62,7 @@ public class ControlSystem extends Thread{
         }
     }
 
-    public void disableLock(){
+    public void disableLock() {
         synchronized (this) {
             notify();
         }
