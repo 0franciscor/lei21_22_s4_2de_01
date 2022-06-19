@@ -73,4 +73,39 @@ public class ObterRelatorioEstatisticoController {
         }
         return num;
     }
+
+    public double obterRespostaMedia(Long questionId, String id) {
+        double num = 0;
+        double soma=0;
+        for (Answer answer : answerRepository.findAll()){
+            if (answer.getIdSurvey().toString().equals(id)){
+                if (answer.getIdQuestion().equals(questionId)) {
+                    for (String respostas:answer.getRespostas()){
+                        int indexInicial = respostas.indexOf("[");
+                        int indexFinal = respostas.indexOf("]");
+                        String resultado = respostas.substring(indexInicial + 1, indexFinal);
+                        soma+=Double.parseDouble(resultado);
+                        num++;
+                    }
+                }
+            }
+        }
+        return (soma/num);
+    }
+
+    public int obterQuantidadeRespostasOutra(Long questionId, Long op, String id) {
+        int aux = 0;
+        for (Answer answer : answerRepository.findAll()) {
+            if (answer.getIdSurvey().toString().equals(id)) {
+                if (answer.getIdQuestion().equals(questionId)) {
+                    for (String as : answer.getRespostas()){
+                        if (as.length() > 2){
+                            aux++;
+                        }
+                    }
+                }
+            }
+        }
+        return aux;
+    }
 }
