@@ -9,10 +9,7 @@ import eapli.base.surveymanagement.domain.*;
 import eapli.base.surveymanagement.repository.SurveyRepository;
 import eapli.framework.actions.Action;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class SurveyBootstrapper extends BaseDemoBootstrapper implements Action {
 
@@ -153,6 +150,15 @@ public class SurveyBootstrapper extends BaseDemoBootstrapper implements Action {
 
         questionnaire.modifyRestricao(new Restricao(Criterio.NONE));
 
+        Iterator<Client> clients = clientRepository.findAll().iterator();
+        int clientes = 0;
+        while (clients.hasNext()){
+            clients.next();
+            clientes++;
+        }
+
+        questionnaire.addQuantityInquiredCustomers(clientes);
+
         surveyRepository.save(questionnaire);
 
         Optional<Client> client = clientRepository.findByEmail(Email.valueOf("arianasobral26@outlook.pt"));
@@ -160,6 +166,72 @@ public class SurveyBootstrapper extends BaseDemoBootstrapper implements Action {
         client.get().addUnansweredQuestionnaire(surveyRepository.findByIdentifier(questionnaire.getSurveyId()).get());
 
         clientRepository.save(client.get());
+
+        Optional<Client> client1 = clientRepository.findByEmail(Email.valueOf("manuela@isep.ipp.pt"));
+
+        client1.get().addUnansweredQuestionnaire(surveyRepository.findByIdentifier(questionnaire.getSurveyId()).get());
+
+        clientRepository.save(client1.get());
+
+        Optional<Client> client2 = clientRepository.findByEmail(Email.valueOf("francisco@isep.ipp.pt"));
+
+        client2.get().addUnansweredQuestionnaire(surveyRepository.findByIdentifier(questionnaire.getSurveyId()).get());
+
+        clientRepository.save(client2.get());
+
+        Optional<Client> client3 = clientRepository.findByEmail(Email.valueOf("pedro@isep.ipp.pt"));
+
+        client3.get().addUnansweredQuestionnaire(surveyRepository.findByIdentifier(questionnaire.getSurveyId()).get());
+
+        clientRepository.save(client3.get());
+
+        Optional<Client> client4 = clientRepository.findByEmail(Email.valueOf("rita@isep.ipp.pt"));
+
+        client4.get().addUnansweredQuestionnaire(surveyRepository.findByIdentifier(questionnaire.getSurveyId()).get());
+
+        clientRepository.save(client4.get());
+
+        Optional<Client> client5 = clientRepository.findByEmail(Email.valueOf("locenzo@isep.ipp.pt"));
+
+        client5.get().addUnansweredQuestionnaire(surveyRepository.findByIdentifier(questionnaire.getSurveyId()).get());
+
+        clientRepository.save(client5.get());
+
+        Optional<Client> client6 = clientRepository.findByEmail(Email.valueOf("ines@isep.ipp.pt"));
+
+        client6.get().addUnansweredQuestionnaire(surveyRepository.findByIdentifier(questionnaire.getSurveyId()).get());
+
+        clientRepository.save(client6.get());
+
+        Optional<Client> client7 = clientRepository.findByEmail(Email.valueOf("busto@isep.ipp.pt"));
+
+        client7.get().addUnansweredQuestionnaire(surveyRepository.findByIdentifier(questionnaire.getSurveyId()).get());
+
+        clientRepository.save(client7.get());
+
+        Optional<Client> client8 = clientRepository.findByEmail(Email.valueOf("leitao@isep.ipp.pt"));
+
+        client8.get().addUnansweredQuestionnaire(surveyRepository.findByIdentifier(questionnaire.getSurveyId()).get());
+
+        clientRepository.save(client8.get());
+
+        Optional<Client> client9 = clientRepository.findByEmail(Email.valueOf("diogo@isep.ipp.pt"));
+
+        client9.get().addUnansweredQuestionnaire(surveyRepository.findByIdentifier(questionnaire.getSurveyId()).get());
+
+        clientRepository.save(client9.get());
+
+        Optional<Client> client10 = clientRepository.findByEmail(Email.valueOf("joaoPedro@gmail.com"));
+
+        client10.get().addUnansweredQuestionnaire(surveyRepository.findByIdentifier(questionnaire.getSurveyId()).get());
+
+        clientRepository.save(client10.get());
+
+        Optional<Client> client11 = clientRepository.findByEmail(Email.valueOf("tiago@isep.ipp.pt"));
+
+        client11.get().addUnansweredQuestionnaire(surveyRepository.findByIdentifier(questionnaire.getSurveyId()).get());
+
+        clientRepository.save(client11.get());
 
     }
 }
