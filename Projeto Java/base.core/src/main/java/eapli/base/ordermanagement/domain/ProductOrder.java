@@ -310,7 +310,7 @@ public class ProductOrder implements AggregateRoot<Long>, Serializable, DTOable<
         String pattern = "yyyy/MM/dd";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
         String date = simpleDateFormat.format(createdOn.getTime());
-        return new OrderDTO(orderId,date,client.obtainName().toString(),status.toString());
+        return new OrderDTO(orderId,date,status.toString());
     }
 
 
