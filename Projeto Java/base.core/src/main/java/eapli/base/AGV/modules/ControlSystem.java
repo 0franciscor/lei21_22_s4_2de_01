@@ -23,7 +23,7 @@ public class ControlSystem extends Thread{
 
         moveAGV.setCoordinates(17,19);
 
-        moveAGV.setCoordinates(4,0);
+        //moveAGV.setCoordinates(4,0);
 
         moveAGV.start();
 
