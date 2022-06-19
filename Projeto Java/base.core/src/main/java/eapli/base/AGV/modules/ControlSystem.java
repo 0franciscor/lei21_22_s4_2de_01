@@ -40,8 +40,6 @@ public class ControlSystem extends Thread {
                 System.out.println("There was an error when refreshing the Control System.");
             }
 
-            //moveAGV.setCoordinates(4,0);
-
         }
     }
 
@@ -51,6 +49,7 @@ public class ControlSystem extends Thread {
                 if (task.getStatus() == 1) {
                     var array = task.getLocation().split(",");
                     moveAGV.setCoordinates(Integer.parseInt(array[0]), Integer.parseInt(array[1]));
+                    task.updateStatus(2);
                     moveAGV.start();
                     try {
                         wait();
