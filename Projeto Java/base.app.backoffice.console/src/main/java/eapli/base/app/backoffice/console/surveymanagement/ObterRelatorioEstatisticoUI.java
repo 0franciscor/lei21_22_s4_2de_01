@@ -92,6 +92,17 @@ public class ObterRelatorioEstatisticoUI extends AbstractUI {
                         } else if (question.getType().equals(Type.NUMERIC)){
                             double media = obterRelatorioEstatisticoController.obterRespostaMedia(question.getQuestionId(),id);
                             System.out.printf("Média: %.2f\n",media);
+                        } else if (question.getType().equals(Type.SORTING_OPTIONS)){
+                            for (int lugar = 0; lugar < question.getOptions().size(); lugar++){
+                                int num = lugar + 1;
+                                System.out.println("--- Lugar " + num + " ---");
+                                for (Long op : question.getOptions().keySet()){
+                                    num = obterRelatorioEstatisticoController.obterPercentagemPorLugar(lugar, question.getQuestionId(), op,id);
+                                    double perc = ((double) num/(long)numRespostas)*100;
+                                    System.out.println("Opção: "+op);
+                                    System.out.printf("Percentagem: %.2f\n",perc);
+                                }
+                            }
                         }
 
                 }
