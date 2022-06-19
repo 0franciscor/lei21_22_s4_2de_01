@@ -79,4 +79,16 @@ public class Answer implements AggregateRoot<Long>{
     public void modifyIdSection(Long idSection) {
         this.idSection = idSection;
     }
+
+    public Identifier getIdSurvey(){
+        return idSurvey;
+    }
+
+    public Long getIdQuestion() {
+        return idQuestion;
+    }
+
+    public List<String> getRespostas() {
+        return respostas;
+    }
 }

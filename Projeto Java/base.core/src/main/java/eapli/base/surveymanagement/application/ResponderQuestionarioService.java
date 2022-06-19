@@ -14,10 +14,9 @@ import java.net.UnknownHostException;
 public class ResponderQuestionarioService {
 
 
-
     private static class ClienteSocket {
-        static final int SERVER_PORT=10000;
-        static final String KEYSTORE_PASS="forgotten";
+        static final int SERVER_PORT = 10000;
+        static final String KEYSTORE_PASS = "forgotten";
         private static final String TRUSTED_STORE = "C:\\Users\\arian\\OneDrive - Instituto Superior de Engenharia do Porto\\Desktop\\lei21_22_s4_2de_01\\Projeto Java\\certificates\\clientOrder_J.jks";
 
         private SSLSocket sock;
@@ -29,11 +28,11 @@ public class ResponderQuestionarioService {
 
             // Trust these certificates provided by servers
             System.setProperty("javax.net.ssl.trustStore", TRUSTED_STORE);
-            System.setProperty("javax.net.ssl.trustStorePassword",KEYSTORE_PASS);
+            System.setProperty("javax.net.ssl.trustStorePassword", KEYSTORE_PASS);
 
             // Use this certificate and private key for client certificate when requested by the server
-            System.setProperty("javax.net.ssl.keyStore",TRUSTED_STORE);
-            System.setProperty("javax.net.ssl.keyStorePassword",KEYSTORE_PASS);
+            System.setProperty("javax.net.ssl.keyStore", TRUSTED_STORE);
+            System.setProperty("javax.net.ssl.keyStorePassword", KEYSTORE_PASS);
 
             SSLSocketFactory sf = (SSLSocketFactory) SSLSocketFactory.getDefault();
 
@@ -45,8 +44,8 @@ public class ResponderQuestionarioService {
             }
 
             try {
-                sock = (SSLSocket) sf.createSocket(serverIP,SERVER_PORT); }
-            catch(IOException ex) {
+                sock = (SSLSocket) sf.createSocket(serverIP, SERVER_PORT);
+            } catch (IOException ex) {
                 System.out.println("Failed to establish TCP connection");
                 System.exit(1);
             }
@@ -72,14 +71,14 @@ public class ResponderQuestionarioService {
             socket.connect(getAddress(), getPort());
 
             try {
-                if (MessageUtils.testCommunicationWithServer(socket.sOutData,socket.sInData)) {
+                if (MessageUtils.testCommunicationWithServer(socket.sOutData, socket.sInData)) {
                     MessageUtils.writeMessageWithData((byte) 7, clientEmail, socket.sOutData);
 
                     // mostrar os questionários
                     ObjectInputStream sInputObject = new ObjectInputStream(socket.sock.getInputStream());
                     questionnaireDTOS = (Iterable<QuestionnaireDTO>) sInputObject.readObject();
 
-                    if (MessageUtils.wantsToExit(socket.sOutData,socket.sInData)) {
+                    if (MessageUtils.wantsToExit(socket.sOutData, socket.sInData)) {
                         socket.stop();
 
                     } else {
@@ -114,13 +113,13 @@ public class ResponderQuestionarioService {
             socket.connect(getAddress(), getPort());
 
             try {
-                if (MessageUtils.testCommunicationWithServer(socket.sOutData,socket.sInData)) {
+                if (MessageUtils.testCommunicationWithServer(socket.sOutData, socket.sInData)) {
                     MessageUtils.writeMessageWithData((byte) 8, surveyId, socket.sOutData);
 
                     ObjectInputStream sInputObject = new ObjectInputStream(socket.sock.getInputStream());
                     surveyDTO = (SurveyDTO) sInputObject.readObject();
 
-                    if (MessageUtils.wantsToExit(socket.sOutData,socket.sInData)) {
+                    if (MessageUtils.wantsToExit(socket.sOutData, socket.sInData)) {
                         socket.stop();
 
                     } else {
@@ -153,14 +152,14 @@ public class ResponderQuestionarioService {
             socket.connect(getAddress(), getPort());
 
             try {
-                if (MessageUtils.testCommunicationWithServer(socket.sOutData,socket.sInData)) {
+                if (MessageUtils.testCommunicationWithServer(socket.sOutData, socket.sInData)) {
                     MessageUtils.writeMessage((byte) 9, socket.sOutData);
 
                     ObjectOutputStream sOutputObject = new ObjectOutputStream(socket.sock.getOutputStream());
                     sOutputObject.writeObject(answer);
                     sOutputObject.flush();
 
-                    if (MessageUtils.wantsToExit(socket.sOutData,socket.sInData)) {
+                    if (MessageUtils.wantsToExit(socket.sOutData, socket.sInData)) {
                         socket.stop();
 
                     } else {
@@ -185,6 +184,45 @@ public class ResponderQuestionarioService {
         }
 
     }
+
+    public void finalizarResposta(String clientEmail,String surveyId) {
+        try {
+            final var socket = new ClienteSocket();
+            socket.connect(getAddress(), getPort());
+
+            try {
+                if (MessageUtils.testCommunicationWithServer(socket.sOutData, socket.sInData)) {
+                    StringBuilder stringBuilder = new StringBuilder(clientEmail+":"+surveyId);
+                    MessageUtils.writeMessageWithData((byte) 11, stringBuilder.toString(), socket.sOutData);
+
+                    if (MessageUtils.wantsToExit(socket.sOutData, socket.sInData)) {
+                        socket.stop();
+
+                    } else {
+                        System.out.println("==> ERROR: Erro no pacote do Servidor");
+
+                    }
+                } else {
+                    System.out.println("==> ERROR: Erro no pacote do Servidor");
+                }
+            } catch (IOException e) {
+                System.out.println("==> ERROR: Falha durante a troca de informação com o server");
+            } finally {
+                try {
+                    socket.stop();
+                } catch (IOException e) {
+                    System.out.println("==> ERROR: Falha a fechar o socket");
+                }
+            }
+
+        } catch (Exception e) {
+            System.out.println("Server down");
+            System.out.println(e.getMessage());
+        }
+
+    }
+
+
 
 
     private int getPort() {

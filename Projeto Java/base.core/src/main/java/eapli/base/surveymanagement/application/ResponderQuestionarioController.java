@@ -63,4 +63,8 @@ public class ResponderQuestionarioController {
     }
 
 
+    public void finalizarResposta(String clientEmail,String surveyId) {
+        service.finalizarResposta(clientEmail,surveyId);
+    }
+
 }

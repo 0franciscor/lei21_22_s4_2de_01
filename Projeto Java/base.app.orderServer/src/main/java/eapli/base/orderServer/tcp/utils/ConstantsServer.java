@@ -26,5 +26,7 @@ public class ConstantsServer {
 
     public static int ANSWER = 9;
 
+    public static int ATUALIZAR_CLIENTE = 11;
+
 
 }

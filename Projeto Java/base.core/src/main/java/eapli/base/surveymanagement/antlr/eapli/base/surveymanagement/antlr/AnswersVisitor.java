@@ -25,7 +25,8 @@ public class AnswersVisitor extends AnswerBaseVisitor<Answer> {
             answer.addAnswer(aux);
         }
         else if (ctx.NUMERIC() != null){
-
+            answer.modifyType("Numeric");
+            answer.addAnswer(ctx.NUMERO().toString());
         }
         else{
             if (ctx.SINGLE_CHOICE() != null){

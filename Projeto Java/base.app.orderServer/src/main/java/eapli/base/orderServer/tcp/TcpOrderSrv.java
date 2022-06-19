@@ -21,6 +21,7 @@ import eapli.base.surveymanagement.application.ListQuestionnaireDTOService;
 import eapli.base.surveymanagement.domain.Answer;
 import eapli.base.surveymanagement.domain.Identifier;
 import eapli.base.surveymanagement.domain.Questionnaire;
+import eapli.base.surveymanagement.domain.Survey;
 import eapli.base.surveymanagement.dto.QuestionnaireDTO;
 import eapli.base.surveymanagement.dto.SurveyDTO;
 import eapli.base.surveymanagement.repository.AnswerRepository;
@@ -30,6 +31,7 @@ import javax.net.ssl.SSLServerSocket;
 import javax.net.ssl.SSLServerSocketFactory;
 import java.io.*;
 import java.net.*;
+import java.util.List;
 import java.util.Optional;
 
 import static eapli.base.MessageUtils.writeMessage;
@@ -92,6 +94,7 @@ class TcpSrvOrderThread implements Runnable {
     private Optional<Client> client;
     private Optional<ShoppingCar> shoppingCar;
     private final AnswerRepository answerRepository = PersistenceContext.repositories().answers();
+    private final SurveyRepository surveyRepository = PersistenceContext.repositories().surveys();
 
     public TcpSrvOrderThread(Socket cli_s) {
         s = cli_s;
@@ -196,6 +199,21 @@ class TcpSrvOrderThread implements Runnable {
                     ObjectInputStream sInputObject = new ObjectInputStream(this.s.getInputStream());
                     Answer answer = (Answer) sInputObject.readObject();
                     answerRepository.save(answer);
+
+                }
+
+                if (clientMessageUS[1] == ConstantsServer.ATUALIZAR_CLIENTE){
+
+                    String info = MessageUtils.getDataFromMessage(clientMessageUS,sIn);
+                    String[] parts = info.split(":");
+                    String clientEmail = parts[0]; // 004
+                    String surveyId = parts[1];
+                    //Optional<Client> client = clientRepository.findByEmail(new Email(clientEmail));
+                    Optional<Questionnaire> questionnaire = surveyRepository.findByIdentifier(new Identifier(surveyId));
+                    //client.get().removeUnansweredQuestionnaire(questionnaire.get().getSurveyId());
+                    //clientRepository.save(client.get());
+                    questionnaire.get().addAmountAnswered();
+                    surveyRepository.save(questionnaire.get());
 
                 }
 

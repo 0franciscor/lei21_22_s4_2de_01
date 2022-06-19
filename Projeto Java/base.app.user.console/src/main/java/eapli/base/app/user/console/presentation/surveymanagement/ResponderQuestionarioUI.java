@@ -14,7 +14,9 @@ import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public class ResponderQuestionarioUI extends AbstractUI {
 
@@ -91,13 +93,49 @@ public class ResponderQuestionarioUI extends AbstractUI {
                             StringBuilder stringBuilder = new StringBuilder("Free-Text "+resposta+"\n\nFIM");
                             responderQuestionarioController.writeFile(surveyDTO.id,stringBuilder.toString());
                             responderQuestionarioController.validateAnswer(authz.session().get().authenticatedUser().email().toString(),surveyDTO.id,sectionDTO.sectionId,questionDTO.questionId);
+                        } else if (questionDTO.type.equals(Type.NUMERIC)){
+                            int resposta = Console.readInteger("Resposta:");
+                            StringBuilder stringBuilder = new StringBuilder("Numeric "+resposta+"\n\nFIM");
+                            responderQuestionarioController.writeFile(surveyDTO.id,stringBuilder.toString());
+                            responderQuestionarioController.validateAnswer(authz.session().get().authenticatedUser().email().toString(),surveyDTO.id,sectionDTO.sectionId,questionDTO.questionId);
+                        } else if (questionDTO.type.equals(Type.MULTIPLE_CHOICE)){
+                            List<Integer> respostas = new ArrayList<>();
+                            boolean valido;
+                            boolean mais = true;
+                            do {
+                                do{
+                                    int option = Console.readInteger("Resposta:");
+                                    if (option<1 || option>questionDTO.options.size()){
+                                        valido=false;
+                                        System.out.println("O valor introduzido não corresponde a nenhuma opção válida!");
+                                    } else {
+                                        valido = true;
+                                        respostas.add(option);
+                                        if (respostas.size()<questionDTO.options.size()){
+                                            String opt = Console.readLine("Deseja adicionar mais alguma resposta? (s|n)");
+                                            if (opt.equals("n")){
+                                                mais=false;
+                                            }
+                                        }
+                                    }
+                                }while (!valido);
+                            }while (mais);
+
+                            StringBuilder stringBuilder = new StringBuilder("Multiple-Choice ");
+                            for (Integer integer: respostas){
+                                stringBuilder.append(integer+"\n");
+                            }
+                            stringBuilder.append("\nFIM");
+                            responderQuestionarioController.writeFile(surveyDTO.id,stringBuilder.toString());
+                            responderQuestionarioController.validateAnswer(authz.session().get().authenticatedUser().email().toString(),surveyDTO.id,sectionDTO.sectionId,questionDTO.questionId);
                         }
                     }
-
                 }
-
             }
+            responderQuestionarioController.finalizarResposta(authz.session().get().authenticatedUser().email().toString(),surveyDTO.id);
+
         }
+
         return false;
     }
 

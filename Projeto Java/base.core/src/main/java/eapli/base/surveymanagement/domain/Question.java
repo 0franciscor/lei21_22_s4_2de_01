@@ -4,7 +4,9 @@ import com.ibm.icu.impl.Pair;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -50,6 +52,9 @@ public class Question implements Serializable {
     private Long seccaoDependente;
 
     @ElementCollection
+    private List<String> escala = new ArrayList<>();
+
+    @ElementCollection
     @MapKeyColumn(name = "id")
     @Column(name = "option")
     private Map<Long,String> options =new HashMap<>();
@@ -80,6 +85,10 @@ public class Question implements Serializable {
 
     public void addOption(Long id, String opcao){
         options.put(id,opcao);
+    }
+
+    public void addEscala(String escala){
+        this.escala.add(escala);
     }
 
     public void modifyDespendencias(Long sectionId, Long questionId){
@@ -118,5 +127,6 @@ public class Question implements Serializable {
     public Long getSeccaoDependente(){
         return seccaoDependente;
     }
+
 
 }

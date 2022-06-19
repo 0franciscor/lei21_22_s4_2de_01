@@ -134,6 +134,10 @@ public class Questionnaire implements AggregateRoot<Long>, Serializable, DTOable
         this.quantityInquiredCustomers = this.quantityInquiredCustomers + aux;
     }
 
+    public void addAmountAnswered(){
+        this.amountAnswered++;
+    }
+
     public Identifier getSurveyId(){
         return this.surveyId;
     }
@@ -157,4 +161,15 @@ public class Questionnaire implements AggregateRoot<Long>, Serializable, DTOable
         return new SurveyDTO(surveyId.toString(),titulo.toString(),sectionDTOS);
     }
 
+    public int getAmountAnswered() {
+        return amountAnswered;
+    }
+
+    public int getQuantityInquiredCustomers() {
+        return quantityInquiredCustomers;
+    }
+
+    public List<Section> getSections() {
+        return sections;
+    }
 }
