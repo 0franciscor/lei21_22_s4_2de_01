@@ -47,7 +47,6 @@ public class ObterRelatorioEstatisticoUI extends AbstractUI {
                 List<Question> questions = obterRelatorioEstatisticoController.obterQuestoes(id);
                 System.out.println("- Perguntas -");
                 for (Question question: questions){
-                    if (!question.getType().equals(Type.FREE_TEXT) && !question.getType().equals(Type.NUMERIC)){
                         System.out.println();
                         System.out.printf("Id: %d\n",question.getQuestionId());
                         System.out.printf("Tipo: ");
