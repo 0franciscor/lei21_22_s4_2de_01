@@ -22,6 +22,7 @@ package daemon.digitaltwin.presentation;
 
 import digitaltwin.tcpprotocol.server.DigitalTwinProtocolRequest;
 import digitaltwin.tcpprotocol.server.RequestMessageParser;
+import eapli.base.AGV.domain.AGV;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -58,9 +59,13 @@ public class DigitalTwinProtocolServer {
 
         private final RequestMessageParser parser;
 
-        public ClientHandler(final Socket socket, final RequestMessageParser parser) {
+        private final AGV agv;
+
+        public ClientHandler(final Socket socket, final RequestMessageParser parser, final AGV agv) {
             this.clientSocket = socket;
             this.parser = parser;
+            this.agv = agv;
+            agv.activateControlSystem();
         }
 
         @Override
@@ -121,7 +126,6 @@ public class DigitalTwinProtocolServer {
             } catch (final IOException e) {
                 LOGGER.error(e);
             } finally {
-
                 try {
                     clientSocket.close();
                     LOGGER.debug("Closing client socket {}:{}", clientIP.getHostAddress(), clientSocket.getPort());
@@ -133,6 +137,8 @@ public class DigitalTwinProtocolServer {
             }
         }
     }
+
+
 
 
     /**
@@ -182,8 +188,11 @@ public class DigitalTwinProtocolServer {
 
     private final RequestMessageParser parser;
 
-    public DigitalTwinProtocolServer(final RequestMessageParser requestMessageParser){
+    private final AGV agv;
+
+    public DigitalTwinProtocolServer(final RequestMessageParser requestMessageParser, final AGV agv){
         this.parser = requestMessageParser;
+        this.agv = agv;
     }
 
     /**
@@ -194,11 +203,11 @@ public class DigitalTwinProtocolServer {
      * @param port of the socket
      */
     @SuppressWarnings("java:S2189")
-    private void listen(final int port)  {
+    private void listen(final int port, final AGV agv)  {
         try (var serverSocket = getServerSocket(port)) {
             while (true) {
                 final var clientSocket = serverSocket.accept();
-                new ClientHandler(clientSocket, parser).start();
+                new ClientHandler(clientSocket, parser, agv).start();
             }
         } catch (final IOException e) {
             LOGGER.error(e);
@@ -215,9 +224,9 @@ public class DigitalTwinProtocolServer {
      */
     public void start(final int port, final boolean blocking) {
         if (blocking) {
-            listen(port);
+            listen(port, agv);
         } else {
-            new Thread(() -> listen(port)).start();
+            new Thread(() -> listen(port, agv)).start();
         }
     }
 }
