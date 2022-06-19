@@ -108,4 +108,36 @@ public class ObterRelatorioEstatisticoController {
         }
         return aux;
     }
+
+    public int obterPercentagemPorLugar(int lugar, Long question, Long op, String id) {
+        int num = 0;
+        for (Answer answer : answerRepository.findAll()) {
+            if (answer.getIdSurvey().toString().equals(id)) {
+                if (answer.getIdQuestion().equals(question)) {
+                    if (!answer.getRespostas().get(lugar).isBlank()){
+                        if (op == Long.parseLong(answer.getRespostas().get(lugar))){
+                            num++;
+                        }
+                    }
+                }
+            }
+        }
+        return num;
+    }
+
+    public int obterNumeroEscalaOpcao(Long question, String scale, int index,String id) {
+        int num = 0;
+        StringBuilder s = new StringBuilder();
+        s.append(scale);
+        for (Answer answer : answerRepository.findAll()) {
+            if (answer.getIdSurvey().toString().equals(id)) {
+                if (answer.getIdQuestion().equals(question)) {
+                    if (answer.getRespostas().get(index).equals(s.toString())) {
+                        num++;
+                    }
+                }
+            }
+        }
+        return num;
+    }
 }
