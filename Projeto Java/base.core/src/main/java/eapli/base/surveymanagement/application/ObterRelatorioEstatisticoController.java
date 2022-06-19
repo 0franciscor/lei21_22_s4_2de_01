@@ -48,9 +48,12 @@ public class ObterRelatorioEstatisticoController {
             if (answer.getIdSurvey().toString().equals(surveyId)){
                 if (answer.getIdQuestion().equals(questionId)){
                     for (String as : answer.getRespostas()){
-                        if (op.equals(Long.parseLong(as))){
-                            num++;
+                        if (as.length()<=2){
+                            if (op.equals(Long.parseLong(as))){
+                                num++;
+                            }
                         }
+
                     }
                 }
             }
