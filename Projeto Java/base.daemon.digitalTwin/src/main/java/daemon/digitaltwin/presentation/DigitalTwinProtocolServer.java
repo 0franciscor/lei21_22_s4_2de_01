@@ -59,13 +59,9 @@ public class DigitalTwinProtocolServer {
 
         private final RequestMessageParser parser;
 
-        private final AGV agv;
-
-        public ClientHandler(final Socket socket, final RequestMessageParser parser, final AGV agv) {
+        public ClientHandler(final Socket socket, final RequestMessageParser parser) {
             this.clientSocket = socket;
             this.parser = parser;
-            this.agv = agv;
-            agv.activateControlSystem();
         }
 
         @Override
@@ -193,6 +189,7 @@ public class DigitalTwinProtocolServer {
     public DigitalTwinProtocolServer(final RequestMessageParser requestMessageParser, final AGV agv){
         this.parser = requestMessageParser;
         this.agv = agv;
+        agv.activateControlSystem();
     }
 
     /**
@@ -203,11 +200,11 @@ public class DigitalTwinProtocolServer {
      * @param port of the socket
      */
     @SuppressWarnings("java:S2189")
-    private void listen(final int port, final AGV agv)  {
+    private void listen(final int port)  {
         try (var serverSocket = getServerSocket(port)) {
             while (true) {
                 final var clientSocket = serverSocket.accept();
-                new ClientHandler(clientSocket, parser, agv).start();
+                new ClientHandler(clientSocket, parser).start();
             }
         } catch (final IOException e) {
             LOGGER.error(e);
@@ -224,9 +221,9 @@ public class DigitalTwinProtocolServer {
      */
     public void start(final int port, final boolean blocking) {
         if (blocking) {
-            listen(port, agv);
+            listen(port);
         } else {
-            new Thread(() -> listen(port, agv)).start();
+            new Thread(() -> listen(port)).start();
         }
     }
 }

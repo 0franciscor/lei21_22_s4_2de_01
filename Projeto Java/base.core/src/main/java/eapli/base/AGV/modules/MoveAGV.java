@@ -19,10 +19,13 @@ public class MoveAGV extends Thread {
 
     private int speed;
 
-    public MoveAGV(final AGV agv, final WarehouseMovement whMovement) {
+    private final ControlSystem controlSystem;
+
+    public MoveAGV(final AGV agv, final WarehouseMovement whMovement, final ControlSystem controlSystem) {
         this.agv = agv;
         this.whMovement = whMovement;
         this.speed = 0;
+        this.controlSystem = controlSystem;
     }
 
     public void run() {
@@ -30,7 +33,11 @@ public class MoveAGV extends Thread {
         do {
             moveAGV();
         } while(speed == -1);
+        var dock = agv.getAgvDock();
+        setCoordinates(dock.getBegin().getBeginLSquare()-1, dock.getBegin().getBeginWSquare()-1);
+        moveAGV();
         agv.deactivateSensors();
+        controlSystem.disableLock();
     }
 
     private void moveAGV() {

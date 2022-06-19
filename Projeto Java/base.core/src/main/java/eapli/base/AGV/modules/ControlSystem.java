@@ -8,9 +8,12 @@ public class ControlSystem extends Thread{
 
     private final MoveAGV moveAGV;
 
+    private final AGV agv;
+
     public ControlSystem(final AGV agv){
         csThread = new Thread(this);
-        this.moveAGV = new MoveAGV(agv, WarehouseMovement.getWarehouseMovement());
+        this.agv = agv;
+        this.moveAGV = new MoveAGV(agv, WarehouseMovement.getWarehouseMovement(), this);
     }
 
     public Thread getControlSystemThread(){
@@ -18,16 +21,28 @@ public class ControlSystem extends Thread{
     }
 
     @Override
-    public synchronized void run(){
-        moveAGV.setCoordinates(4,0);
+    public void run(){
+        var taskList = agv.getAgvTask();
 
-        moveAGV.start();
-
-        try {
-            this.wait(100); // regula a frequência de atualização do Control System
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+        synchronized (this) {
+            for (var task : taskList) {
+                if (task.getStatus() == 1) {
+                    var array = task.getLocation().split(",");
+                    moveAGV.setCoordinates(Integer.parseInt(array[0]), Integer.parseInt(array[1]));
+                    moveAGV.start();
+                    try {
+                        wait();
+                    } catch (InterruptedException e) {
+                        System.out.println("There was an error when refreshing the Control System.");
+                    }
+                }
+            }
         }
     }
 
+    public void disableLock(){
+        synchronized (this) {
+            notify();
+        }
+    }
 }
