@@ -152,6 +152,7 @@ class AGVPosition <<(V,#FF8B40) value object>> {
 
 class AGVStatus<<(V,#FF8B40) value object>> {
     -taskState
+    -status
 }
 
 class AGVId <<(V,#FF8B40) value object>> {

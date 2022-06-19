@@ -48,6 +48,7 @@ class AGVStatus<<(V,#FF8B40) value object>> {
 entity AGVTask <<entity>> {
     -id
     -agvTaskDescription
+    -status
 }
 
 class AGVId <<(V,#FF8B40) value object>> {
